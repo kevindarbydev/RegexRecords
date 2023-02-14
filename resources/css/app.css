@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.jet-authentication-card-logo {
+    background-image: url('/vendor/jetstream/img/jetstream-logo.svg');
+    width: 160px;
+    height: 40px;
+}
