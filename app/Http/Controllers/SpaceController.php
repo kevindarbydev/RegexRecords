@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Aws\S3\S3Client;
+use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7\Uri;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client as GuzzleClient;
@@ -16,7 +17,8 @@ class SpaceController extends Controller
     {
         return view('testPage');
     }
-    public function uploadFileToSpace()
+    public function
+    uploadFileToSpace(Request $request)
     {
         // Create a new S3Client instance
         $client = new S3Client([
@@ -30,37 +32,24 @@ class SpaceController extends Controller
         ]);
 
 
-        // Get the Guzzle HTTP handler stack used by the S3Client instance
-        $handlerStack = HandlerStack::create();
-
-        // Add middleware to set the User-Agent header and retry failed requests
-        $handlerStack->push(Middleware::mapRequest(function ($request) {
-            return $request->withHeader('User-Agent', 'MyCustomUserAgent/1.0');
-        }));
-        $handlerStack->push(Middleware::retry($this->retryDecider(), $this->retryDelay()));
-
-        $client->getHandlerList()->setHandler(function ($request, $options) use ($handlerStack) {
-            $fn = $handlerStack->resolve();
-            $command = $request->toArray();
-            $endpoint = (string) $request->getUri();
-            $uri = new Uri($endpoint);
-            $uri = $uri->withPath($request->getRequestTarget());
-            $psrRequest = $request->getHandlerList()->resolve(
-                $command,
-                $uri,
-                $request->getMethod()
-            );
-            return $fn($psrRequest, $options);
-        });
 
 
 
 
-        // Upload a file to your Space
+        // Retrieve the file from the request
+        $file = $request->file('file');
+
+        // Get the contents of the file as a string
+        $fileContents = file_get_contents($file->getPathname());
+
+        // Generate a unique filename for the file
+        $fileName = md5(uniqid()) . '.' . $file->getClientOriginalExtension();
+
+        // Upload the file to your Space
         $result = $client->putObject([
                 'Bucket' => env('DO_SPACES_BUCKET'),
-                'Key' => 'test.txt',
-                'Body' => 'Hello, world!',
+                'Key' => $fileName,
+                'Body' => $fileContents,
             ]);
 
         return 'File uploaded successfully';
