@@ -40,6 +40,8 @@
 
                 <div style="color:white;">
                     Hello World from Laravel!
+                    <br />
+                    <a style="color:red;" href="{{ route('test') }}">Test File Upload</a>
                 </div>
 
                 <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
