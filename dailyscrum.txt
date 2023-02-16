@@ -1,1 +1,96 @@
+2/15/2023 Kevin
+1. Done/not done since last scrum:
+- initialize basic project structure 
+- installed livewire 
+- lead as CI / CD 
+2. To do until next Scrum:
+- research CI / CD 
+3. Need assistance / figure things out:
+-
+
+2/15/2023 Matthew
+1. Done/not done since last scrum:
+- Database design
+- Research on Laravel/Livewire
+- Trello Board creation
+2. To do until next Scrum:
+- Research Breeze
+3. Need assistance / figure things out:
+-
+
+2/15/2023 Chris
+1. Done/not done since last scrum:
+- conceptualization, layout
+2. To do until next Scrum:
+- finish up proposal, ideas, research techs used but also how the news cycle works internally
+3. Need assistance / figure things out:
+- laravel, livewire, etc
+
+2/15/2023 Seena
+1. Done/not done since last scrum:
+- Research different Laravel Starter kits (Breeze, Jetsream)
+2. To do until next Scrum:
+- Maybe do user stories for proposal once db approved
+- continue research for laravel 
+3. Need assistance / figure things out:
+-
+
+2/15/2023 Nathaniel
+1. Done/not done since last scrum:
+- Created project proposal
+- Research Laravel platforms/Breeze
+2. To do until next Scrum:
+- Finalize laravel implementations
+- begin basic views (front page, user login, etc)
+3. Need assistance / figure things out:
+-
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+2/16/2023 Kevin
+1. Done/not done since last scrum:
+- initialize basic project structure 
+- installed livewire 
+- lead as CI / CD 
+2. To do until next Scrum:
+- research CI / CD 
+3. Need assistance / figure things out:
+-
+
+2/16/2023 Matthew
+1. Done/not done since last scrum:
+- Database design for new idea
+- Trello Board creation
+- Submission of Proposal
+2. To do until next Scrum:
+- Research Laravael/Inertia
+- Practice Implementation of Inertia
+3. Need assistance / figure things out:
+-
+
+2/16/2023 Chris
+1. Done/not done since last scrum:
+- conceptualization, layout
+2. To do until next Scrum:
+- finish up proposal, ideas, research techs used but also how the news cycle works internally
+3. Need assistance / figure things out:
+- laravel, livewire, etc
+
+2/16/2023 Seena
+1. Done/not done since last scrum:
+- Research different Laravel Starter kits (Breeze, Jetsream)
+2. To do until next Scrum:
+- Maybe do user stories for proposal once db approved
+- continue research for laravel 
+3. Need assistance / figure things out:
+-
+
+2/16/2023 Nathaniel
+1. Done/not done since last scrum:
+- Created project proposal
+- Research Laravel platforms/Breeze
+2. To do until next Scrum:
+- Finalize laravel implementations
+- begin basic views (front page, user login, etc)
+3. Need assistance / figure things out:
+-
 
