@@ -69,9 +69,9 @@
 
 2/16/2023 Chris
 1. Done/not done since last scrum:
-- conceptualization, layout
+- worked on proposal, advanced in tutorials (blade, inertia)
 2. To do until next Scrum:
-- finish up proposal, ideas, research techs used but also how the news cycle works internally
+- get a homepage up and running, navbar, links
 3. Need assistance / figure things out:
 - laravel, livewire, etc
 
