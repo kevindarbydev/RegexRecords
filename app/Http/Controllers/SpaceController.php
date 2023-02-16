@@ -77,42 +77,6 @@ class SpaceController extends Controller
 
     //     return $contents;
     // }
-    private function retryDecider()
-    {
-        return function (
-            $retries,
-            \GuzzleHttp\Psr7\Request $request,
-            \GuzzleHttp\Psr7\Response $response = null,
-            \GuzzleHttp\Exception\RequestException $exception = null
-        ) {
-            // Limit the number of retries to 5
-            if ($retries >= 5) {
-                return false;
-            }
-
-            // Retry on server errors (status code 500 or higher)
-            if ($exception instanceof \GuzzleHttp\Exception\ServerException) {
-                return true;
-            }
-
-            // Retry on connection errors (network timeout, DNS errors, etc.)
-            if ($exception instanceof \GuzzleHttp\Exception\ConnectException) {
-                return true;
-            }
-
-            // Retry on specific HTTP status codes
-            if ($response && $response->getStatusCode() == 429) {
-                return true;
-            }
-
-            return false;
-        };
-    }
-    private function retryDelay()
-    {
-        return function ($numberOfRetries) {
-            return 1000 * $numberOfRetries;
-        };
-    }
+ 
 }
 
