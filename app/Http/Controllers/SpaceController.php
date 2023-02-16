@@ -24,7 +24,7 @@ class SpaceController extends Controller
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-east-1',
-            'endpoint' => 'https://integrationprojectlaravelnews.nyc3.digitaloceanspaces.com',
+            'endpoint' => 'https://nyc3.digitaloceanspaces.com',
             'credentials' => [
                 'key' => env('DO_SPACES_KEY'),
                 'secret' => env('DO_SPACES_SECRET'),
@@ -53,7 +53,7 @@ class SpaceController extends Controller
                 'Body' => $fileContents,
             ]);
 
-        return 'File uploaded successfully';
+        return 'File uploaded successfully!! Woohoo!';
     }
 
     // public function downloadFileFromSpace()
