@@ -28,7 +28,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified']);
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('items', ItemController::class)
 
