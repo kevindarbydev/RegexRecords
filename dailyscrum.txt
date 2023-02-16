@@ -86,11 +86,14 @@
 
 2/16/2023 Nathaniel
 1. Done/not done since last scrum:
-- Created project proposal
-- Research Laravel platforms/Breeze
+- Research Breeze, Livewire, Jetstream, etc
+- Created Laravel with Blade
+- Created Laravel with Inertia
+- Attempted to web host using AWS, Azure
 2. To do until next Scrum:
-- Finalize laravel implementations
-- begin basic views (front page, user login, etc)
+- Finalize which platforms/APIs to use
+- Create Database Tables in Azure
+- Basic CRUD for DB
 3. Need assistance / figure things out:
--
+- livewire, implementing Tailwind CSS, APIs
 
