@@ -33,14 +33,21 @@ class ItemController extends Controller
     //     return response();
     // }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  */
-    // public function store(Request $request): RedirectResponse
-    // {
-    //     //
-    //     return Redirect();
-    // }
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+
+            'message' => 'required|string|max:255',
+        ]);
+
+
+        $request->user()->items()->create($validated);
+
+        return redirect(route('chirps.index'));
+    }
 
     // /**
     //  * Display the specified resource.
