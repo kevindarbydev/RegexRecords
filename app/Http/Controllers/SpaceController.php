@@ -23,7 +23,7 @@ class SpaceController extends Controller
         // Create a new S3Client instance
         $client = new S3Client([
             'version' => 'latest',
-            'region' => env('DO_SPACES_REGION'),
+            'region' => 'us-east-1',
             'endpoint' => 'https://integrationprojectlaravelnews.nyc3.digitaloceanspaces.com',
             'credentials' => [
                 'key' => env('DO_SPACES_KEY'),
