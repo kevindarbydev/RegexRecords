@@ -46,7 +46,7 @@ class ItemController extends Controller
 
         $request->user()->items()->create($validated);
 
-        return redirect(route('chirps.index'));
+        return redirect(route('items.index'));
     }
 
     // /**
