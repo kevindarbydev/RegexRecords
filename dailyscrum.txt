@@ -97,3 +97,55 @@
 3. Need assistance / figure things out:
 - livewire, implementing Tailwind CSS, APIs
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+2/17/2023 Kevin
+1. Done/not done since last scrum:
+- initialize basic project structure 
+- installed livewire 
+- lead as CI / CD 
+2. To do until next Scrum:
+- research CI / CD 
+3. Need assistance / figure things out:
+-
+
+2/17/2023 Matthew
+1. Done/not done since last scrum:
+- Continued research/practice with Laravel/Breeze/React
+- Set up Gantt chart
+2. To do until next Scrum:
+- Get comfortable with Laravel and React
+- Begin looking at project structure
+- Assist in creation of Models/Controllers
+3. Need assistance / figure things out:
+-
+
+2/17/2023 Chris
+1. Done/not done since last scrum:
+- worked on proposal, advanced in tutorials (blade, inertia)
+- conceptualization, layout
+2. To do until next Scrum:
+- get a homepage up and running, navbar, links
+3. Need assistance / figure things out:
+- laravel, livewire, etc
+
+2/17/2023 Seena
+1. Done/not done since last scrum:
+- Use-case diagrams for project proposal
+2. To do until next Scrum:
+- keep researching laravel (roles, guards, permissions) 
+3. Need assistance / figure things out:
+-
+
+2/17/2023 Nathaniel
+1. Done/not done since last scrum:
+- Research Breeze, Livewire, Jetstream, etc
+- Created Laravel with Blade
+- Created Laravel with Inertia
+- Attempted to web host using AWS, Azure
+2. To do until next Scrum:
+- Finalize which platforms/APIs to use
+- Create Database Tables in Azure
+- Basic CRUD for DB
+3. Need assistance / figure things out:
+- livewire, implementing Tailwind CSS, APIs
+
