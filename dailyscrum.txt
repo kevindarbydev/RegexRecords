@@ -139,11 +139,9 @@
 2/17/2023 Nathaniel
 1. Done/not done since last scrum:
 - Research Breeze, Livewire, Jetstream, etc
-- Created Laravel with Blade
-- Created Laravel with Inertia
-- Attempted to web host using AWS, Azure
+- Created Album Table View/Index
+- Routed Album Table to Nav Bar
 2. To do until next Scrum:
-- Finalize which platforms/APIs to use
 - Create Database Tables in Azure
 - Basic CRUD for DB
 3. Need assistance / figure things out:
