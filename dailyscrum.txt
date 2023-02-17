@@ -100,11 +100,13 @@
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 2/17/2023 Kevin
 1. Done/not done since last scrum:
-- initialize basic project structure 
-- installed livewire 
-- lead as CI / CD 
+- Configured D.O Spaces
+- Set up cloud DB management (TablePlus)
+- Researched Livewire/other laravel packages
+- Added some user stories to Trello
 2. To do until next Scrum:
-- research CI / CD 
+- Implement basic project structure from breeze tutorial
+- More CI/CD Research + SSH research
 3. Need assistance / figure things out:
 -
 
@@ -125,12 +127,14 @@
 2. To do until next Scrum:
 - navbar, routes, any additional register/login validation 
 3. Need assistance / figure things out:
+- 
 
 2/17/2023 Seena
 1. Done/not done since last scrum:
-- Use-case diagrams for project proposal
+- researched laravel-acquaintances (package for connections) 
 2. To do until next Scrum:
-- keep researching laravel (roles, guards, permissions) 
+- maybe implement laravel-acquaintances??
+- implement dark mode (test it out)
 3. Need assistance / figure things out:
 -
 
