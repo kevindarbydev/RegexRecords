@@ -104,8 +104,10 @@
 - Set up cloud DB management (TablePlus)
 - Researched Livewire/other laravel packages
 - Added some user stories to Trello
-2. To do until next Scrum:
 - Implement basic project structure from breeze tutorial
+2. To do until next Scrum:
+- look into typescript
+- set up email sender
 - More CI/CD Research + SSH research
 3. Need assistance / figure things out:
 -
