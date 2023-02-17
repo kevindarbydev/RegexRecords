@@ -121,12 +121,10 @@
 
 2/17/2023 Chris
 1. Done/not done since last scrum:
-- worked on proposal, advanced in tutorials (blade, inertia)
-- conceptualization, layout
+- research/tutorials, minaly routes, React integration, Typescript basics
 2. To do until next Scrum:
-- get a homepage up and running, navbar, links
+- navbar, routes, any additional register/login validation 
 3. Need assistance / figure things out:
-- laravel, livewire, etc
 
 2/17/2023 Seena
 1. Done/not done since last scrum:
