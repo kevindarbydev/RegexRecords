@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class Album extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-
-        'message',
-
+        'album_name',
+        'artist',
+        'value'
     ];
 }

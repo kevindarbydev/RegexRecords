@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
+use App\Models\Album;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -10,15 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 
-class ItemController extends Controller
+class AlbumController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-     public function index(): Response
+    public function index(): Response
 
     {
-        return Inertia::render('Items/Index', [
+        return Inertia::render('Albums/Index', [
 
             //
 
@@ -39,14 +39,15 @@ class ItemController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-
-            'message' => 'required|string|max:255',
+            'album_name' => 'required|string|max:255',
+            'artist' => 'required|string|max:255',
+            'value' => 'required|integer',
         ]);
 
 
-        $request->user()->items()->create($validated);
+        $request->user()->albums()->create($validated);
 
-        return redirect(route('items.index'));
+        return redirect(route('albums.index'));
     }
 
     // /**
