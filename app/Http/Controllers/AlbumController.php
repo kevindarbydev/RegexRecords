@@ -8,7 +8,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-
+use Illuminate\Support\Facades\Http;
 
 class AlbumController extends Controller
 {
@@ -38,11 +38,47 @@ class AlbumController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $spaceController = app(\App\Http\Controllers\SpaceController::class);
         $validated = $request->validate([
             'album_name' => 'required|string|max:255',
             'artist' => 'required|string|max:255',
+            'cover_image_url' => 'nullable|string',
             'value' => 'required|integer',
         ]);
+
+        $album_name = $request->album_name;
+        $artist_name = $request->artist;
+
+        $response = Http::get('https://api.discogs.com/database/search', [
+            'release_title' => $album_name,
+            'artist' => $artist_name,
+            'token' => env('DISCOGS_ACCESS_TOKEN'),
+        ]);
+
+        if ($response->ok()) {
+            // The API call was successful
+            $data = $response->json();
+
+            // Get the first item in the results array (usually will be correct)   
+            $item = $data['results'][0];
+
+            // Get the cover image URL from the item
+            $cover_image_url = $item['cover_image'];
+
+            // Upload the cover image to DigitalOcean Spaces bucket and get the URL
+            $cover_image_spaces_url = $spaceController->uploadCoverImageToSpace($cover_image_url);
+
+            //Assign the cover image url to the new album obj
+            $validated['cover_image_url'] = $cover_image_spaces_url;
+        } else {
+            // The API call failed
+            $status_code = $response->status();
+            $error_message = $response->body();
+            echo $error_message . ': ' . $status_code;
+            //TODO:
+            //handle album cover not found
+            //generic ? image           
+        }
 
 
         $request->user()->albums()->create($validated);

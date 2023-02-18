@@ -12,6 +12,8 @@ class Album extends Model
     protected $fillable = [
         'album_name',
         'artist',
-        'value'
+        'cover_image_url',
+        'value',
+
     ];
 }

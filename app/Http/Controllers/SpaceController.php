@@ -17,8 +17,8 @@ class SpaceController extends Controller
     {
         return view('testPage');
     }
-    public function
-    uploadFileToSpace(Request $request)
+    
+    public function uploadCoverImageToSpace($coverImageURL)
     {
         // Create a new S3Client instance
         $client = new S3Client([
@@ -30,53 +30,25 @@ class SpaceController extends Controller
                 'secret' => env('DO_SPACES_SECRET'),
             ],
         ]);
-       
 
+        // Get the contents of the cover image from the URL
+        $fileContents = file_get_contents($coverImageURL);
 
+        // Generate a unique filename for the image
+        $fileName = md5(uniqid()) . '.jpg';
 
-
-
-
-        // Retrieve the file from the request
-        $file = $request->file('file');
-
-        // Get the contents of the file as a string
-        $fileContents = file_get_contents($file->getPathname());
-
-        // Generate a unique filename for the file
-        $fileName = md5(uniqid()) . '.' . $file->getClientOriginalExtension();
-
-        // Upload the file to your Space
+        // Upload the image to your Space
         $result = $client->putObject([
-                'Bucket' => env('DO_SPACES_BUCKET'),
-                'Key' => $fileName,
-                'Body' => $fileContents,
-            ]);
+            'Bucket' => env('DO_SPACES_BUCKET'),
+            'Key' => $fileName,
+            'Body' => $fileContents,
+            'ContentType' => 'image/jpeg',
+            'ACL' => 'public-read',
+        ]);
 
-        return 'File uploaded successfully!! Woohoo!';
+        // Return the URL of the uploaded image
+        return $result['ObjectURL'];
     }
-
-    // public function downloadFileFromSpace()
-    // {
-    //     // Create a new S3Client instance
-    //     $client = new S3Client([
-    //         'version' => 'latest',
-    //         'region' => env('DO_SPACES_REGION'),
-    //         'endpoint' => 'https://nyc3.digitaloceanspaces.com',
-    //         'credentials' => [
-    //             'key' => env('DO_SPACES_KEY'),
-    //             'secret' => env('DO_SPACES_SECRET'),
-    //         ],
-    //     ]);
-
-    //     // Download the file from your Space
-    //     $contents = $client->getObject([
-    //         'Bucket' => env('DO_SPACES_BUCKET'),
-    //         'Key' => 'test.txt',
-    //     ])['Body'];
-
-    //     return $contents;
-    // }
  
 }
 
