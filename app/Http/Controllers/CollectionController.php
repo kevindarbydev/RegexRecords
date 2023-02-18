@@ -16,7 +16,8 @@ class CollectionController extends Controller
     public function index(): Response
     {
         return Inertia::render('Collections/Index', [
-            //
+            'collections' => Collection::with('user:id,collection_name')->latest()->get(),
+
         ]);
     }
 
@@ -34,12 +35,12 @@ class CollectionController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'message' => 'required|string|max:255',
+            'collection_name' => 'required|string|max:255',
         ]);
  
         $request->user()->collections()->create($validated);
  
-        return redirect(route('collections.index'));
+        return to_route('collections.index');
     }
 
     /**
@@ -47,7 +48,9 @@ class CollectionController extends Controller
      */
     public function show(Collection $collection): Response
     {
-        //
+        return Inertia::render('Collections/Show', [
+            'collection' => $collection
+          ]);
     }
 
     /**

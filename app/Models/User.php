@@ -47,4 +47,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Album::class);
     }
+    public function collections(): HasMany
+    {
+        return $this->hasMany(Collection::class);
+    }
 }

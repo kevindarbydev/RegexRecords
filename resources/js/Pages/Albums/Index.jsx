@@ -14,6 +14,7 @@ export default function Index({ auth }) {
     const submit = (e) => {
         e.preventDefault();
         post(route("albums.store"), { onSuccess: () => reset() });
+        
     };
 
     return (

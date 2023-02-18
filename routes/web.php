@@ -36,7 +36,7 @@ Route::resource('albums', AlbumController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('collections', CollectionController::class)
-->only(['index', 'store'])
+->only(['index', 'store', 'show'])
 ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
