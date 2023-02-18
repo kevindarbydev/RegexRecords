@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\CollectionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +34,10 @@ Route::get('/dashboard', function () {
 Route::resource('albums', AlbumController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
+
+Route::resource('collections', CollectionController::class)
+->only(['index', 'store'])
+->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

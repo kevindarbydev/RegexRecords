@@ -35,6 +35,9 @@ export default function Authenticated({ auth, header, children }) {
                                 >
                                     Albums
                                 </NavLink>
+                                <NavLink href={route('collections.index')} active={route().current('collections.index')}>
+                                    Collections
+                                </NavLink>
                             </div>
                         </div>
 
