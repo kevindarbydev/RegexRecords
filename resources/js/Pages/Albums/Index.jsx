@@ -3,8 +3,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
+import Album from "@/Components/Album";
 
-export default function Index({ auth }) {
+export default function Index({ auth, albums }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         album_name: "",
         artist: "",
@@ -53,6 +54,11 @@ export default function Index({ auth }) {
                         Post Album
                     </PrimaryButton>
                 </form>
+                <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                    {albums.map((album) => (
+                        <Album key={album.id} album={album} />
+                    ))}
+                </div>
             </div>
         </AuthenticatedLayout>
     );

@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
 
@@ -14,13 +15,15 @@ class AlbumController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * User albums ONLY
      */
     public function index(): Response
 
     {
         return Inertia::render('Albums/Index', [
 
-            //
+            // only returning user albums
+            'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
 
         ]);
     }
@@ -83,7 +86,7 @@ class AlbumController extends Controller
 
         $request->user()->albums()->create($validated);
 
-        return redirect(route('albums.index'));
+        return to_route('albums.index');
     }
 
     // /**
