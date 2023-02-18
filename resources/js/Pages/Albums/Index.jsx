@@ -15,7 +15,6 @@ export default function Index({ auth, albums }) {
     const submit = (e) => {
         e.preventDefault();
         post(route("albums.store"), { onSuccess: () => reset() });
-        
     };
 
     return (
@@ -54,7 +53,7 @@ export default function Index({ auth, albums }) {
                         Post Album
                     </PrimaryButton>
                 </form>
-                <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                <div className="mt-10 space-y-2">
                     {albums.map((album) => (
                         <Album key={album.id} album={album} />
                     ))}
