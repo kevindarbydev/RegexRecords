@@ -49,10 +49,10 @@ export default function Wishlist({ wishlist }) {
                             </Dropdown.Trigger>
                             <Dropdown.Content>
                                 <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={() => setEditing(true)}>
-                                    Edit
+                                    Edit Wishlist Name
                                 </button>
                                 <Dropdown.Link as="button" href={route('wishlists.destroy', wishlist.id)} method="delete">
-                                    Delete
+                                    Delete Wishlist
                                 </Dropdown.Link>
                             </Dropdown.Content>
                         </Dropdown>
@@ -67,7 +67,7 @@ export default function Wishlist({ wishlist }) {
                             <button className="mt-4" onClick={() => { setEditing(false); reset(); clearErrors(); }}>Cancel</button>
                         </div>
                     </form>
-                    : <p className="mt-4 text-lg text-gray-900">{wishlist.list_name}</p>
+                    : <p className="mt-4 text-lg text-gray-900">ADD ALBUMS</p>
                 }
             </div>
         </div>
