@@ -45,6 +45,9 @@ export default function Authenticated({ auth, header, children }) {
                                 >
                                     Collections
                                 </NavLink>
+                                <NavLink href={route('wishlists.index')} active={route().current('wishlists.index')}>
+                                    Wishlist
+                                </NavLink>
                             </div>
                         </div>
 
