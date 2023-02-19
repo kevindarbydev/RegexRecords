@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useForm, usePage } from '@inertiajs/react';
 import ApplicationLogo from './ApplicationLogo';
+import { PlusCircleIcon } from "@heroicons/react/24/solid";
 
 
 dayjs.extend(relativeTime);
@@ -61,7 +62,13 @@ export default function Collection({ collection }) {
                         </Dropdown>
                     }
                 </div>
-                {editing
+                <a
+                                href="#"
+                                class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-black hover:bg-gray-100 dark:hover:bg-gray-700"
+                            >
+                                <PlusCircleIcon className="h-6 w-6 text-blue-500" />
+                                <span class="ml-3">Add an album</span>
+                            </a>               {editing
                     ? <form onSubmit={submit}>
                         <textarea value={data.collection_name} onChange={e => setData('collection_name', e.target.value)} className="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
                         <InputError message={errors.message} class="mt-2" />
@@ -70,7 +77,8 @@ export default function Collection({ collection }) {
                             <button className="mt-4" onClick={() => { setEditing(false); reset(); clearErrors(); }}>Cancel</button>
                         </div>
                     </form>
-                    : <p className="mt-4 text-lg text-gray-900">ADD ALBUMS</p>
+                    : <p className="mt-4 text-lg text-gray-900"></p>
+                    
                 }            </div>
         </div>
     );
