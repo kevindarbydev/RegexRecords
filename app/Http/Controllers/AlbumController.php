@@ -61,32 +61,35 @@ class AlbumController extends Controller
         if ($response->ok()) {
             // The API call was successful
             $data = $response->json();
+            if (empty($data['results'])) {
+                $validated['cover_image_url'] = null;
+                //TODO:
+            //assign record not found
+            } else {
+                // Get the first item in the results array (usually will be correct)   
+                $item = $data['results'][0];
 
-            // Get the first item in the results array (usually will be correct)   
-            $item = $data['results'][0];
+                // Get the cover image URL from the item
+                $cover_image_url = $item['cover_image'];
 
-            // Get the cover image URL from the item
-            $cover_image_url = $item['cover_image'];
+                // Upload the cover image to DigitalOcean Spaces bucket and get the URL
+                $cover_image_spaces_url = $spaceController->uploadCoverImageToSpace($cover_image_url);
 
-            // Upload the cover image to DigitalOcean Spaces bucket and get the URL
-            $cover_image_spaces_url = $spaceController->uploadCoverImageToSpace($cover_image_url);
-
-            //Assign the cover image url to the new album obj
-            $validated['cover_image_url'] = $cover_image_spaces_url;
+                //Assign the cover image url to the new album obj
+                $validated['cover_image_url'] = $cover_image_spaces_url;
+            }
         } else {
             // The API call failed
             $status_code = $response->status();
             $error_message = $response->body();
-            echo $error_message . ': ' . $status_code;
-            //TODO:
-            //handle album cover not found
-            //generic ? image           
+            echo $error_message . ': ' . $status_code;                     
         }
+        
 
 
         $request->user()->albums()->create($validated);
 
-        return to_route('albums.index');
+        return redirect()->route('albums.index');
     }
 
     // /**

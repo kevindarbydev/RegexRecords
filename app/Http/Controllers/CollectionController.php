@@ -37,10 +37,11 @@ class CollectionController extends Controller
         $validated = $request->validate([
             'collection_name' => 'required|string|max:255',
         ]);
- 
+       
         $request->user()->collections()->create($validated);
+        
  
-        return to_route('collections.index');
+        return redirect()->route('collections.index');
     }
 
     /**
