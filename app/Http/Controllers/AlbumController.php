@@ -61,10 +61,11 @@ class AlbumController extends Controller
         if ($response->ok()) {
             // The API call was successful
             $data = $response->json();
+
+            
             if (empty($data['results'])) {
-                $validated['cover_image_url'] = null;
-                //TODO:
-            //assign record not found
+                //assign it null now, checking for null later (Album.jsx component) to assign default img   
+                $validated['cover_image_url'] = null;           
             } else {
                 // Get the first item in the results array (usually will be correct)   
                 $item = $data['results'][0];
