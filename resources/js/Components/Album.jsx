@@ -1,15 +1,27 @@
 import React from "react";
 
-export default function Album({ album }) {
-    return (
+export default function Album({ album }) {    
+    const albumCoverStyle = {
+        
+    }
+    
+   return (
         <div className="flex flex-row bg-white shadow-sm rounded-lg mb-3">
-            <img
-                class="object-cover w-1/4 rounded-t-lg h-96 md:h-1/4 md:w-1/4 md:rounded-none md:rounded-l-lg"
-                src="storage/record_icon.png"
-                alt=""
-            />
-            <div class="flex flex-row justify-between p-4 leading-normal">
-                <div class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white">
+            {album.cover_image_url ? (
+                <img
+                    className="object-cover w-1/4 rounded-t-lg h-96 md:h-1/4 md:w-1/4 md:rounded-none md:rounded-l-lg"
+                    src={album.cover_image_url}
+                    alt=""
+                />
+            ) : (
+                <img
+                    className="object-cover w-1/4 rounded-t-lg h-96 md:h-1/4 md:w-1/4 md:rounded-none md:rounded-l-lg"
+                    src="storage/record_icon.png"
+                    alt=""
+                />
+            )}
+            <div className="flex flex-row justify-between p-4 leading-normal">
+                <div className="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white">
                     <p className="mt-4 text-gray-900">
                         Album: {album.album_name}
                     </p>
