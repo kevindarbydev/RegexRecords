@@ -62,7 +62,7 @@ class AlbumController extends Controller
             // The API call was successful
             $data = $response->json();
 
-            
+            //results may be empty due to a typo or if the artist/album is not well known
             if (empty($data['results'])) {
                 //assign it null now, checking for null later (Album.jsx component) to assign default img   
                 $validated['cover_image_url'] = null;           
