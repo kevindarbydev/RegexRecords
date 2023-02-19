@@ -12,15 +12,17 @@ export default function Authenticated({ auth, header, children }) {
     return (
         <div className="min-h-screen ">
             <nav className=" border-b border-gray-100">
+                {/* main-nav */}
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
+                            {/* nav-logo */}
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <ApplicationLogo className="h-10 w-10" />
                                 </Link>
                             </div>
-
+                            {/* links */}
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink
                                     href={route("dashboard")}
@@ -35,12 +37,18 @@ export default function Authenticated({ auth, header, children }) {
                                 >
                                     Albums
                                 </NavLink>
-                                <NavLink href={route('collections.index')} active={route().current('collections.index')}>
+                                <NavLink
+                                    href={route("collections.index")}
+                                    active={route().current(
+                                        "collections.index"
+                                    )}
+                                >
                                     Collections
                                 </NavLink>
                             </div>
                         </div>
 
+                        {/* dropdown stuff */}
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
                             <div className="ml-3 relative">
                                 <Dropdown>
@@ -128,7 +136,7 @@ export default function Authenticated({ auth, header, children }) {
                         </div>
                     </div>
                 </div>
-
+                {/* responsive-nav */}
                 <div
                     className={
                         (showingNavigationDropdown ? "block" : "hidden") +
