@@ -66,14 +66,25 @@ class CollectionController extends Controller
      */
     public function update(Request $request, Collection $collection): RedirectResponse
     {
-        //
-    }
+        $this->authorize('update', $collection);
+ 
+        $validated = $request->validate([
+            'collection_name' => 'required|string|max:255',
+        ]);
+ 
+        $collection->update($validated);
+ 
+        return redirect(route('collections.index'));    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Collection $collection): RedirectResponse
     {
-        //
+        $this->authorize('delete', $collection);
+ 
+        $collection->delete();
+ 
+        return redirect(route('collections.index'));
     }
 }
