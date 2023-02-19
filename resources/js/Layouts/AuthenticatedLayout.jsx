@@ -17,7 +17,7 @@ export default function Authenticated({ auth, header, children }) {
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <ApplicationLogo className="h-10 w-10" />
                                 </Link>
                             </div>
 
@@ -35,7 +35,12 @@ export default function Authenticated({ auth, header, children }) {
                                 >
                                     Albums
                                 </NavLink>
-                                <NavLink href={route('collections.index')} active={route().current('collections.index')}>
+                                <NavLink
+                                    href={route("collections.index")}
+                                    active={route().current(
+                                        "collections.index"
+                                    )}
+                                >
                                     Collections
                                 </NavLink>
                             </div>
