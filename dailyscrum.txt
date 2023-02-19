@@ -151,3 +151,44 @@
 3. Need assistance / figure things out:
 - livewire, implementing Tailwind CSS, APIs
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+2/19/2023 Kevin
+1. Done/not done since last scrum:
+2. To do until next Scrum:
+3. Need assistance / figure things out:
+-
+
+2/19/2023 Matthew
+1. Done/not done since last scrum:
+2. To do until next Scrum:
+3. Need assistance / figure things out:
+-
+
+2/19/2023 Chris
+1. Done/not done since last scrum:
+2. To do until next Scrum:
+3. Need assistance / figure things out:
+- 
+
+2/19/2023 Seena
+1. Done/not done since last scrum:
+2. To do until next Scrum:
+
+3. Need assistance / figure things out:
+-
+
+2/19/2023 Nathaniel
+1. Done/not done since last scrum:
+- installed HeroIcons
+- Created Collections page
+- Added Create Collections function
+- Created Collection Components
+- CRUD Collections completed
+
+2. To do until next Scrum:
+- update Collections Cards
+- update Collections Table to hold Albums
+- show Albums in Collection Cards
+
+3. Need assistance / figure things out:
+- holding Albums in Collections

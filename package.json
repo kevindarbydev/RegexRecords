@@ -20,9 +20,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "@heroicons/react": "^2.0.16"
-    },
-    "dependencies": {
+        "@heroicons/react": "^2.0.16",
         "dayjs": "^1.11.7"
     }
 }
