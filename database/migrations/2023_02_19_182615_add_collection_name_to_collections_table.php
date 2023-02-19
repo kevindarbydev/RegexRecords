@@ -12,18 +12,18 @@ return new class extends Migration
 
      // Try running this one, it might give an error but check the db anyway
      //if it didnt add the columns, try the one below, not sure which one worked for me
-    public function up()
-    {
-        Schema::table('collections', function (Blueprint $table) {
-            $table->integer('user_id')->after('id');
-            $table->string('collection_name')->after('user_id');
+  //  public function up()
+    // {
+    //     Schema::table('collections', function (Blueprint $table) {
+    //         $table->integer('user_id')->after('id');
+    //         $table->string('collection_name')->after('user_id');
 
-            $table->foreign('user_id')
-            ->references('id')
-            ->on('users')
-            ->onDelete('cascade');
-        });
-    }
+    //         $table->foreign('user_id')
+    //         ->references('id')
+    //         ->on('users')
+    //         ->onDelete('cascade');
+    //     });
+   // }
 
 
     // public function up()
