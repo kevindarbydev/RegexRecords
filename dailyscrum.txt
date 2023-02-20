@@ -1,10 +1,10 @@
 2/15/2023 Kevin
 1. Done/not done since last scrum:
-- initialize basic project structure 
-- installed livewire 
-- lead as CI / CD 
+- initialize basic project structure
+- installed livewire
+- lead as CI / CD
 2. To do until next Scrum:
-- research CI / CD 
+- research CI / CD
 3. Need assistance / figure things out:
 -
 
@@ -31,7 +31,7 @@
 - Research different Laravel Starter kits (Breeze, Jetsream)
 2. To do until next Scrum:
 - Maybe do user stories for proposal once db approved
-- continue research for laravel 
+- continue research for laravel
 3. Need assistance / figure things out:
 -
 
@@ -48,11 +48,11 @@
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 2/16/2023 Kevin
 1. Done/not done since last scrum:
-- initialize basic project structure 
-- installed livewire 
-- lead as CI / CD 
+- initialize basic project structure
+- installed livewire
+- lead as CI / CD
 2. To do until next Scrum:
-- research CI / CD 
+- research CI / CD
 3. Need assistance / figure things out:
 -
 
@@ -80,7 +80,7 @@
 1. Done/not done since last scrum:
 - Use-case diagrams for project proposal
 2. To do until next Scrum:
-- keep researching laravel (roles, guards, permissions) 
+- keep researching laravel (roles, guards, permissions)
 3. Need assistance / figure things out:
 -
 
@@ -127,13 +127,13 @@
 1. Done/not done since last scrum:
 - research/tutorials, minaly routes, React integration, Typescript basics
 2. To do until next Scrum:
-- navbar, routes, any additional register/login validation 
+- navbar, routes, any additional register/login validation
 3. Need assistance / figure things out:
-- 
+-
 
 2/17/2023 Seena
 1. Done/not done since last scrum:
-- researched laravel-acquaintances (package for connections) 
+- researched laravel-acquaintances (package for connections)
 2. To do until next Scrum:
 - maybe implement laravel-acquaintances??
 - implement dark mode (test it out)
@@ -164,10 +164,10 @@
 2. To do until next Scrum:
 - Basic admin interface
 - look into Connection implementation
-(laravel-acquaintances only works on 
+(laravel-acquaintances only works on
 laravel <= 9)
 - add 'for_sale' boolean to albums
-OR create table 'user_store' where 
+OR create table 'user_store' where
 users will only add the albums they want to sell
 3. Need assistance / figure things out:
 -
@@ -182,14 +182,14 @@ users will only add the albums they want to sell
 1. Done/not done since last scrum:
 2. To do until next Scrum:
 3. Need assistance / figure things out:
-- 
+-
 
 2/19/2023 Seena
 1. Done/not done since last scrum:
 - worked on albums (mostly styling index page)
 - tentative sidebar
 2. To do until next Scrum:
-- not sure 
+- not sure
 3. Need assistance / figure things out:
 -
 
@@ -208,3 +208,18 @@ users will only add the albums they want to sell
 
 3. Need assistance / figure things out:
 - holding Albums in Collections
+
+
+2/20/2023 Chris
+1. Done/not done since last scrum:
+- laravel tuts, more research, login/dash icon, nav
+
+2. To do until next Scrum:
+- fill out dashboard page
+- add tabs to profile>add additonal settings
+- universal flash component that can be used anywhere
+- add options on albums -> add to collection, delete
+
+3. Need assistance / figure things out:
+- decide what 'albums' page should be-> ALL albums?
+- react research
