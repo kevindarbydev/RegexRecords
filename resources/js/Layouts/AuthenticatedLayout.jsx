@@ -2,6 +2,7 @@ import { useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
+import DashboardTabs from "@/Components/DashboardTabs";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
@@ -48,7 +49,7 @@ export default function Authenticated({ auth, header, children }) {
                                         Home
                                     </span>
                                 </NavLink>
-                                <NavLink
+                                {/* <NavLink
                                     href={route("collections.index")}
                                     active={route().current(
                                         "collections.index"
@@ -65,7 +66,7 @@ export default function Authenticated({ auth, header, children }) {
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
                                         Wishlist
                                     </span>
-                                </NavLink>
+                                </NavLink> */}
                                 <NavLink
                                     href={route("albums.index")}
                                     active={route().current("albums.index")}
@@ -277,14 +278,14 @@ export default function Authenticated({ auth, header, children }) {
                 </div>
             </nav>
 
-            {header && (
+            {/* {header && (
                 <header className="bg-white shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {header}
                     </div>
                 </header>
-            )}
-
+            )} */}
+            <DashboardTabs />
             <main>{children}</main>
         </div>
     );
