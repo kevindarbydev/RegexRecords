@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,9 @@ class Album extends Model
         'album_name',
         'artist',
         'cover_image_url',
+        'discogs_album_id',
+        'genre',
+        'year_of_release',
         'value',
 
     ];
@@ -23,7 +27,11 @@ class Album extends Model
     {
         return $this->belongsTo(User::class);
     }
-        public function collection_albums(): HasMany
+    public function tracklist()
+    {
+        return $this->hasOne(Tracklist::class);
+    }
+    public function collection_albums(): HasMany
     {
         return $this->hasMany(Collection_Album::class);
     }

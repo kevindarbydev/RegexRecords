@@ -58,11 +58,10 @@ return [
 
         'do' => [
             'driver' => 's3',
-            'key' => env('DO_ACCESS_KEY_ID'),
-            'secret' => env('DO_SECRET_ACCESS_KEY'),
-            'region' => env('DO_DEFAULT_REGION'),
-            'bucket' => env('DO_SPACES_BUCKET'),
-            'folder' => env('DO_FOLDER'),
+            'key' => env('DO_SPACES_KEY'),
+            'secret' => env('DO_SPACES_SECRET'),
+            'region' => env('DO_SPACES_REGION'),
+            'bucket' => env('DO_SPACES_BUCKET'),            
             'cdn_endpoint' => env('DO_CDN_ENDPOINT'),
             'url' => env('DO_URL'),
             'endpoint' => env('DO_ENDPOINT'),
