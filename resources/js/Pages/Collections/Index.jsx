@@ -4,7 +4,7 @@ import Collection from "@/Components/Collection";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head, Link } from "@inertiajs/react";
-import DashboardTabs from "@/Components/DashboardTabs";
+import DashboardTabs from "@/Components/Tabs/DashboardTabs";
 
 export default function Index({ auth, collections }) {
     const { data, setData, post, processing, reset, errors } = useForm({

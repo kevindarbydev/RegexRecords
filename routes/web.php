@@ -26,6 +26,8 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::inertia('/marketplace', 'Index');
+
 //disabled default laravel page
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
@@ -36,15 +38,15 @@ Route::resource('albums', AlbumController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('collections', CollectionController::class)
-->only(['index', 'store','update', 'destroy'])
-->middleware(['auth', 'verified']);
+    ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
 
 Route::resource('wishlists', WishlistController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-    Route::resource('collection_albums', CollectionAlbumController::class)
-    ->only(['index', 'store','update', 'destroy'])
+Route::resource('collection_albums', CollectionAlbumController::class)
+    ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
