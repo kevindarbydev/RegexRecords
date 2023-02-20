@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('collection__albums', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('collections_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('albums_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('collection_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('album_id')->constrained()->cascadeOnDelete();
             $table->timestamps('added_date');
             $table->boolean('for_sale');
 
