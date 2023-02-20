@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\CollectionAlbumController;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -39,6 +41,10 @@ Route::resource('collections', CollectionController::class)
 
 Route::resource('wishlists', WishlistController::class)
     ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+    Route::resource('collection_albums', CollectionAlbumController::class)
+    ->only(['index', 'store','update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
