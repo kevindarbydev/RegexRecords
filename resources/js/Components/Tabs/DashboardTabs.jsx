@@ -5,7 +5,10 @@ export default function DashboardTabs() {
     return (
         <Tab.Group defaultIndex={1}>
             <Tab.List className="flex space-x-8 bg-blue-300/20 p-2">
-                <Tab className="ml-2">
+                <Tab disabled className="ml-2">
+                    Dashboard
+                </Tab>
+                <Tab>
                     <NavLink
                         href={route("dashboard")}
                         active={route().current("dashboard")}
@@ -16,7 +19,7 @@ export default function DashboardTabs() {
                     </NavLink>
                 </Tab>
 
-                <Tab className="ml-4">
+                <Tab>
                     <NavLink
                         href={route("collections.index")}
                         active={route().current("collections.index")}

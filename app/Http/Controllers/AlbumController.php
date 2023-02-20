@@ -68,10 +68,10 @@ class AlbumController extends Controller
 
             //results may be empty due to a typo or if the artist/album is not well known
             if (empty($data['results'])) {
-                //assign it null now, checking for null later (Album.jsx component) to assign default img   
+                //assign it null now, checking for null later (Album.jsx component) to assign default img
                 $validated['cover_image_url'] = null;
             } else {
-                // Get the first item in the results array (usually will be correct)   
+                // Get the first item in the results array (usually will be correct)
                 $item = $data['results'][0];
 
                 // Get the album img, genre, year from the response obj
@@ -88,7 +88,7 @@ class AlbumController extends Controller
                 //Assign the data from API to the saved album
                 $validated['cover_image_url'] = $cover_image_spaces_url;
 
-                $validated['genre'] = $item['genre'][0]; //there may be multiple genres, first should be fine              
+                $validated['genre'] = $item['genre'][0]; //there may be multiple genres, first should be fine
                 $validated['discogs_album_id'] = $item['id'];
 
                 //save the album obj and save it to a var to grab album_id for tracklist
@@ -114,7 +114,7 @@ class AlbumController extends Controller
                         if (empty($trackData['duration'])) {
                             continue;
                         }
-                        $track->duration = $trackData['duration'];                        
+                        $track->duration = $trackData['duration'];
                         $track->save();
                     }
                 } else {

@@ -5,6 +5,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CollectionAlbumController;
+use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\Community\SearchController;
 
 use Illuminate\Foundation\Application;
@@ -27,8 +28,6 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::inertia('/marketplace', 'Index');
-
 //disabled default laravel page
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
@@ -49,6 +48,11 @@ Route::resource('wishlists', WishlistController::class)
 Route::resource('collection_albums', CollectionAlbumController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
+
+Route::resource('marketplace', MarketplaceController::class)
+    ->only(['index'])
+    ->middleware(['auth', 'verified']);
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

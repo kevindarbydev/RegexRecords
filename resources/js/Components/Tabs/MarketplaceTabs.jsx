@@ -5,19 +5,12 @@ export default function MarketplaceTabs() {
     return (
         <Tab.Group defaultIndex={1}>
             <Tab.List className="flex space-x-8 bg-blue-300/20 p-2">
-                <Tab className="ml-2">
-                    <NavLink
-                        href={route("dashboard")}
-                        active={route().current("dashboard")}
-                    >
-                        <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Marketplace
-                        </span>
-                    </NavLink>
+                <Tab disabled className="ml-2">
+                    Marketplace
                 </Tab>
-
-                <Tab className="ml-4">
+                <Tab>
                     <NavLink
+                        //? collections as placeholder for now
                         href={route("collections.index")}
                         active={route().current("collections.index")}
                     >
@@ -28,8 +21,8 @@ export default function MarketplaceTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    // href={route("wishlists.index")}
-                    // active={route().current("wishlists.index")}
+                        href={route("wishlists.index")}
+                        active={route().current("wishlists.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Wishlists
@@ -38,8 +31,8 @@ export default function MarketplaceTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    // href={route("submissions.index")}
-                    // active={route().current("submissions.index")}
+                    // href={route("purchases.index")}
+                    // active={route().current("purchases.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Purchases
@@ -49,8 +42,8 @@ export default function MarketplaceTabs() {
                 <Tab>
                     {" "}
                     <NavLink
-                    // href={route("export.index")}
-                    // active={route().current("export.index")}
+                    // href={route("cart.index")}
+                    // active={route().current("cart.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Cart
@@ -58,12 +51,6 @@ export default function MarketplaceTabs() {
                     </NavLink>
                 </Tab>
             </Tab.List>
-            {/* <Tab.Panels> */}
-            {/* tab panels may or may not be helpful, maybe only on dash */}
-            {/* <Tab.Panel>Home/Dash content</Tab.Panel>
-                <Tab.Panel>Content 2</Tab.Panel>
-                <Tab.Panel>Content 3</Tab.Panel> */}
-            {/* </Tab.Panels> */}
         </Tab.Group>
     );
 }

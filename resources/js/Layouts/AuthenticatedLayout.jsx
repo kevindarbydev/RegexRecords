@@ -74,12 +74,15 @@ export default function Authenticated({ auth, header, children }) {
                                         Community
                                     </span>
                                 </NavLink>
+
                                 <NavLink
-                                    href={route("albums.index")}
-                                    active={route().current("albums.index")}
+                                    href={route("marketplace.index")}
+                                    active={route().current(
+                                        "marketplace.index"
+                                    )}
                                 >
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
-                                        MarketPlace
+                                        Marketplace
                                     </span>
                                 </NavLink>
                             </div>
