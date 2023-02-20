@@ -2,7 +2,6 @@ import { useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
-import DashboardTabs from "@/Components/DashboardTabs";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
@@ -285,7 +284,7 @@ export default function Authenticated({ auth, header, children }) {
                     </div>
                 </header>
             )} */}
-            <DashboardTabs />
+
             <main>{children}</main>
         </div>
     );
