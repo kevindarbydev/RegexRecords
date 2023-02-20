@@ -20,7 +20,6 @@ class Album extends Model
         'year_of_release',
         'value',
         'discogs_album_id',
-
     ];
 
     public function user(): BelongsTo

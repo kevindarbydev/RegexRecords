@@ -114,8 +114,7 @@ class AlbumController extends Controller
                         if (empty($trackData['duration'])) {
                             continue;
                         }
-                        $track->duration = $trackData['duration'];
-                        dump($track);
+                        $track->duration = $trackData['duration'];                        
                         $track->save();
                     }
                 } else {
