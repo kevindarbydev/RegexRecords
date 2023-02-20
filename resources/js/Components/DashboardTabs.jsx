@@ -3,20 +3,20 @@ import NavLink from "@/Components/NavLink";
 
 export default function DashTabs() {
     return (
-        <Tab.Group>
-            <Tab.List>
-                <Tab>
+        <Tab.Group defaultIndex={1}>
+            <Tab.List className="flex space-x-8 bg-blue-300/20 p-2">
+                <Tab className="ml-2">
                     <NavLink
                         href={route("dashboard")}
                         active={route().current("dashboard")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Dashboard
+                            Overview
                         </span>
                     </NavLink>
                 </Tab>
 
-                <Tab>
+                <Tab className="ml-4">
                     <NavLink
                         href={route("collections.index")}
                         active={route().current("collections.index")}
