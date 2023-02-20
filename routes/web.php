@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\WishlistController;
@@ -60,10 +61,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/test', function () {
-        return view('test');
-    })->name('test');
+Route::middleware(['auth',])->group(function () {
+
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');    
+
 });
 
 require __DIR__ . '/auth.php';
