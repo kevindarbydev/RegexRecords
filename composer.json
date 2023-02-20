@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.1",
@@ -11,7 +14,6 @@
         "inertiajs/inertia-laravel": "^0.6.3",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
-        "laravel/scout": "^9.8",
         "laravel/tinker": "^2.8",
         "multicaret/laravel-acquaintances": "^3.5",
         "sendgrid/sendgrid": "^8.0",
