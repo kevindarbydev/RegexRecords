@@ -178,6 +178,15 @@ users will only add the albums they want to sell
 3. Need assistance / figure things out:
 -
 
+2/20/2023 Chris
+1. Done/not done since last scrum:
+-
+2. To do until next Scrum:
+- 
+3. Need assistance / figure things out:
+-
+
+
 2/19/2023 Seena
 1. Done/not done since last scrum:
 - worked on albums (mostly styling index page)
@@ -254,11 +263,9 @@ for each album w/ Discogs API
 - added Wishlist to navbar
 - created Add Album button to Collection
 - created Collection Albums mrc with relationships
-
 2. To do until next Scrum:
 - create Add to Collection button on Albums
 - add to Collection_Albums table after button press (backend)
 - show Collection_Albums in Collection
-
 3. Need assistance / figure things out:
 - holding Albums in Collections
