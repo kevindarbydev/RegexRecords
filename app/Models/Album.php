@@ -15,11 +15,11 @@ class Album extends Model
     protected $fillable = [
         'album_name',
         'artist',
-        'cover_image_url',
-        'discogs_album_id',
+        'cover_image_url',        
         'genre',
         'year_of_release',
         'value',
+        'discogs_album_id',
 
     ];
 

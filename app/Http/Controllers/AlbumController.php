@@ -47,6 +47,8 @@ class AlbumController extends Controller
             'artist' => 'required|string|max:255',
             'cover_image_url' => 'nullable|string',
             'value' => 'required|integer',
+            'year' => 'nullable|string',
+            'discogs_album_id' => 'nullable|string',
         ]);
 
         $album_name = $request->album_name;
@@ -61,7 +63,7 @@ class AlbumController extends Controller
         if ($response->ok()) {
             // The API call was successful
             $data = $response->json();
-
+           
             //results may be empty due to a typo or if the artist/album is not well known
             if (empty($data['results'])) {
                 //assign it null now, checking for null later (Album.jsx component) to assign default img   
@@ -69,15 +71,24 @@ class AlbumController extends Controller
             } else {
                 // Get the first item in the results array (usually will be correct)   
                 $item = $data['results'][0];
-
-                // Get the cover image URL from the item
+                
+                
+                // Get the album img, genre, year from the response obj
                 $cover_image_url = $item['cover_image'];
-
+                if (isset($items['year'])) { //nullcheck on year as it is no always included
+                    $year = strval($item['year']);
+                    $validated['year_of_release'] = $item['year'];
+                    dump(strval($item['year']));
+                }              
+                
                 // Upload the cover image to DigitalOcean Spaces bucket and get the URL
                 $cover_image_spaces_url = $spaceController->uploadCoverImageToSpace($cover_image_url);
 
-                //Assign the cover image url to the new album obj
+                //Assign the data from API to the saved album
                 $validated['cover_image_url'] = $cover_image_spaces_url;
+                
+                $validated['genre'] = $item['genre'][0];//there may be multiple genres, first should be fine              
+                $validated['discogs_album_id'] = $item['id'];
             }
         } else {
             // The API call failed
