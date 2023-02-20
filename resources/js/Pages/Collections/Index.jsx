@@ -46,7 +46,7 @@ export default function Index({ auth, collections }) {
                         </div>
                 </form>
             </div>
-            <div className="container mx-auto">                        
+            <div className="container mx-auto px-20">                        
             <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
                     {collections.map(collection =>
                         <Collection key={collection.id} collection={collection} />
