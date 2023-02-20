@@ -5,6 +5,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CollectionAlbumController;
+use App\Http\Controllers\Community\SearchController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
