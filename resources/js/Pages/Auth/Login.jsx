@@ -34,7 +34,11 @@ export default function Login({ status, canResetPassword }) {
         <GuestLayout>
             <Head title="Log in" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {status && (
+                <div className="mb-4 font-medium text-sm text-green-600">
+                    {status}
+                </div>
+            )}
 
             <form onSubmit={submit}>
                 <div>
@@ -72,22 +76,39 @@ export default function Login({ status, canResetPassword }) {
 
                 <div className="block mt-4">
                     <label className="flex items-center">
-                        <Checkbox name="remember" value={data.remember} handleChange={onHandleChange} />
-                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                        <Checkbox
+                            name="remember"
+                            value={data.remember}
+                            handleChange={onHandleChange}
+                        />
+                        <span className="ml-2 text-sm text-gray-600">
+                            Remember me
+                        </span>
                     </label>
                 </div>
-
-                <div className="flex items-center justify-end mt-4">
+                {/* items-center justify-end */}
+                <div className="flex items-center justify-items mt-4">
                     {canResetPassword && (
                         <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            href={route("register")}
+                            className="-mr-5 underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Forgot your password?
+                            Register
                         </Link>
                     )}
 
-                    <PrimaryButton className="ml-4" processing={processing}>
+                    <p>
+                        <br />
+                        <br />
+                        <br />
+                        <Link
+                            href={route("password.request")}
+                            className="-ml-8 underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            Forgot your password?
+                        </Link>
+                    </p>
+                    <PrimaryButton className="ml-32" processing={processing}>
                         Log in
                     </PrimaryButton>
                 </div>
