@@ -4,7 +4,6 @@ import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import Album from "./Partials/Album";
-import Sidebar from "@/Layouts/Sidebar";
 
 export default function Index({ auth, albums }) {
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -22,7 +21,6 @@ export default function Index({ auth, albums }) {
         <AuthenticatedLayout auth={auth}>
             <Head title="Albums" />
             <div className="flex flex-row">
-                <Sidebar />
                 <div className="p-4 sm:p-6 lg:p-8 ml-10">
                     <form className="w-full md:w-1/2 m-6" onSubmit={submit}>
                         <label htmlFor="AlbumName">Album Name</label>

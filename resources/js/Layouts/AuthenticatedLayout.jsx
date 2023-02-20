@@ -45,7 +45,7 @@ export default function Authenticated({ auth, header, children }) {
                                     active={route().current("albums.index")}
                                 >
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
-                                        Albums
+                                        Home
                                     </span>
                                 </NavLink>
                                 <NavLink
@@ -64,6 +64,22 @@ export default function Authenticated({ auth, header, children }) {
                                 >
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
                                         Wishlist
+                                    </span>
+                                </NavLink>
+                                <NavLink
+                                    href={route("albums.index")}
+                                    active={route().current("albums.index")}
+                                >
+                                    <span className=" dark:text-white dark:hover:bg-gray-700">
+                                        Community
+                                    </span>
+                                </NavLink>
+                                <NavLink
+                                    href={route("albums.index")}
+                                    active={route().current("albums.index")}
+                                >
+                                    <span className=" dark:text-white dark:hover:bg-gray-700">
+                                        MarketPlace
                                     </span>
                                 </NavLink>
                             </div>
@@ -231,7 +247,7 @@ export default function Authenticated({ auth, header, children }) {
                             href={route("albums.index")}
                             active={route().current("albums.index")}
                         >
-                            Albums
+                            Home
                         </ResponsiveNavLink>
                     </div>
 
