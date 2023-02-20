@@ -26,7 +26,7 @@ export default function Authenticated({ auth, header, children }) {
                             {/* nav-logo */}
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="h-10 w-10" />
+                                    <ApplicationLogo className="h-16 w-16" />
                                 </Link>
                             </div>
                             {/* links */}
