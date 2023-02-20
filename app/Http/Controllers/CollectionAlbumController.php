@@ -34,10 +34,13 @@ class CollectionAlbumController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->create();
-        
+        // $validated = $request ->validate([
+        //     'for_sale'=>'nullable|boolean',
+        // ]);
+
+        // $request->user()->collections()->collection_albums() -> create($validated);
  
-        return redirect(route('albums.index'));
+        return redirect(route('collections.index'));
     }
 
     /**

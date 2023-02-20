@@ -8,10 +8,11 @@ import { useForm, usePage } from "@inertiajs/react";
 import Album from "@/Pages/Albums/Partials/Album";
 
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import Collection_Album from "./Collection_Album";
 
 dayjs.extend(relativeTime);
 
-export default function Collection({ collection, albums }) {
+export default function Collection({ collection, collection_albums }) {
     const { auth } = usePage().props;
 
     const [editing, setEditing] = useState(false);
@@ -105,7 +106,9 @@ export default function Collection({ collection, albums }) {
                         <span class="ml-3">Add an album</span>
                     </a>
                     <div className="flex flex-row flex-wrap">
-                    {"AlbumList"}
+                    {collection_albums.map((collection_album) => (
+                            <Collection_Album key={collection_album.collection_id} album={collection_album} />
+                        ))}
                     </div>
                     {editing ? (
                         <form onSubmit={submit}>
