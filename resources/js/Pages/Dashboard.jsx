@@ -1,6 +1,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
+
 import DashboardTabs from "@/Components/Tabs/DashboardTabs";
+import NavLink from "@/Components/NavLink";
 
 export default function Dashboard(props) {
     return (
@@ -21,6 +23,9 @@ export default function Dashboard(props) {
                         <div className="p-6 text-gray-900">
                             You're logged in!
                         </div>
+                        <NavLink to="/admin">Go to admin page</NavLink>
+                        <br/>
+                        <a href="/admin">regular</a>
                     </div>
                 </div>
             </div>
