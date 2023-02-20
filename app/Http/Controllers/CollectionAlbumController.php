@@ -33,7 +33,10 @@ class CollectionAlbumController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        //
+ 
+        $request->user()->collection_albums()->create();
+ 
+        return redirect(route('albums.index'));
     }
 
     /**

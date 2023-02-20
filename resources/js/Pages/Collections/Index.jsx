@@ -39,7 +39,7 @@ export default function Index({ auth, collections }) {
                     <div className="mt-4">
                             <button
                                 type="submit"
-                                className="px-6 py-2 font-bold text-white bg-green-500 rounded"
+                                className="px-6 py-2 font-bold text-white bg-green-500 hover:bg-orange-400 rounded"
                             >
                                 Create Collection
                             </button>
