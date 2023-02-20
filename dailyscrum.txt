@@ -186,8 +186,10 @@ users will only add the albums they want to sell
 
 2/19/2023 Seena
 1. Done/not done since last scrum:
+- worked on albums (mostly styling index page)
+- tentative sidebar
 2. To do until next Scrum:
-
+- not sure 
 3. Need assistance / figure things out:
 -
 
