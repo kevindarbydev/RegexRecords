@@ -8,6 +8,7 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CollectionAlbumController;
 use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\Community\CommunityController;
+use App\Http\Controllers\Community\FriendController;
 use App\Http\Controllers\Community\SearchController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,8 +47,8 @@ Route::resource('wishlists', WishlistController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('collection_albums', CollectionAlbumController::class)
-->only(['index', 'store','update', 'destroy'])
-->middleware(['auth', 'verified']);
+    ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
 
 Route::resource('marketplace', MarketplaceController::class)
     ->only(['index'])
@@ -58,8 +59,12 @@ Route::resource('community', CommunityController::class)
     ->middleware(['auth', 'verified']);
 
 
-Route::resource('search', SearchController::class)
-    ->only(['index', 'store'])
+Route::resource('community/search', SearchController::class)
+    ->only(['index', 'store', 'update'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('community/friends', FriendController::class)
+    ->only(['index'])
     ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {

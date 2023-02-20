@@ -37,10 +37,10 @@ class CollectionController extends Controller
         $validated = $request->validate([
             'collection_name' => 'required|string|max:255',
         ]);
-       
+
         $request->user()->collections()->create($validated);
-        
- 
+
+
         return redirect()->route('collections.index');
     }
 
@@ -51,7 +51,7 @@ class CollectionController extends Controller
     {
         return Inertia::render('Collections/Show', [
             'collection' => $collection
-          ]);
+        ]);
     }
 
     /**
@@ -67,15 +67,17 @@ class CollectionController extends Controller
      */
     public function update(Request $request, Collection $collection): RedirectResponse
     {
+        error_log("$collection");
         $this->authorize('update', $collection);
- 
+
         $validated = $request->validate([
             'collection_name' => 'required|string|max:255',
         ]);
- 
+
         $collection->update($validated);
- 
-        return redirect(route('collections.index'));    }
+
+        return redirect(route('collections.index'));
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -83,9 +85,9 @@ class CollectionController extends Controller
     public function destroy(Collection $collection): RedirectResponse
     {
         $this->authorize('delete', $collection);
- 
+
         $collection->delete();
- 
+
         return redirect(route('collections.index'));
     }
 }
