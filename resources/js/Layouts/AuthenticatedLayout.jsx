@@ -18,7 +18,6 @@ export default function Authenticated({ auth, header, children }) {
 
     return (
         <div className={`min-h-screen ${darkMode ? "dark" : ""}`}>
-            {/* ${darkMode ? "dark" : ""} */}
             <nav className=" border-b border-gray-100">
                 {/* main-nav */}
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,14 +35,18 @@ export default function Authenticated({ auth, header, children }) {
                                     href={route("dashboard")}
                                     active={route().current("dashboard")}
                                 >
-                                    Dashboard
+                                    <span className=" dark:text-white dark:hover:bg-gray-700">
+                                        Dashboard
+                                    </span>
                                 </NavLink>
 
                                 <NavLink
                                     href={route("albums.index")}
                                     active={route().current("albums.index")}
                                 >
-                                    Albums
+                                    <span className=" dark:text-white dark:hover:bg-gray-700">
+                                        Albums
+                                    </span>
                                 </NavLink>
                                 <NavLink
                                     href={route("collections.index")}
@@ -51,13 +54,17 @@ export default function Authenticated({ auth, header, children }) {
                                         "collections.index"
                                     )}
                                 >
-                                    Collections
+                                    <span className=" dark:text-white dark:hover:bg-gray-700">
+                                        Collections
+                                    </span>
                                 </NavLink>
                                 <NavLink
                                     href={route("wishlists.index")}
                                     active={route().current("wishlists.index")}
                                 >
-                                    Wishlist
+                                    <span className=" dark:text-white dark:hover:bg-gray-700">
+                                        Wishlist
+                                    </span>
                                 </NavLink>
                             </div>
                         </div>
@@ -109,7 +116,7 @@ export default function Authenticated({ auth, header, children }) {
                                     </svg>
                                 </button>
                             </div>
-                            {/* dropdown stuff */}
+                            {/* Profile */}
                             <div className="ml-3 ">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -150,47 +157,49 @@ export default function Authenticated({ auth, header, children }) {
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
-                            <div className="-mr-2 flex items-center sm:hidden">
-                                <button
-                                    onClick={() =>
-                                        setShowingNavigationDropdown(
-                                            (previousState) => !previousState
-                                        )
-                                    }
-                                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                                >
-                                    <svg
-                                        className="h-6 w-6"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            className={
-                                                !showingNavigationDropdown
-                                                    ? "inline-flex"
-                                                    : "hidden"
-                                            }
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M4 6h16M4 12h16M4 18h16"
-                                        />
-                                        <path
-                                            className={
-                                                showingNavigationDropdown
-                                                    ? "inline-flex"
-                                                    : "hidden"
-                                            }
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M6 18L18 6M6 6l12 12"
-                                        />
-                                    </svg>
-                                </button>
-                            </div>
                         </div>
+                        {/* Burger */}
+                        <div className="-mr-2 flex items-center sm:hidden">
+                            <button
+                                onClick={() =>
+                                    setShowingNavigationDropdown(
+                                        (previousState) => !previousState
+                                    )
+                                }
+                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                            >
+                                <svg
+                                    className="h-6 w-6"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        className={
+                                            !showingNavigationDropdown
+                                                ? "inline-flex"
+                                                : "hidden"
+                                        }
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M4 6h16M4 12h16M4 18h16"
+                                    />
+                                    <path
+                                        className={
+                                            showingNavigationDropdown
+                                                ? "inline-flex"
+                                                : "hidden"
+                                        }
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                        {/* dark mode */}
                         <div
                             onClick={toggleDarkMode}
                             className="h-6 w-6 self-center"
