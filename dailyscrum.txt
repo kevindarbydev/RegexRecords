@@ -154,7 +154,21 @@
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 2/19/2023 Kevin
 1. Done/not done since last scrum:
+- Preliminary admin configuration
+- icons on rightside navbar
+- configured Discogs API
+- Artist name + album name are queried
+ on album creation to find album cover
+- Save and retrieve album cover from
+ DigitalOcean Spaces (equivalent to Azure BLOBs)
 2. To do until next Scrum:
+- Basic admin interface
+- look into Connection implementation
+(laravel-acquaintances only works on 
+laravel <= 9)
+- add 'for_sale' boolean to albums
+OR create table 'user_store' where 
+users will only add the albums they want to sell
 3. Need assistance / figure things out:
 -
 
