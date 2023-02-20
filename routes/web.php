@@ -5,6 +5,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CollectionAlbumController;
+use App\Http\Controllers\Community\SearchController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,15 +37,19 @@ Route::resource('albums', AlbumController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('collections', CollectionController::class)
-->only(['index', 'store','update', 'destroy'])
-->middleware(['auth', 'verified']);
+    ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
 
 Route::resource('wishlists', WishlistController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-    Route::resource('collection_albums', CollectionAlbumController::class)
-    ->only(['index', 'store','update', 'destroy'])
+Route::resource('collection_albums', CollectionAlbumController::class)
+    ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('search', SearchController::class)
+    ->only(['index'])
     ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
