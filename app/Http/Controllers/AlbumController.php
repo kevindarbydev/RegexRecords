@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\Tracklist;
+use App\Models\Track;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -63,43 +65,72 @@ class AlbumController extends Controller
         if ($response->ok()) {
             // The API call was successful
             $data = $response->json();
-           
+
             //results may be empty due to a typo or if the artist/album is not well known
             if (empty($data['results'])) {
                 //assign it null now, checking for null later (Album.jsx component) to assign default img   
-                $validated['cover_image_url'] = null;           
+                $validated['cover_image_url'] = null;
             } else {
                 // Get the first item in the results array (usually will be correct)   
                 $item = $data['results'][0];
-                
-                
+
                 // Get the album img, genre, year from the response obj
                 $cover_image_url = $item['cover_image'];
                 if (isset($items['year'])) { //nullcheck on year as it is no always included
                     $year = strval($item['year']);
                     $validated['year_of_release'] = $item['year'];
-                    dump(strval($item['year']));
-                }              
-                
+                    // dump(strval($item['year']));
+                }
+
                 // Upload the cover image to DigitalOcean Spaces bucket and get the URL
                 $cover_image_spaces_url = $spaceController->uploadCoverImageToSpace($cover_image_url);
 
                 //Assign the data from API to the saved album
                 $validated['cover_image_url'] = $cover_image_spaces_url;
-                
-                $validated['genre'] = $item['genre'][0];//there may be multiple genres, first should be fine              
+
+                $validated['genre'] = $item['genre'][0]; //there may be multiple genres, first should be fine              
                 $validated['discogs_album_id'] = $item['id'];
+
+                //save the album obj and save it to a var to grab album_id for tracklist
+                $album = $request->user()->albums()->create($validated);
+
+                //perform 2nd API call with discogs_album_id
+                $response2 = Http::get("https://api.discogs.com/releases/{$item['id']}");
+                if ($response2->ok()) {
+                    // Second API call was successful
+                    $tracklist = $response2->json()['tracklist'];
+
+                    $tracklistModel = new Tracklist();
+                    $tracklistModel->album_id = $album->id;
+                    $tracklistModel->save();
+
+                    // Loop through each track in the tracklist and create a new Track model
+                    foreach ($tracklist as $trackData) {
+
+                        $track = new Track();
+                        $track->tracklist_id = $tracklistModel->id;
+                        $track->track_number = str_replace('.', '', $trackData['position']);
+                        $track->title = $trackData['title'];
+                        if (empty($trackData['duration'])) {
+                            continue;
+                        }
+                        $track->duration = $trackData['duration'];
+                        dump($track);
+                        $track->save();
+                    }
+                } else {
+                    // The second API call failed
+                    $status_code = $response2->status();
+                    $error_message = $response2->body();
+                    echo "2nd API Call -> " .  $status_code . ': ' . $error_message;
+                }
             }
         } else {
             // The API call failed
             $status_code = $response->status();
             $error_message = $response->body();
-            echo $error_message . ': ' . $status_code;                     
+            echo "1st API Call -> " .  $status_code . ': ' . $error_message;
         }
-        
-
-
-        $request->user()->albums()->create($validated);
 
         return redirect()->route('albums.index');
     }
