@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import DashboardTabs from "@/Components/DashboardTabs";
+import DashboardTabs from "@/Components/Tabs/DashboardTabs";
 
 export default function Dashboard(props) {
     return (
