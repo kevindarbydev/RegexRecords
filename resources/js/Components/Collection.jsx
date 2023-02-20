@@ -5,13 +5,13 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useForm, usePage } from "@inertiajs/react";
-import ApplicationLogo from "./ApplicationLogo";
+import Album from "@/Pages/Albums/Partials/Album";
 
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 
 dayjs.extend(relativeTime);
 
-export default function Collection({ collection, album }) {
+export default function Collection({ collection, albums }) {
     const { auth } = usePage().props;
 
     const [editing, setEditing] = useState(false);
@@ -104,7 +104,9 @@ export default function Collection({ collection, album }) {
                         <PlusCircleIcon className="h-6 w-6 text-blue-500" />
                         <span class="ml-3">Add an album</span>
                     </a>
-                    Album List
+                    <div className="flex flex-row flex-wrap">
+                    {"AlbumList"}
+                    </div>
                     {editing ? (
                         <form onSubmit={submit}>
                             <textarea

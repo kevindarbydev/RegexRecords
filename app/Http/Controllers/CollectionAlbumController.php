@@ -16,7 +16,8 @@ class CollectionAlbumController extends Controller
     public function index(): Response
     {
         return Inertia::render('Collection_Albums/Index', [
-            //
+            'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
+
         ]);
     }
 
@@ -33,8 +34,8 @@ class CollectionAlbumController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
- 
-        $request->user()->collection_albums()->create();
+        $request->create();
+        
  
         return redirect(route('albums.index'));
     }

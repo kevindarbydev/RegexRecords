@@ -46,8 +46,8 @@ Route::resource('wishlists', WishlistController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('collection_albums', CollectionAlbumController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
+->only(['index', 'store','update', 'destroy'])
+->middleware(['auth', 'verified']);
 
 Route::resource('marketplace', MarketplaceController::class)
     ->only(['index'])

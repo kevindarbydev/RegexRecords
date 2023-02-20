@@ -1,20 +1,22 @@
 import React from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-
 import { useForm, Head } from '@inertiajs/react';
+
 
 dayjs.extend(relativeTime);
 
 export default function Album({ album }) {
-    const { data, setData, post, processing, reset, errors } = useForm({
+    const { data, setData, post, processing, reset, errors } = useForm(
        
-    });
+    );
     const submit = (e) => {
         console.log("submit button works");
         e.preventDefault();
-        // post(route("collection_albums.store"), { onSuccess: () => reset() });
+        post(route("collection_albums.store"), { onSuccess: () => reset() });
+        console.log("Post Passed");
     };
+
 
     return (
         <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-6">
@@ -58,6 +60,11 @@ export default function Album({ album }) {
                     </button>
                 </p>
             </div>
+
+                
+
         </div>
+
+        
     );
 }
