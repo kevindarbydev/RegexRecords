@@ -3,7 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
-import Album from "@/Components/Album";
+import Album from "./Partials/Album";
 import Sidebar from "@/Layouts/Sidebar";
 
 export default function Index({ auth, albums }) {
@@ -23,8 +23,8 @@ export default function Index({ auth, albums }) {
             <Head title="Albums" />
             <div className="flex flex-row">
                 <Sidebar />
-                <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-                    <form onSubmit={submit}>
+                <div className="p-4 sm:p-6 lg:p-8 ml-10">
+                    <form className="w-full md:w-1/2 m-6" onSubmit={submit}>
                         <label htmlFor="AlbumName">Album Name</label>
                         <input
                             name="AlbumName"
@@ -61,7 +61,7 @@ export default function Index({ auth, albums }) {
                             Post Album
                         </PrimaryButton>
                     </form>
-                    <div className="grid grid-cols-4 gap-4">
+                    <div className="flex flex-row flex-wrap">
                         {albums.map((album) => (
                             <Album key={album.id} album={album} />
                         ))}

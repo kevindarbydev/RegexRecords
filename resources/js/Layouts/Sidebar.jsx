@@ -5,7 +5,7 @@ import { MusicalNoteIcon } from "@heroicons/react/24/solid";
 function Sidebar() {
     return (
         <div>
-            <button
+            {/* <button
                 data-drawer-target="default-sidebar"
                 data-drawer-toggle="default-sidebar"
                 aria-controls="default-sidebar"
@@ -26,10 +26,10 @@ function Sidebar() {
                         d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
                     ></path>
                 </svg>
-            </button>
+            </button> */}
             <aside
                 id="default-sidebar"
-                class="z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+                class="md:z-40 md:w-64 h-screen sticky top-0 transition-transform -translate-x-full sm:translate-x-0"
                 aria-label="Sidebar"
             >
                 <div class="h-screen px-3 py-4 overflow-y-auto bg-violet-300 dark:bg-gray-800">
