@@ -67,8 +67,8 @@ export default function Authenticated({ auth, header, children }) {
                                     </span>
                                 </NavLink> */}
                                 <NavLink
-                                    href={route("albums.index")}
-                                    active={route().current("albums.index")}
+                                    href={route("community.index")}
+                                    active={route().current("community.index")}
                                 >
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
                                         Community

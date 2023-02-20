@@ -7,9 +7,8 @@ use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CollectionAlbumController;
 use App\Http\Controllers\MarketplaceController;
+use App\Http\Controllers\Community\CommunityController;
 use App\Http\Controllers\Community\SearchController;
-
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -51,6 +50,10 @@ Route::resource('collection_albums', CollectionAlbumController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('marketplace', MarketplaceController::class)
+    ->only(['index'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('community', CommunityController::class)
     ->only(['index'])
     ->middleware(['auth', 'verified']);
 

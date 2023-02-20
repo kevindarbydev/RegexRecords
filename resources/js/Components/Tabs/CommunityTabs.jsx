@@ -5,65 +5,42 @@ export default function CommunityTabs() {
     return (
         <Tab.Group defaultIndex={1}>
             <Tab.List className="flex space-x-8 bg-blue-300/20 p-2">
-                <Tab className="ml-2">
-                    <NavLink
-                        href={route("dashboard")}
-                        active={route().current("dashboard")}
-                    >
-                        <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Overview
-                        </span>
-                    </NavLink>
+                <Tab disabled className="ml-2">
+                    Community
                 </Tab>
-
-                <Tab className="ml-4">
+                <Tab>
                     <NavLink
+                        //? collections as placeholder for now
                         href={route("collections.index")}
                         active={route().current("collections.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Collections
+                            Friends
                         </span>
                     </NavLink>
                 </Tab>
                 <Tab>
                     <NavLink
-                        href={route("wishlists.index")}
-                        active={route().current("wishlists.index")}
+                    // href={route("conversations.index")}
+                    // active={route().current("conversations.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Wishlists
-                        </span>
-                    </NavLink>
-                </Tab>
-                <Tab>
-                    <NavLink
-                    // href={route("submissions.index")}
-                    // active={route().current("submissions.index")}
-                    >
-                        <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Submissions
+                            Conversations
                         </span>
                     </NavLink>
                 </Tab>
                 <Tab>
                     {" "}
                     <NavLink
-                    // href={route("export.index")}
-                    // active={route().current("export.index")}
+                    // href={route("###.index")}
+                    // active={route().current("###.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Export
+                            Recent Activity
                         </span>
                     </NavLink>
                 </Tab>
             </Tab.List>
-            {/* <Tab.Panels> */}
-            {/* tab panels may or may not be helpful, maybe only on dash */}
-            {/* <Tab.Panel>Home/Dash content</Tab.Panel>
-                <Tab.Panel>Content 2</Tab.Panel>
-                <Tab.Panel>Content 3</Tab.Panel> */}
-            {/* </Tab.Panels> */}
         </Tab.Group>
     );
 }
