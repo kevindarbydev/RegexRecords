@@ -61,7 +61,9 @@ export default function Index({ auth, albums }) {
                     </form>
                     <div className="flex flex-row flex-wrap">
                         {albums.map((album) => (
-                            <Album key={album.id} album={album} />
+                          
+                                <Album key={album.id} album={album} />
+                          
                         ))}
                     </div>
                 </div>

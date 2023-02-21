@@ -134,13 +134,18 @@ class AlbumController extends Controller
         return redirect()->route('albums.index');
     }
 
-    // /**
-    //  * Display the specified resource.
-    //  */
-    // public function show(Item $item): Response
-    // {
-    //     return response();
-    // }
+    /**
+     * Display the specified resource.
+     */
+    public function show(Album $album): Response
+    {
+        $album = Album::with('tracklist')->find($album->id);
+
+
+        return Inertia::render('Albums/AlbumDetails', [
+            'album' => $album,
+        ]);
+    }
 
     // /**
     //  * Show the form for editing the specified resource.
