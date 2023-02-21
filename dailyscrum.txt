@@ -316,14 +316,14 @@ for each album w/ Discogs API
 
 2/21/2023 Nathaniel
 1. Done/not done since last scrum:
-- added Collection icons
-- completed Wishlist CRUD
-- added Wishlist to navbar
-- created Add Album button to Collection
-- created Collection Albums mrc with relationships
+- Created wishlist_album mrc
+- added route to store collection_album
+- Add to Collections button on all albums
+
 2. To do until next Scrum:
-- create Add to Collection button on Albums
+- create new Collection Album
+- create new Wishlist Album
+
+3. Need assistance / figure things out:
 - add to Collection_Albums table after button press (backend)
 - show Collection_Albums in Collection
-3. Need assistance / figure things out:
-- holding Albums in Collections
