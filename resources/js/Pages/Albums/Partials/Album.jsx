@@ -51,7 +51,7 @@ export default function Album({ album }) {
                         Added {dayjs(album.created_at).fromNow()}
                     </small>
                 </p>
-
+                    
                 <p>
                     {" "}
                     <button

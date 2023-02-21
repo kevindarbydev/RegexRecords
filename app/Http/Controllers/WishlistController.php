@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Wishlist;
+use App\Models\Album;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,6 +18,7 @@ class WishlistController extends Controller
     {
         return Inertia::render('Wishlists/Index', [
             'wishlists' => Wishlist::with('user:id,list_name')->latest()->get(),
+            'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
 
         ]);
     }
