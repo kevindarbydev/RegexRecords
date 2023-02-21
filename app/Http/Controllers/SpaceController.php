@@ -39,7 +39,7 @@ class SpaceController extends Controller
         ]);
 
         // Get the contents of the cover image from the URL
-        $fileContents = file_get_contents($coverImageURL);
+        $fileContents = file_get_contents($coverImageURL, false, $context);
 
         // Generate a unique filename for the image
         $fileName = md5(uniqid()) . '.jpg';
