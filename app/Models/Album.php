@@ -34,4 +34,8 @@ class Album extends Model
     {
         return $this->hasMany(Collection_Album::class);
     }
+    public function wishlist_albums(): HasMany
+    {
+        return $this->hasMany(Wishlist_Album::class);
+    }
 }

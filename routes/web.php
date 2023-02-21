@@ -10,6 +10,7 @@ use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\Community\CommunityController;
 use App\Http\Controllers\Community\FriendController;
 use App\Http\Controllers\Community\SearchController;
+use App\Http\Controllers\WishlistAlbumController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -48,6 +49,10 @@ Route::resource('wishlists', WishlistController::class)
 
 Route::resource('collection_albums', CollectionAlbumController::class)
     ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+    Route::resource('wishlist_albums', WishlistAlbumController::class)
+    ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
 
 Route::resource('marketplace', MarketplaceController::class)
