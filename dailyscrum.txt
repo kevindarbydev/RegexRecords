@@ -273,13 +273,12 @@ for each album w/ Discogs API
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 2/21/2023 Kevin
 1. Done/not done since last scrum:
-- poppins font
-- set up a managed DB
-(seperate DBs for dev/prod)
+- admin routing + basic view
+- tracks and tracklist gets populated
+when albums are created (discogs API)
 2. To do until next Scrum:
-- Admin interface + CRUD
-- Try and generate list of tracks
-for each album w/ Discogs API
+- Finish admin interface
+- Reconfigure forge 
 3. Need assistance / figure things out:
 -
 
@@ -296,14 +295,11 @@ for each album w/ Discogs API
 
 2/21/2023 Chris
 1. Done/not done since last scrum:
-- laravel tuts, more research, login/dash icon, nav
+- tabs by section, routing, ui improve (minor), toast notif, research
 2. To do until next Scrum:
-- fill out dashboard page
-- add tabs to profile>add additonal settings
-- universal flash component that can be used anywhere
-- add options on albums -> add to collection, delete
+- fill out dashboard, format inputs (albums), add stats/settings tabs somewhere like in profil
+- profile image/avatar  --- drag n' drop
 3. Need assistance / figure things out:
-- decide what 'albums' page should be-> ALL albums?
 - react research
 
 2/21/2023 Seena
