@@ -6,8 +6,6 @@ import { Head } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Edit({ auth, mustVerifyEmail, status, user }) {
-    const isAdmin = user.is_admin;
-
     return (
         <AuthenticatedLayout
             auth={auth}
@@ -37,9 +35,9 @@ export default function Edit({ auth, mustVerifyEmail, status, user }) {
                         <DeleteUserForm className="max-w-xl" />
                     </div>
 
-                    {isAdmin && (
+                   {user.is_admin  ? (
                         <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                            <h3 className="font-semibold text-lg text-gray-800 leading-tight">
+                            <h3 className="text-lg text-gray-800 leading-tight">
                                 Admin Panel
                             </h3>
                             <PrimaryButton className="mt-4 bg-blue-500">
@@ -48,7 +46,10 @@ export default function Edit({ auth, mustVerifyEmail, status, user }) {
                                 </a>
                             </PrimaryButton>
                         </div>
-                    )}
+                    ) : (
+                        <div>
+                            </div>
+                     )}
                 </div>
             </div>
         </AuthenticatedLayout>

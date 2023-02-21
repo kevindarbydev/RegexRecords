@@ -27,7 +27,7 @@ class User extends Authenticatable
     ];
 
     //attributes that are read only
-    protected $visible = ['is_admin'];
+    // protected $visible = ['is_admin']; // prevents visibility of user info elsewhere
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -35,7 +35,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',        
+        'remember_token',
     ];
 
     /**
@@ -63,7 +63,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wishlist::class);
     }
-    public function x(){
+    public function x()
+    {
         return "User: " . $this->name . " Admin: " . $this->is_admin;
     }
 
