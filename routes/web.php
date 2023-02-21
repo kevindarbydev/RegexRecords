@@ -51,7 +51,7 @@ Route::resource('collection_albums', CollectionAlbumController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-    Route::resource('wishlist_albums', WishlistAlbumController::class)
+Route::resource('wishlist_albums', WishlistAlbumController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
 
@@ -59,18 +59,14 @@ Route::resource('marketplace', MarketplaceController::class)
     ->only(['index'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('community', CommunityController::class)
-    ->only(['index'])
-    ->middleware(['auth', 'verified']);
-
-
-Route::resource('community/search', SearchController::class)
-    ->only(['index', 'store', 'update'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('community/friends', FriendController::class)
-    ->only(['index'])
-    ->middleware(['auth', 'verified']);
+Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
+    Route::get('/', [CommunityController::class, 'index'])->name('community.index');
+    Route::get('/search', [CommunityController::class, 'search'])->name('community.search');
+    Route::post('/search', [CommunityController::class, 'searchPost'])->name('community.search.post');
+    Route::patch('/search', [CommunityController::class, 'addFriend'])->name('community.search.add.friend');
+    Route::resource('/friends', FriendController::class)
+        ->only(['index']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

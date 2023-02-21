@@ -9,7 +9,7 @@ function SearchBar() {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("search.store"), { onSuccess: () => reset() });
+        post(route("community.search.post"), { onSuccess: () => reset() });
     };
 
     return (

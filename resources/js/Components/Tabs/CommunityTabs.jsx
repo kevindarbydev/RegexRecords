@@ -20,8 +20,8 @@ export default function CommunityTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                        href={route("search.index")}
-                        active={route().current("search.index")}
+                        href={route("community.search")}
+                        active={route().current("community.search")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             search
@@ -31,11 +31,11 @@ export default function CommunityTabs() {
                 <Tab>
                     {" "}
                     <NavLink
-                    // href={route("###.index")}
-                    // active={route().current("###.index")}
+                    // href={route("pending.index")}
+                    // active={route().current("pending.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Recent Activity
+                            Pending requests
                         </span>
                     </NavLink>
                 </Tab>

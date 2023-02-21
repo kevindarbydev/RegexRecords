@@ -15,7 +15,7 @@ function SearchedUser({ user }) {
     });
     const submit = (e) => {
         e.preventDefault();
-        patch(route("search.update", user.id));
+        patch(route("community.search.add.friend", user.id));
     };
     return (
         <div class="mr-5 mb-5 w-80">
