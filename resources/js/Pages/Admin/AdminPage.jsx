@@ -10,6 +10,7 @@ function AdminPage() {
 
     return (
         <div>
+            <Head title="Admin Interface" />
             <AdminUserTable users={users} />
         </div>
     );
