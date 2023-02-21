@@ -285,10 +285,12 @@ for each album w/ Discogs API
 
 2/21/2023 Matthew
 1. Done/not done since last scrum:
-- research/practice with laravel/react
+- research/practice with payment apis
+- started work on marketplace
 2. To do until next Scrum:
-- setup the marketplace interface
-- begin looking into payment API
+- Continue working on marketplace
+- Assist in Collection_Albums
+- Start Payment APIs
 3. Need assistance / figure things out:
 - 
 
@@ -306,13 +308,13 @@ for each album w/ Discogs API
 
 2/21/2023 Seena
 1. Done/not done since last scrum:
-- dark mode implemented 
-- laravel-acquaintances package added
+- friends page setup (blade.php for now) 
+- implemented search for friends and add them
 2. To do until next Scrum:
-- setup a "hub" navlink for all connections/friend interaction/etc.
-- setup a search bar for friends (look into Laravel Scout)
+- clean up bugs for adding friends 
+- setup accept friend request (all automatic for now)
 3. Need assistance / figure things out:
--
+- react rendering eager-loaded data not working (hence blade.php)
 
 2/21/2023 Nathaniel
 1. Done/not done since last scrum:
