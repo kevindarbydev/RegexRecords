@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('collection_id')->constrained()->cascadeOnDelete();
             $table->foreignId('album_id')->constrained()->cascadeOnDelete();
-            $table->timestamps('added_date');
+            $table->timestamps();
             $table->boolean('for_sale');
 
         });
