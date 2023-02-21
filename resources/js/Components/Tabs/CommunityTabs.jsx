@@ -10,9 +10,8 @@ export default function CommunityTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                        //? collections as placeholder for now
-                        href={route("collections.index")}
-                        active={route().current("collections.index")}
+                        href={route("friends.index")}
+                        active={route().current("friends.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Friends
@@ -21,11 +20,11 @@ export default function CommunityTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    // href={route("conversations.index")}
-                    // active={route().current("conversations.index")}
+                        href={route("search.index")}
+                        active={route().current("search.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Conversations
+                            search
                         </span>
                     </NavLink>
                 </Tab>
