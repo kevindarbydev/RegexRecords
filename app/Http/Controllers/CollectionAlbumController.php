@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
+
 class CollectionAlbumController extends Controller
 {
     /**
@@ -34,11 +35,11 @@ class CollectionAlbumController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // $validated = $request ->validate([
-        //     'for_sale'=>'nullable|boolean',
-        // ]);
+        $validated = $request ->validate([
+            'for_sale'=>'nullable|boolean',
+        ]);
 
-        // $request->user()->collections()->collection_albums() -> create($validated);
+        $request->album()->collection_album() -> create($validated);
  
         return redirect(route('collections.index'));
     }

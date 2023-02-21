@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Album;
 
 use App\Models\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\Auth;
+
 
 class CollectionController extends Controller
 {
@@ -16,7 +19,7 @@ class CollectionController extends Controller
     public function index(): Response
     {
         return Inertia::render('Collections/Index', [
-            'collections' => Collection::with('user:id')->latest()->get(),
+            'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
 
         ]);
     }
