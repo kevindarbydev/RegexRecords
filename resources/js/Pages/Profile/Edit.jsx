@@ -41,7 +41,7 @@ export default function Edit({ auth, mustVerifyEmail, status, user }) {
                                 Admin Panel
                             </h3>
                             <PrimaryButton className="mt-4 bg-blue-500">
-                                <a href={route("admin.index")}>
+                                <a href={route("admin.users.index")}>
                                     Go to admin page
                                 </a>
                             </PrimaryButton>

@@ -4,7 +4,7 @@ function AdminUserTable(props) {
     return (
         <div>
             <h3>Manage Users</h3>
-            <table className="table-auto w-3/4 text-left divide-y divide-gray-200 shadow overflow-hidden sm:rounded-lg">
+            <table className="table-auto w-full text-left divide-y divide-gray-200 shadow overflow-hidden sm:rounded-lg">
                 <thead className="bg-gray-50">
                     <tr>
                         <th
@@ -45,7 +45,7 @@ function AdminUserTable(props) {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    {user.role}
+                                    {user.is_admin ? "admin" : "user"}
                                 </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">

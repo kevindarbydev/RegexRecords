@@ -10,11 +10,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
-
+use App\Models\User;
+use App\Models\Album;
 class AdminController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Admin/AdminPage');
+        //retrieve everything on index and switch between tables
+        $users = User::all();
+        $albums = Album::with('user')->orderByDesc('created_at')->get();
+        return Inertia::render('Admin/AdminPage', [
+        'users' => $users,
+        'albums' => $albums,
+    ]);
+    }
+
+    public function albums()
+    {
+        $albums = Album::all();
+        return Inertia::render('Admin/AlbumsIndex', [
+            'albums' => $albums,
+        ]);
     }
 }
