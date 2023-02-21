@@ -99,14 +99,15 @@ class AlbumController extends Controller
                 if ($response2->ok()) {
                     // Second API call was successful
                     $tracklist = $response2->json()['tracklist'];
-
+                    
                     $tracklistModel = new Tracklist();
                     $tracklistModel->album_id = $album->id;
                     $tracklistModel->save();
-
+                   // dd($tracklist);
+                   
                     // Loop through each track in the tracklist and create a new Track model
                     foreach ($tracklist as $trackData) {
-
+                       
                         $track = new Track();
                         $track->tracklist_id = $tracklistModel->id;
                         $track->track_number = str_replace('.', '', $trackData['position']);
@@ -115,8 +116,14 @@ class AlbumController extends Controller
                             continue;
                         }
                         $track->duration = $trackData['duration'];
-                        $track->save();
+
+                        if ($track->save()) {
+                            echo "Track saved successfully";
+                        } else {
+                          dd($track->getError());
+                        }
                     }
+                    
                 } else {
                     // The second API call failed
                     $status_code = $response2->status();
@@ -140,10 +147,12 @@ class AlbumController extends Controller
     public function show(Album $album): Response
     {
         $album = Album::with('tracklist')->find($album->id);
-
+        $tracklistId = $album->tracklist->id;
+        $tracks = Track::where('tracklist_id', $tracklistId)->get();
 
         return Inertia::render('Albums/AlbumDetails', [
             'album' => $album,
+            'tracks' => $tracks,
         ]);
     }
 
