@@ -1,20 +1,22 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import MyFriend from "./Partials/MyFriend";
+import Friendship from "./Partials/Friendship";
 import CommunityTabs from "@/Components/Tabs/CommunityTabs";
 
-function Friends({ auth, userFriendships }) {
+function Friends({ auth, currentFriendships, pendingFriendships }) {
     return (
         <AuthenticatedLayout auth={auth}>
             <Head title="MyFriends" />
             <CommunityTabs />
             <div className="flex flex-row flex-wrap m-10">
-                {userFriendships.map((userFriendship) => (
-                    <MyFriend
-                        key={userFriendship.id}
-                        userFriendship={userFriendship}
-                    />
+                {currentFriendships.map((friendship) => (
+                    <Friendship key={friendship.id} friendship={friendship} />
+                ))}
+            </div>
+            <div className="flex flex-row flex-wrap m-10">
+                {pendingFriendships.map((friendship) => (
+                    <Friendship key={friendship.id} friendship={friendship} />
                 ))}
             </div>
         </AuthenticatedLayout>
