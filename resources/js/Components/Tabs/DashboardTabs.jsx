@@ -61,12 +61,6 @@ export default function DashboardTabs() {
                     </NavLink>
                 </Tab>
             </Tab.List>
-            {/* <Tab.Panels> */}
-            {/* tab panels may or may not be helpful, maybe only on dash */}
-            {/* <Tab.Panel>Home/Dash content</Tab.Panel>
-                <Tab.Panel>Content 2</Tab.Panel>
-                <Tab.Panel>Content 3</Tab.Panel> */}
-            {/* </Tab.Panels> */}
         </Tab.Group>
     );
 }

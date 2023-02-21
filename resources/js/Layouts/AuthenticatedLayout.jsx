@@ -41,11 +41,11 @@ export default function Authenticated({ auth, header, children }) {
                                 </NavLink>
 
                                 <NavLink
-                                    href={route("albums.index")}
-                                    active={route().current("albums.index")}
+                                    href={route("explore.index")}
+                                    active={route().current("explore.index")}
                                 >
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
-                                        Home
+                                        Explore
                                     </span>
                                 </NavLink>
                                 {/* <NavLink

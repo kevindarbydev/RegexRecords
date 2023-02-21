@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\ExploreController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\CollectionAlbumController;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\MarketplaceController;
-use App\Http\Controllers\Community\CommunityController;
+use App\Http\Controllers\WishlistAlbumController;
+use App\Http\Controllers\CollectionAlbumController;
 use App\Http\Controllers\Community\FriendController;
 use App\Http\Controllers\Community\SearchController;
-use App\Http\Controllers\WishlistAlbumController;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\Community\CommunityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +52,7 @@ Route::resource('collection_albums', CollectionAlbumController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-    Route::resource('wishlist_albums', WishlistAlbumController::class)
+Route::resource('wishlist_albums', WishlistAlbumController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
 
@@ -63,6 +64,9 @@ Route::resource('community', CommunityController::class)
     ->only(['index'])
     ->middleware(['auth', 'verified']);
 
+Route::resource('explore', ExploreController::class)
+    ->only(['index'])
+    ->middleware(['auth', 'verified']);
 
 Route::resource('community/search', SearchController::class)
     ->only(['index', 'store', 'update'])
