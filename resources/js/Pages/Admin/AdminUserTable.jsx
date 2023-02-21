@@ -1,8 +1,8 @@
-import React from "react";
+import { Head } from "@inertiajs/react";
 
 function AdminUserTable(props) {
     return (
-        <div>     
+        <div>
             <h3>Manage Users</h3>
             <table className="table table-striped">
                 <thead>

@@ -1,4 +1,4 @@
-import React from "react";
+import { Head } from "@inertiajs/react";
 import AdminUserTable from "./AdminUserTable";
 
 function AdminPage() {
