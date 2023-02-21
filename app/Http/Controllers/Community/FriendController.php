@@ -12,7 +12,16 @@ class FriendController extends Controller
 {
   public function index(): Response
   {
-    $userFriendships = Friendship::with('recipient')->where('sender_id', Auth::user()->id)->latest()->get();
+    $userFriendships = Friendship::with('recipient')
+      ->where(function ($query) {
+        $query->where('sender_id', Auth::user()->id);
+      })
+      ->where(function ($query) {
+        $query->where('status', 'accepted');
+      })
+      ->latest()->get();
+
+
     return Inertia::render('Community/Friends', [
       'userFriendships' => $userFriendships
     ]);
