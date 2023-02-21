@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -50,9 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Album::class);
     }
-    public function collections(): HasMany
+    public function collections(): HasOne
     {
-        return $this->hasMany(Collection::class);
+        return $this->hasOne(Collection::class);
     }
     public function reviews(): HasMany
     {
