@@ -3,7 +3,6 @@ import DeleteUserForm from "./Partials/DeleteUserForm";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
 import { Head } from "@inertiajs/react";
-import NavLink from "@/Components/NavLink";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Edit({ auth, mustVerifyEmail, status, user }) {
@@ -44,11 +43,7 @@ export default function Edit({ auth, mustVerifyEmail, status, user }) {
                                 Admin Panel
                             </h3>
                             <PrimaryButton className="mt-4 bg-blue-500">
-                                <a
-                                    href={route("admin.index")}
-                                   
-                                    className="font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700"
-                                >
+                                <a href={route("admin.index")}>
                                     Go to admin page
                                 </a>
                             </PrimaryButton>
