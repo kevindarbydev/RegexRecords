@@ -43,7 +43,7 @@ class CommunityController extends Controller
     public function addFriend(Request $request): RedirectResponse
     {
         $loggedInUser = Auth()->user();
-        $friend = User::where('name', $request->message)->first();
+        $friend = User::where('name', $request->name)->first();
 
         // TODO: Only logged in user can send request from their account -- maybe create policy
         // $this->authorize('update', $user); 
@@ -51,7 +51,6 @@ class CommunityController extends Controller
         $loggedInUser->befriend($friend);
         error_log("LOGGED IN USER: $loggedInUser");
         error_log("FRIEND: $friend");
-        // $friend->acceptFriendRequest($loggedInUser);
         error_log("friend request sent");
 
         return redirect(route('friends.index'));

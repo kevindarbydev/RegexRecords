@@ -70,8 +70,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
     Route::get('/search', [CommunityController::class, 'search'])->name('community.search');
     Route::post('/search', [CommunityController::class, 'searchPost'])->name('community.search.post');
     Route::patch('/search', [CommunityController::class, 'addFriend'])->name('community.search.add.friend');
-    Route::resource('/friends', FriendController::class)
-        ->only(['index']);
+    // -----------------------------
+    Route::get('/friends', [FriendController::class, 'index'])->name('friends.index');
+    Route::patch('/friends/update', [FriendController::class, 'acceptRequest'])->name('friends.update');
 });
 
 Route::middleware('auth')->group(function () {
