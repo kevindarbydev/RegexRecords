@@ -31,6 +31,13 @@ class SpaceController extends Controller
             ],
         ]);
 
+        // Set the User-Agent header (needed for calling API from the server)
+        $context = stream_context_create([
+            'http' => [
+                'user_agent' => 'Regex Records(Laravel Student Project)',
+            ],
+        ]);
+
         // Get the contents of the cover image from the URL
         $fileContents = file_get_contents($coverImageURL);
 
