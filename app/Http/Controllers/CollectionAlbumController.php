@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collection_Album;
+use App\Models\Album;
+
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -18,6 +20,7 @@ class CollectionAlbumController extends Controller
     {
         return Inertia::render('Collection_Albums/Index', [
             'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
+
 
         ]);
     }
@@ -35,11 +38,11 @@ class CollectionAlbumController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request ->validate([
-            'for_sale'=>'nullable|boolean',
-        ]);
+        // $validated = $request ->validate([
+        //     'for_sale'=>'nullable|boolean',
+        // ]);
+  
 
-        $request->album()->collection_album() -> create($validated);
  
         return redirect(route('collections.index'));
     }
@@ -73,6 +76,8 @@ class CollectionAlbumController extends Controller
      */
     public function destroy(Collection_Album $collection_Album): RedirectResponse
     {
-        //
+        $this->authorize('delete', $collection_Album);
+        $collection_Album->delete();
+        return redirect(route('collection_albums.index'));
     }
 }

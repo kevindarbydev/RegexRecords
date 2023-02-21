@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Album;
 
 use App\Models\Collection;
+use App\Models\Collection_Album;
+
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -19,7 +21,7 @@ class CollectionController extends Controller
     public function index(): Response
     {
         return Inertia::render('Collections/Index', [
-            'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
+            'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
 
         ]);
     }
