@@ -49,6 +49,8 @@ class CommunityController extends Controller
         // $this->authorize('update', $user); 
 
         $loggedInUser->befriend($friend);
+        error_log("LOGGED IN USER: $loggedInUser");
+        error_log("FRIEND: $friend");
         // $friend->acceptFriendRequest($loggedInUser);
         error_log("friend request sent");
 

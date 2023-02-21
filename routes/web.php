@@ -60,21 +60,11 @@ Route::resource('marketplace', MarketplaceController::class)
     ->only(['index'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('community', CommunityController::class)
-    ->only(['index'])
-    ->middleware(['auth', 'verified']);
 
 Route::resource('explore', ExploreController::class)
     ->only(['index'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('community/search', SearchController::class)
-    ->only(['index', 'store', 'update'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('community/friends', FriendController::class)
-    ->only(['index'])
-    ->middleware(['auth', 'verified']);
 Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
     Route::get('/', [CommunityController::class, 'index'])->name('community.index');
     Route::get('/search', [CommunityController::class, 'search'])->name('community.search');
