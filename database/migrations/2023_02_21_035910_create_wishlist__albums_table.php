@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('wantlist_id')->constrained()->cascadeOnDelete();
             $table->foreignId('album_id')->constrained()->cascadeOnDelete();
-            $table->timestamps('added_date');
+            $table->timestamps();
         });
     }
 
