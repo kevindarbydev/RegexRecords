@@ -178,7 +178,7 @@ users will only add the albums they want to sell
 3. Need assistance / figure things out:
 -
 
-2/20/2023 Chris
+2/19/2023 Chris
 1. Done/not done since last scrum:
 -
 2. To do until next Scrum:
@@ -225,7 +225,7 @@ for each album w/ Discogs API
 3. Need assistance / figure things out:
 -
 
-2/19/2023 Matthew
+2/20/2023 Matthew
 1. Done/not done since last scrum:
 - research/practice with laravel/react
 2. To do until next Scrum:
@@ -257,6 +257,64 @@ for each album w/ Discogs API
 -
 
 2/20/2023 Nathaniel
+1. Done/not done since last scrum:
+- added Collection icons
+- completed Wishlist CRUD
+- added Wishlist to navbar
+- created Add Album button to Collection
+- created Collection Albums mrc with relationships
+2. To do until next Scrum:
+- create Add to Collection button on Albums
+- add to Collection_Albums table after button press (backend)
+- show Collection_Albums in Collection
+3. Need assistance / figure things out:
+- holding Albums in Collections
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+2/21/2023 Kevin
+1. Done/not done since last scrum:
+- poppins font
+- set up a managed DB
+(seperate DBs for dev/prod)
+2. To do until next Scrum:
+- Admin interface + CRUD
+- Try and generate list of tracks
+for each album w/ Discogs API
+3. Need assistance / figure things out:
+-
+
+2/21/2023 Matthew
+1. Done/not done since last scrum:
+- research/practice with laravel/react
+2. To do until next Scrum:
+- setup the marketplace interface
+- begin looking into payment API
+3. Need assistance / figure things out:
+- 
+
+2/21/2023 Chris
+1. Done/not done since last scrum:
+- laravel tuts, more research, login/dash icon, nav
+2. To do until next Scrum:
+- fill out dashboard page
+- add tabs to profile>add additonal settings
+- universal flash component that can be used anywhere
+- add options on albums -> add to collection, delete
+3. Need assistance / figure things out:
+- decide what 'albums' page should be-> ALL albums?
+- react research
+
+2/21/2023 Seena
+1. Done/not done since last scrum:
+- dark mode implemented 
+- laravel-acquaintances package added
+2. To do until next Scrum:
+- setup a "hub" navlink for all connections/friend interaction/etc.
+- setup a search bar for friends (look into Laravel Scout)
+3. Need assistance / figure things out:
+-
+
+2/21/2023 Nathaniel
 1. Done/not done since last scrum:
 - added Collection icons
 - completed Wishlist CRUD
