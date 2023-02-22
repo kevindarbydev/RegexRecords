@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Collection_Album;
 use App\Models\Album;
-
+use App\Models\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -38,12 +40,26 @@ class CollectionAlbumController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request ->validate([
-            'for_sale'=>'nullable|boolean',
-        ]);
-  
-        $request->user()-> collections()->collection_albums()->create($validated);
- 
+        // $validated = $request->validate([
+        //     // 'collection_id' => 'nullable|int',
+        //     'album_id' => 'nullable|int',
+        //     'for_sale' => 'nullable|boolean',
+        // ]);
+        $user = Auth::user();
+
+        $collection = Collection::with('user')->where('user_id', Auth::user()->id)->first();
+
+        if ($collection == null) {
+            return redirect(route('collections.index'));
+        }
+        $cAlbum = new Collection_Album();
+        $cAlbum->album_id = $request->message;
+        $cAlbum->collection_id = $collection->id;
+        $cAlbum->for_sale = false;
+
+        error_log("test $cAlbum");
+
+        $collection->collection_albums()->save($cAlbum);
         return redirect(route('collections.index'));
     }
 

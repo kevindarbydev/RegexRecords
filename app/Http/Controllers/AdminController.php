@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
 use App\Models\Album;
+
 class AdminController extends Controller
 {
     public function index()
@@ -20,14 +21,15 @@ class AdminController extends Controller
         $users = User::all();
         $albums = Album::with('user')->orderByDesc('created_at')->get();
         return Inertia::render('Admin/AdminPage', [
-        'users' => $users,
-        'albums' => $albums,
-    ]);
+            'users' => $users,
+            'albums' => $albums,
+        ]);
     }
 
-   public function deleteAlbum($album_id){
+    public function deleteAlbum($album_id)
+    {
         $album = Album::find($album_id);
         $album->delete();
         return redirect()->back();
-   }
+    }
 }

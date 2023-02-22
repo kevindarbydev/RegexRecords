@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Album;
 
 use App\Models\Collection;
@@ -21,6 +22,8 @@ class CollectionController extends Controller
     public function index(): Response
     {
         return Inertia::render('Collections/Index', [
+            'collections' => Collection::all(),
+            'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
             'collection_albums' => Collection_Album::with('user','collection_albums')->latest()->get(),
             
         ]);
