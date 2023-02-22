@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,13 +15,12 @@ class Collection extends Model
     protected $fillable = [
         'collection_name',
     ];
-    public function user(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
     public function collection_albums(): HasMany
     {
         return $this->hasMany(Collection_Album::class);
     }
-
 }

@@ -12,7 +12,7 @@ import Collection_Album from "./Collection_Album";
 
 dayjs.extend(relativeTime);
 
-export default function Collection({ collection, collection_albums }) {
+export default function Collection({ collection }) {
     const { auth } = usePage().props;
 
     const [editing, setEditing] = useState(false);
@@ -57,13 +57,13 @@ export default function Collection({ collection, collection_albums }) {
                             </small>
                             {collection.created_at !==
                                 collection.updated_at && (
-                                <small className="text-sm text-gray-600">
-                                    {" "}
-                                    &middot; edited
-                                </small>
-                            )}
+                                    <small className="text-sm text-gray-600">
+                                        {" "}
+                                        &middot; edited
+                                    </small>
+                                )}
                         </div>
-                        {collection.user.id === auth.user.id && (
+                        {collection.user_id === auth.user.id && (
                             <Dropdown>
                                 <Dropdown.Trigger>
                                     <button>
@@ -106,7 +106,7 @@ export default function Collection({ collection, collection_albums }) {
                         <span class="ml-3">Add an album</span>
                     </a>
                     <div className="flex flex-row flex-wrap">
-                    {/* {collection_albums.map((collection_album) => (
+                        {/* {collection_albums.map((collection_album) => (
                             <Collection_Album key={collection_album.collection_id} album={collection_album} />
                         ))} */}
                     </div>

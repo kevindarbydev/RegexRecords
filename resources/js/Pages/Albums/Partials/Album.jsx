@@ -6,7 +6,11 @@ import { useForm, Head } from "@inertiajs/react";
 dayjs.extend(relativeTime);
 
 export default function Album({ album }) {
-    const { data, setData, post, processing, reset, errors } = useForm();
+    const { data, setData, post, processing, reset, errors } = useForm(
+        {
+            message: album.id,
+        }
+    );
     const submit = (e) => {
         console.log("submit button works");
         e.preventDefault();
@@ -51,7 +55,7 @@ export default function Album({ album }) {
                         Added {dayjs(album.created_at).fromNow()}
                     </small>
                 </p>
-                    
+
                 <p>
                     {" "}
                     <button

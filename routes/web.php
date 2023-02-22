@@ -51,7 +51,7 @@ Route::resource('wishlists', WishlistController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('collection__albums', CollectionAlbumController::class)
+Route::resource('collection_albums', CollectionAlbumController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
@@ -75,7 +75,7 @@ Route::resource('reviews', CollectionAlbumController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-    Route::resource('orders', OrderController::class)
+Route::resource('orders', OrderController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
@@ -107,7 +107,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     //delete
     Route::delete('/admin/albums/{id}', [AdminController::class, 'deleteAlbum'])->name('admin.albums.delete');
-
 });
 
 require __DIR__ . '/auth.php';
