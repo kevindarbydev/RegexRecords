@@ -1,12 +1,13 @@
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
-import AdminUserTable from "./AdminUserTable";
-import AdminAlbumTable from "./AdminAlbumTable";
-import AdminMessageTable from "./AdminMessageTable";
-import AdminReviewTable from "./AdminReviewTable";
+import AdminUserTable from "./Partials/AdminUserTable";
+import AdminAlbumTable from "./Partials/AdminAlbumTable";
+import AdminMessageTable from "./Partials/AdminMessageTable";
+import AdminReviewTable from "./Partials/AdminReviewTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 function AdminPage({ auth, users, albums }) {
+    //TODO: CSRF token
     const [currentTable, setCurrentTable] = useState("users");
 
     const handleTableChange = (newTable) => {
