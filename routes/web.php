@@ -4,7 +4,6 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CollectionController;
@@ -14,6 +13,8 @@ use App\Http\Controllers\CollectionAlbumController;
 use App\Http\Controllers\Community\FriendController;
 use App\Http\Controllers\Community\SearchController;
 use App\Http\Controllers\Community\CommunityController;
+use App\Http\Controllers\Explore\ExploreController;
+use App\Http\Controllers\Explore\ViewAllAlbumsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,10 +61,15 @@ Route::resource('marketplace', MarketplaceController::class)
     ->only(['index'])
     ->middleware(['auth', 'verified']);
 
-
 Route::resource('explore', ExploreController::class)
-    ->only(['index'])
+    ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
+
+Route::resource('viewAllAlbums', ViewAllAlbumsController::class)
+    ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+
 
 Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
     Route::get('/', [CommunityController::class, 'index'])->name('community.index');

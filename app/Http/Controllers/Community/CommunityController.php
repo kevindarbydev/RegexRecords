@@ -19,14 +19,14 @@ class CommunityController extends Controller
 
     public function search(Request $request): Response
     {
-        //TODO: 
+        //TODO:
         // prevent "add friend" button if friend is already added
         $users = User::where(function ($query) use ($request) {
             $query->where('name', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('email', 'LIKE', '%' . $request->search . '%');
         })
             ->where(function ($query) {
-                $query->where('id', '!=', Auth::user()->id); //preventing logged in user from showing up as querry 
+                $query->where('id', '!=', Auth::user()->id); //preventing logged in user from showing up as querry
             })
             ->latest()->get();
         return Inertia::render('Community/Search', [
@@ -39,14 +39,14 @@ class CommunityController extends Controller
         return redirect()->route('community.search', ['search' => $request->search]);
     }
 
-    //   // goal --> retrieve searched user and befriend 
+    //   // goal --> retrieve searched user and befriend
     public function addFriend(Request $request): RedirectResponse
     {
         $loggedInUser = Auth()->user();
         $friend = User::where('name', $request->message)->first();
 
         // TODO: Only logged in user can send request from their account -- maybe create policy
-        // $this->authorize('update', $user); 
+        // $this->authorize('update', $user);
 
         $loggedInUser->befriend($friend);
         error_log("LOGGED IN USER: $loggedInUser");

@@ -8,10 +8,10 @@ export default function ExploreTabs() {
                 <Tab disabled className="ml-2">
                     Explore
                 </Tab>
-                <Tab>
+                <Tab Index={1}>
                     <NavLink
-                        // href={route("collections.index")}
-                        // active={route().current("collections.index")}
+                        href={route("viewAllAlbums.index")}
+                        active={route().current("viewAllAlbums.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             View All Albums
@@ -20,8 +20,8 @@ export default function ExploreTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                        // href={route("wishlists.index")}
-                        // active={route().current("wishlists.index")}
+                    // href={route("wishlists.index")}
+                    // active={route().current("wishlists.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             New Releases
