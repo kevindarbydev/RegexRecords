@@ -46,24 +46,14 @@ export default function Index({ auth, albums }) {
                             onChange={(e) => setData("artist", e.target.value)}
                         />
                         <InputError message={errors.artist} className="mt-2" />
-                        <label htmlFor="value">Value</label>
-                        <input
-                            name="value"
-                            value={data.value}
-                            placeholder="30"
-                            className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                            onChange={(e) => setData("value", e.target.value)}
-                        />
-                        <InputError message={errors.value} className="mt-2" />
+                    
                         <PrimaryButton className="mt-4" processing={processing}>
                             Post Album
                         </PrimaryButton>
                     </form>
                     <div className="flex flex-row flex-wrap">
                         {albums.map((album) => (
-                          
-                                <Album key={album.id} album={album} />
-                          
+                            <Album key={album.id} album={album} />
                         ))}
                     </div>
                 </div>
