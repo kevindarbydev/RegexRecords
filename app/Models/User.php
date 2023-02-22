@@ -63,6 +63,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wishlist::class);
     }
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
     public function x()
     {
         return "User: " . $this->name . " Admin: " . $this->is_admin;

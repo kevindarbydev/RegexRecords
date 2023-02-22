@@ -15,6 +15,8 @@ use App\Http\Controllers\Community\SearchController;
 use App\Http\Controllers\Community\CommunityController;
 use App\Http\Controllers\Explore\ExploreController;
 use App\Http\Controllers\Explore\ViewAllAlbumsController;
+use App\Http\Controllers\OrderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +51,7 @@ Route::resource('wishlists', WishlistController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('collection_albums', CollectionAlbumController::class)
+Route::resource('collection__albums', CollectionAlbumController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
@@ -70,6 +72,10 @@ Route::resource('viewAllAlbums', ViewAllAlbumsController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('reviews', CollectionAlbumController::class)
+    ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+    Route::resource('orders', OrderController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
