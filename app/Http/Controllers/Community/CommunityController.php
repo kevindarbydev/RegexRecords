@@ -41,12 +41,11 @@ class CommunityController extends Controller
         return redirect()->route('community.search', ['search' => $request->search]);
     }
 
-    public function addFriend(Request $request): RedirectResponse
+    public function addFriend(Request $request, User $user): RedirectResponse
     {
-        $user = Auth()->user();
-        $friend = User::where('name', $request->name)->first();
+        $loggedInUser = Auth()->user();
 
-        $user->befriend($friend);
+        $loggedInUser->befriend($user);
 
 
         return redirect(route('friends.index'));

@@ -17,9 +17,13 @@ class Album extends Model
         'artist',
         'cover_image_url',        
         'genre',
+        'subgenres',
         'year_of_release',
         'value',
         'discogs_album_id',
+    ];
+    protected $casts = [
+        'subgenres' => 'array',
     ];
 
     public function user(): BelongsTo

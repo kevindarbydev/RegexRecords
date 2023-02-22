@@ -78,9 +78,10 @@ class AlbumController extends Controller
 
                 
                 if (isset($item['year'])) { //nullcheck on year as it is no always included
-                    $year = strval($item['year']);
-                    $validated['year_of_release'] = $item['year'];
-                    // dump(strval($item['year']));
+                    
+                    $validated['year_of_release'] = $item['year'];                    
+                }else if (isset($data['results'][1])){ //check 2nd item in response if 1st year is null
+                    $validated['year_of_release'] = $data['results'][1]['year'];
                 }
 
                 // Upload the cover image to DigitalOcean Spaces bucket and get the URL
@@ -89,7 +90,19 @@ class AlbumController extends Controller
                 //Assign the data from API to the saved album
                 $validated['cover_image_url'] = $cover_image_spaces_url;
 
-                $validated['genre'] = $item['genre'][0]; //there may be multiple genres, first should be fine
+                $validated['genre'] = $item['genre'][0]; //TODO: change genre to json() to capture all genres in the response
+
+                // $subgenres = '';
+                // if (isset($item['style'])) {
+                //     foreach ($item['style'] as $style) {
+                //         $subgenres .= $style . ', ';
+                //     }
+                //     // Remove the last comma and space
+                //     $subgenres = rtrim($subgenres, ', ');
+                // }
+
+                $validated['subgenres'] = $item['style'];
+
                 $validated['discogs_album_id'] = $item['id'];// discogs_album_id is the ID thats used for the API request
 
                 
@@ -99,7 +112,7 @@ class AlbumController extends Controller
                 if ($response2->ok()) {
                     //2nd query gives us access to "lowest_price" for value
                     if ($response2->json()['lowest_price'] === null){
-                        $validated['value'] = "0";
+                        $validated['value'] = "0"; //TODO: make value string so i can put  "not found"
                     } else {
                         $validated['value'] = $response2->json()['lowest_price'];
                     }
@@ -120,10 +133,8 @@ class AlbumController extends Controller
                         $track = new Track();
                         $track->tracklist_id = $tracklistModel->id;
                         $track->track_number = $trackData['position'];
-                        $track->title = $trackData['title'];
-                        
-                        $track->duration = $trackData['duration'];
-
+                        $track->title = $trackData['title'];                       
+                        $track->duration = $trackData['duration'];                         
                         if ($track->save()) {
                             echo "Track saved successfully";
                         } else {
