@@ -18,7 +18,7 @@ class WishlistController extends Controller
     {
         return Inertia::render('Wishlists/Index', [
             'wishlists' => Wishlist::with('user:id,list_name')->latest()->get(),
-            'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
+            // 'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
 
         ]);
     }
