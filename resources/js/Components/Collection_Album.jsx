@@ -12,11 +12,11 @@ export default function Collection_Album({ collection_album }) {
 
     if(collection_album.for_sale == 0) {
         console.log("For Sale");
-        return <h1>Yes</h1>;
+        return <h1>For Sale? Yes</h1>;
     }
     else {
         console.log("Not for Sale");
-        return <h1>No</h1>;
+        return <h1>For Sale? No</h1>;
     }
 }
 
@@ -37,7 +37,7 @@ export default function Collection_Album({ collection_album }) {
                 </p>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     {/* For Sale? {collection_album.for_sale} */}
-                    For Sale? <Sale/> 
+                    <Sale/> 
                 </p>
 
             </div>
