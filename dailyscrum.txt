@@ -322,3 +322,60 @@ when albums are created (discogs API)
 - create new Wishlist Album
 3. Need assistance / figure things out:
 - holding Albums in Collections
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+2/22/2023 Kevin
+1. Done/not done since last scrum:
+-users+album admin tables
+-AlbumDetails page
+-got Discogs API to work on the server
+-value is now retrieved
+when albums are created (discogs API)
+2. To do until next Scrum:
+- Handle no result from API
+- set up jenkins server for CICD
+- Finish styling AlbumDetails + admin sections
+3. Need assistance / figure things out:
+-
+
+2/22/2023 Matthew
+1. Done/not done since last scrum:
+- started design on Marketplace
+- tried fixing collection_albums issue
+2. To do until next Scrum:
+- Continue to try and fix the collection_albums problem
+- Continue working on marketplace
+- Start Payment APIs
+3. Need assistance / figure things out:
+- 
+
+2/22/2023 Chris
+1. Done/not done since last scrum:
+- explore section, controller, routes
+2. To do until next Scrum:
+- view all albums + pagination, explore 'homepage'
+- bring in search bar
+3. Need assistance / figure things out:
+- 
+
+2/22/2023 Seena
+1. Done/not done since last scrum:
+- friends page working /w react components
+- add friend/ accept pending request 
+2. To do until next Scrum:
+- not sure
+3. Need assistance / figure things out:
+- 
+
+2/22/2023 Nathaniel
+1. Done/not done since last scrum:
+- Created wishlist_album mrc
+- added route to store collection_album
+- Add to Collections button on all album
+2. To do until next Scrum:
+- create new Collection Album
+- create new Wishlist Album
+3. Need assistance / figure things out:
+- holding Albums in Collections
+
