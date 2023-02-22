@@ -92,7 +92,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
 
-    Route::get('/admin/users', [AdminController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/albums', [AdminController::class, 'albums'])->name('admin.albums.index');
 });
 

@@ -3,11 +3,11 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useForm, Head } from "@inertiajs/react";
 
 export default function AlbumDetails({ auth, album, tracks }) {
- const subgenres = album.subgenres;
+    const subgenres = album.subgenres;
     return (
         <AuthenticatedLayout auth={auth}>
             <Head title={album.album_name} />
-            <div className="flex flex-row">
+            <div className="flex flex-row mt-6">
                 <div className="p-6 rounded-lg shadow-lg w-3/4 mx-auto">
                     <div className="flex items-center mb-8">
                         <img
@@ -34,7 +34,7 @@ export default function AlbumDetails({ auth, album, tracks }) {
                                     </p>
                                 )}
                                 {subgenres && subgenres.length > 0 && (
-                                    <p className="text-l mt-1 text-gray-500">
+                                    <p className="text-xl mt-1 text-gray-500">
                                         {subgenres.map((subgenre, index) => (
                                             <span key={index}>
                                                 {subgenre}
@@ -47,6 +47,26 @@ export default function AlbumDetails({ auth, album, tracks }) {
                                 )}
                             </div>
                         )}
+                        <div className="flex-1 flex justify-end mr-4">
+                            <h3>Extra info will go here</h3>
+                            <p>
+                                {album && (
+                                    <div>
+                                        {album.value && (
+                                            <p className="text-lg font-medium">
+                                                Value: ${album.value}
+                                            </p>
+                                        )}
+                                        {album.discogs_album_id && (
+                                            <p className="text-lg font-medium">
+                                                Discogs ID:{" "}
+                                                {album.discogs_album_id}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+                            </p>
+                        </div>
                     </div>
                     <div>
                         <h4 className="text-lg font-medium mb-4">Tracklist</h4>
