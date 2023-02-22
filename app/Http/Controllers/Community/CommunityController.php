@@ -14,7 +14,9 @@ class CommunityController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Community/Index');
+        $user = Auth()->user();
+
+        return Inertia::render('Community/Index', ['friendCount' => $user->getFriendsCount()]);
     }
 
     public function search(Request $request): Response
@@ -39,19 +41,13 @@ class CommunityController extends Controller
         return redirect()->route('community.search', ['search' => $request->search]);
     }
 
-    //   // goal --> retrieve searched user and befriend
     public function addFriend(Request $request): RedirectResponse
     {
-        $loggedInUser = Auth()->user();
+        $user = Auth()->user();
         $friend = User::where('name', $request->name)->first();
 
-        // TODO: Only logged in user can send request from their account -- maybe create policy
-        // $this->authorize('update', $user);
+        $user->befriend($friend);
 
-        $loggedInUser->befriend($friend);
-        error_log("LOGGED IN USER: $loggedInUser");
-        error_log("FRIEND: $friend");
-        error_log("friend request sent");
 
         return redirect(route('friends.index'));
     }
