@@ -8,8 +8,7 @@ import Album from "./Partials/Album";
 export default function Index({ auth, albums }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         album_name: "",
-        artist: "",
-        value: "",
+        artist: "",        
     });
 
     const submit = (e) => {
@@ -46,7 +45,7 @@ export default function Index({ auth, albums }) {
                             onChange={(e) => setData("artist", e.target.value)}
                         />
                         <InputError message={errors.artist} className="mt-2" />
-                        <label htmlFor="value">Value</label>
+                        {/* <label htmlFor="value">Value</label>
                         <input
                             name="value"
                             value={data.value}
@@ -54,7 +53,7 @@ export default function Index({ auth, albums }) {
                             className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                             onChange={(e) => setData("value", e.target.value)}
                         />
-                        <InputError message={errors.value} className="mt-2" />
+                        <InputError message={errors.value} className="mt-2" /> */}
                         <PrimaryButton className="mt-4" processing={processing}>
                             Post Album
                         </PrimaryButton>
