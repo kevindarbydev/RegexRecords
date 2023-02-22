@@ -15,6 +15,7 @@ use App\Http\Controllers\Community\SearchController;
 use App\Http\Controllers\Community\CommunityController;
 use App\Http\Controllers\Explore\ExploreController;
 use App\Http\Controllers\Explore\ViewAllAlbumsController;
+use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\OrderController;
 
 
@@ -109,4 +110,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/albums/{id}', [AdminController::class, 'deleteAlbum'])->name('admin.albums.delete');
 });
 
+Route::group(['prefix' => 'messages'], function () {
+    Route::get('/', [MessagesController::class, 'index'])->name('messages.index');
+ 
+});
 require __DIR__ . '/auth.php';
