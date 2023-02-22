@@ -23,9 +23,9 @@ class CollectionController extends Controller
     {
         return Inertia::render('Collections/Index', [
             'collections' => Collection::all(),
-            'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
-            'collection_albums' => Collection_Album::with('user','collection_albums')->latest()->get(),
-            
+            // 'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
+            // 'collection_albums' => Collection_Album::with('user', 'collection_albums')->latest()->get(),
+
         ]);
     }
 
