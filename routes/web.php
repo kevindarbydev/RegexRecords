@@ -69,7 +69,7 @@ Route::resource('viewAllAlbums', ViewAllAlbumsController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-    Route::resource('reviews', CollectionAlbumController::class)
+Route::resource('reviews', CollectionAlbumController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
@@ -78,10 +78,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
     Route::get('/', [CommunityController::class, 'index'])->name('community.index');
     Route::get('/search', [CommunityController::class, 'search'])->name('community.search');
     Route::post('/search', [CommunityController::class, 'searchPost'])->name('community.search.post');
-    Route::patch('/search', [CommunityController::class, 'addFriend'])->name('community.search.add.friend');
+    Route::patch('/search/{user}', [CommunityController::class, 'addFriend'])->name('community.search.add.friend');
     // -----------------------------
     Route::get('/friends', [FriendController::class, 'index'])->name('friends.index');
-    Route::patch('/friends/update', [FriendController::class, 'acceptRequest'])->name('friends.update');
+    Route::patch('/friends/update/{friendship}', [FriendController::class, 'acceptRequest'])->name('friends.update');
 });
 
 Route::middleware('auth')->group(function () {
