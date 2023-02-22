@@ -370,9 +370,10 @@ when albums are created (discogs API)
 
 2/22/2023 Nathaniel
 1. Done/not done since last scrum:
-- Created wishlist_album mrc
-- added route to store collection_album
-- Add to Collections button on all album
+- Show Collection Albums on Collections page
+- added route to show albums on Wishlist
+- CRUD Wishlist completed
+- doctrine/dbal installed
 2. To do until next Scrum:
 - create new Collection Album
 - create new Wishlist Album
