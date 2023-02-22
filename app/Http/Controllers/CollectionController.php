@@ -21,8 +21,8 @@ class CollectionController extends Controller
     public function index(): Response
     {
         return Inertia::render('Collections/Index', [
-            'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
-
+            'collection_albums' => Collection_Album::with('user','collection_albums')->latest()->get(),
+            
         ]);
     }
 

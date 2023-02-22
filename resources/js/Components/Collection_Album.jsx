@@ -15,7 +15,7 @@ export default function Collection_Album({ collection_album }) {
             <div className="flex flex-col w-64 justify-between p-4 leading-normal">
 
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    Album ID: {collection_album.album_id}
+                    Album ID: {collection_album.albums_id}
                 </p>
 
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
