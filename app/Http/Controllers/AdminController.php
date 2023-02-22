@@ -25,11 +25,9 @@ class AdminController extends Controller
     ]);
     }
 
-    public function albums()
-    {
-        $albums = Album::all();
-        return Inertia::render('Admin/AlbumsIndex', [
-            'albums' => $albums,
-        ]);
-    }
+   public function deleteAlbum($album_id){
+        $album = Album::find($album_id);
+        $album->delete();
+        return redirect()->back();
+   }
 }

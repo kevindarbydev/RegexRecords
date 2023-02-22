@@ -101,9 +101,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
-
+    //get tables
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/albums', [AdminController::class, 'albums'])->name('admin.albums.index');
+
+    //delete
+    Route::delete('/admin/albums/{id}', [AdminController::class, 'deleteAlbum'])->name('admin.albums.delete');
+
 });
 
 require __DIR__ . '/auth.php';
