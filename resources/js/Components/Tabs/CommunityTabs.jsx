@@ -31,17 +31,6 @@ export default function CommunityTabs() {
                 <Tab>
                     {" "}
                     <NavLink
-                    // href={route("pending.index")}
-                    // active={route().current("pending.index")}
-                    >
-                        <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Pending requests
-                        </span>
-                    </NavLink>
-                </Tab>
-                <Tab>
-                    {" "}
-                    <NavLink
                     // href={route("###.index")}
                     // active={route().current("###.index")}
                     >
