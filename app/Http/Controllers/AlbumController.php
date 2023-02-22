@@ -75,7 +75,9 @@ class AlbumController extends Controller
 
                 // Get the album img, genre, year from the response obj
                 $cover_image_url = $item['cover_image'];
-                if (isset($items['year'])) { //nullcheck on year as it is no always included
+
+                
+                if (isset($item['year'])) { //nullcheck on year as it is no always included
                     $year = strval($item['year']);
                     $validated['year_of_release'] = $item['year'];
                     // dump(strval($item['year']));
@@ -88,7 +90,7 @@ class AlbumController extends Controller
                 $validated['cover_image_url'] = $cover_image_spaces_url;
 
                 $validated['genre'] = $item['genre'][0]; //there may be multiple genres, first should be fine
-                $validated['discogs_album_id'] = $item['id'];
+                $validated['discogs_album_id'] = $item['id'];// discogs_album_id is the ID thats used for the API request
 
                 
 
@@ -117,11 +119,9 @@ class AlbumController extends Controller
                        
                         $track = new Track();
                         $track->tracklist_id = $tracklistModel->id;
-                        $track->track_number = str_replace('.', '', $trackData['position']);
+                        $track->track_number = $trackData['position'];
                         $track->title = $trackData['title'];
-                        if (empty($trackData['duration'])) {
-                            continue;
-                        }
+                        
                         $track->duration = $trackData['duration'];
 
                         if ($track->save()) {
