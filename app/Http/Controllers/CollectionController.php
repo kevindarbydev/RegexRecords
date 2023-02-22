@@ -22,9 +22,10 @@ class CollectionController extends Controller
     public function index(): Response
     {
         return Inertia::render('Collections/Index', [
-            'collections' => Collection::all(),
+            'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->latest()->get(),
             // 'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
-            // 'collection_albums' => Collection_Album::with('user', 'collection_albums')->latest()->get(),
+            'collection_albums' => Collection_Album::with('collection', 'album')->latest()->get(),
+            'albums' => Album::with('user')->latest()->get(),
 
         ]);
     }
