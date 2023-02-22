@@ -10,12 +10,10 @@ const notify = () => toast.success("Friend request sent!");
 dayjs.extend(relativeTime);
 
 function SearchedUser({ user }) {
-    const { patch } = useForm({
-        name: user.name,
-    });
+    const { patch } = useForm({});
     const submit = (e) => {
         e.preventDefault();
-        patch(route("community.search.add.friend"));
+        patch(route("community.search.add.friend", user.id));
     };
     return (
         <div class="mr-5 mb-5 w-80">

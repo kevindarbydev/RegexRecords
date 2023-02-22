@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\User;
+use Multicaret\Acquaintances\Models\Friendship;
 
 class FriendController extends Controller
 {
@@ -26,12 +27,12 @@ class FriendController extends Controller
     }
 
     // accept friend request
-    public function acceptRequest(Request $request): RedirectResponse
+    public function acceptRequest(Request $request, Friendship $friendship): RedirectResponse
     {
-        $user = Auth()->user();
-        $sender = User::where('name', $request->name)->first();
 
-        $user->acceptFriendRequest($sender);
+        $loggedInUser = Auth()->user();
+
+        $loggedInUser->acceptFriendRequest($friendship->sender);
 
         return redirect(route('friends.index'));
     }

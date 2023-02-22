@@ -12,12 +12,10 @@ dayjs.extend(relativeTime);
 
 function FriendshipPending({ friendship }) {
     const user = usePage().props.auth.user;
-    const { patch } = useForm({
-        name: friendship.sender.name,
-    });
+    const { patch } = useForm({});
     const submit = (e) => {
         e.preventDefault();
-        patch(route("friends.update"));
+        patch(route("friends.update", friendship.id));
     };
 
     return (
