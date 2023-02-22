@@ -10,8 +10,8 @@ export default function ExploreTabs() {
                 </Tab>
                 <Tab Index={1}>
                     <NavLink
-                        href={route("viewAllAlbums.index")}
-                        active={route().current("viewAllAlbums.index")}
+                        href={route("explore.viewAllAlbums")}
+                        active={route().current("explore.viewAllAlbums")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             View All Albums

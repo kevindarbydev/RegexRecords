@@ -61,18 +61,14 @@ Route::resource('marketplace', MarketplaceController::class)
     ->only(['index'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('explore', ExploreController::class)
+Route::resource('reviews', CollectionAlbumController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('viewAllAlbums', ViewAllAlbumsController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
-    Route::resource('reviews', CollectionAlbumController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
+Route::group(['middleware' => 'auth', 'prefix' => 'explore'], function () {
+    Route::get('/', [ExploreController::class, 'index'])->name('explore.index');
+    Route::get('/viewAllAlbums', [ExploreController::class, 'viewAllAlbums'])->name('explore.viewAllAlbums');
+});
 
 Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
     Route::get('/', [CommunityController::class, 'index'])->name('community.index');

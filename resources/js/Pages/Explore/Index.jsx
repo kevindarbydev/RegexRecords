@@ -7,16 +7,7 @@ import { useForm, Head, Link } from "@inertiajs/react";
 import ExploreTabs from "@/Components/Tabs/ExploreTabs";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 
-export default function Index({ auth, albums }) {
-    const { data, setData, post, processing, reset, errors } = useForm({
-        album_name: "",
-    });
-
-    // const submit = (e) => {
-    //     e.preventDefault();
-    //     post(route("collections.store"), { onSuccess: () => reset() });
-    // };
-
+export default function Index({ auth }) {
     return (
         <AuthenticatedLayout auth={auth}>
             <Head title="Explore" />
