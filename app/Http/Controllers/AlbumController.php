@@ -81,7 +81,7 @@ class AlbumController extends Controller
                     
                     $validated['year_of_release'] = $item['year'];                    
                 }else if (isset($data['results'][1])){ //check 2nd item in response if 1st year is null
-                    $validated['year_of_release'] = $data['results']['year'];
+                    $validated['year_of_release'] = $data['results'][1]['year'];
                 }
 
                 // Upload the cover image to DigitalOcean Spaces bucket and get the URL
