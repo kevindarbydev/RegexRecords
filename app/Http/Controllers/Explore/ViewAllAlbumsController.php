@@ -9,16 +9,23 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use App\Models\Album;
 
 class ViewAllAlbumsController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Explore/ViewAllAlbums');
-    }
+        return Inertia::render('Explore/ViewAllAlbums', [
 
-    // public function viewAll(): Response
-    // {
-    //     
-    // }
+            'albums' => Album::all(),
+            // 'users' => Auth::all()
+            // ->with('user:id')->all()->get()
+
+
+        ]);
+        //testing out stuff
+        // $albums = Album::whereHas('users', function ($getAllUsers) use ($userId) {
+        //     $getAllUsers->whereIn('id', $userId);
+        // })->get();
+    }
 }
