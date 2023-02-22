@@ -5,15 +5,6 @@ import ExploreTabs from "@/Components/Tabs/ExploreTabs";
 import Album from "../Albums/Partials/Album";
 
 export default function ViewAllAlbums({ auth, albums }) {
-    // const { data, setData, post, processing, reset, errors } = useForm({
-    //     album_name: "",
-    // });
-
-    // const submit = (e) => {
-    //     e.preventDefault();
-    //     post(route("collections.store"), { onSuccess: () => reset() });
-    // };
-
     return (
         <AuthenticatedLayout auth={auth}>
             <Head title="All Albums" />

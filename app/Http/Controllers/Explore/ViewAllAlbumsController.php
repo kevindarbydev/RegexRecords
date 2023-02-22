@@ -16,16 +16,7 @@ class ViewAllAlbumsController extends Controller
     public function index(): Response
     {
         return Inertia::render('Explore/ViewAllAlbums', [
-
-            'albums' => Album::all(),
-            // 'users' => Auth::all()
-            // ->with('user:id')->all()->get()
-
-
+            'albums' => Album::all()
         ]);
-        //testing out stuff
-        // $albums = Album::whereHas('users', function ($getAllUsers) use ($userId) {
-        //     $getAllUsers->whereIn('id', $userId);
-        // })->get();
     }
 }
