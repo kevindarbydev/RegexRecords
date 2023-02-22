@@ -120,10 +120,8 @@ class AlbumController extends Controller
                         $track = new Track();
                         $track->tracklist_id = $tracklistModel->id;
                         $track->track_number = $trackData['position'];
-                        $track->title = $trackData['title'];
-                        
-                        $track->duration = $trackData['duration'];
-
+                        $track->title = $trackData['title'];                       
+                        $track->duration = $trackData['duration'];                         
                         if ($track->save()) {
                             echo "Track saved successfully";
                         } else {
