@@ -69,6 +69,9 @@ Route::resource('viewAllAlbums', ViewAllAlbumsController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
+    Route::resource('reviews', CollectionAlbumController::class)
+    ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
 
 
 Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {

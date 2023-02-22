@@ -47,8 +47,7 @@ class AlbumController extends Controller
         $validated = $request->validate([
             'album_name' => 'required|string|max:255',
             'artist' => 'required|string|max:255',
-            'cover_image_url' => 'nullable|string',
-            'value' => 'required|integer',
+            'cover_image_url' => 'nullable|string',            
             'year' => 'nullable|string',
             'discogs_album_id' => 'nullable|string',
         ]);
@@ -91,19 +90,27 @@ class AlbumController extends Controller
                 $validated['genre'] = $item['genre'][0]; //there may be multiple genres, first should be fine
                 $validated['discogs_album_id'] = $item['id'];
 
-                //save the album obj and save it to a var to grab album_id for tracklist
-                $album = $request->user()->albums()->create($validated);
+                
 
                 //perform 2nd API call with discogs_album_id
                 $response2 = Http::get("https://api.discogs.com/releases/{$item['id']}");
                 if ($response2->ok()) {
+                    //2nd query gives us access to "lowest_price" for value
+                    if ($response2->json()['lowest_price'] === null){
+                        $validated['value'] = "0";
+                    } else {
+                        $validated['value'] = $response2->json()['lowest_price'];
+                    }
+                    
+
+                    //save the album obj and save it to a var to grab album_id for tracklist
+                    $album = $request->user()->albums()->create($validated);
                     // Second API call was successful
                     $tracklist = $response2->json()['tracklist'];
                     
                     $tracklistModel = new Tracklist();
                     $tracklistModel->album_id = $album->id;
-                    $tracklistModel->save();
-                   // dd($tracklist);
+                    $tracklistModel->save();                 
                    
                     // Loop through each track in the tracklist and create a new Track model
                     foreach ($tracklist as $trackData) {

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ReviewController extends Controller
 {
@@ -14,7 +15,10 @@ class ReviewController extends Controller
      */
     public function index(): Response
     {
-        //
+        return Inertia::render('Reviews/Index', [
+            'reviews' => Review::with('user:id')->latest()->get(),
+
+        ]);
     }
 
     /**
@@ -30,7 +34,14 @@ class ReviewController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'rating' => 'nullable|int',
+            'content' => 'required|string|max:500',
+        ]);
+ 
+        $request->user()->chirps()->create($validated);
+ 
+        return redirect(route('chirps.index'));
     }
 
     /**
@@ -54,7 +65,16 @@ class ReviewController extends Controller
      */
     public function update(Request $request, Review $review): RedirectResponse
     {
-        //
+        $this->authorize('update', $review);
+ 
+        $validated = $request->validate([
+            'rating' => 'nullable|int',
+            'content' => 'required|string|max:500',
+        ]);
+ 
+        $review->update($validated);
+ 
+        return redirect(route('reviews.index'));
     }
 
     /**
@@ -62,6 +82,10 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review): RedirectResponse
     {
-        //
+        $this->authorize('delete', $review);
+ 
+        $review->delete();
+ 
+        return redirect(route('reviews.index'));
     }
 }
