@@ -57,11 +57,11 @@ export default function Collection({ collection }) {
                             </small>
                             {collection.created_at !==
                                 collection.updated_at && (
-                                <small className="text-sm text-gray-600">
-                                    {" "}
-                                    &middot; edited
-                                </small>
-                            )}
+                                    <small className="text-sm text-gray-600">
+                                        {" "}
+                                        &middot; edited
+                                    </small>
+                                )}
                         </div>
                         {collection.user_id === auth.user.id && (
                             <Dropdown>
@@ -99,7 +99,7 @@ export default function Collection({ collection }) {
                         )}
                     </div>
                     <a
-                        href="/albums"
+                        href="/dashboard/albums"
                         class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-black hover:bg-gray-100 dark:hover:bg-gray-100"
                     >
                         <PlusCircleIcon className="h-6 w-6 text-blue-500" />
