@@ -71,7 +71,7 @@ class AlbumController extends Controller
                 if (isset($item['year'])) { //nullcheck on year as it is no always included
 
                     $validated['year_of_release'] = $item['year'];
-                } else if (isset($data['results'][1])) { //check 2nd item in response if 1st year is null
+                } else if (isset($data['results'][1]['year'])) { //check 2nd item in response if 1st year is null
                     $validated['year_of_release'] = $data['results'][1]['year'];
                 }
 
@@ -127,7 +127,7 @@ class AlbumController extends Controller
                         $track->title = $trackData['title'];
                         $track->duration = $trackData['duration'];
                         if ($track->save()) {
-                            echo "Track saved successfully";
+                            error_log("Track saved successfully (duration: " . $track->duration . ")");
                         } else {
                             dd($track->getError());
                         }

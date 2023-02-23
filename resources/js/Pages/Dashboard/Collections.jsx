@@ -7,6 +7,7 @@ import InputError from "@/Components/InputError";
 import Collection_Album from "@/Pages/Dashboard/Partials/Collection_Album";
 import Collection from "@/Pages/Dashboard/Partials/Collection";
 import Album from "./Partials/Album";
+import { HandThumbUpIcon } from "@heroicons/react/24/solid";
 
 export default function Index({ auth, collection_albums, collection, albums }) {
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -70,28 +71,51 @@ export default function Index({ auth, collection_albums, collection, albums }) {
                                         collection={collection}
                                     />
                                 </div>
-                                <div className="flex flex-row flex-wrap">
-                                    {collection_albums.map((collection_album) =>
-                                        albums.map((album) =>
-                                            album.id ==
-                                                collection_album.album_id &&
-                                            collection_album.collection_id ==
-                                                collection.id ? (
-                                                <Album
-                                                    key={album.id}
-                                                    album={album}
-                                                />
-                                            ) : (
-                                                <div></div>
+                                <div className="w-full">
+                                    <table className="w-full table-auto">
+                                        <thead>
+                                            <th>Album</th>
+                                            <th>Artist</th>
+                                            <th>Value</th>
+                                        </thead>
+                                        {collection_albums.map((collection_album) =>
+                                            albums.map((album) =>
+                                                album.id ==
+                                                    collection_album.album_id &&
+                                                    collection_album.collection_id ==
+                                                    collection.id ? (
+                                                    // <Album
+                                                    //     key={album.id}
+                                                    //     album={album}
+                                                    // />
+                                                    <tbody>
+                                                        <td className="flex flex-row w-12">
+                                                            <img
+                                                                className="rounded-t-lg md:h-full md:w-20 md:rounded-none md:rounded-l-lg mr-5"
+                                                                src={album.cover_image_url}
+                                                                alt=""
+                                                            />
+                                                            <p className="pt-2">{album.album_name}</p>
+                                                        </td>
+                                                        <td>
+                                                            {album.artist}
+                                                        </td>
+                                                        <td>
+                                                            {album.value}$
+                                                        </td>
+                                                    </tbody>
+                                                ) : (
+                                                    <div></div>
+                                                )
                                             )
-                                        )
-                                    )}
+                                        )}
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     )}
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayout >
     );
 }
