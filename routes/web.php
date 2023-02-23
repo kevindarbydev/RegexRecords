@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
     // -----------------------------
     Route::get('/friends', [FriendController::class, 'index'])->name('friends.index');
     Route::patch('/friends/update/{friendship}', [FriendController::class, 'acceptRequest'])->name('friends.update');
+    Route::patch('/friends/deny/{friendship}', [FriendController::class, 'denyRequest'])->name('friends.deny');
     Route::delete('/friends/delete/{friendship}', [FriendController::class, 'unfriend'])->name('friends.unfriend');
 });
 

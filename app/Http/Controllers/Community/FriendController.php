@@ -38,6 +38,16 @@ class FriendController extends Controller
         return redirect(route('friends.index'));
     }
 
+    // accept friend request
+    public function denyRequest(Request $request, Friendship $friendship): RedirectResponse
+    {
+        $loggedInUser = Auth()->user();
+
+        $loggedInUser->denyFriendRequest($friendship->sender);
+
+        return redirect(route('friends.index'));
+    }
+
     // delete friend
     public function unfriend(Request $request, Friendship $friendship): RedirectResponse
     {
