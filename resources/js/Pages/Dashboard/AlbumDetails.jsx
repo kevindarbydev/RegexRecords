@@ -47,8 +47,7 @@ export default function AlbumDetails({ auth, album, tracks }) {
                                 )}
                             </div>
                         )}
-                        <div className="flex-1 flex justify-end mr-4">
-                            <h3>Extra info will go here</h3>
+                        <div className="flex-1 flex justify-end mr-12">                            
                             <p>
                                 {album && (
                                     <div>
@@ -57,12 +56,12 @@ export default function AlbumDetails({ auth, album, tracks }) {
                                                 Value: ${album.value}
                                             </p>
                                         )}
-                                        {album.discogs_album_id && (
+                                        {/* {album.discogs_album_id && (
                                             <p className="text-lg font-medium">
                                                 Discogs ID:{" "}
                                                 {album.discogs_album_id}
                                             </p>
-                                        )}
+                                        )} */}
                                     </div>
                                 )}
                             </p>

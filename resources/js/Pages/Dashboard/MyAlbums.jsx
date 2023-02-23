@@ -30,7 +30,7 @@ export default function Index({ auth, albums }) {
                         <input
                             name="AlbumName"
                             value={data.album_name}
-                            placeholder="abbey road"
+                            placeholder="Dark Side of the Moon"
                             className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                             onChange={(e) =>
                                 setData("album_name", e.target.value)
@@ -44,7 +44,7 @@ export default function Index({ auth, albums }) {
                         <input
                             name="artist"
                             value={data.artist}
-                            placeholder="the beatles"
+                            placeholder="Pink Floyd"
                             className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                             onChange={(e) => setData("artist", e.target.value)}
                         />
