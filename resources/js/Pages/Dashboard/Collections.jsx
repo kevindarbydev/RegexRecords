@@ -71,43 +71,66 @@ export default function Index({ auth, collection_albums, collection, albums }) {
                                         collection={collection}
                                     />
                                 </div>
-                                <div className="w-full">
-                                    <table className="w-full table-auto">
-                                        <thead>
-                                            <th>Album</th>
-                                            <th>Artist</th>
-                                            <th>Value</th>
+                                <div className="relative overflow-x-auto">
+                                    <table className="w-1/2 text-sm text-left text-gray-500 dark:text-gray-400 mx-auto mt-10">
+                                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                            <th scope="col" class="px-6 py-3">
+                                                Album
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Artist
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Value
+                                            </th>
                                         </thead>
-                                        {collection_albums.map((collection_album) =>
-                                            albums.map((album) =>
-                                                album.id ==
-                                                    collection_album.album_id &&
+                                        {collection_albums.map(
+                                            (collection_album) =>
+                                                albums.map((album) =>
+                                                    album.id ==
+                                                        collection_album.album_id &&
                                                     collection_album.collection_id ==
-                                                    collection.id ? (
-                                                    // <Album
-                                                    //     key={album.id}
-                                                    //     album={album}
-                                                    // />
-                                                    <tbody>
-                                                        <td className="flex flex-row w-12">
-                                                            <img
-                                                                className="rounded-t-lg md:h-full md:w-20 md:rounded-none md:rounded-l-lg mr-5"
-                                                                src={album.cover_image_url}
-                                                                alt=""
-                                                            />
-                                                            <p className="pt-2">{album.album_name}</p>
-                                                        </td>
-                                                        <td>
-                                                            {album.artist}
-                                                        </td>
-                                                        <td>
-                                                            {album.value}$
-                                                        </td>
-                                                    </tbody>
-                                                ) : (
-                                                    <div></div>
+                                                        collection.id ? (
+                                                        // <Album
+                                                        //     key={album.id}
+                                                        //     album={album}
+                                                        // />
+                                                        <tbody>
+                                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                <th
+                                                                    scope="row"
+                                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                                                >
+                                                                    <img
+                                                                        className="rounded-t-lg md:h-full md:w-20 md:rounded-none md:rounded-l-lg mr-5"
+                                                                        src={
+                                                                            album.cover_image_url
+                                                                        }
+                                                                        alt=""
+                                                                    />
+                                                                    <p className="pt-2">
+                                                                        {
+                                                                            album.album_name
+                                                                        }
+                                                                    </p>
+                                                                </th>
+                                                                <td class="px-6 py-4">
+                                                                    {
+                                                                        album.artist
+                                                                    }
+                                                                </td>
+                                                                <td class="px-6 py-4">
+                                                                    {
+                                                                        album.value
+                                                                    }
+                                                                    $
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    ) : (
+                                                        <div></div>
+                                                    )
                                                 )
-                                            )
                                         )}
                                     </table>
                                 </div>
@@ -116,6 +139,6 @@ export default function Index({ auth, collection_albums, collection, albums }) {
                     )}
                 </div>
             </div>
-        </AuthenticatedLayout >
+        </AuthenticatedLayout>
     );
 }
