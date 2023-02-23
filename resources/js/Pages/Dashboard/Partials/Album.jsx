@@ -6,22 +6,22 @@ import { useForm, Head } from "@inertiajs/react";
 dayjs.extend(relativeTime);
 
 export default function Album({ album }) {
-    const { data, setData, post, processing, reset, errors } = useForm(
-        {
-            message: album.id,
-        }
-    );
+    const { data, setData, post, processing, reset, errors } = useForm({
+        message: album.id,
+    });
     const submit = (e) => {
         console.log("submit button works");
         e.preventDefault();
-        post(route("collection_albums.store"), { onSuccess: () => reset() });
+        post(route("dashboard.album.to.collection"), {
+            onSuccess: () => reset(),
+        });
         console.log("Post Passed");
     };
 
     return (
         <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-6">
             <a
-                href={route("albums.show", { album: album.id })}
+                href={route("dashboard.albums.show", { album: album.id })}
                 className="flex items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-6"
             >
                 {album.cover_image_url ? (
@@ -40,7 +40,7 @@ export default function Album({ album }) {
             </a>
             <div className="flex flex-col w-64 justify-between p-4 leading-normal">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    <a href={route("albums.show", album.id)}>
+                    <a href={route("dashboard.albums.show", album.id)}>
                         {album.album_name}
                     </a>
                 </h5>

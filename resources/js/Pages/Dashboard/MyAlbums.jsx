@@ -4,6 +4,7 @@ import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import Album from "./Partials/Album";
+import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
 export default function Index({ auth, albums }) {
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -13,13 +14,15 @@ export default function Index({ auth, albums }) {
     });
 
     const submit = (e) => {
+        console.log("test");
         e.preventDefault();
-        post(route("albums.store"), { onSuccess: () => reset() });
+        post(route("dashboard.albums.store"), { onSuccess: () => reset() });
     };
 
     return (
         <AuthenticatedLayout auth={auth}>
             <Head title="Albums" />
+            <DashboardTabs />
             <div className="flex flex-row">
                 <div className="p-4 sm:p-6 lg:p-8 ml-10">
                     <form className="w-full md:w-1/2 m-6" onSubmit={submit}>
@@ -27,7 +30,7 @@ export default function Index({ auth, albums }) {
                         <input
                             name="AlbumName"
                             value={data.album_name}
-                            placeholder="abbey road"
+                            placeholder="Dark Side of the Moon"
                             className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                             onChange={(e) =>
                                 setData("album_name", e.target.value)
@@ -41,12 +44,12 @@ export default function Index({ auth, albums }) {
                         <input
                             name="artist"
                             value={data.artist}
-                            placeholder="the beatles"
+                            placeholder="Pink Floyd"
                             className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                             onChange={(e) => setData("artist", e.target.value)}
                         />
                         <InputError message={errors.artist} className="mt-2" />
-                    
+
                         <PrimaryButton className="mt-4" processing={processing}>
                             Post Album
                         </PrimaryButton>

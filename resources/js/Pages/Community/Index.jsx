@@ -1,7 +1,7 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import CommunityTabs from "@/Components/Tabs/CommunityTabs";
+import CommunityTabs from "@/Layouts/Tabs/CommunityTabs";
 
 export default function Index({ auth }) {
     return (

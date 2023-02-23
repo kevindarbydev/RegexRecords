@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Album;
+use App\Models\Collection;
+use App\Models\Collection_Album;
 use App\Models\Tracklist;
+use App\Http\Controllers\Controller;
 use App\Models\Track;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -15,14 +18,11 @@ use Illuminate\Support\Facades\Http;
 
 class AlbumController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * User albums ONLY
-     */
+    // display user albums only
     public function index(): Response
 
     {
-        return Inertia::render('Albums/Index', [
+        return Inertia::render('Dashboard/MyAlbums', [
 
             // only returning user albums
             'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
@@ -30,24 +30,15 @@ class AlbumController extends Controller
         ]);
     }
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  */
-    // public function create(): Response
-    // {
-    //     return response();
-    // }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // add album to user-master list
     public function store(Request $request): RedirectResponse
     {
         $spaceController = app(\App\Http\Controllers\SpaceController::class);
         $validated = $request->validate([
             'album_name' => 'required|string|max:255',
             'artist' => 'required|string|max:255',
-            'cover_image_url' => 'nullable|string',            
+            'cover_image_url' => 'nullable|string',
             'year' => 'nullable|string',
             'discogs_album_id' => 'nullable|string',
         ]);
@@ -76,11 +67,11 @@ class AlbumController extends Controller
                 // Get the album img, genre, year from the response obj
                 $cover_image_url = $item['cover_image'];
 
-                
+
                 if (isset($item['year'])) { //nullcheck on year as it is no always included
-                    
-                    $validated['year_of_release'] = $item['year'];                    
-                }else if (isset($data['results'][1])){ //check 2nd item in response if 1st year is null
+
+                    $validated['year_of_release'] = $item['year'];
+                } else if (isset($data['results'][1])) { //check 2nd item in response if 1st year is null
                     $validated['year_of_release'] = $data['results'][1]['year'];
                 }
 
@@ -103,45 +94,44 @@ class AlbumController extends Controller
 
                 $validated['subgenres'] = $item['style'];
 
-                $validated['discogs_album_id'] = $item['id'];// discogs_album_id is the ID thats used for the API request
+                $validated['discogs_album_id'] = $item['id']; // discogs_album_id is the ID thats used for the API request
 
-                
+
 
                 //perform 2nd API call with discogs_album_id
                 $response2 = Http::get("https://api.discogs.com/releases/{$item['id']}");
                 if ($response2->ok()) {
                     //2nd query gives us access to "lowest_price" for value
-                    if ($response2->json()['lowest_price'] === null){
+                    if ($response2->json()['lowest_price'] === null) {
                         $validated['value'] = "0"; //TODO: make value string so i can put  "not found"
                     } else {
                         $validated['value'] = $response2->json()['lowest_price'];
                     }
-                    
+
 
                     //save the album obj and save it to a var to grab album_id for tracklist
                     $album = $request->user()->albums()->create($validated);
                     // Second API call was successful
                     $tracklist = $response2->json()['tracklist'];
-                    
+
                     $tracklistModel = new Tracklist();
                     $tracklistModel->album_id = $album->id;
-                    $tracklistModel->save();                 
-                   
+                    $tracklistModel->save();
+
                     // Loop through each track in the tracklist and create a new Track model
                     foreach ($tracklist as $trackData) {
-                       
+
                         $track = new Track();
                         $track->tracklist_id = $tracklistModel->id;
                         $track->track_number = $trackData['position'];
-                        $track->title = $trackData['title'];                       
-                        $track->duration = $trackData['duration'];                         
+                        $track->title = $trackData['title'];
+                        $track->duration = $trackData['duration'];
                         if ($track->save()) {
                             echo "Track saved successfully";
                         } else {
-                          dd($track->getError());
+                            dd($track->getError());
                         }
                     }
-                    
                 } else {
                     // The second API call failed
                     $status_code = $response2->status();
@@ -156,45 +146,45 @@ class AlbumController extends Controller
             echo "1st API Call -> " .  $status_code . ': ' . $error_message;
         }
 
-        return redirect()->route('albums.index');
+        return redirect()->route('dashboard.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // show album track details
     public function show(Album $album): Response
     {
         $album = Album::with('tracklist')->find($album->id);
         $tracklistId = $album->tracklist->id;
         $tracks = Track::where('tracklist_id', $tracklistId)->get();
 
-        return Inertia::render('Albums/AlbumDetails', [
+        return Inertia::render('Dashboard/AlbumDetails', [
             'album' => $album,
             'tracks' => $tracks,
         ]);
     }
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    // public function edit(Item $item): Response
-    // {
-    //     return response();
-    // }
+    // add album to collection
+    public function addAlbumToCollection(Request $request): RedirectResponse
+    {
+        // $validated = $request->validate([
+        //     // 'collection_id' => 'nullable|int',
+        //     'album_id' => 'nullable|int',
+        //     'for_sale' => 'nullable|boolean',
+        // ]);
+        $user = Auth::user();
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  */
-    // public function update(Request $request, Item $item): RedirectResponse
-    // {
-    //     return Redirect();
-    // }
+        $collection = Collection::with('user')->where('user_id', Auth::user()->id)->first();
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  */
-    // public function destroy(Item $item): RedirectResponse
-    // {
-    //     return Redirect();
-    // }
+        // if ($collection == null) {
+        //     return redirect(route('collections.index'));
+        // }
+        $cAlbum = new Collection_Album();
+        $cAlbum->album_id = $request->message;
+        $cAlbum->collection_id = $collection->id;
+        $cAlbum->for_sale = false;
+
+        error_log("test $cAlbum");
+
+        $collection->collection_albums()->save($cAlbum);
+        return redirect()->route('dashboard.collections');
+    }
 }

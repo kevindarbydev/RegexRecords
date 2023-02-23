@@ -5,7 +5,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useForm, usePage } from "@inertiajs/react";
-import Album from "@/Pages/Albums/Partials/Album";
+import Album from "@/Pages/Dashboard/Partials/Album";
 
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import Collection_Album from "./Collection_Album";
@@ -23,7 +23,7 @@ export default function Collection({ collection }) {
 
     const submit = (e) => {
         e.preventDefault();
-        patch(route("collections.update", collection.id), {
+        patch(route("dashboard.collections.update", collection.id), {
             onSuccess: () => setEditing(false),
         });
     };
@@ -57,11 +57,11 @@ export default function Collection({ collection }) {
                             </small>
                             {collection.created_at !==
                                 collection.updated_at && (
-                                    <small className="text-sm text-gray-600">
-                                        {" "}
-                                        &middot; edited
-                                    </small>
-                                )}
+                                <small className="text-sm text-gray-600">
+                                    {" "}
+                                    &middot; edited
+                                </small>
+                            )}
                         </div>
                         {collection.user_id === auth.user.id && (
                             <Dropdown>
@@ -87,7 +87,7 @@ export default function Collection({ collection }) {
                                     <Dropdown.Link
                                         as="button"
                                         href={route(
-                                            "collections.destroy",
+                                            "dashboard.collections.destroy",
                                             collection.id
                                         )}
                                         method="delete"

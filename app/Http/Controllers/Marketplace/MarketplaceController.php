@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Marketplace;
 
 use App\Models\Album;
 use App\Models\Tracklist;
@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\Controller;
 
 
 class MarketplaceController extends Controller
