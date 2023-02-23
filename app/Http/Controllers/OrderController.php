@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Order_Item;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -18,6 +19,7 @@ class OrderController extends Controller
     {
         return Inertia::render('Orders/Index', [
             'orders' => Order::with('user:id')->latest()->get(),
+            'order_items' => Order_Item::with('order','album')->latest()->get(),
 
         ]);
     }
@@ -35,8 +37,14 @@ class OrderController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $validated = $request->validate([
+            'subtotal' => 'required|int',
+            'shipping' => 'required|int',
+            'tax' => 'required|int',
+            'totalPrice' => 'required|int',
+        ]);
  
-        $request->user()->orders()->create();
+        $request->user()->orders()->create($validated);
  
         return redirect(route('orders.index'));
     }
