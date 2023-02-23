@@ -381,21 +381,20 @@ when albums are created (discogs API)
 - holding Albums in Collections
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-2/22/2023 Kevin
+2/23/2023 Kevin
 1. Done/not done since last scrum:
--users+album admin tables
--AlbumDetails page
--got Discogs API to work on the server
--value is now retrieved
-when albums are created (discogs API)
+- started on messages
+-progress on admin interface
+-set up jenkins server
 2. To do until next Scrum:
-- Handle no result from API
-- set up jenkins server for CICD
-- Finish styling AlbumDetails + admin sections
+-continue jenkins ci/cd, maybe
+github actions if it doesnt work out
+- more styling on AlbumDetails
+-continue on messages
 3. Need assistance / figure things out:
 -
 
-2/22/2023 Matthew
+2/23/2023 Matthew
 1. Done/not done since last scrum:
 - Add albums to a collection
 - Show all albums in a collection
@@ -407,33 +406,30 @@ when albums are created (discogs API)
 3. Need assistance / figure things out:
 - 
 
-2/22/2023 Chris
+2/23/2023 Chris
 1. Done/not done since last scrum:
-- explore section, controller, routes
+- started pagination, filling out explore section
 2. To do until next Scrum:
-- view all albums + pagination, explore 'homepage'
-- bring in search bar
+- adding a search/advanced search in explore section, moving over to messaging/friends (core funcs)
+3. Need assistance / figure things out:
+- the Illuminate Paginator class
+
+2/23/2023 Seena
+1. Done/not done since last scrum:
+- refactored routes, controllers & views
+2. To do until next Scrum:
+- styling day 
 3. Need assistance / figure things out:
 - 
 
-2/22/2023 Seena
+2/23/2023 Nathaniel
 1. Done/not done since last scrum:
-- friends page working /w react components
-- add friend/ accept pending request 
+- CRUD Order backend, migrate orders table
+- created Order page
+- Linked Cart Icon to show Order
 2. To do until next Scrum:
-- not sure
+- Create Order Items table
+- Show Order Items
 3. Need assistance / figure things out:
-- 
-
-2/22/2023 Nathaniel
-1. Done/not done since last scrum:
-- Show Collection Albums on Collections page
-- added route to show albums on Wishlist
-- CRUD Wishlist completed
-- doctrine/dbal installed
-2. To do until next Scrum:
-- create new Collection Album
-- create new Wishlist Album
-3. Need assistance / figure things out:
-- holding Albums in Collections
+- Order routing
 
