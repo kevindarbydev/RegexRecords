@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 
 class CollectionController extends Controller
 {
@@ -19,7 +19,7 @@ class CollectionController extends Controller
     public function index(): Response
     {
         return Inertia::render('Collections/Index', [
-            'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->latest()->get(),
+            'collection' => Collection::with('user')->where('user_id', Auth::user()->id)->first(),
             // 'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
             'collection_albums' => Collection_Album::with('collection', 'album')->latest()->get(),
             'albums' => Album::with('user')->latest()->get(),

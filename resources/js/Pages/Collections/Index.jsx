@@ -6,11 +6,12 @@ import DashboardTabs from "@/Components/Tabs/DashboardTabs";
 import InputError from "@/Components/InputError";
 import Collection_Album from "@/Components/Collection_Album";
 import Collection from "@/Components/Collection";
+import Album from "../Albums/Partials/Album";
 
 export default function Index({
     auth,
     collection_albums,
-    collections,
+    collection,
     albums,
 }) {
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -23,19 +24,20 @@ export default function Index({
             onSuccess: () => reset(),
         });
     };
+
     return (
         <AuthenticatedLayout auth={auth}>
             <DashboardTabs />
             <Head title="Collection" />
             <div className="flex flex-col">
                 <div className="p-4 sm:p-6 lg:p-8 ml-10">
-                    <form name="createForm" onSubmit={submit}>
-                        <div className="flex flex-col">
-                            {/* FIXME:
+                    {collection == null ? (
+                        <form name="createForm" onSubmit={submit}>
+                            <div className="flex flex-col">
+                                {/* FIXME:
                              *  if there are no collections at all --> can't add collection
                              *  changed it to != null for now
                              */}
-                            {collections != null ? (
                                 <div className="mb-4">
                                     <label className="">Title</label>
                                     <input
@@ -62,29 +64,28 @@ export default function Index({
                                         Create Collection
                                     </button>
                                 </div>
-                            ) : (
-                                <div></div>
-                            )}
+                            </div>
+                        </form>
+                    ) : (
+                        <div>
+                            <div>
+                                <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                                    <Collection key={collection.id} collection={collection} />
+                                </div>
+                                <div className="flex flex-row flex-wrap">
+                                    {collection_albums.map((collection_album) => (
+                                        albums.map((album) => (
+                                            album.id == collection_album.album_id && collection_album.collection_id == collection.id ?
+                                                <Album key={album.id} album={album} /> :
+                                                <div></div>
+                                        ))
+                                    ))}
+                                </div>
+                            </div>
                         </div>
-                    </form>
-                    <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
-                        {collections.map((collection) => (
-                            <Collection
-                                key={collection.id}
-                                collection={collection}
-                            />
-                        ))}
-                    </div>
-                </div>
-                <div className="flex flex-row flex-wrap">
-                    {collection_albums.map((collection_album) => (
-                        <Collection_Album
-                            key={collection_album.id}
-                            collection_album={collection_album}
-                        />
-                    ))}
+                    )}
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayout >
     );
 }

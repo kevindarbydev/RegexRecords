@@ -185,6 +185,6 @@ class AlbumController extends Controller
         error_log("test $cAlbum");
 
         $collection->collection_albums()->save($cAlbum);
-        return redirect(route('collections.index'));
+        return redirect()->route('dashboard.collections');
     }
 }
