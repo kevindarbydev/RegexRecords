@@ -52,9 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Album::class);
     }
-    public function collections(): HasOne
+    public function collections(): HasMany
     {
-        return $this->hasOne(Collection::class);
+        return $this->hasMany(Collection::class);
     }
     public function reviews(): HasMany
     {

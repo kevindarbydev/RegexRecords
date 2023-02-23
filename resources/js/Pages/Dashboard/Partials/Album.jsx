@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Dropdown from "@/Components/Dropdown";
 import { useForm, Head } from "@inertiajs/react";
 
 dayjs.extend(relativeTime);
 
-export default function Album({ album }) {
+export default function Album({ album, collections }) {
+
     const { data, setData, post, processing, reset, errors } = useForm({
-        message: album.id,
+        album_id: album.id,
+        collection_id: "",
     });
+
     const submit = (e) => {
         console.log("submit button works");
         e.preventDefault();
@@ -16,7 +20,7 @@ export default function Album({ album }) {
             onSuccess: () => reset(),
         });
         console.log("Post Passed");
-    };
+    }
 
     return (
         <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-6">
@@ -58,15 +62,32 @@ export default function Album({ album }) {
 
                 <p>
                     {" "}
-                    <button
+                    {/* <button
                         type="submit"
                         onClick={submit}
                         className="px-2 py-1 font-bold text-white bg-green-500 rounded hover:bg-orange-400"
                     >
                         Add to Collection
-                    </button>
+                    </button> */}
+                    <Dropdown>
+                        <Dropdown.Trigger>
+                            <button className="px-2 py-1 font-bold text-white bg-green-500 rounded hover:bg-orange-400">
+                                Add to Collection
+                            </button>
+                        </Dropdown.Trigger>
+                        <Dropdown.Content>
+                            {collections.map((collection) =>
+                                <button
+                                    onClick={submit}
+                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                >
+                                    {collection.collection_name}
+                                </button>
+                            )}
+                        </Dropdown.Content>
+                    </Dropdown>
                 </p>
             </div>
-        </div>
+        </div >
     );
 }

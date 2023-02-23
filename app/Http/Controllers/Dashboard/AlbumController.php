@@ -26,6 +26,7 @@ class AlbumController extends Controller
 
             // only returning user albums
             'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
+            'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
 
         ]);
     }
@@ -163,28 +164,20 @@ class AlbumController extends Controller
     }
 
     // add album to collection
-    public function addAlbumToCollection(Request $request): RedirectResponse
+    public function addAlbumToCollection(Request $request, Collection $collection): RedirectResponse
     {
-        // $validated = $request->validate([
-        //     // 'collection_id' => 'nullable|int',
-        //     'album_id' => 'nullable|int',
-        //     'for_sale' => 'nullable|boolean',
-        // ]);
-        $user = Auth::user();
-
-        $collection = Collection::with('user')->where('user_id', Auth::user()->id)->first();
 
         // if ($collection == null) {
         //     return redirect(route('collections.index'));
         // }
         $cAlbum = new Collection_Album();
-        $cAlbum->album_id = $request->message;
+        $cAlbum->album_id = $request->album_id;
         $cAlbum->collection_id = $collection->id;
         $cAlbum->for_sale = false;
 
         error_log("test $cAlbum");
 
-        $collection->collection_albums()->save($cAlbum);
+        // $collection->collection_albums()->save($cAlbum);
         return redirect()->route('dashboard.collections');
     }
 }
