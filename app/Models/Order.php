@@ -10,12 +10,19 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'subtotal',
+        'shipping',
+        'tax',
+        'totalPrice',
+
+    ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    public function orders(): HasMany
+    public function order_item(): HasMany
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order_Item::class);
     }
 }

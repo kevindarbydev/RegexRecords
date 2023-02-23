@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class Order_Item extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'quantity',
+        'price',
+
+    ];
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
