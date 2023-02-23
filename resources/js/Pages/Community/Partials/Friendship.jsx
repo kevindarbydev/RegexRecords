@@ -1,6 +1,8 @@
 import React from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import DangerButton from "@/Components/DangerButton";
+import { Link } from "@inertiajs/react";
 
 dayjs.extend(relativeTime);
 
@@ -17,6 +19,12 @@ function Friendship({ friendship }) {
                         Became friends {dayjs(friendship.updated_at).fromNow()}
                     </small>
                 </p>
+                <Link
+                    href={route("friends.unfriend", friendship.id)}
+                    method="delete"
+                >
+                    <DangerButton className="mt-2">Unfriend</DangerButton>
+                </Link>
             </div>
         </div>
     );
