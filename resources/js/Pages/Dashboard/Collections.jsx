@@ -2,7 +2,7 @@ import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head, Link } from "@inertiajs/react";
-import DashboardTabs from "@/Components/Tabs/DashboardTabs";
+import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 import InputError from "@/Components/InputError";
 import Collection_Album from "@/Pages/Dashboard/Partials/Collection_Album";
 import Collection from "@/Pages/Dashboard/Partials/Collection";

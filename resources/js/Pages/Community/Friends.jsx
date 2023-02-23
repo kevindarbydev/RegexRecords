@@ -4,7 +4,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import Friendship from "./Partials/Friendship";
 import FriendshipPending from "./Partials/FriendshipPending";
-import CommunityTabs from "@/Components/Tabs/CommunityTabs";
+import CommunityTabs from "@/Layouts/Tabs/CommunityTabs";
 import { UsersIcon, ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
 function Friends({ auth, currentFriendships, pendingFriendships }) {

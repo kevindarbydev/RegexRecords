@@ -4,7 +4,7 @@ import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import Album from "./Partials/Album";
-import DashboardTabs from "@/Components/Tabs/DashboardTabs";
+import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
 export default function Index({ auth, albums }) {
     const { data, setData, post, processing, reset, errors } = useForm({

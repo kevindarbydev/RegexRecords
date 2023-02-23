@@ -4,7 +4,7 @@ import Collection from "@/Pages/Dashboard/Partials/Collection";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head, Link } from "@inertiajs/react";
-import MarketplaceTabs from "@/Components/Tabs/MarketplaceTabs";
+import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
 
 export default function Index({ auth, albums }) {
     const { data, setData, post, processing, reset, errors } = useForm({

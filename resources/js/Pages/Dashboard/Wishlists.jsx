@@ -4,7 +4,7 @@ import Wishlist from "@/Pages/Dashboard/Partials/Wishlist";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
-import DashboardTabs from "@/Components/Tabs/DashboardTabs";
+import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
 export default function Index({ auth, wishlists }) {
     const { data, setData, post, processing, reset, errors } = useForm({

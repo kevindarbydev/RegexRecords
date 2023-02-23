@@ -1,7 +1,7 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useForm, Head, Link } from "@inertiajs/react";
-import ExploreTabs from "@/Components/Tabs/ExploreTabs";
+import ExploreTabs from "@/Layouts/Tabs/ExploreTabs";
 import Album from "../Dashboard/Partials/Album";
 
 export default function ViewAllAlbums({ auth, albums, totalAlbums }) {

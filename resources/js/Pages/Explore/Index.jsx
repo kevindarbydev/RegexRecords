@@ -4,7 +4,7 @@ import Collection from "@/Pages/Dashboard/Partials/Collection";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head, Link } from "@inertiajs/react";
-import ExploreTabs from "@/Components/Tabs/ExploreTabs";
+import ExploreTabs from "@/Layouts/Tabs/ExploreTabs";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 
 export default function Index({ auth }) {
