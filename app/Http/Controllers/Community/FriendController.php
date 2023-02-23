@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\User;
+use Error;
 use Multicaret\Acquaintances\Models\Friendship;
 
 class FriendController extends Controller
@@ -33,6 +34,16 @@ class FriendController extends Controller
         $loggedInUser = Auth()->user();
 
         $loggedInUser->acceptFriendRequest($friendship->sender);
+
+        return redirect(route('friends.index'));
+    }
+
+    // delete friend
+    public function unfriend(Request $request, Friendship $friendship): RedirectResponse
+    {
+        $loggedInUser = Auth()->user();
+
+        $loggedInUser->unfriend($friendship->sender);
 
         return redirect(route('friends.index'));
     }
