@@ -83,13 +83,16 @@ export default function Index({ auth, collection_albums, collection, albums }) {
                                             <th scope="col" class="px-6 py-3">
                                                 Value
                                             </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                For Sale?
+                                            </th>
                                         </thead>
                                         {collection_albums.map(
                                             (collection_album) =>
                                                 albums.map((album) =>
                                                     album.id ==
                                                         collection_album.album_id &&
-                                                    collection_album.collection_id ==
+                                                        collection_album.collection_id ==
                                                         collection.id ? (
                                                         // <Album
                                                         //     key={album.id}
@@ -125,6 +128,17 @@ export default function Index({ auth, collection_albums, collection, albums }) {
                                                                     }
                                                                     $
                                                                 </td>
+                                                                {
+                                                                    collection_album.for_sale == 0 ?
+                                                                        <td class="px-6 py-4">
+                                                                            No
+                                                                        </td>
+                                                                        :
+                                                                        <td class="px-6 py-4">
+                                                                            Yes
+                                                                        </td>
+                                                                }
+
                                                             </tr>
                                                         </tbody>
                                                     ) : (
