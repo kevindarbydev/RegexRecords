@@ -4,16 +4,11 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head, Link } from "@inertiajs/react";
 import DashboardTabs from "@/Components/Tabs/DashboardTabs";
 import InputError from "@/Components/InputError";
-import Collection_Album from "@/Components/Collection_Album";
-import Collection from "@/Components/Collection";
-import Album from "../Albums/Partials/Album";
+import Collection_Album from "@/Pages/Dashboard/Partials/Collection_Album";
+import Collection from "@/Pages/Dashboard/Partials/Collection";
+import Album from "./Partials/Album";
 
-export default function Index({
-    auth,
-    collection_albums,
-    collection,
-    albums,
-}) {
+export default function Index({ auth, collection_albums, collection, albums }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         collection_name: "",
     });
@@ -35,9 +30,9 @@ export default function Index({
                         <form name="createForm" onSubmit={submit}>
                             <div className="flex flex-col">
                                 {/* FIXME:
-                             *  if there are no collections at all --> can't add collection
-                             *  changed it to != null for now
-                             */}
+                                 *  if there are no collections at all --> can't add collection
+                                 *  changed it to != null for now
+                                 */}
                                 <div className="mb-4">
                                     <label className="">Title</label>
                                     <input
@@ -70,22 +65,33 @@ export default function Index({
                         <div>
                             <div>
                                 <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
-                                    <Collection key={collection.id} collection={collection} />
+                                    <Collection
+                                        key={collection.id}
+                                        collection={collection}
+                                    />
                                 </div>
                                 <div className="flex flex-row flex-wrap">
-                                    {collection_albums.map((collection_album) => (
-                                        albums.map((album) => (
-                                            album.id == collection_album.album_id && collection_album.collection_id == collection.id ?
-                                                <Album key={album.id} album={album} /> :
+                                    {collection_albums.map((collection_album) =>
+                                        albums.map((album) =>
+                                            album.id ==
+                                                collection_album.album_id &&
+                                            collection_album.collection_id ==
+                                                collection.id ? (
+                                                <Album
+                                                    key={album.id}
+                                                    album={album}
+                                                />
+                                            ) : (
                                                 <div></div>
-                                        ))
-                                    ))}
+                                            )
+                                        )
+                                    )}
                                 </div>
                             </div>
                         </div>
                     )}
                 </div>
             </div>
-        </AuthenticatedLayout >
+        </AuthenticatedLayout>
     );
 }

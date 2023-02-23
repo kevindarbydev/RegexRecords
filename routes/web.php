@@ -25,10 +25,10 @@ use App\Http\Controllers\OrderController;
 |
 */
 
-// HOMEPAGE
+// LANDING PAGE
 Route::get('/', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return Inertia::render('LandingPage');
+})->middleware(['auth', 'verified'])->name('landing.page');
 
 // DASHBOARD
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {

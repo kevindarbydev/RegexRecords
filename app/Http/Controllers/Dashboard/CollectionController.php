@@ -18,7 +18,7 @@ class CollectionController extends Controller
     // display index with everything
     public function index(): Response
     {
-        return Inertia::render('Collections/Index', [
+        return Inertia::render('Dashboard/Collections', [
             'collection' => Collection::with('user')->where('user_id', Auth::user()->id)->first(),
             // 'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
             'collection_albums' => Collection_Album::with('collection', 'album')->latest()->get(),

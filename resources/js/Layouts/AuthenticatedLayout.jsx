@@ -243,8 +243,8 @@ export default function Authenticated({ auth, header, children }) {
                 >
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            href={route("dashboard")}
-                            active={route().current("dashboard")}
+                            href={route("landing.page")}
+                            active={route().current("landing.page")}
                         >
                             Dashboard
                         </ResponsiveNavLink>

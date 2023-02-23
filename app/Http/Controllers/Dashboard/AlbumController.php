@@ -22,7 +22,7 @@ class AlbumController extends Controller
     public function index(): Response
 
     {
-        return Inertia::render('Albums/Index', [
+        return Inertia::render('Dashboard/MyAlbums', [
 
             // only returning user albums
             'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
@@ -156,7 +156,7 @@ class AlbumController extends Controller
         $tracklistId = $album->tracklist->id;
         $tracks = Track::where('tracklist_id', $tracklistId)->get();
 
-        return Inertia::render('Albums/AlbumDetails', [
+        return Inertia::render('Dashboard/AlbumDetails', [
             'album' => $album,
             'tracks' => $tracks,
         ]);
