@@ -32,8 +32,8 @@ export default function Authenticated({ auth, header, children }) {
                             {/* links */}
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
+                                    href={route("dashboard.index")}
+                                    active={route().current("dashboard.index")}
                                 >
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
                                         Dashboard
@@ -249,8 +249,8 @@ export default function Authenticated({ auth, header, children }) {
                             Dashboard
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href={route("albums.index")}
-                            active={route().current("albums.index")}
+                            href={route("dashboard.index")}
+                            active={route().current("dashboard.index")}
                         >
                             Home
                         </ResponsiveNavLink>

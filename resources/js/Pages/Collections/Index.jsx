@@ -7,24 +7,35 @@ import InputError from "@/Components/InputError";
 import Collection_Album from "@/Components/Collection_Album";
 import Collection from "@/Components/Collection";
 
-export default function Index({ auth, collection_albums, collections, albums }) {
+export default function Index({
+    auth,
+    collection_albums,
+    collections,
+    albums,
+}) {
     const { data, setData, post, processing, reset, errors } = useForm({
-        collection_name: '',
+        collection_name: "",
     });
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("collections.store"), { onSuccess: () => reset() });
+        post(route("dashboard.collections.store"), {
+            onSuccess: () => reset(),
+        });
     };
     return (
         <AuthenticatedLayout auth={auth}>
             <DashboardTabs />
             <Head title="Collection" />
-            <div className="flex flex-row">
+            <div className="flex flex-col">
                 <div className="p-4 sm:p-6 lg:p-8 ml-10">
                     <form name="createForm" onSubmit={submit}>
                         <div className="flex flex-col">
-                            {collections == null ?
+                            {/* FIXME:
+                             *  if there are no collections at all --> can't add collection
+                             *  changed it to != null for now
+                             */}
+                            {collections != null ? (
                                 <div className="mb-4">
                                     <label className="">Title</label>
                                     <input
@@ -34,10 +45,16 @@ export default function Index({ auth, collection_albums, collections, albums }) 
                                         name="collection_name"
                                         value={data.collection_name}
                                         onChange={(e) =>
-                                            setData("collection_name", e.target.value)
+                                            setData(
+                                                "collection_name",
+                                                e.target.value
+                                            )
                                         }
                                     />
-                                    <InputError message={errors.collection_name} className="mt-2" />
+                                    <InputError
+                                        message={errors.collection_name}
+                                        className="mt-2"
+                                    />
                                     <button
                                         type="submit"
                                         className="px-6 py-2 font-bold text-white bg-green-500 rounded"
@@ -45,25 +62,29 @@ export default function Index({ auth, collection_albums, collections, albums }) 
                                         Create Collection
                                     </button>
                                 </div>
-                                :
+                            ) : (
                                 <div></div>
-                            }
+                            )}
                         </div>
                     </form>
                     <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
                         {collections.map((collection) => (
-                            <Collection key={collection.id} collection={collection} />
+                            <Collection
+                                key={collection.id}
+                                collection={collection}
+                            />
                         ))}
                     </div>
                 </div>
                 <div className="flex flex-row flex-wrap">
                     {collection_albums.map((collection_album) => (
-
-                        <Collection_Album key={collection_album.id} collection_album={collection_album} />
-
+                        <Collection_Album
+                            key={collection_album.id}
+                            collection_album={collection_album}
+                        />
                     ))}
                 </div>
             </div>
-        </AuthenticatedLayout >
+        </AuthenticatedLayout>
     );
 }

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Album;
-
+use App\Http\Controllers\Controller;
 use App\Models\Collection;
 use App\Models\Collection_Album;
-
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,9 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CollectionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // display index with everything
     public function index(): Response
     {
         return Inertia::render('Collections/Index', [
@@ -30,17 +27,7 @@ class CollectionController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // add collection 
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -50,30 +37,10 @@ class CollectionController extends Controller
         $request->user()->collections()->create($validated);
 
 
-        return redirect()->route('collections.index');
+        return redirect()->route('dashboard.collections');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Collection $collection): Response
-    {
-        return Inertia::render('Collections/Show', [
-            'collection' => $collection
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Collection $collection): Response
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    // edit collection name
     public function update(Request $request, Collection $collection): RedirectResponse
     {
         error_log("$collection");
@@ -85,18 +52,16 @@ class CollectionController extends Controller
 
         $collection->update($validated);
 
-        return redirect(route('collections.index'));
+        return redirect(route('dashboard.collections'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // delete collection
     public function destroy(Collection $collection): RedirectResponse
     {
         $this->authorize('delete', $collection);
 
         $collection->delete();
 
-        return redirect(route('collections.index'));
+        return redirect(route('dashboard.collections'));
     }
 }

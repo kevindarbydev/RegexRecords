@@ -3,18 +3,13 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\CollectionController;
-use App\Http\Controllers\MarketplaceController;
-use App\Http\Controllers\WishlistAlbumController;
-use App\Http\Controllers\CollectionAlbumController;
+use App\Http\Controllers\Dashboard\CollectionController;
+use App\Http\Controllers\Marketplace\MarketplaceController;
+use App\Http\Controllers\Dashboard\AlbumController;
 use App\Http\Controllers\Community\FriendController;
-use App\Http\Controllers\Community\SearchController;
 use App\Http\Controllers\Community\CommunityController;
 use App\Http\Controllers\Explore\ExploreController;
-use App\Http\Controllers\Explore\ViewAllAlbumsController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\OrderController;
 
@@ -30,61 +25,31 @@ use App\Http\Controllers\OrderController;
 |
 */
 
+// HOMEPAGE
 Route::get('/', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// DASHBOARD
+Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
+    Route::get('/albums', [AlbumController::class, 'index'])->name('dashboard.index');
+    Route::post('/albums/store', [AlbumController::class, 'store'])->name('dashboard.albums.store');
+    Route::get('/albums/{album}', [AlbumController::class, 'show'])->name('dashboard.albums.show');
+    Route::post('/albums', [AlbumController::class, 'addAlbumToCollection'])->name('dashboard.album.to.collection');
+    // -------------------------
+    Route::get('/collections', [CollectionController::class, 'index'])->name('dashboard.collections');
+    Route::post('/collections/store', [CollectionController::class, 'store'])->name('dashboard.collections.store');
+    Route::patch('/collections/{collection}', [CollectionController::class, 'update'])->name('dashboard.collections.update');
+    Route::delete('/collections/{collection}', [CollectionController::class, 'destroy'])->name('dashboard.collections.destroy');
+});
 
-//disabled default laravel page
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::resource('albums', AlbumController::class)
-    ->only(['index', 'store', 'show'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('collections', CollectionController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('wishlists', WishlistController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('collection_albums', CollectionAlbumController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('wishlist_albums', WishlistAlbumController::class)
-    ->only(['index', 'store'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('marketplace', MarketplaceController::class)
-    ->only(['index'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('explore', ExploreController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('viewAllAlbums', ViewAllAlbumsController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('reviews', CollectionAlbumController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('orders', OrderController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
+// EXPLORE
 Route::group(['middleware' => 'auth', 'prefix' => 'explore'], function () {
     Route::get('/', [ExploreController::class, 'index'])->name('explore.index');
     Route::get('/viewAllAlbums', [ExploreController::class, 'viewAllAlbums'])->name('explore.viewAllAlbums');
 });
 
+// COMMUNITY
 Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
     Route::get('/', [CommunityController::class, 'index'])->name('community.index');
     Route::get('/search', [CommunityController::class, 'search'])->name('community.search');
@@ -95,12 +60,25 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
     Route::patch('/friends/update/{friendship}', [FriendController::class, 'acceptRequest'])->name('friends.update');
 });
 
+// MARKETPLACE
+Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
+    Route::get('/', [MarketplaceController::class, 'index'])->name('marketplace.index');
+});
+
+// TODO: 
+// add this to the marketplace controller eventually
+Route::resource('orders', OrderController::class)
+    ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+// PROFILE
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// ADMIN
 Route::middleware(['auth', 'admin'])->group(function () {
     //get tables
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
@@ -110,8 +88,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/albums/{id}', [AdminController::class, 'deleteAlbum'])->name('admin.albums.delete');
 });
 
+// MESSAGES
 Route::group(['prefix' => 'messages'], function () {
     Route::get('/', [MessagesController::class, 'index'])->name('messages.index');
- 
 });
 require __DIR__ . '/auth.php';

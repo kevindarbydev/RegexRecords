@@ -10,19 +10,19 @@ export default function DashboardTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                        href={route("dashboard")}
-                        active={route().current("dashboard")}
+                        href={route("dashboard.index")}
+                        active={route().current("dashboard.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Overview
+                            My Albums
                         </span>
                     </NavLink>
                 </Tab>
 
                 <Tab>
                     <NavLink
-                        href={route("collections.index")}
-                        active={route().current("collections.index")}
+                        href={route("dashboard.collections")}
+                        active={route().current("dashboard.collections")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Collections
@@ -31,8 +31,8 @@ export default function DashboardTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                        href={route("wishlists.index")}
-                        active={route().current("wishlists.index")}
+                    // href={route("wishlists.index")}
+                    // active={route().current("wishlists.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Wishlists
