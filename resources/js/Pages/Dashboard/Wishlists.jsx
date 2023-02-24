@@ -21,7 +21,8 @@ export default function Index({ auth, wishlists }) {
             <DashboardTabs />
             <Head title="Create Wishlist" />
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-                <form name="createForm" onSubmit={submit}>
+                My Wishlist
+                {/* <form name="createForm" onSubmit={submit}>
                     <div className="flex flex-col">
                         <div className="mb-4">
                             <label className="">Wishlist Title</label>
@@ -49,11 +50,11 @@ export default function Index({ auth, wishlists }) {
                             Create Wishlist
                         </button>
                     </div>
-                </form>
+                </form> */}
                 <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
-                    {wishlists.map((wishlist) => (
+                    {/* {wishlists.map((wishlist) => (
                         <Wishlist key={wishlist.id} wishlist={wishlist} />
-                    ))}
+                    ))} */}
                 </div>
             </div>
         </AuthenticatedLayout>

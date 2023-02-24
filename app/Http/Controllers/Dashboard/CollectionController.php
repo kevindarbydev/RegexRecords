@@ -66,6 +66,25 @@ class CollectionController extends Controller
         return redirect(route('dashboard.collections'));
     }
 
+    public function updateForSale(Request $request): RedirectResponse
+    {
+        $cAlbum = Collection_Album::where('id', $request->cAlbum)->first();
+
+        error_log("test $cAlbum");
+
+        if ($cAlbum->for_sale == false) {
+            $cAlbum->for_sale = true;
+        } else {
+            $cAlbum->for_sale = false;
+        }
+
+        $cAlbum->update();
+
+        error_log("test $cAlbum");
+
+        return redirect(route('dashboard.collections'));
+    }
+
     // delete collection
     public function destroy(Collection $collection): RedirectResponse
     {

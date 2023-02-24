@@ -20,6 +20,7 @@ export default function Index({ auth, albums }) {
         <AuthenticatedLayout auth={auth}>
             <Head title="Marketplace" />
             <MarketplaceTabs />
+            
         </AuthenticatedLayout>
     );
 }
