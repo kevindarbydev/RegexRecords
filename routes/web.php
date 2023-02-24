@@ -84,7 +84,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::post('/marketplace/orders', [OrderController::class, 'store'])->name('order.store');
 });
 
-// TODO: 
+// TODO:
 // add this to the marketplace controller eventually
 Route::resource('orders', OrderController::class)
     ->only(['index', 'store', 'update', 'destroy'])

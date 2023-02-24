@@ -4,22 +4,37 @@ import { Head, Link } from "@inertiajs/react";
 import ExploreTabs from "@/Layouts/Tabs/ExploreTabs";
 import TopPicks from "./Partials/TopPicks";
 import NewReleases from "./Partials/NewReleases";
-import Featured from "./Partials/Featured";
+import Spotlight from "./Partials/Spotlight";
 
-export default function Index({ auth }) {
+export default function Index({
+    auth,
+    collections,
+    spotlightAlbums,
+    recentAlbums,
+    topAlbums,
+}) {
     return (
         <AuthenticatedLayout auth={auth}>
             <Head title="Explore" />
             <ExploreTabs />
 
+            <h1 className="text-4xl m-4">Fresh This Week:</h1>
+            <NewReleases
+                recentAlbums={recentAlbums}
+                collections={collections}
+            />
+
             <h1 className="text-4xl m-4">Top Picks:</h1>
-            <TopPicks />
+            <TopPicks
+            //   topAlbums = {topAlbums}
+            // collections = {collections}
+            />
 
             <h1 className="text-4xl m-4">Spotlight: "B" Artists</h1>
-            <Featured />
-
-            <h1 className="text-4xl m-4">Fresh This Week:</h1>
-            <NewReleases />
+            <Spotlight
+                spotlightAlbums={spotlightAlbums}
+                collections={collections}
+            />
         </AuthenticatedLayout>
     );
 }
