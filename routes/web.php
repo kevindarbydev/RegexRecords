@@ -72,7 +72,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
 // MARKETPLACE
 Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::get('/', [MarketplaceController::class, 'index'])->name('marketplace.index');
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/marketplace/orders', [OrderController::class, 'store'])->name('marketplace.order.store');
 });
 

@@ -15,8 +15,8 @@ class OrderItemController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('Chirps/Index', [
-            
+        return Inertia::render('Order_Items/Index', [
+            //return order items
             'order_items' => Order_Item::with('order','album')->latest()->get(),
         ]);
     }
