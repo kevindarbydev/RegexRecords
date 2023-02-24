@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conversation;
 use App\Models\User;
 use Carbon\Carbon;
 use Cmgmyr\Messenger\Models\Message;
@@ -26,18 +27,20 @@ class MessagesController extends Controller
      */
     public function index(): Response
     {
-        $user = auth()->user();
-        $messages = Message::where('id', $user->id)->get();
-        $threads = Thread::where('sender', $user->id)->get();
-        $friends = $user->getFriendsList();
+        // $user = auth()->user();
+        // $messages = Message::where('id', $user->id)->get();
+        
+        // $friends = $user->getFriendsList();
 
+        // $conversations = Conversation::all();
+       // $threads = Thread::getAllLatest();
         return Inertia::render(
             'Messages/Index',
-            [
-                'messages' => $messages,
-                'friends' => $friends,
-                'threads' => $threads,
-            ]
+            // [
+            //     'messages' => $messages,
+            //     'friends' => $friends,
+            //     'threads' => $conversations,
+            // ]
         );
     }
 
@@ -76,20 +79,13 @@ class MessagesController extends Controller
      */
     public function create()
     {
-        $users = User::where('id', '!=', Auth::id())->get(); // get all users
+        //$users = User::where('id', '!=', Auth::id())->get(); // get all users
 
-        // // Get the IDs of the current user's friends
-        // $user = auth()->user();
-        // //$friends = $user->getFriendsList();
 
-        // $nums[] = [1,2,3];
+        $friends = Auth::user()->getFriendsList(); //display only friends to message
 
-        // // Get the users with the friend IDs
-        // $users = User::whereIn('id', $nums)
-        // ->where('id', '!=', Auth::id())
-        // ->get();
-        // error_log($users);
-        return response()->json($users);
+
+        return response()->json($friends);
     }
 
     /**
@@ -101,25 +97,16 @@ class MessagesController extends Controller
     public function store($userId)
     {
 
-
+        //creating both objects for now
         $thread = Thread::create([
             'subject' => 'New Message',
+        ]);
+
+        $convo = Conversation::create([
             'sender' => Auth::id(),
             'recipient' => $userId,
+            'threadId' => $thread->id,
         ]);
-
-        // Message
-        Message::create([
-            'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
-            'body' => 'test', //$input['message']
-        ]);
-
-        // Sender
-        $thread->sender = Auth::id();
-        $thread->recipient = $userId;
-       
-
 
 
         return redirect()->route('messages');

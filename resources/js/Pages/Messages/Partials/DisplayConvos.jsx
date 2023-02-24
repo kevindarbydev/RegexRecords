@@ -9,7 +9,7 @@ function DisplayConvos({ friends, messages, threads }) {
             <div className="flex h-screen">
                 <ul className="space-y-4">
                   
-                    {threads.map((thread) => (
+                    {/* {threads.map((thread) => (
                         <div key={thread.id}>
                             {thread.participants.map((participant) => (
                                 <div key={participant.user.id}>
@@ -22,7 +22,7 @@ function DisplayConvos({ friends, messages, threads }) {
                             ))}
                             <span>{thread.messages.last().body}</span>
                         </div>
-                    ))}
+                    ))} */}
                 </ul>
             </div>
         </div>

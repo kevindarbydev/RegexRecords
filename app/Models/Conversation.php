@@ -1,14 +1,16 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
+
 namespace App\Models;
 
-use Cmgmyr\Messenger\Models\Thread;
-
-class Conversation extends Thread
+class Conversation extends Model
 {
-    protected $fillable = [
-        'subject',
-        'sender_id',
-        'recipient_id',
+
+    protected $table = 'conversations';
+
+    protected $fillable = [        
+        'sender',
+        'recipient',
     ];
 }
