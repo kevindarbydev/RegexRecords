@@ -4,38 +4,37 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DisplayConvos from "./Partials/DisplayConvos";
 import ChooseRecipientModal from "./Partials/ChooseRecipientModal";
 
-function Index({ auth, friends, messages }) {    
-const [showModal, setShowModal] = useState(false);
-const [users, setUsers] = useState([]);
-const [csrfToken, setCsrfToken] = useState("");
+function Index({ auth, friends, messages, threads }) {
+    const [showModal, setShowModal] = useState(false);
+    const [users, setUsers] = useState([]);
+    const [csrfToken, setCsrfToken] = useState("");
 
+    useEffect(() => {
+        // Fetch the CSRF token from the server and store it in state
+        fetch("/csrf-token")
+            .then((response) => response.json())
+            .then((data) => setCsrfToken(data.csrfToken))
+            .catch((error) => console.error(error));
+    }, []);
+    if (csrfToken !== "") {
+        console.log("Csrf token: " + csrfToken);
+    }
 
- useEffect(() => {
-     // Fetch the CSRF token from the server and store it in state
-     fetch("/csrf-token")
-         .then((response) => response.json())
-         .then((data) => setCsrfToken(data.csrfToken))
-         .catch((error) => console.error(error));
- }, []);
- if (csrfToken !== "") {
-    console.log("Csrf token: " + csrfToken);
- }
+    function handleCreateClick(event) {
+        event.preventDefault();
+        fetch("/messages/create", {
+            headers: {
+                "X-CSRF-TOKEN": csrfToken,
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setUsers(data);
+                setShowModal(true);
+            })
+            .catch((error) => console.error(error));
+    }
 
-     function handleCreateClick(event) {
-         event.preventDefault();
-         fetch("/messages/create", {
-             headers: {
-                 "X-CSRF-TOKEN": csrfToken,
-             }
-         })
-             .then((response) => response.json())
-             .then((data) => {
-                 setUsers(data);
-                 setShowModal(true);
-             })
-             .catch((error) => console.error(error));
-     }
-    
     return (
         <div>
             <AuthenticatedLayout auth={auth}>
@@ -68,7 +67,11 @@ const [csrfToken, setCsrfToken] = useState("");
                     {showModal && (
                         <ChooseRecipientModal users={users} csrf={csrfToken} />
                     )}
-                    <DisplayConvos friends={friends} messages={messages} />
+                    <DisplayConvos
+                        friends={friends}
+                        messages={messages}
+                        threads={threads}
+                    />
                 </div>
             </AuthenticatedLayout>
         </div>

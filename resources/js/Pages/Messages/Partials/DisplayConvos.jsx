@@ -1,19 +1,29 @@
 import React, { useState } from "react";
 
-function DisplayConvos({friends, messages}) {   
-
-
-   
+function DisplayConvos({ friends, messages, threads }) {
+    console.log("Found threads user is in: " + threads);
+      console.log(messages);
 
     return (
         <div>
             <div className="flex h-screen">
-                
+                <ul className="space-y-4">
                   
-                    <ul className="space-y-4">
-                      
-                    </ul>
-               
+                    {threads.map((thread) => (
+                        <div key={thread.id}>
+                            {thread.participants.map((participant) => (
+                                <div key={participant.user.id}>
+                                    <img
+                                        src={participant.user.avatar}
+                                        alt={participant.user.name}
+                                    />
+                                    <span>{participant.user.name}</span>
+                                </div>
+                            ))}
+                            <span>{thread.messages.last().body}</span>
+                        </div>
+                    ))}
+                </ul>
             </div>
         </div>
     );
