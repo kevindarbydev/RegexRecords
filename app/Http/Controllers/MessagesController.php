@@ -27,20 +27,20 @@ class MessagesController extends Controller
      */
     public function index(): Response
     {
-        // $user = auth()->user();
-        // $messages = Message::where('id', $user->id)->get();
+        $user = auth()->user();
+        $messages = Message::where('id', $user->id)->get();
         
-        // $friends = $user->getFriendsList();
+        $friends = $user->getFriendsList();
 
-        // $conversations = Conversation::all();
-       // $threads = Thread::getAllLatest();
+        $conversations = Conversation::all();
+       $threads = Thread::getAllLatest();
         return Inertia::render(
             'Messages/Index',
-            // [
-            //     'messages' => $messages,
-            //     'friends' => $friends,
-            //     'threads' => $conversations,
-            // ]
+            [
+                'messages' => $messages,
+                'friends' => $friends,
+                'threads' => $conversations,
+            ]
         );
     }
 
@@ -105,7 +105,7 @@ class MessagesController extends Controller
         $convo = Conversation::create([
             'sender' => Auth::id(),
             'recipient' => $userId,
-            'threadId' => $thread->id,
+            'threadId' => $thread->id ?? 0,
         ]);
 
 
