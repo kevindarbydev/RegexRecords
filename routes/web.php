@@ -12,6 +12,7 @@ use App\Http\Controllers\Community\CommunityController;
 use App\Http\Controllers\Explore\ExploreController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Dashboard\WishlistController;
 
 
 /*
@@ -47,6 +48,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::post('/collections/store', [CollectionController::class, 'store'])->name('dashboard.collections.store');
     Route::patch('/collections/{collection}', [CollectionController::class, 'update'])->name('dashboard.collections.update');
     Route::delete('/collections/{collection}', [CollectionController::class, 'destroy'])->name('dashboard.collections.destroy');
+    // -------------------------
+    Route::get('/wishlists', [WishlistController::class, 'index'])->name('dashboard.wishlists');
+    Route::get('/wishlists/wishlist_albums', [WishlistController::class, 'showWishlistAlbums'])->name('dashboard.wishlists.albums');
+    Route::post('/wishlists/store', [WishlistController::class, 'store'])->name('dashboard.wishlists.store');
+    Route::patch('/wishlists/{wishlist}', [WishlistController::class, 'update'])->name('dashboard.wishlists.update');
+    Route::delete('/wishlists/{wishlist}', [WishlistController::class, 'destroy'])->name('dashboard.wishlists.destroy');
 });
 
 // EXPLORE
@@ -72,8 +79,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
 // MARKETPLACE
 Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::get('/', [MarketplaceController::class, 'index'])->name('marketplace.index');
-    Route::get('/orders', [OrderController::class, 'index']);
-    Route::post('/marketplace/orders', [OrderController::class, 'store'])->name('marketplace.order.store');
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');;
+    Route::post('/marketplace/orders', [OrderController::class, 'store'])->name('order.store');
 });
 
 // TODO: 

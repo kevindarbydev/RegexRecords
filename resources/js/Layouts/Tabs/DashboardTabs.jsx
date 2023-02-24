@@ -31,8 +31,8 @@ export default function DashboardTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    // href={route("wishlists.index")}
-                    // active={route().current("wishlists.index")}
+                    href={route("dashboard.wishlists")}
+                    active={route().current("wishlists.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Wishlists
