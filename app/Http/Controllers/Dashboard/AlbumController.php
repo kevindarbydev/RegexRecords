@@ -73,7 +73,7 @@ class AlbumController extends Controller
                 if (isset($item['year'])) { //nullcheck on year as it is no always included
 
                     $validated['year_of_release'] = $item['year'];
-                } else if (isset($data['results'][1]['year'])) { //check 2nd item in response if 1st year is null
+                } else if (isset($data['results'][1]['year'])) { //check 2nd item in response if 1st year is null (it often is)
                     $validated['year_of_release'] = $data['results'][1]['year'];
                 }
 
@@ -84,15 +84,6 @@ class AlbumController extends Controller
                 $validated['cover_image_url'] = $cover_image_spaces_url;
 
                 $validated['genre'] = $item['genre'][0]; //TODO: change genre to json() to capture all genres in the response
-
-                // $subgenres = '';
-                // if (isset($item['style'])) {
-                //     foreach ($item['style'] as $style) {
-                //         $subgenres .= $style . ', ';
-                //     }
-                //     // Remove the last comma and space
-                //     $subgenres = rtrim($subgenres, ', ');
-                // }
 
                 $validated['subgenres'] = $item['style'];
 

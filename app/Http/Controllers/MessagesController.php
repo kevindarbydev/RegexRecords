@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Inertia\Response;
+use Multicaret\Acquaintances\Traits\Friendable;
+use Cmgmyr\Messenger\Traits\Messagable;
+
 
 class MessagesController extends Controller
 {
@@ -23,19 +26,31 @@ class MessagesController extends Controller
      */
     public function index(): Response
     {
-        // All threads, ignore deleted/archived participants
-        //$threads = Thread::getAllLatest()->get();
+ 
         $messages = Message::all();
 
-        // All threads that user is participating in
-        // $threads = Thread::forUser(Auth::id())->latest('updated_at')->get();
+        $user = auth()->user();
+       
+        $friends = $user->getFriendsList();
+   
+        // // create a new thread
+        // $thread = Thread::create(['subject' => 'Test Thread']);
 
-        // All threads that user is participating in, with new messages
-        // $threads = Thread::forUserWithNewMessages(Auth::id())->latest('updated_at')->get();
+        // // add users to the thread
+        // $thread->addParticipant(auth()->user()->id);
+        
+
+        // // send a message
+        // $message = Message::create([
+        //         'thread_id' => $thread->id,
+        //         'user_id' => auth()->user()->id,
+        //         'body' => 'Test Message'
+        //     ]);
 
         return Inertia::render('Messages/Index',
         [
             'messages' => $messages,
+            'friends' => $friends,
         ]
     );
     }

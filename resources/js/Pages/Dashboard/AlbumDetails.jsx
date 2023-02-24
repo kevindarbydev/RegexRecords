@@ -47,23 +47,19 @@ export default function AlbumDetails({ auth, album, tracks }) {
                                 )}
                             </div>
                         )}
-                        <div className="flex-1 flex justify-end mr-12">                            
+                        <div className="flex-1 flex justify-end mr-12">
                             <p>
-                                {album && (
-                                    <div>
-                                        {album.value && (
-                                            <p className="text-lg font-medium">
-                                                Value: ${album.value}
-                                            </p>
-                                        )}
-                                        {/* {album.discogs_album_id && (
-                                            <p className="text-lg font-medium">
-                                                Discogs ID:{" "}
-                                                {album.discogs_album_id}
-                                            </p>
-                                        )} */}
-                                    </div>
-                                )}
+                                <div>
+                                    {album.value !== 0 ? (
+                                        <p className="text-lg font-medium">
+                                            Value: ${album.value}
+                                        </p>
+                                    ) : (
+                                        <p className="text-lg font-medium">
+                                            No price data found
+                                        </p>
+                                    )}
+                                </div>
                             </p>
                         </div>
                     </div>
