@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 
-function DisplayConvos(friends, messages) {   
+function DisplayConvos({friends, messages}) {   
 
 
-    console.log(messages);
-    //start new conversation
    
 
     return (
