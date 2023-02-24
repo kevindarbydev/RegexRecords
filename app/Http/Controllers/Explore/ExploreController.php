@@ -6,13 +6,11 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Album;
 use Inertia\Response;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use App\Models\Collection;
+use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -20,14 +18,38 @@ class ExploreController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Explore/Index');
+
+        //*limit setting for all 3 partials on explore/index:
+        $limit = 4;
+
+
+        //? SPOTLIGHT: ARTISTS BY STARTING LETTER
+        $name = 'B';
+        $spotlightAlbums = Album::where(function ($query) use ($name) {
+            $query->where('artist', 'like',  $name . '%');
+        })
+            ->limit($limit)->inRandomOrder()->get();
+
+
+        //? NEW RELEASES: ALBUMS THIS WEEK
+        //TODO: check this next week
+        $recentAlbums = Album::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::MONDAY), Carbon::now()->endOfWeek(Carbon::SUNDAY)])->inRandomOrder()->limit($limit)->get();
+
+
+        return Inertia::render(
+            'Explore/Index',
+            [
+                'recentAlbums' => $recentAlbums,
+                'spotlightAlbums' => $spotlightAlbums,
+                'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
+            ]
+        );
     }
 
     public function viewAllAlbums(): Response
     {
         $albums = Album::all();
         $totalAlbums = count($albums);
-        // error_log('TOTAL ALBUMS: ' . $totalAlbums);
         $perPage = 3;
         $page = Paginator::resolveCurrentPage('viewAllAlbums');
         // $page = LengthAwarePaginator::resolveCurrentPage('viewAllAlbums');
@@ -61,14 +83,15 @@ class ExploreController extends Controller
         // print_r(array_chunk($input_array, 3));
         // $results = (array_chunk($input_array, 3, true));
 
-        // $ass = Album::all()->paginate(3);
+
 
         return Inertia::render('Explore/ViewAllAlbums', [
             'perPage' => $perPage,
             'totalAlbums' => $totalAlbums,
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
+            // 'albums' => $albums,
             'albums' => Album::all(),
-            // 'albums' => $ass,
+
 
             // 'albums' => Album::all(), $results,
             // 'albums' => $albums,
