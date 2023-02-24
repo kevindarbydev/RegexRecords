@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('/collections', [CollectionController::class, 'index'])->name('dashboard.collections');
     Route::get('/collections/{collection}/albums', [CollectionController::class, 'showAlbums'])->name('dashboard.collections.albums');
     Route::post('/collections/store', [CollectionController::class, 'store'])->name('dashboard.collections.store');
+    Route::patch('/collections/album/update', [CollectionController::class, 'updateForSale'])->name('dashboard.collections.album.sell');
     Route::patch('/collections/{collection}', [CollectionController::class, 'update'])->name('dashboard.collections.update');
     Route::delete('/collections/{collection}', [CollectionController::class, 'destroy'])->name('dashboard.collections.destroy');
 });
@@ -100,7 +101,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 // MESSAGES
-Route::group(['middleware' => ['web','auth'], 'prefix' => 'messages'], function () {
+Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'messages'], function () {
     Route::get('/', [MessagesController::class, 'index'])->name('messages.index');
     Route::get('/create', [MessagesController::class, 'create'])->name('messages.create');
     Route::get('/store/{userId}', [MessagesController::class, 'store'])->name('messages.store');
