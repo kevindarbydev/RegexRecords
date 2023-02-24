@@ -6,6 +6,18 @@ import { useForm, Head, Link } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
 export default function Collection_Albums({ auth, collection, collection_albums, albums }) {
+
+    const { data, setData, patch, processing, reset, errors } = useForm({
+        cAlbum: "",
+    });
+
+    const submit = (e) => {
+        e.preventDefault();
+        patch(route("dashboard.collections.album.sell"), {
+            onSuccess: () => reset(),
+        });
+    };
+
     return (
         <AuthenticatedLayout auth={auth}>
             <DashboardTabs />
@@ -14,17 +26,20 @@ export default function Collection_Albums({ auth, collection, collection_albums,
                 <h5 className="mt-2 mb-2 text-center">{collection.collection_name}</h5>
                 <table className="w-1/2 text-sm text-left text-gray-500 dark:text-gray-400 mx-auto mt-10">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                             Album
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                             Artist
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                             Value
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                             For Sale?
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+
                         </th>
                     </thead>
                     {collection_albums.map(
@@ -66,62 +81,55 @@ export default function Collection_Albums({ auth, collection, collection_albums,
                                             </td>
                                             {
                                                 collection_album.for_sale == 0 ?
+                                                    <>
+                                                        <td className="px-6 py-4">
+                                                            <p className="mr-10">
+                                                                No
+                                                            </p>
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <form onSubmit={submit}>
+                                                                <input
+                                                                    type="radio"
+                                                                    name="for_sale"
+                                                                    value={collection_album.id}
+                                                                    onChange={(e) => {
+                                                                        setData("cAlbum", e.target.value);
 
-                                                    <td className="px-6 py-4 flex flex-row mt-10">
-                                                        <p className="mr-10">
-                                                            No
-                                                        </p>
-                                                        <Dropdown>
-                                                            <Dropdown.Trigger>
-                                                                <button>
-                                                                    <svg
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        className="h-4 w-4 text-gray-400"
-                                                                        viewBox="0 0 20 20"
-                                                                        fill="currentColor"
-                                                                    >
-                                                                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                                    </svg>
+                                                                    }}
+                                                                /> Sell
+                                                                <button className="ml-5 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                                    Submit
                                                                 </button>
-                                                            </Dropdown.Trigger>
-                                                            <Dropdown.Content>
-                                                                <a
-                                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
-                                                                    onClick={() => setEditing(true)}
-                                                                >
-                                                                    Sell Album
-                                                                </a>
-                                                            </Dropdown.Content>
-                                                        </Dropdown>
-                                                    </td>
+
+                                                            </form>
+                                                        </td>
+                                                    </>
                                                     :
-                                                    <td className="px-6 py-4 flex flex-row mt-10">
-                                                        <p className="mr-10">
-                                                            Yes
-                                                        </p>
-                                                        <Dropdown>
-                                                            <Dropdown.Trigger>
-                                                                <button>
-                                                                    <svg
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        className="h-4 w-4 text-gray-400"
-                                                                        viewBox="0 0 20 20"
-                                                                        fill="currentColor"
-                                                                    >
-                                                                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                                    </svg>
+                                                    <>
+                                                        <td className="px-6 py-4">
+                                                            <p className="mr-10">
+                                                                Yes
+                                                            </p>
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <form onSubmit={submit}>
+                                                                <input
+                                                                    type="radio"
+                                                                    name="for_sale"
+                                                                    value={collection_album.id}
+                                                                    onChange={(e) => {
+                                                                        setData("cAlbum", e.target.value);
+
+                                                                    }}
+                                                                /> Don't Sell
+                                                                <button className="ml-5 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                                    Submit
                                                                 </button>
-                                                            </Dropdown.Trigger>
-                                                            <Dropdown.Content>
-                                                                <a
-                                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
-                                                                    onClick={() => setEditing(true)}
-                                                                >
-                                                                    Stop Selling Album
-                                                                </a>
-                                                            </Dropdown.Content>
-                                                        </Dropdown>
-                                                    </td>
+
+                                                            </form>
+                                                        </td>
+                                                    </>
                                             }
 
                                         </tr>
