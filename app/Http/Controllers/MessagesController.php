@@ -26,27 +26,9 @@ class MessagesController extends Controller
      */
     public function index(): Response
     {
-
-        
-
-
         $user = auth()->user();
         $messages = Message::where('id', $user->id)->get();
         $friends = $user->getFriendsList();
-   
-        // // create a new thread
-        // $thread = Thread::create(['subject' => 'Test Thread']);
-
-        // // add users to the thread
-        // $thread->addParticipant(auth()->user()->id);
-        
-
-        // // send a message
-        // $message = Message::create([
-        //         'thread_id' => $thread->id,
-        //         'user_id' => auth()->user()->id,
-        //         'body' => 'Test Message'
-        //     ]);
 
         return Inertia::render('Messages/Index',
         [
@@ -86,50 +68,65 @@ class MessagesController extends Controller
 
     /**
      * Creates a new message thread.
-     *
+     * currently used to display modal of users to create a new thread with
      * @return mixed
      */
     public function create()
     {
-        $users = User::where('id', '!=', Auth::id())->get();
+        $users = User::where('id', '!=', Auth::id())->get(); // get all users
 
+        // // Get the IDs of the current user's friends
+        // $user = auth()->user();
+        // //$friends = $user->getFriendsList();
+        
+        // $nums[] = [1,2,3];
+
+        // // Get the users with the friend IDs
+        // $users = User::whereIn('id', $nums)
+        // ->where('id', '!=', Auth::id())
+        // ->get();
+        // error_log($users);
         return response()->json($users);
     }
 
-    // /**
-    //  * Stores a new message thread.
-    //  *
-    //  * @return mixed
-    //  */
-    // public function store()
-    // {
-    //     $input = Request::all();
+    /**
+     * Stores a new message thread.
+     * 
+     *
+     * @return mixed
+     */
+    public function store($userId)
+    {
 
-    //     $thread = Thread::create([
-    //         'subject' => $input['subject'],
-    //     ]);
 
-    //     // Message
-    //     Message::create([
-    //         'thread_id' => $thread->id,
-    //         'user_id' => Auth::id(),
-    //         'body' => $input['message'],
-    //     ]);
+        $input = Request::all();
+        
+        $thread = Thread::create([
+            'subject' => 'New Message',
+        ]);
 
-    //     // Sender
-    //     Participant::create([
-    //         'thread_id' => $thread->id,
-    //         'user_id' => Auth::id(),
-    //         'last_read' => new Carbon(),
-    //     ]);
+        // Message
+        Message::create([
+            'thread_id' => $thread->id,
+            'user_id' => Auth::id(),
+            'body' => 'test', //$input['message']
+        ]);
 
-    //     // Recipients
-    //     if (Request::has('recipients')) {
-    //         $thread->addParticipant($input['recipients']);
-    //     }
+        // // Sender
+        // Participant::create([
+        //     'thread_id' => $thread->id,
+        //     'user_id' => $userId,
+        //     'last_read' => new Carbon(),
+        // ]);
 
-    //     return redirect()->route('messages');
-    // }
+        // Recipients
+        if (Request::has('recipients')) {
+            $thread->addParticipant($userId);
+        }
+        
+
+        return redirect()->route('messages');
+    }
 
     // /**
     //  * Adds a new message to a current thread.

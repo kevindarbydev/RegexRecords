@@ -30,6 +30,11 @@ Route::get('/', function () {
     return Inertia::render('LandingPage');
 })->middleware(['auth', 'verified'])->name('landing.page');
 
+//CSRF token
+Route::get('/csrf-token', function () {
+    return response()->json(['csrfToken' => csrf_token()]);
+})->name('csrf.token');
+
 // DASHBOARD
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('/albums', [AlbumController::class, 'index'])->name('dashboard.index');
@@ -95,8 +100,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 // MESSAGES
-Route::group(['prefix' => 'messages'], function () {
+Route::group(['middleware' => ['web','auth'], 'prefix' => 'messages'], function () {
     Route::get('/', [MessagesController::class, 'index'])->name('messages.index');
     Route::get('/create', [MessagesController::class, 'create'])->name('messages.create');
+    Route::get('/store/{userId}', [MessagesController::class, 'store'])->name('messages.store');
 });
 require __DIR__ . '/auth.php';

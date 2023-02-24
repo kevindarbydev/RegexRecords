@@ -9,6 +9,17 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 function AdminPage({ auth, users, albums }) {
     //TODO: CSRF token
     const [currentTable, setCurrentTable] = useState("users");
+    const [csrfToken, setCsrfToken] = useState("");
+
+     useEffect(() => {        
+         fetch("/csrf-token")
+             .then((response) => response.json())
+             .then((data) => setCsrfToken(data.csrfToken))
+             .catch((error) => console.error(error));
+     }, []);
+     if (csrfToken !== "") {
+         console.log("Csrf token: " + csrfToken);
+     }
 
     const handleTableChange = (newTable) => {
         setCurrentTable(newTable);

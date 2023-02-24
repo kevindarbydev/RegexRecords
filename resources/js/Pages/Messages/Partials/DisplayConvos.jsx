@@ -11,33 +11,7 @@ function DisplayConvos({friends, messages}) {
                 
                   
                     <ul className="space-y-4">
-                        {messages && messages.length > 0 ? (
-                            messages.map((message) => (
-                                <li
-                                    key={message.id}
-                                    className="flex items-center space-x-4"
-                                >
-                                    {/* <img
-                                        src="/avatar.jpg"
-                                        alt="Avatar"
-                                        className="w-8 h-8 rounded-full"
-                                    /> */}
-                                    <div className="flex-1">
-                                        <h2 className="font-medium">
-                                            {message.sender.name}
-                                        </h2>
-                                        <p className="text-gray-500">
-                                            {message.body}
-                                        </p>
-                                    </div>
-                                    <span className="text-sm text-gray-500">
-                                        {message.created_at}
-                                    </span>
-                                </li>
-                            ))
-                        ) : (
-                            <p>No messages found.</p>
-                        )}
+                      
                     </ul>
                
             </div>
@@ -98,22 +72,31 @@ export default DisplayConvos;
                             </span>*/
     }
 
-    // // Open the modal here and display the list of users
-    // const modal = document.createElement("div");
-    // modal.classList.add("modal");
-
-    // // Create the list of users
-    // const userList = document.createElement("ul");
-    // data.forEach((user) => {
-    //     const userItem = document.createElement("li");
-    //     userItem.textContent = user.name;
-    //     userList.appendChild(userItem);
-    // });
-    // modal.appendChild(userList);
-
-    // // Add the modal to the page
-    // document.body.appendChild(modal);
-
-    // // Display the modal
-    // modal.style.display = "block";
+    // {messages && messages.length > 0 ? (
+    //                         messages.map((message) => (
+    //                             <li
+    //                                 key={message.id}
+    //                                 className="flex items-center space-x-4"
+    //                             >
+    //                                 {/* <img
+    //                                     src="/avatar.jpg"
+    //                                     alt="Avatar"
+    //                                     className="w-8 h-8 rounded-full"
+    //                                 /> 
+    //                                 <div className="flex-1">
+    //                                     <h2 className="font-medium">
+    //                                         {message.sender.name}
+    //                                     </h2>
+    //                                     <p className="text-gray-500">
+    //                                         {message.body}
+    //                                     </p>
+    //                                 </div>
+    //                                 <span className="text-sm text-gray-500">
+    //                                     {message.created_at}
+    //                                 </span>
+    //                             </li>
+    //                         ))
+    //                     ) : (
+    //                         <p>No messages found.</p>
+    //                     )} 
 }
