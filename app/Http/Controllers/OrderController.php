@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Order_Item;
+use App\Models\Album;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class OrderController extends Controller
@@ -18,8 +21,9 @@ class OrderController extends Controller
     public function index(): Response
     {
         return Inertia::render('Orders/Index', [
-            'orders' => Order::with('user')->latest()->get(),
+            'orders' => Order::with('user')->where('user_id', Auth::user()->id)->get(),
             'order_items' => Order_Item::with('order','album')->latest()->get(),
+            'albums' => Album::with('user')->latest()->get(),
 
         ]);
     }

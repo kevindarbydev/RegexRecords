@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Order_Item;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class OrderItemController extends Controller
 {
@@ -14,7 +15,10 @@ class OrderItemController extends Controller
      */
     public function index(): Response
     {
-        //
+        return Inertia::render('Chirps/Index', [
+            
+            'order_items' => Order_Item::with('order','album')->latest()->get(),
+        ]);
     }
 
     /**
