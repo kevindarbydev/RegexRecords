@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
 
@@ -164,20 +165,29 @@ class AlbumController extends Controller
     }
 
     // add album to collection
-    public function addAlbumToCollection(Request $request, Collection $collection): RedirectResponse
+    public function addAlbumToCollection(Request $request): RedirectResponse
     {
 
-        // if ($collection == null) {
-        //     return redirect(route('collections.index'));
-        // }
+        if ($request->collection_name == null) {
+            return redirect()->route('explore.viewAllAlbums');
+        }
+
+        $collection = Collection::with('user')->where('collection_name', $request->collection_name)->first();
+
         $cAlbum = new Collection_Album();
         $cAlbum->album_id = $request->album_id;
         $cAlbum->collection_id = $collection->id;
         $cAlbum->for_sale = false;
 
-        error_log("test $cAlbum");
+        $cAlbum2 = DB::table('collection__albums')->where('collection_id', $cAlbum->collection_id && 'album_id', $cAlbum->album_id)->first();
 
-        // $collection->collection_albums()->save($cAlbum);
+        if ($cAlbum2 != null) {
+            return redirect()->route('explore.viewAllAlbums');
+        }
+
+        // error_log("test $cAlbum");
+
+        $collection->collection_albums()->save($cAlbum);
         return redirect()->route('dashboard.collections');
     }
 }

@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Dropdown from "@/Components/Dropdown";
 import { useForm, Head } from "@inertiajs/react";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 dayjs.extend(relativeTime);
 
@@ -10,7 +11,7 @@ export default function Album({ album, collections }) {
 
     const { data, setData, post, processing, reset, errors } = useForm({
         album_id: album.id,
-        collection_id: "",
+        collection_name: "",
     });
 
     const submit = (e) => {
@@ -59,34 +60,31 @@ export default function Album({ album, collections }) {
                         Added {dayjs(album.created_at).fromNow()}
                     </small>
                 </p>
-
-                <p>
-                    {" "}
-                    {/* <button
+                {" "}
+                {/* <button
                         type="submit"
                         onClick={submit}
                         className="px-2 py-1 font-bold text-white bg-green-500 rounded hover:bg-orange-400"
                     >
                         Add to Collection
                     </button> */}
-                    <Dropdown>
-                        <Dropdown.Trigger>
-                            <button className="px-2 py-1 font-bold text-white bg-green-500 rounded hover:bg-orange-400">
-                                Add to Collection
-                            </button>
-                        </Dropdown.Trigger>
-                        <Dropdown.Content>
-                            {collections.map((collection) =>
-                                <button
-                                    onClick={submit}
-                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
-                                >
-                                    {collection.collection_name}
-                                </button>
-                            )}
-                        </Dropdown.Content>
-                    </Dropdown>
-                </p>
+                <form onSubmit={submit}>
+                    <select
+                        name="collection"
+                        onChange={(e) =>
+                            setData("collection_name", e.target.value)
+                        }
+                    >
+                        <option value="" hidden> Select a collection </option>
+                        {collections.map((collection) => (
+                            <option>{collection.collection_name}</option>
+                        ))}
+                    </select>
+
+                    <PrimaryButton className="mt-4" processing={processing}>
+                        Add to Collection
+                    </PrimaryButton>
+                </form>
             </div>
         </div >
     );
