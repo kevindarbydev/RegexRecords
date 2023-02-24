@@ -42,7 +42,7 @@ export default function MarketplaceTabs() {
                 <Tab>
                     {" "}
                     <NavLink
-                    // href={route("cart.index")}
+                    href={route("orders.index")}
                     // active={route().current("cart.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
