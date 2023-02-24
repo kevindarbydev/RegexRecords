@@ -28,9 +28,7 @@ class MessagesController extends Controller
     {
         $user = auth()->user();
         $messages = Message::where('id', $user->id)->get();
-        $threads = Thread::join('participants', 'threads.id', '=', 'participants.thread_id')
-        ->where('participants.user_id', '=', $user->id)
-        ->get();
+        $threads = Thread::where('sender', $user->id)->get();
         $friends = $user->getFriendsList();
 
         return Inertia::render(
@@ -104,10 +102,10 @@ class MessagesController extends Controller
     {
 
 
-        $input = Request::all();
-
         $thread = Thread::create([
             'subject' => 'New Message',
+            'sender' => Auth::id(),
+            'recipient' => $userId,
         ]);
 
         // Message
@@ -117,17 +115,11 @@ class MessagesController extends Controller
             'body' => 'test', //$input['message']
         ]);
 
-        // // Sender
-        // Participant::create([
-        //     'thread_id' => $thread->id,
-        //     'user_id' => $userId,
-        //     'last_read' => new Carbon(),
-        // ]);
+        // Sender
+        $thread->sender = Auth::id();
+        $thread->recipient = $userId;
+       
 
-        // Recipients
-        if (Request::has('recipients')) {
-            $thread->addParticipant($userId);
-        }
 
 
         return redirect()->route('messages');
