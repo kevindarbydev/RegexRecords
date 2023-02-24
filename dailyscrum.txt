@@ -182,7 +182,7 @@ users will only add the albums they want to sell
 1. Done/not done since last scrum:
 -
 2. To do until next Scrum:
-- 
+-
 3. Need assistance / figure things out:
 -
 
@@ -232,7 +232,7 @@ for each album w/ Discogs API
 - setup the marketplace interface
 - begin looking into payment API
 3. Need assistance / figure things out:
-- 
+-
 
 2/20/2023 Chris
 1. Done/not done since last scrum:
@@ -248,7 +248,7 @@ for each album w/ Discogs API
 
 2/20/2023 Seena
 1. Done/not done since last scrum:
-- dark mode implemented 
+- dark mode implemented
 - laravel-acquaintances package added
 2. To do until next Scrum:
 - setup a "hub" navlink for all connections/friend interaction/etc.
@@ -278,7 +278,7 @@ for each album w/ Discogs API
 when albums are created (discogs API)
 2. To do until next Scrum:
 - Finish admin interface
-- Reconfigure forge 
+- Reconfigure forge
 3. Need assistance / figure things out:
 -
 
@@ -291,7 +291,7 @@ when albums are created (discogs API)
 - Assist in Collection_Albums
 - Start Payment APIs
 3. Need assistance / figure things out:
-- 
+-
 
 2/21/2023 Chris
 1. Done/not done since last scrum:
@@ -304,10 +304,10 @@ when albums are created (discogs API)
 
 2/21/2023 Seena
 1. Done/not done since last scrum:
-- friends page setup (blade.php for now) 
+- friends page setup (blade.php for now)
 - implemented search for friends and add them
 2. To do until next Scrum:
-- clean up bugs for adding friends 
+- clean up bugs for adding friends
 - setup accept friend request (all automatic for now)
 3. Need assistance / figure things out:
 - react rendering eager-loaded data not working (hence blade.php)
@@ -348,7 +348,7 @@ when albums are created (discogs API)
 - Continue working on marketplace
 - Start Payment APIs
 3. Need assistance / figure things out:
-- 
+-
 
 2/22/2023 Chris
 1. Done/not done since last scrum:
@@ -357,16 +357,16 @@ when albums are created (discogs API)
 - view all albums + pagination, explore 'homepage'
 - bring in search bar
 3. Need assistance / figure things out:
-- 
+-
 
 2/22/2023 Seena
 1. Done/not done since last scrum:
 - friends page working /w react components
-- add friend/ accept pending request 
+- add friend/ accept pending request
 2. To do until next Scrum:
 - not sure
 3. Need assistance / figure things out:
-- 
+-
 
 2/22/2023 Nathaniel
 1. Done/not done since last scrum:
@@ -404,7 +404,7 @@ github actions if it doesnt work out
 - Look at Marketplace
 - Start Payment APIs
 3. Need assistance / figure things out:
-- 
+-
 
 2/23/2023 Chris
 1. Done/not done since last scrum:
@@ -418,9 +418,9 @@ github actions if it doesnt work out
 1. Done/not done since last scrum:
 - refactored routes, controllers & views
 2. To do until next Scrum:
-- styling day 
+- styling day
 3. Need assistance / figure things out:
-- 
+-
 
 2/23/2023 Nathaniel
 1. Done/not done since last scrum:
@@ -458,12 +458,15 @@ github actions if it doesnt work out
 
 2/24/2023 Chris
 1. Done/not done since last scrum:
+- explore section, partials, a lot of work getting pagination to work
 2. To do until next Scrum:
+- finish up the above, clean up albums section, add a "see as table" for albums
 3. Need assistance / figure things out:
+- pagination, else, tables for certain pages, like viewAllAlbums
 
 2/24/2023 Seena
 1. Done/not done since last scrum:
-- unfriend & deny friend request implemented 
+- unfriend & deny friend request implemented
 - assist on albums to collections
 2. To do until next Scrum:
 - start thinking about implementing rating system (rate other users collections?)
