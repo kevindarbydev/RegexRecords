@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
     Route::delete('/friends/delete/{friendship}', [FriendController::class, 'unfriend'])->name('friends.unfriend');
 });
 
+
 // MARKETPLACE
 Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::get('/', [MarketplaceController::class, 'index'])->name('marketplace.index');
@@ -96,5 +97,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // MESSAGES
 Route::group(['prefix' => 'messages'], function () {
     Route::get('/', [MessagesController::class, 'index'])->name('messages.index');
+    Route::get('/create', [MessagesController::class, 'create'])->name('messages.create');
 });
 require __DIR__ . '/auth.php';

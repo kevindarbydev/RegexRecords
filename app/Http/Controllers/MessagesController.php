@@ -26,11 +26,12 @@ class MessagesController extends Controller
      */
     public function index(): Response
     {
- 
-        $messages = Message::all();
+
+        
+
 
         $user = auth()->user();
-       
+        $messages = Message::where('id', $user->id)->get();
         $friends = $user->getFriendsList();
    
         // // create a new thread
@@ -55,45 +56,45 @@ class MessagesController extends Controller
     );
     }
 
-    // /**
-    //  * Shows a message thread.
-    //  *
-    //  * @param $id
-    //  * @return mixed
-    //  */
-    // public function show($id)
-    // {
-    //     try {
-    //         $thread = Thread::findOrFail($id);
-    //     } catch (ModelNotFoundException $e) {
-    //         Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
+    /**
+     * Shows a message thread.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function show($id)
+    {
+        try {
+            $thread = Thread::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
 
-    //         return redirect()->route('messages');
-    //     }
+            return redirect()->route('messages');
+        }
 
-    //     // show current user in list if not a current participant
-    //     // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
+        // show current user in list if not a current participant
+        // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
 
-    //     // don't show the current user in list
-    //     $userId = Auth::id();
-    //     $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
+        // don't show the current user in list
+        $userId = Auth::id();
+        $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
 
-    //     $thread->markAsRead($userId);
+        $thread->markAsRead($userId);
 
-    //     return view('messenger.show', compact('thread', 'users'));
-    // }
+        return view('messenger.show', compact('thread', 'users'));
+    }
 
-    // /**
-    //  * Creates a new message thread.
-    //  *
-    //  * @return mixed
-    //  */
-    // public function create()
-    // {
-    //     $users = User::where('id', '!=', Auth::id())->get();
+    /**
+     * Creates a new message thread.
+     *
+     * @return mixed
+     */
+    public function create()
+    {
+        $users = User::where('id', '!=', Auth::id())->get();
 
-    //     return view('messenger.create', compact('users'));
-    // }
+        return response()->json($users);
+    }
 
     // /**
     //  * Stores a new message thread.
