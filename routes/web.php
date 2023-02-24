@@ -33,11 +33,12 @@ Route::get('/', function () {
 // DASHBOARD
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('/albums', [AlbumController::class, 'index'])->name('dashboard.index');
-    Route::post('/albums/store', [AlbumController::class, 'store'])->name('dashboard.albums.store');
+    Route::get('/albums/store', [AlbumController::class, 'store'])->name('dashboard.albums.store');
     Route::get('/albums/{album}', [AlbumController::class, 'show'])->name('dashboard.albums.show');
     Route::post('/albums', [AlbumController::class, 'addAlbumToCollection'])->name('dashboard.album.to.collection');
     // -------------------------
     Route::get('/collections', [CollectionController::class, 'index'])->name('dashboard.collections');
+    Route::get('/collections/{collection}/albums', [CollectionController::class, 'showAlbums'])->name('dashboard.collections.albums');
     Route::post('/collections/store', [CollectionController::class, 'store'])->name('dashboard.collections.store');
     Route::patch('/collections/{collection}', [CollectionController::class, 'update'])->name('dashboard.collections.update');
     Route::delete('/collections/{collection}', [CollectionController::class, 'destroy'])->name('dashboard.collections.destroy');
@@ -67,7 +68,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::get('/', [MarketplaceController::class, 'index'])->name('marketplace.index');
     Route::get('/marketplace/orders', [OrderController::class, 'index'])->name('marketplace.order');
     Route::post('/marketplace/orders', [OrderController::class, 'store'])->name('marketplace.order.store');
-
 });
 
 // TODO: 

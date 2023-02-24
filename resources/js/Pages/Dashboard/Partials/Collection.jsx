@@ -98,16 +98,10 @@ export default function Collection({ collection }) {
                             </Dropdown>
                         )}
                     </div>
-                    {/* <a
-                        href="/dashboard/albums"
-                        className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-black hover:bg-gray-100 dark:hover:bg-gray-100"
-                    >
-                        <PlusCircleIcon className="h-6 w-6 text-blue-500" />
-                        <span class="ml-3">Add an album</span>
-                    </a> */}
                     <div className="flex flex-row flex-wrap">
                         <a
-                            href="dashboard/collection/albums"
+                            href={route("dashboard.collections.albums", collection.id)}
+                            active={route().current("dashboard.collections.albums")}
                             className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-black hover:bg-gray-100 dark:hover:bg-gray-100"
                         >
                             View Collection

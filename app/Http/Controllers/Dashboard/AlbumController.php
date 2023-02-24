@@ -179,13 +179,11 @@ class AlbumController extends Controller
         $cAlbum->collection_id = $collection->id;
         $cAlbum->for_sale = false;
 
-        $cAlbum2 = DB::table('collection__albums')->where('collection_id', $cAlbum->collection_id && 'album_id', $cAlbum->album_id)->first();
+        $cAlbum2 = DB::table('collection__albums')->where('collection_id', $cAlbum->collection_id)->where('album_id', $cAlbum->album_id)->first();
 
         if ($cAlbum2 != null) {
             return redirect()->route('explore.viewAllAlbums');
         }
-
-        // error_log("test $cAlbum");
 
         $collection->collection_albums()->save($cAlbum);
         return redirect()->route('dashboard.collections');
