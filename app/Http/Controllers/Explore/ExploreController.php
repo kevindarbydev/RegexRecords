@@ -9,6 +9,7 @@ use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Collection;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,7 +66,7 @@ class ExploreController extends Controller
         return Inertia::render('Explore/ViewAllAlbums', [
             'perPage' => $perPage,
             'totalAlbums' => $totalAlbums,
-
+            'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
             'albums' => Album::all(),
             // 'albums' => $ass,
 
