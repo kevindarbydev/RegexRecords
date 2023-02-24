@@ -1,8 +1,10 @@
 <?php
 
+namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
 
-namespace App\Models;
+
 
 class Conversation extends Model
 {
@@ -12,5 +14,6 @@ class Conversation extends Model
     protected $fillable = [        
         'sender',
         'recipient',
+        'threadId',
     ];
 }

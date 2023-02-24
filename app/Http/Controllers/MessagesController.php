@@ -27,20 +27,24 @@ class MessagesController extends Controller
      */
     public function index(): Response
     {
-        // $user = auth()->user();
-        // $messages = Message::where('id', $user->id)->get();
+        $user = auth()->user();
+        $messages = Message::where('id', $user->id)->get();
         
-        // $friends = $user->getFriendsList();
+        $friends = $user->getFriendsList();
 
-        // $conversations = Conversation::all();
-       // $threads = Thread::getAllLatest();
+        $conversations = Conversation::where('sender', $user->id)->get();
+        $threadIds = [];
+        foreach ($conversations as $conversation) {
+            $threadIds[] = $conversation->id;
+        }
+       $threads = Thread::whereIn('id', $threadIds)->get();
         return Inertia::render(
             'Messages/Index',
-            // [
-            //     'messages' => $messages,
-            //     'friends' => $friends,
-            //     'threads' => $conversations,
-            // ]
+            [
+                'messages' => $messages,
+                'friends' => $friends,
+                'threads' => $threads,
+            ]
         );
     }
 
@@ -96,7 +100,7 @@ class MessagesController extends Controller
      */
     public function store($userId)
     {
-
+        error_log("here");
         //creating both objects for now
         $thread = Thread::create([
             'subject' => 'New Message',
@@ -109,7 +113,7 @@ class MessagesController extends Controller
         ]);
 
 
-        return redirect()->route('messages');
+        return redirect()->route('messages.index');
     }
 
     // /**

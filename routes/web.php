@@ -111,6 +111,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'messages'], function () {
     Route::get('/', [MessagesController::class, 'index'])->name('messages.index');
     Route::get('/create', [MessagesController::class, 'create'])->name('messages.create');
-    Route::get('/store/{userId}', [MessagesController::class, 'store'])->name('messages.store');
+    Route::post('/store/{userId}', [MessagesController::class, 'store'])->name('messages.store');
 });
 require __DIR__ . '/auth.php';

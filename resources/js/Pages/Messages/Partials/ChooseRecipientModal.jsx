@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 function ChooseRecipientModal({ users, csrf }) {
      console.log(csrf);
-    function handleSelectUser(user) {       
+    function handleSelectUser(user, event) {
+        event.preventDefault();       
         var id = user.id;      
         console.log("HERE");
         fetch(route("messages.store", { userId: id }), {
@@ -30,8 +31,7 @@ function ChooseRecipientModal({ users, csrf }) {
                         <span className="mt-2">{user.name}</span>
                         <a
                             className="mt-2"
-                            href={route("messages.store", user.id)}
-                           
+                            onClick={(event) => handleSelectUser(user, event)}
                         >
                             +
                         </a>
