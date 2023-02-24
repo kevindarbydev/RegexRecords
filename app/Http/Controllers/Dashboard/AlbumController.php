@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
 
@@ -26,6 +27,7 @@ class AlbumController extends Controller
 
             // only returning user albums
             'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
+            'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
 
         ]);
     }
@@ -71,7 +73,7 @@ class AlbumController extends Controller
                 if (isset($item['year'])) { //nullcheck on year as it is no always included
 
                     $validated['year_of_release'] = $item['year'];
-                } else if (isset($data['results'][1]['year'])) { //check 2nd item in response if 1st year is null
+                } else if (isset($data['results'][1]['year'])) { //check 2nd item in response if 1st year is null (it often is)
                     $validated['year_of_release'] = $data['results'][1]['year'];
                 }
 
@@ -82,15 +84,6 @@ class AlbumController extends Controller
                 $validated['cover_image_url'] = $cover_image_spaces_url;
 
                 $validated['genre'] = $item['genre'][0]; //TODO: change genre to json() to capture all genres in the response
-
-                // $subgenres = '';
-                // if (isset($item['style'])) {
-                //     foreach ($item['style'] as $style) {
-                //         $subgenres .= $style . ', ';
-                //     }
-                //     // Remove the last comma and space
-                //     $subgenres = rtrim($subgenres, ', ');
-                // }
 
                 $validated['subgenres'] = $item['style'];
 
@@ -165,24 +158,23 @@ class AlbumController extends Controller
     // add album to collection
     public function addAlbumToCollection(Request $request): RedirectResponse
     {
-        // $validated = $request->validate([
-        //     // 'collection_id' => 'nullable|int',
-        //     'album_id' => 'nullable|int',
-        //     'for_sale' => 'nullable|boolean',
-        // ]);
-        $user = Auth::user();
 
-        $collection = Collection::with('user')->where('user_id', Auth::user()->id)->first();
+        if ($request->collection_name == null) {
+            return redirect()->route('explore.viewAllAlbums');
+        }
 
-        // if ($collection == null) {
-        //     return redirect(route('collections.index'));
-        // }
+        $collection = Collection::with('user')->where('collection_name', $request->collection_name)->first();
+
         $cAlbum = new Collection_Album();
-        $cAlbum->album_id = $request->message;
+        $cAlbum->album_id = $request->album_id;
         $cAlbum->collection_id = $collection->id;
         $cAlbum->for_sale = false;
 
-        error_log("test $cAlbum");
+        $cAlbum2 = DB::table('collection__albums')->where('collection_id', $cAlbum->collection_id)->where('album_id', $cAlbum->album_id)->first();
+
+        if ($cAlbum2 != null) {
+            return redirect()->route('explore.viewAllAlbums');
+        }
 
         $collection->collection_albums()->save($cAlbum);
         return redirect()->route('dashboard.collections');

@@ -7,17 +7,21 @@ import toast, { Toaster } from "react-hot-toast";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 const notify = () => toast.success("Friend request accepted!");
+const notifyDeny = () => toast.error("Friend request denied!");
 
 dayjs.extend(relativeTime);
 
 function FriendshipPending({ friendship }) {
     const user = usePage().props.auth.user;
     const { patch } = useForm({});
-    const submit = (e) => {
+    const acceptFriendship = (e) => {
         e.preventDefault();
         patch(route("friends.update", friendship.id));
     };
-
+    const denyFriendship = (e) => {
+        e.preventDefault();
+        patch(route("friends.deny", friendship.id));
+    };
     return (
         <div class="mr-5">
             <Toaster />
@@ -38,8 +42,8 @@ function FriendshipPending({ friendship }) {
                         {dayjs(friendship.created_at).fromNow()}
                     </small>
                 </p>
-                <form onSubmit={submit}>
-                    <div>
+                <div className="flex flex-row">
+                    <form onSubmit={acceptFriendship}>
                         {friendship.recipient.id == user.id ? (
                             <div className="flex flex-row self-center mt-5">
                                 <UserPlusIcon class="w-5 h-5 self-center" />
@@ -53,8 +57,22 @@ function FriendshipPending({ friendship }) {
                         ) : (
                             <div></div>
                         )}
-                    </div>
-                </form>
+                    </form>
+                    <form onSubmit={denyFriendship}>
+                        {friendship.recipient.id == user.id ? (
+                            <div className="flex flex-row self-center mt-5">
+                                <PrimaryButton
+                                    onClick={notifyDeny}
+                                    className="ml-3 self-center"
+                                >
+                                    Deny
+                                </PrimaryButton>
+                            </div>
+                        ) : (
+                            <div></div>
+                        )}
+                    </form>
+                </div>
             </div>
         </div>
     );

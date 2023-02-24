@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conversation;
 use App\Models\User;
 use Carbon\Carbon;
 use Cmgmyr\Messenger\Models\Message;
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Inertia\Response;
+use Multicaret\Acquaintances\Traits\Friendable;
+use Cmgmyr\Messenger\Traits\Messagable;
+
 
 class MessagesController extends Controller
 {
@@ -23,97 +27,90 @@ class MessagesController extends Controller
      */
     public function index(): Response
     {
-        // All threads, ignore deleted/archived participants
-        //$threads = Thread::getAllLatest()->get();
-        $messages = Message::all();
+        // $user = auth()->user();
+        // $messages = Message::where('id', $user->id)->get();
+        
+        // $friends = $user->getFriendsList();
 
-        // All threads that user is participating in
-        // $threads = Thread::forUser(Auth::id())->latest('updated_at')->get();
-
-        // All threads that user is participating in, with new messages
-        // $threads = Thread::forUserWithNewMessages(Auth::id())->latest('updated_at')->get();
-
-        return Inertia::render('Messages/Index',
-        [
-            'messages' => $messages,
-        ]
-    );
+        // $conversations = Conversation::all();
+       // $threads = Thread::getAllLatest();
+        return Inertia::render(
+            'Messages/Index',
+            // [
+            //     'messages' => $messages,
+            //     'friends' => $friends,
+            //     'threads' => $conversations,
+            // ]
+        );
     }
 
-    // /**
-    //  * Shows a message thread.
-    //  *
-    //  * @param $id
-    //  * @return mixed
-    //  */
-    // public function show($id)
-    // {
-    //     try {
-    //         $thread = Thread::findOrFail($id);
-    //     } catch (ModelNotFoundException $e) {
-    //         Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
+    /**
+     * Shows a message thread.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function show($id)
+    {
+        try {
+            $thread = Thread::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
 
-    //         return redirect()->route('messages');
-    //     }
+            return redirect()->route('messages');
+        }
 
-    //     // show current user in list if not a current participant
-    //     // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
+        // show current user in list if not a current participant
+        // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
 
-    //     // don't show the current user in list
-    //     $userId = Auth::id();
-    //     $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
+        // don't show the current user in list
+        $userId = Auth::id();
+        $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
 
-    //     $thread->markAsRead($userId);
+        $thread->markAsRead($userId);
 
-    //     return view('messenger.show', compact('thread', 'users'));
-    // }
+        return view('messenger.show', compact('thread', 'users'));
+    }
 
-    // /**
-    //  * Creates a new message thread.
-    //  *
-    //  * @return mixed
-    //  */
-    // public function create()
-    // {
-    //     $users = User::where('id', '!=', Auth::id())->get();
+    /**
+     * Creates a new message thread.
+     * currently used to display modal of users to create a new thread with
+     * @return mixed
+     */
+    public function create()
+    {
+        //$users = User::where('id', '!=', Auth::id())->get(); // get all users
 
-    //     return view('messenger.create', compact('users'));
-    // }
 
-    // /**
-    //  * Stores a new message thread.
-    //  *
-    //  * @return mixed
-    //  */
-    // public function store()
-    // {
-    //     $input = Request::all();
+        $friends = Auth::user()->getFriendsList(); //display only friends to message
 
-    //     $thread = Thread::create([
-    //         'subject' => $input['subject'],
-    //     ]);
 
-    //     // Message
-    //     Message::create([
-    //         'thread_id' => $thread->id,
-    //         'user_id' => Auth::id(),
-    //         'body' => $input['message'],
-    //     ]);
+        return response()->json($friends);
+    }
 
-    //     // Sender
-    //     Participant::create([
-    //         'thread_id' => $thread->id,
-    //         'user_id' => Auth::id(),
-    //         'last_read' => new Carbon(),
-    //     ]);
+    /**
+     * Stores a new message thread.
+     * 
+     *
+     * @return mixed
+     */
+    public function store($userId)
+    {
 
-    //     // Recipients
-    //     if (Request::has('recipients')) {
-    //         $thread->addParticipant($input['recipients']);
-    //     }
+        //creating both objects for now
+        $thread = Thread::create([
+            'subject' => 'New Message',
+        ]);
 
-    //     return redirect()->route('messages');
-    // }
+        $convo = Conversation::create([
+            'sender' => Auth::id(),
+            'recipient' => $userId,
+            'threadId' => $thread->id,
+        ]);
+
+
+        return redirect()->route('messages');
+    }
 
     // /**
     //  * Adds a new message to a current thread.

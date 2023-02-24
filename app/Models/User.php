@@ -12,6 +12,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Multicaret\Acquaintances\Traits\Friendable;
 use Cmgmyr\Messenger\Traits\Messagable;
 
+
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Friendable, Messagable;
@@ -52,25 +54,35 @@ class User extends Authenticatable
     {
         return $this->hasMany(Album::class);
     }
-    public function collections(): HasOne
+    public function collections(): HasMany
     {
-        return $this->hasOne(Collection::class);
+        return $this->hasMany(Collection::class);
     }
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
-    public function wishlists(): HasMany
+    public function wishlists(): HasOne
     {
-        return $this->hasMany(Wishlist::class);
+        return $this->hasOne(Wishlist::class);
     }
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
-    public function x()
+    public function getFriendsList()
     {
-        return "User: " . $this->name . " Admin: " . $this->is_admin;
+        $friends = $this->getFriends();
+        $friendList = [];
+
+        foreach ($friends as $friend) {
+            error_log("Found friend: " . $friend->name . "... adding to list");
+            $friendList[] = [
+                'id' => $friend->id,
+                'name' => $friend->name,
+            ];
+        }
+        return $friendList;
     }
 
     public function toSearchableArray(): array

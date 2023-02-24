@@ -9,7 +9,7 @@ import Collection from "@/Pages/Dashboard/Partials/Collection";
 import Album from "./Partials/Album";
 import { HandThumbUpIcon } from "@heroicons/react/24/solid";
 
-export default function Index({ auth, collection_albums, collection, albums }) {
+export default function Index({ auth, collection_albums, collections, albums }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         collection_name: "",
     });
@@ -27,95 +27,50 @@ export default function Index({ auth, collection_albums, collection, albums }) {
             <Head title="Collection" />
             <div className="flex flex-col">
                 <div className="p-4 sm:p-6 lg:p-8 ml-10">
-                    {collection == null ? (
-                        <form name="createForm" onSubmit={submit}>
-                            <div className="flex flex-col">
-                                {/* FIXME:
-                                 *  if there are no collections at all --> can't add collection
-                                 *  changed it to != null for now
-                                 */}
-                                <div className="mb-4">
-                                    <label className="">Title</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-4 py-2"
-                                        label="Collection Name"
-                                        name="collection_name"
-                                        value={data.collection_name}
-                                        onChange={(e) =>
-                                            setData(
-                                                "collection_name",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                    <InputError
-                                        message={errors.collection_name}
-                                        className="mt-2"
-                                    />
-                                    <button
-                                        type="submit"
-                                        className="px-6 py-2 font-bold text-white bg-green-500 rounded"
-                                    >
-                                        Create Collection
-                                    </button>
-                                </div>
+                    <form name="createForm" onSubmit={submit}>
+                        <div className="flex flex-col">
+                            <div className="mb-4">
+                                <label className="">Title</label>
+                                <input
+                                    type="text"
+                                    className="w-full px-4 py-2"
+                                    label="Collection Name"
+                                    name="collection_name"
+                                    value={data.collection_name}
+                                    onChange={(e) =>
+                                        setData(
+                                            "collection_name",
+                                            e.target.value
+                                        )
+                                    }
+                                />
+                                <InputError
+                                    message={errors.collection_name}
+                                    className="mt-2"
+                                />
+                                <button
+                                    type="submit"
+                                    className="px-6 py-2 font-bold text-white bg-green-500 rounded"
+                                >
+                                    Create Collection
+                                </button>
                             </div>
-                        </form>
-                    ) : (
+                        </div>
+                    </form>
+                    <div>
                         <div>
-                            <div>
+                            {collections.map((collection) =>
                                 <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
                                     <Collection
                                         key={collection.id}
                                         collection={collection}
                                     />
                                 </div>
-                                <div className="w-full">
-                                    <table className="w-full table-auto">
-                                        <thead>
-                                            <th>Album</th>
-                                            <th>Artist</th>
-                                            <th>Value</th>
-                                        </thead>
-                                        {collection_albums.map((collection_album) =>
-                                            albums.map((album) =>
-                                                album.id ==
-                                                    collection_album.album_id &&
-                                                    collection_album.collection_id ==
-                                                    collection.id ? (
-                                                    // <Album
-                                                    //     key={album.id}
-                                                    //     album={album}
-                                                    // />
-                                                    <tbody>
-                                                        <td className="flex flex-row w-12">
-                                                            <img
-                                                                className="rounded-t-lg md:h-full md:w-20 md:rounded-none md:rounded-l-lg mr-5"
-                                                                src={album.cover_image_url}
-                                                                alt=""
-                                                            />
-                                                            <p className="pt-2">{album.album_name}</p>
-                                                        </td>
-                                                        <td>
-                                                            {album.artist}
-                                                        </td>
-                                                        <td>
-                                                            {album.value}$
-                                                        </td>
-                                                    </tbody>
-                                                ) : (
-                                                    <div></div>
-                                                )
-                                            )
-                                        )}
-                                    </table>
-                                </div>
-                            </div>
+                            )}
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
-        </AuthenticatedLayout >
+        </AuthenticatedLayout>
     );
 }

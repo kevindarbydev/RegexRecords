@@ -6,7 +6,7 @@ import { useForm, Head } from "@inertiajs/react";
 import Album from "./Partials/Album";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
-export default function Index({ auth, albums }) {
+export default function Index({ auth, albums, collections }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         album_name: "",
         artist: "",
@@ -56,7 +56,7 @@ export default function Index({ auth, albums }) {
                     </form>
                     <div className="flex flex-row flex-wrap">
                         {albums.map((album) => (
-                            <Album key={album.id} album={album} />
+                            <Album key={album.id} album={album} collections={collections} />
                         ))}
                     </div>
                 </div>

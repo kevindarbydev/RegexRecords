@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Dropdown from "@/Components/Dropdown";
 import { useForm, Head } from "@inertiajs/react";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 dayjs.extend(relativeTime);
 
-export default function Album({ album }) {
+export default function Album({ album, collections }) {
+
     const { data, setData, post, processing, reset, errors } = useForm({
-        message: album.id,
+        album_id: album.id,
+        collection_name: "",
     });
+
     const submit = (e) => {
         console.log("submit button works");
         e.preventDefault();
@@ -16,7 +21,7 @@ export default function Album({ album }) {
             onSuccess: () => reset(),
         });
         console.log("Post Passed");
-    };
+    }
 
     return (
         <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-6">
@@ -55,18 +60,32 @@ export default function Album({ album }) {
                         Added {dayjs(album.created_at).fromNow()}
                     </small>
                 </p>
-
-                <p>
-                    {" "}
-                    <button
+                {" "}
+                {/* <button
                         type="submit"
                         onClick={submit}
                         className="px-2 py-1 font-bold text-white bg-green-500 rounded hover:bg-orange-400"
                     >
                         Add to Collection
-                    </button>
-                </p>
+                    </button> */}
+                <form onSubmit={submit}>
+                    <select
+                        name="collection"
+                        onChange={(e) =>
+                            setData("collection_name", e.target.value)
+                        }
+                    >
+                        <option value="" hidden> Select a collection </option>
+                        {collections.map((collection) => (
+                            <option>{collection.collection_name}</option>
+                        ))}
+                    </select>
+
+                    <PrimaryButton className="mt-4" processing={processing}>
+                        Add to Collection
+                    </PrimaryButton>
+                </form>
             </div>
-        </div>
+        </div >
     );
 }
