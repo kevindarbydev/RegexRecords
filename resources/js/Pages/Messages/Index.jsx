@@ -4,7 +4,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DisplayConvos from "./Partials/DisplayConvos";
 import ChooseRecipientModal from "./Partials/ChooseRecipientModal";
 
-function Index({ auth, friends, messages, threads }) {
+function Index({ auth, friends, messages, conversations, errors, success }) {
     const [showModal, setShowModal] = useState(false);
     const [users, setUsers] = useState([]);
     const [csrfToken, setCsrfToken] = useState("");
@@ -38,6 +38,16 @@ function Index({ auth, friends, messages, threads }) {
     return (
         <div>
             <AuthenticatedLayout auth={auth}>
+                {errors && (
+                    <div className="alert alert-danger">
+                        {Object.values(errors).map((error, index) => (
+                            <div key={index}>{error}</div>
+                        ))}
+                    </div>
+                )}
+                {success && (
+                    <div className="alert alert-success">{success}</div>
+                )}
                 <div className="w-1/4 h-1/2 bg-gray-100  px-4 py-8">
                     <h1 className="font-medium text-lg mb-4">
                         Conversations{" "}
@@ -70,7 +80,7 @@ function Index({ auth, friends, messages, threads }) {
                     <DisplayConvos
                         friends={friends}
                         messages={messages}
-                        threads={threads}
+                        conversations={conversations}
                     />
                 </div>
             </AuthenticatedLayout>

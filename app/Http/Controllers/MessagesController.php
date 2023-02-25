@@ -32,18 +32,35 @@ class MessagesController extends Controller
         
         $friends = $user->getFriendsList();
 
-        $conversations = Conversation::where('sender', $user->id)->get();
-        $threadIds = [];
-        foreach ($conversations as $conversation) {
-            $threadIds[] = $conversation->id;
+        $conversations = Conversation::where('sender', $user->id)
+        ->orWhere('recipient', $user->id)
+        ->get();
+
+        //     $threadIds = [];
+        //     foreach ($conversations as $conversation) {
+        //         $threadIds[] = $conversation->id;
+        //         error_log($conversation->id);
+        //     }
+
+        //    $threads = Thread::whereIn('id', $threadIds)->get();
+
+        // Retrieve the message threads for the conversations
+        $threads = Thread::whereIn('id', $conversations->pluck('threadId')->toArray())->get();
+
+        // Retrieve the messages for each thread and group them by conversation
+        $messagesByConversation = [];
+        foreach ($threads as $thread) {
+            $messages = Message::where('thread_id', $thread->id)->get();
+            $conversationId = $conversations->where('threadId', $thread->id)->first()->id;
+            $messagesByConversation[$conversationId] = $messages;
+            //error_log("Content of messagesbyconversation: " . $conversationId . ": " . $messagesByConversation[$conversationId]);
         }
-       $threads = Thread::whereIn('id', $threadIds)->get();
         return Inertia::render(
             'Messages/Index',
             [
-                'messages' => $messages,
+                'conversations' => $conversations,
+                'messagesByConversation' => $messagesByConversation,
                 'friends' => $friends,
-                'threads' => $threads,
             ]
         );
     }
@@ -113,7 +130,7 @@ class MessagesController extends Controller
         ]);
 
 
-        return redirect()->route('messages.index');
+        return redirect()->back()->with('success', 'Item added successfully!');
     }
 
     // /**
