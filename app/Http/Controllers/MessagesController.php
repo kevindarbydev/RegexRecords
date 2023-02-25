@@ -28,21 +28,12 @@ class MessagesController extends Controller
     public function index(): Response
     {
         $user = auth()->user();
-        $messages = Message::where('id', $user->id)->get();
-        
+
         $friends = $user->getFriendsList();
 
         $conversations = Conversation::where('sender', $user->id)
-        ->orWhere('recipient', $user->id)
-        ->get();
-
-        //     $threadIds = [];
-        //     foreach ($conversations as $conversation) {
-        //         $threadIds[] = $conversation->id;
-        //         error_log($conversation->id);
-        //     }
-
-        //    $threads = Thread::whereIn('id', $threadIds)->get();
+            ->orWhere('recipient', $user->id)
+            ->get();
 
         // Retrieve the message threads for the conversations
         $threads = Thread::whereIn('id', $conversations->pluck('threadId')->toArray())->get();
@@ -51,8 +42,17 @@ class MessagesController extends Controller
         $messagesByConversation = [];
         foreach ($threads as $thread) {
             $messages = Message::where('thread_id', $thread->id)->get();
-            $conversationId = $conversations->where('threadId', $thread->id)->first()->id;
-            $messagesByConversation[$conversationId] = $messages;
+            $conversation = $conversations->where('threadId', $thread->id)->first();
+            $conversationId = $conversation->id;
+            $sender = User::find($conversation->sender);
+            $recipient = User::find($conversation->recipient);
+
+            $messagesByConversation[$conversationId] = [
+                'messages' => $messages,
+                'sender' => $sender->name,
+                'recipient' => $recipient->name,
+            ];
+
             //error_log("Content of messagesbyconversation: " . $conversationId . ": " . $messagesByConversation[$conversationId]);
         }
         return Inertia::render(

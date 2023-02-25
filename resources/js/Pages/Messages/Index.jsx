@@ -4,7 +4,14 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DisplayConvos from "./Partials/DisplayConvos";
 import ChooseRecipientModal from "./Partials/ChooseRecipientModal";
 
-function Index({ auth, friends, messages, conversations, errors, success }) {
+function Index({
+    auth,
+    friends,
+    messagesByConversation,
+    conversations,
+    errors,
+    success,
+}) {
     const [showModal, setShowModal] = useState(false);
     const [users, setUsers] = useState([]);
     const [csrfToken, setCsrfToken] = useState("");
@@ -79,7 +86,7 @@ function Index({ auth, friends, messages, conversations, errors, success }) {
                     )}
                     <DisplayConvos
                         friends={friends}
-                        messages={messages}
+                        messagesByConversation={messagesByConversation}
                         conversations={conversations}
                     />
                 </div>

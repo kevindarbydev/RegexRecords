@@ -58,3 +58,24 @@ body {
   margin-left: 10px;
   margin-top: 1em;
 }
+
+.convo-modal {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.modal-overlay {
+  z-index: 50;
+}
+
+.modal-content {
+  z-index: 51;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+}
