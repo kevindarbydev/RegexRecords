@@ -52,16 +52,16 @@ export default function Collection({ collection }) {
                             <span className="text-gray-800">
                                 {collection.collection_name}
                             </span>
-                            <small className="ml-2 text-sm text-gray-600">
+                            {/* <small className="ml-2 text-sm text-gray-600">
                                 {dayjs(collection.created_at).fromNow()}
-                            </small>
+                            </small> */}
                             {collection.created_at !==
                                 collection.updated_at && (
-                                    <small className="text-sm text-gray-600">
-                                        {" "}
-                                        &middot; edited
-                                    </small>
-                                )}
+                                <small className="text-sm text-gray-600">
+                                    {" "}
+                                    &middot; edited
+                                </small>
+                            )}
                         </div>
                         {collection.user_id === auth.user.id && (
                             <Dropdown>
@@ -100,8 +100,13 @@ export default function Collection({ collection }) {
                     </div>
                     <div className="flex flex-row flex-wrap">
                         <a
-                            href={route("dashboard.collections.albums", collection.id)}
-                            active={route().current("dashboard.collections.albums")}
+                            href={route(
+                                "dashboard.collections.albums",
+                                collection.id
+                            )}
+                            active={route().current(
+                                "dashboard.collections.albums"
+                            )}
                             className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-black hover:bg-gray-100 dark:hover:bg-gray-100"
                         >
                             View Collection
