@@ -88,6 +88,7 @@ function Index({
                         friends={friends}
                         messagesByConversation={messagesByConversation}
                         conversations={conversations}
+                        auth={auth}
                     />
                 </div>
             </AuthenticatedLayout>

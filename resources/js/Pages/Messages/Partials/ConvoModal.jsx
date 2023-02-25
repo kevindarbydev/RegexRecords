@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Modal from "../../../components/Modal";
 
+function ConvoModal({ conversation, convoId }) {
+    const [convo, setConvo] = useState(null);
 
-function ConvoModal({ conversation }) {
+    console.log(convoId);
+    useEffect(() => {
+        fetch(`/messages/${convoId}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setConvo(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, [convoId]);
+
+    const messages = conversation.messages || {};
+    const messageKeys = Object.keys(messages);
     return (
-        <Modal>
-            <div className="convo-modal">
-                {conversation.messages.map((message) => (
-                    <p key={message.id}>{message.body}</p>
+        <div className="modal">
+            <p className="modal-content">
+                <h3 className="text-xl font-bold underline">
+                     Conversation
+                </h3>
+                {messageKeys.map((key) => (
+                    <p key={key}>{messages[key].body}</p>
                 ))}
-            </div>
-        </Modal>
+            </p>
+        </div>
     );
 }
 

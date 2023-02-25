@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import ConvoModal from "./ConvoModal";
-function DisplayConvos({ friends, messagesByConversation, conversations }) {
+function DisplayConvos({    
+    messagesByConversation,
+    conversations,
+    auth,
+}) {
     const [selectedConversation, setSelectedConversation] = useState(null);
-    console.log("Found threads user is in: " + conversations);    
+    console.log("Found threads user is in: " + conversations);
     console.dir(messagesByConversation);
 
     // Create a new array containing conversations with sender and recipient names
     const conversationsWithNames = conversations.map((convo) => {
         const senderName = messagesByConversation[convo.id]?.sender || "";
         const recipientName = messagesByConversation[convo.id]?.recipient || "";
-        console.log("This conversation has these names: " + senderName + "|||" + recipientName);
+        console.log(
+            "This conversation has these names: " +
+                senderName +
+                "|||" +
+                recipientName
+        );
         return {
             ...convo,
             sender: senderName,
@@ -17,7 +26,7 @@ function DisplayConvos({ friends, messagesByConversation, conversations }) {
         };
     });
 
-    function handleConversationClick(convo) {
+    function handleConversationClick(convo) {        
         let selectedId = convo.id;
         let messages = messagesByConversation[selectedId];
         setSelectedConversation({
@@ -33,14 +42,18 @@ function DisplayConvos({ friends, messagesByConversation, conversations }) {
                     {conversationsWithNames.map((convo) => (
                         <li key={convo.id}>
                             <a
-                                href="#"
+                                href="javascript:void(0)"
                                 className="convo-link"
-                                onClick={() => handleConversationClick(convo)}
+                                onClick={(event) =>
+                                    handleConversationClick(convo)
+                                }
                             >
                                 <p className="text-blue-500">
-                                    hello{" "}
+                                    no messages yet....
                                     <span className="text-blue-600 opacity-75">
-                                        {convo.sender} ... {convo.recipient}
+                                        {convo.sender === auth.user.name
+                                            ? convo.recipient
+                                            : convo.sender}
                                     </span>{" "}
                                 </p>
                             </a>
@@ -50,7 +63,7 @@ function DisplayConvos({ friends, messagesByConversation, conversations }) {
             </div>
             {/* Render the conversation modal */}
             {selectedConversation && (
-                <ConvoModal conversation={selectedConversation} />
+                <ConvoModal conversation={selectedConversation} convoId={selectedConversation.id} />
             )}
         </div>
     );
