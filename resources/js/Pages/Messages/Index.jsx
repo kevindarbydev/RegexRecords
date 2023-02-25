@@ -12,6 +12,10 @@ function Index({
     errors,
     success,
 }) {
+    //TODO:
+    /*
+    implement something so that when 'esc' key is pressed, modal closes
+    */
     const [showModal, setShowModal] = useState(false);
     const [users, setUsers] = useState([]);
     const [csrfToken, setCsrfToken] = useState("");

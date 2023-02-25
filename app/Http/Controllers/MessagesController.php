@@ -65,21 +65,7 @@ class MessagesController extends Controller
         );
     }
 
-    /**
-     * Shows a message thread.
-     *
-     */
-    public function show($id)
-    {
-        $conversation = Conversation::findOrFail($id);
-
-        $messages = Message::where('thread_id', $conversation->threadId)->get();
-
-        return Inertia::render('Messages/Partials/ConvoModal', [
-            'conversation' => $conversation,
-            'messages' => $messages,
-        ]);
-    }
+ 
     /**
      * Creates a new message thread.
      * currently used to display modal of users to create a new thread with
@@ -120,44 +106,26 @@ class MessagesController extends Controller
         return redirect()->back()->with('success', 'Item added successfully!');
     }
 
-    // /**
-    //  * Adds a new message to a current thread.
-    //  *
-    //  * @param $id
-    //  * @return mixed
-    //  */
-    // public function update($id)
-    // {
-    //     try {
-    //         $thread = Thread::findOrFail($id);
-    //     } catch (ModelNotFoundException $e) {
-    //         Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
+    /**
+     * Adds a new message to a current thread.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function update($threadId, $message)
+    {
+       
 
-    //         return redirect()->route('messages');
-    //     }
+        // Message
+        Message::create([
+            'thread_id' => $threadId,
+            'user_id' => Auth::id(),
+            'body' => $message,
+        ]);
+        error_log("Message created with text: " . $message);
+      
+  
 
-    //     $thread->activateAllParticipants();
-
-    //     // Message
-    //     Message::create([
-    //         'thread_id' => $thread->id,
-    //         'user_id' => Auth::id(),
-    //         'body' => Request::input('message'),
-    //     ]);
-
-    //     // Add replier as a participant
-    //     $participant = Participant::firstOrCreate([
-    //         'thread_id' => $thread->id,
-    //         'user_id' => Auth::id(),
-    //     ]);
-    //     $participant->last_read = new Carbon();
-    //     $participant->save();
-
-    //     // Recipients
-    //     if (Request::has('recipients')) {
-    //         $thread->addParticipant(Request::input('recipients'));
-    //     }
-
-    //     return redirect()->route('messages.show', $id);
-    // }
+        return redirect()->back();
+    }
 }

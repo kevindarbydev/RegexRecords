@@ -6,8 +6,6 @@ function DisplayConvos({
     auth,
 }) {
     const [selectedConversation, setSelectedConversation] = useState(null);
-    console.log("Found threads user is in: " + conversations);
-    console.dir(messagesByConversation);
 
     // Create a new array containing conversations with sender and recipient names
     const conversationsWithNames = conversations.map((convo) => {
