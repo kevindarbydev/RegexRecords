@@ -39,7 +39,7 @@ Route::get('/csrf-token', function () {
 // DASHBOARD
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('/albums', [AlbumController::class, 'index'])->name('dashboard.index');
-    Route::get('/albums/store', [AlbumController::class, 'store'])->name('dashboard.albums.store');
+    Route::post('/albums/store', [AlbumController::class, 'store'])->name('dashboard.albums.store');
     Route::get('/albums/{album}', [AlbumController::class, 'show'])->name('dashboard.albums.show');
     Route::post('/albums', [AlbumController::class, 'addAlbumToCollection'])->name('dashboard.album.to.collection');
     // -------------------------
