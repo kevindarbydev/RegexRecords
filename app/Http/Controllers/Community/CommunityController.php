@@ -46,9 +46,16 @@ class CommunityController extends Controller
     {
         $loggedInUser = Auth()->user();
 
-        $loggedInUser->befriend($user);
+        if ($loggedInUser->isFriendWith($user)) {
 
+            return redirect(route('community.search'))->with('warning', 'Already friends!');
+        } else if ($loggedInUser->hasSentFriendRequestTo($user)) {
 
-        return redirect(route('friends.index'));
+            return redirect(route('community.search'))->with('warning', 'Friend request already sent!');
+        } else {
+
+            $loggedInUser->befriend($user);
+            return redirect(route('friends.index'))->with('success', 'Friend request sent!');
+        }
     }
 }
