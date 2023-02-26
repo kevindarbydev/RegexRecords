@@ -38,7 +38,7 @@ class OrderController extends Controller
  
         $request->user()->orders()->create($validated);
  
-        return redirect(route('marketplace.orders'));
+        return redirect(route('orders.index'));
     }
 
     //Update Orders
@@ -55,7 +55,7 @@ class OrderController extends Controller
  
         $order->update($validated);
  
-        return redirect(route('marketplace.orders'));
+        return redirect(route('orders.index'));
     }
 
     //Delete Orders
@@ -65,6 +65,6 @@ class OrderController extends Controller
  
         $order->delete();
  
-        return redirect(route('marketplace.orders'));
+        return redirect(route('orders.index'));
     }
 }
