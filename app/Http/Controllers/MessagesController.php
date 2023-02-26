@@ -9,8 +9,9 @@ use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Participant;
 use Cmgmyr\Messenger\Models\Thread;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -88,7 +89,7 @@ class MessagesController extends Controller
      *
      * @return mixed
      */
-    public function store($userId)
+    public function store($userId): RedirectResponse
     {
         error_log("here");
         //creating both objects for now
@@ -101,20 +102,22 @@ class MessagesController extends Controller
             'recipient' => $userId,
             'threadId' => $thread->id,
         ]);
+        //TODO: close "Choose recipient modal" and open convoModal of the new conversation
 
-
-        return redirect()->back()->with('success', 'Item added successfully!');
+        return Inertia::render('Messages/Index');
+       
     }
 
-    /**
-     * Adds a new message to a current thread.
-     *
-     * @param $id
-     * @return mixed
-     */
-    public function update($threadId, $message)
+    
+    public function update(Request $request): RedirectResponse
     {
-       
+
+        $message = $request->input('message');
+        $threadId = $request->input('threadId');
+        $myStr = "Found data: " . $message . "" . $threadId;
+        error_log($myStr);
+        // error_log("Received message: " . $message);
+        // error_log("Received threadId: " . $threadId);
 
         // Message
         Message::create([
@@ -122,7 +125,7 @@ class MessagesController extends Controller
             'user_id' => Auth::id(),
             'body' => $message,
         ]);
-        error_log("Message created with text: " . $message);
+       
       
   
 

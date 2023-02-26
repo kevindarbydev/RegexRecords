@@ -4,24 +4,26 @@ import axios from "axios";
 
 function ConvoModal({ conversation, convoId }) {
     const [convo, setConvo] = useState(null);
+    const [messages, setMessages] = useState(null);
     const [newMessage, setNewMessage] = useState("");
-   
-    // useEffect(() => {
-    //     fetch(`/messages/${convoId}`)
-    //         .then((response) => response.json())
-    //         .then((data) => {
+    
+    useEffect(() => {
+        fetch(`/messages/${convoId}`)
+            .then((response) => response.json())
+            .then((data) => {
                 
-    //             console.log("response data: " + data);
-    //         })
-    //         .catch((error) => {
-    //             console.error("Response error: " + error);
-    //         });
-    // }, [convoId]);
-
-    const messages = conversation.messages || {};
-    const messageKeys = Object.keys(messages);
+                console.log("response data: " + data);
+            })
+            .catch((error) => {
+                console.error("Response error: " + error);
+            });
+    }, [convoId]);
+    console.dir(conversation.messages.messages);
+    const msgs = conversation.messages.messages || {};
+    //const messageKeys = Object.keys(msgs);
     
-    
+    // console.log("m" + messages.length);
+    // console.log("MK " + messageKeys);
     const handleNewMessageChange = (e) => {
         setNewMessage(e.target.value);
     };
@@ -31,6 +33,7 @@ function ConvoModal({ conversation, convoId }) {
          if (newMessage.trim() === "") {
              return; // message is empty, do not send
          }
+      
         // Add the new message to the conversation's messages array        
        const newMessages = Array.isArray(messages)
            ? [...messages, { body: newMessage }]
@@ -38,9 +41,12 @@ function ConvoModal({ conversation, convoId }) {
 
         const newConversation = { ...conversation, messages: newMessages };
         axios
-            .post(`/messages/${convoId}`, { newMessage })
+            .post(`/messages/${convoId}`, {
+                message: newMessage,
+                threadId: convoId,
+            })
             .then(() => {
-                setConversation(newConversation);
+                setConvo(newConversation);
                 setNewMessage("");
             })
             .catch((error) => {
@@ -53,10 +59,16 @@ function ConvoModal({ conversation, convoId }) {
             <div className="modal-content">
                 <h2 className="text-lg font-medium mb-4">Conversation</h2>
 
-                {messages.length > 0 ? (
+                {msgs.length > 0 ? (
                     <p className="text-gray-700 text-lg">
-                        {messageKeys.map((key) => (
-                            <p key={key}>{messages[key].body}</p>
+                        {msgs.map((key, index) => (
+                            <p key={key}>
+                                {msgs[index].body}|||{" "}
+                                <span className="text-blue-500 opacity-75">
+                                    {" "}
+                                    sent at {msgs[index].created_at}{" "}
+                                </span>
+                            </p>
                         ))}
                     </p>
                 ) : (
@@ -72,7 +84,7 @@ function ConvoModal({ conversation, convoId }) {
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
                     />
-                    <button className="bg-blue-500 text-white py-2 px-4 rounded">
+                    <button className="bg-blue-500 text-white py-2 px-4 rounded ml-4">
                         Send
                     </button>
                 </form>

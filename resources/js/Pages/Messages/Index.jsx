@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DisplayConvos from "./Partials/DisplayConvos";
 import ChooseRecipientModal from "./Partials/ChooseRecipientModal";
+import { Head } from "@inertiajs/react";
+
 
 function Index({
     auth,
@@ -48,6 +50,7 @@ function Index({
 
     return (
         <div>
+            <Head title="Messages" />;
             <AuthenticatedLayout auth={auth}>
                 {errors && (
                     <div className="alert alert-danger">
