@@ -26,6 +26,7 @@ function Index({
 
      function handleModalClose() {
          setShowModal(false);
+         location.reload();
      }
 
     

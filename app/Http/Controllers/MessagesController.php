@@ -91,7 +91,32 @@ class MessagesController extends Controller
      */
     public function store($userId): Response
     {
-        error_log("here");
+
+        // Check if conversation already exists between the current user and the second user
+        $conversationExists = Conversation::where(function ($query) use ($userId) {
+            $query->where('sender', Auth::id())
+                ->where('recipient', $userId);
+        })->orWhere(function ($query) use ($userId) {
+            $query->where('sender', $userId)
+                ->where('recipient', Auth::id());
+        })->exists();
+
+        if ($conversationExists){
+            return Inertia::render('Messages/Index');
+        }
+        // // If conversation exists, redirect to the existing conversation
+        // if ($conversationExists) {
+        //     $conversation = Conversation::where(function ($query) use ($userId) {
+        //         $query->where('sender', Auth::id())
+        //             ->where('recipient', $userId);
+        //     })->orWhere(function ($query) use ($userId) {
+        //         $query->where('sender', $userId)
+        //             ->where('recipient', Auth::id());
+        //     })->first();
+
+        //     return redirect()->route('messages.show', $conversation->id);
+        // }
+
         //creating both objects for now
         $thread = Thread::create([
             'subject' => 'New Message',
@@ -102,7 +127,7 @@ class MessagesController extends Controller
             'recipient' => $userId,
             'threadId' => $thread->id,
         ]);
-        //TODO: close "Choose recipient modal" and open convoModal of the new conversation
+        //TODO:open convoModal of the new conversation
 
         return Inertia::render('Messages/Index');
        
