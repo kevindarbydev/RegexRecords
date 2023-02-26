@@ -13,6 +13,7 @@ export default function Index({
     recentAlbums,
     topPicks,
     selectedSubgenre,
+    featureLetter,
 }) {
     return (
         <AuthenticatedLayout auth={auth}>
@@ -28,7 +29,9 @@ export default function Index({
             <h1 className="text-4xl m-4">Top Picks in {selectedSubgenre}:</h1>
             <TopPicks topPicks={topPicks} collections={collections} />
 
-            <h1 className="text-4xl m-4">Spotlight: "B" Artists</h1>
+            <h1 className="text-4xl m-4">
+                Spotlight: "{featureLetter}" Artists
+            </h1>
             <Spotlight
                 spotlightAlbums={spotlightAlbums}
                 collections={collections}

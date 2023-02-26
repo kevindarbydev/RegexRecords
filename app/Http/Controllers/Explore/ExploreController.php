@@ -23,21 +23,46 @@ class ExploreController extends Controller
         $limit = 4;
 
 
-        //? SPOTLIGHT: ARTISTS BY STARTING LETTER
-        $name = 'B';
-        $spotlightAlbums = Album::where(function ($query) use ($name) {
-            $query->where('artist', 'like',  $name . '%');
+        //? ----- SPOTLIGHT: ARTISTS BY STARTING LETTER -----
+        // this section cycles through a random letter and if records are found, will display them. If records not found, it rerolls letters until it finds records
+
+        function randomLetter()
+        {
+            $int = rand(0, 25);
+            $letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            $letter = $letters[$int];
+            return $letter;
+        }
+
+        $letter = randomLetter();
+        // error_log("the first letter searched " . $letter);
+
+
+        $spotlightAlbums = Album::where(function ($query) use ($letter) {
+            $query->where('artist', 'like',  $letter . '%');
         })
             ->limit($limit)->inRandomOrder()->get();
+        $featureLetter = $letter;
+
+        while ($spotlightAlbums->isEmpty()) {
+
+            $letter = randomLetter();
+            // error_log("rerolled, new letter is " . $letter);
+            $spotlightAlbums = Album::where(function ($query) use ($letter) {
+                $query->where('artist', 'like',  $letter . '%');
+            })
+                ->limit($limit)->inRandomOrder()->get();
+            $featureLetter = $letter;
+        }
 
 
-        //? NEW RELEASES: ALBUMS THIS WEEK
+        //? ----- NEW RELEASES: ALBUMS THIS WEEK -----
         //TODO: check this next week
         $recentAlbums = Album::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::MONDAY), Carbon::now()->endOfWeek(Carbon::SUNDAY)])->inRandomOrder()->limit($limit)->get();
 
 
-        //? TOP PICKS: BY SUBGENRE
-        // dynamically cycles content every day
+        //? -----  TOP PICKS: BY SUBGENRE -----
+        // dynamically cycles content by subgenre, different every day
 
         function process($subgenreList)
         {
@@ -51,7 +76,7 @@ class ExploreController extends Controller
         // days are 0-6 where sunday is 0, monday is 1, etc
         switch ($weekday) {
             case 0:
-                $subgenreList = ["Melodic Hardcore", "Punk", "Hardcore"];
+                $subgenreList = ["Punk", "Melodic Hardcore", "Hardcore"];
                 $selectedSubgenre = "Punk";
                 $subgenre = process($subgenreList);
                 break;
@@ -100,12 +125,10 @@ class ExploreController extends Controller
             ->get();
 
         // if query fails this moves the weekday forward in an attempt to render other content instead of blank results
-        if (!$topPicks) {
-            $weekday++;
-            if ($weekday > 6) {
-                $weekday = 0;
-            }
-        }
+        // TODO: needs work, leaving it for now
+        // while ($topPicks->isEmpty()) {
+        //     $weekday++;
+        // }
 
         // error_log($topPicks);
 
@@ -113,6 +136,7 @@ class ExploreController extends Controller
         return Inertia::render(
             'Explore/Index',
             [
+                'featureLetter' => $featureLetter,
                 'selectedSubgenre' => $selectedSubgenre,
                 'topPicks' => $topPicks,
                 'recentAlbums' => $recentAlbums,
@@ -126,10 +150,10 @@ class ExploreController extends Controller
     {
         $albums = Album::all();
         $totalAlbums = count($albums);
-        $perPage = 3;
+        // $perPage = 3;
 
         return Inertia::render('Explore/ViewAllAlbums', [
-            'perPage' => $perPage,
+            // 'perPage' => $perPage,
             'totalAlbums' => $totalAlbums,
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
             'albums' => Album::all(),
