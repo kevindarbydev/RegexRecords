@@ -22,24 +22,32 @@ class CommunityController extends Controller
 
     public function search(Request $request): Response
     {
-        //TODO:
-        // prevent "add friend" button if friend is already added
-        $users = User::where(function ($query) use ($request) {
-            $query->where('name', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('email', 'LIKE', '%' . $request->search . '%');
-        })
-            ->where(function ($query) {
-                $query->where('id', '!=', Auth::user()->id); //preventing logged in user from showing up as querry
+        $keySearch = $request->search;
+
+        if ($keySearch != "") {
+            $users = User::where(function ($query) use ($request) {
+                $query->where('name', 'LIKE', '%' . $request->search . '%')
+                    ->orWhere('email', 'LIKE', '%' . $request->search . '%');
             })
-            ->latest()->get();
-        return Inertia::render('Community/Search', [
-            'users' => $users
-        ]);
+                ->where(function ($query) {
+                    $query->where('id', '!=', Auth::user()->id); //preventing logged in user from showing up as querry
+                })
+                ->latest()->get();
+            return Inertia::render('Community/Search', [
+                'users' => $users
+            ]);
+        } else {
+            //return empty array if keysearch is just spaces
+            $users = [];
+            return Inertia::render('Community/Search', [
+                'users' => $users
+            ]);
+        }
     }
 
     public function searchPost(Request $request): RedirectResponse
     {
-        return redirect()->route('community.search', ['search' => $request->search]);
+        return redirect()->route('community.search', ['search' => $request->search])->with('success', 'Search results!');;
     }
 
     public function addFriend(Request $request, User $user): RedirectResponse

@@ -6,6 +6,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
 import FlashMessage from "@/Components/FlashMessage";
+import SearchBar from "@/Pages/Community/Partials/SearchBar";
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -88,6 +89,8 @@ export default function Authenticated({ auth, header, children }) {
                                         Marketplace
                                     </span>
                                 </NavLink>
+                                {/* FIXME: responsive overlap with icons */}
+                                <SearchBar />
                             </div>
                         </div>
 

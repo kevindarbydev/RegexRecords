@@ -19,16 +19,6 @@ export default function CommunityTabs() {
                     </NavLink>
                 </Tab>
                 <Tab>
-                    <NavLink
-                        href={route("community.search")}
-                        active={route().current("community.search")}
-                    >
-                        <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Search
-                        </span>
-                    </NavLink>
-                </Tab>
-                <Tab>
                     {" "}
                     <NavLink
                         href={route("messages.index")}
