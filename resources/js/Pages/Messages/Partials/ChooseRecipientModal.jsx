@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function ChooseRecipientModal({ users, csrf, onClose }) {
-     console.log(csrf);
+    useEffect(() => {
+        function handleKeyDown(event) {
+            if (event.keyCode === 27) {
+                onClose();
+                console.log("Escape key pressed");
+            }
+        }
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, []);
+
     function handleSelectUser(user, event) {
-        event.preventDefault();       
-        var id = user.id;      
+        event.preventDefault();
+        var id = user.id;
         console.log("HERE");
         fetch(route("messages.store", { userId: id }), {
             method: "POST",

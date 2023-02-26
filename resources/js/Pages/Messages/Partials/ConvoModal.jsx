@@ -5,7 +5,23 @@ function ConvoModal({ conversation, convoId }) {
     const [convo, setConvo] = useState(null);
     const [messages, setMessages] = useState(null);
     const [newMessage, setNewMessage] = useState("");
-    
+
+
+     useEffect(() => {
+         function handleKeyDown(event) {
+             if (event.keyCode === 27) {
+                 onClose();
+                 console.log("Escape key pressed");
+             }
+         }
+
+         document.addEventListener("keydown", handleKeyDown);
+
+         return () => {
+             document.removeEventListener("keydown", handleKeyDown);
+         };
+     }, []);
+     
     useEffect(() => {
         fetch(`/messages/${convoId}`)
             .then((response) => response.json())

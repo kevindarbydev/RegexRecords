@@ -25,8 +25,7 @@ function Index({
 
 
      function handleModalClose() {
-         setShowModal(false);
-         location.reload();
+         setShowModal(false);         
      }
 
     
@@ -59,7 +58,7 @@ function Index({
 
     return (
         <div>
-            <Head title="Messages" />;
+            <Head title="Messages" />
             <AuthenticatedLayout auth={auth}>
                 {errors && (
                     <div className="alert alert-danger">
