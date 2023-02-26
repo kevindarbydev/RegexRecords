@@ -28,16 +28,6 @@ class CollectionController extends Controller
         ]);
     }
 
-    // show albums in collection
-    public function showAlbums(Collection $collection): Response
-    {
-        return Inertia::render('Collections/Collection_Albums', [
-            'collection' => Collection::with('user')->where('id', $collection->id)->first(),
-            'collection_albums' => Collection_Album::with('collection', 'album')->latest()->get(),
-            'albums' => Album::with('user')->latest()->get(),
-        ]);
-    }
-
     // add collection 
     public function store(Request $request): RedirectResponse
     {

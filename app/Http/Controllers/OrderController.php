@@ -15,30 +15,16 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //Show/Read orders
     public function index(): Response
     {
-        return Inertia::render('Orders/Index', [
-            'orders' => Order::with('user')->where('user_id', Auth::user()->id)->get(),
+        return Inertia::render('Marketplace/Orders', [
             'order_items' => Order_Item::with('order','album')->latest()->get(),
-            'albums' => Album::with('user')->latest()->get(),
 
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    //Create orders
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -53,25 +39,7 @@ class OrderController extends Controller
         return redirect(route('orders.index'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Order $order): Response
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Order $order): Response
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    //Update Orders
     public function update(Request $request, Order $order): RedirectResponse
     {
         $this->authorize('update', $order);
@@ -88,9 +56,7 @@ class OrderController extends Controller
         return redirect(route('orders.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    //Delete Orders
     public function destroy(Order $order): RedirectResponse
     {
         $this->authorize('delete', $order);

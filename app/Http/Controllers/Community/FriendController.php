@@ -23,7 +23,8 @@ class FriendController extends Controller
 
         return Inertia::render('Community/Friends', [
             'currentFriendships' => $currentFriendships,
-            'pendingFriendships'  => $pendingFriendships
+            'pendingFriendships'  => $pendingFriendships,
+            'current_user' => $user,
         ]);
     }
 

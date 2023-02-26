@@ -1,9 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function ChooseRecipientModal({ users, csrf }) {
-     console.log(csrf);
-    function handleSelectUser(user) {       
-        var id = user.id;      
+function ChooseRecipientModal({ users, csrf, onClose }) {
+    useEffect(() => {
+        function handleKeyDown(event) {
+            if (event.keyCode === 27) {
+                onClose(); //closes modal window                
+            }
+        }
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, []);
+
+    function handleSelectUser(user, event) {
+        event.preventDefault();
+        var id = user.id;
         console.log("HERE");
         fetch(route("messages.store", { userId: id }), {
             method: "POST",
@@ -14,9 +27,7 @@ function ChooseRecipientModal({ users, csrf }) {
             body: JSON.stringify({ user_id: id }),
         })
             .then((response) => response.json())
-            .then((data) => {
-                console.log("New conversation created:", data);
-            })
+            .then(onClose())
             .catch((error) => console.error(error));
     }
     return (
@@ -30,8 +41,8 @@ function ChooseRecipientModal({ users, csrf }) {
                         <span className="mt-2">{user.name}</span>
                         <a
                             className="mt-2"
-                            href={route("messages.store", user.id)}
-                           
+                            href="#"
+                            onClick={(event) => handleSelectUser(user, event)}
                         >
                             +
                         </a>

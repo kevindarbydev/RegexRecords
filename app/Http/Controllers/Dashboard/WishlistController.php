@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
+    //Display Wishlist Albums
     public function index(): Response {
         
         return Inertia::render('Dashboard/Wishlists', [
@@ -22,4 +23,6 @@ class WishlistController extends Controller
 
         ]);
     }
+    
+    
 }

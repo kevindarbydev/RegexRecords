@@ -14,5 +14,6 @@ class Conversation extends Model
     protected $fillable = [        
         'sender',
         'recipient',
+        'threadId',
     ];
 }

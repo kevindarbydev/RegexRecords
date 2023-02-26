@@ -5,6 +5,7 @@ import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
+import FlashMessage from "@/Components/FlashMessage";
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -117,40 +118,36 @@ export default function Authenticated({ auth, header, children }) {
                             {/* Cart */}
                             <div className="ml-3 ">
                                 <Dropdown>
-                                        <Dropdown.Trigger>
+                                    <Dropdown.Trigger>
                                         <button
-                                    type="button"
-                                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                                                  >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="w-6 h-6"
-                                    >
-                                        <path
-                                        
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                                        />
-                                    </svg>
-                                </button>
-                                        </Dropdown.Trigger>
-                                        <Dropdown.Content>
-                                            {"ORDER LIST"}
+                                            type="button"
+                                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth={1.5}
+                                                stroke="currentColor"
+                                                className="w-6 h-6"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                                                />
+                                            </svg>
+                                        </button>
+                                    </Dropdown.Trigger>
+                                    <Dropdown.Content>
+                                        {"ORDER LIST"}
                                         <Dropdown.Link
                                             href={route("orders.index")}
                                         >
                                             Checkout
                                         </Dropdown.Link>
                                     </Dropdown.Content>
-                                    
                                 </Dropdown>
-                                
-
                             </div>
                             {/* Profile */}
                             <div className="ml-3 ">
@@ -304,7 +301,7 @@ export default function Authenticated({ auth, header, children }) {
                     </div>
                 </header>
             )} */}
-
+            <FlashMessage />
             <main>{children}</main>
         </div>
     );

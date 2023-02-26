@@ -1,112 +1,102 @@
 import React, { useState } from "react";
+import ConvoModal from "./ConvoModal";
 
-function DisplayConvos({ friends, messages, threads }) {
-    console.log("Found threads user is in: " + threads);
-      console.log(messages);
+function DisplayConvos({ messagesByConversation, conversations, auth }) {
+    const [selectedConversation, setSelectedConversation] = useState(null);
+
+    // Create a new array containing conversations with sender and recipient names and the most recent message
+    const conversationsWithNames = conversations.map((convo) => {
+        console.dir(messagesByConversation[convo.id].messages);
+        console.log(messagesByConversation[convo.id].messages.length);
+        let index = messagesByConversation[convo.id].messages.length - 1;
+        if (index >= 0) {
+            console.log(messagesByConversation[convo.id].messages[index].body);
+        }
+
+        const senderName = messagesByConversation[convo.id]?.sender || "";
+        const recipientName = messagesByConversation[convo.id]?.recipient || "";
+
+       
+        const mostRecentMessage =
+            messagesByConversation[convo.id]?.messages?.reduce(
+                (prev, current) => {
+                    return new Date(prev.created_at) >
+                        new Date(current.created_at)
+                        ? prev
+                        : current;
+                },
+                {}
+            ).body || "";
+
+        console.log(
+            "This conversation has these names: " +
+                senderName +
+                "," +
+                recipientName +
+                " AND most recent msg: " +
+                mostRecentMessage
+        );
+        return {
+            ...convo,
+            sender: senderName,
+            recipient: recipientName,
+            mostRecentMessage: mostRecentMessage,
+        };
+    });
+
+
+    
+     function handleModalClose() {
+         setSelectedConversation(null);
+     }
+
+    function handleConversationClick(convo) {
+        let selectedId = convo.id;
+        let messages = messagesByConversation[selectedId];
+        setSelectedConversation({
+            ...convo,
+            messages: messages || [],
+        });
+    }
 
     return (
         <div>
             <div className="flex h-screen">
                 <ul className="space-y-4">
-                  
-                    {/* {threads.map((thread) => (
-                        <div key={thread.id}>
-                            {thread.participants.map((participant) => (
-                                <div key={participant.user.id}>
-                                    <img
-                                        src={participant.user.avatar}
-                                        alt={participant.user.name}
-                                    />
-                                    <span>{participant.user.name}</span>
+                    {conversationsWithNames.map((convo) => (
+                        <li key={convo.id}>
+                            <a
+                                href="javascript:void(0)"
+                                className="convo-link"
+                                onClick={(event) =>
+                                    handleConversationClick(convo)
+                                }
+                            >
+                                <div className="flex justify-between">
+                                    <p className="text-blue-500">
+                                        {convo.mostRecentMessage}
+                                    </p>
+                                    <span className="text-blue-600 opacity-75 self-end">
+                                        {convo.sender === auth.user.name
+                                            ? convo.recipient
+                                            : convo.sender}
+                                    </span>
                                 </div>
-                            ))}
-                            <span>{thread.messages.last().body}</span>
-                        </div>
-                    ))} */}
+                            </a>
+                        </li>
+                    ))}
                 </ul>
             </div>
+            {/* Render the conversation modal */}
+            {selectedConversation && (
+                <ConvoModal
+                    conversation={selectedConversation}
+                    convoId={selectedConversation.id}
+                    onClose={handleModalClose}
+                />
+            )}
         </div>
     );
 }
 
 export default DisplayConvos;
-
-{
-    /* {friends['friends'].length > 0 ? (
-                <ul>
-                    {friends['friends'].map((friend) => (
-                        <li key={friend.id}>
-                            <button
-                                onClick={() => handleSendButtonClick(friend)}
-                            >
-                                Send message to {friend.name}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No friends found.</p>
-            )} */
-
-    {
-        /* <div className="flex-1">
-                                <h2 className="font-medium">John Doe</h2>
-                                <p className="text-gray-500">
-                                    Hey, how's it going?
-                                </p>
-                            </div>
-                            <span className="text-sm text-gray-500">
-                                2:30pm
-                            </span>
-                        </li>
-                        <li className="flex items-center space-x-4">
-                            <div className="flex-1">
-                                <h2 className="font-medium">John Doe</h2>
-                                <p className="text-gray-500">
-                                    Hey, how's it going?
-                                </p>
-                            </div>
-                            <span className="text-sm text-gray-500">
-                                2:30pm
-                            </span>
-                        </li>
-                        <li className="flex items-center space-x-4">
-                            <div className="flex-1">
-                                <h2 className="font-medium">John Doe</h2>
-                                <p className="text-gray-500">
-                                    Hey, how's it going?
-                                </p>
-                            </div>
-                            <span className="text-sm text-gray-500">
-                                2:30pm
-                            </span>*/
-    }
-
-    // {messages && messages.length > 0 ? (
-    //                         messages.map((message) => (
-    //                             <li
-    //                                 key={message.id}
-    //                                 className="flex items-center space-x-4"
-    //                             >
-    //                                 {/* <img
-    //                                     src="/avatar.jpg"
-    //                                     alt="Avatar"
-    //                                     className="w-8 h-8 rounded-full"
-    //                                 /> 
-    //                                 <div className="flex-1">
-    //                                     <h2 className="font-medium">
-    //                                         {message.sender.name}
-    //                                     </h2>
-    //                                     <p className="text-gray-500">
-    //                                         {message.body}
-    //                                     </p>
-    //                                 </div>
-    //                                 <span className="text-sm text-gray-500">
-    //                                     {message.created_at}
-    //                                 </span>
-    //                             </li>
-    //                         ))
-    //                     ) : (
-    //                         <p>No messages found.</p>
-    //                     )} 
-}

@@ -9,8 +9,9 @@ use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Participant;
 use Cmgmyr\Messenger\Models\Thread;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -28,50 +29,44 @@ class MessagesController extends Controller
     public function index(): Response
     {
         $user = auth()->user();
-        $messages = Message::where('id', $user->id)->get();
-        
+
         $friends = $user->getFriendsList();
 
-        $conversations = Conversation::all();
-       $threads = Thread::getAllLatest();
+        $conversations = Conversation::where('sender', $user->id)
+            ->orWhere('recipient', $user->id)
+            ->get();
+
+        // Retrieve the message threads for the conversations
+        $threads = Thread::whereIn('id', $conversations->pluck('threadId')->toArray())->get();
+
+        // Retrieve the messages for each thread and group them by conversation
+        $messagesByConversation = [];
+        foreach ($threads as $thread) {
+            $messages = Message::where('thread_id', $thread->id)->get();
+            $conversation = $conversations->where('threadId', $thread->id)->first();
+            $conversationId = $conversation->id;
+            $sender = User::find($conversation->sender);
+            $recipient = User::find($conversation->recipient);
+
+            $messagesByConversation[$conversationId] = [
+                'messages' => $messages,
+                'sender' => $sender->name,
+                'recipient' => $recipient->name,
+            ];
+
+            //error_log("Content of messagesbyconversation: " . $conversationId . ": " . $messagesByConversation[$conversationId]);
+        }
         return Inertia::render(
             'Messages/Index',
             [
-                'messages' => $messages,
+                'conversations' => $conversations,
+                'messagesByConversation' => $messagesByConversation,
                 'friends' => $friends,
-                'threads' => $conversations,
             ]
         );
     }
 
-    /**
-     * Shows a message thread.
-     *
-     * @param $id
-     * @return mixed
-     */
-    public function show($id)
-    {
-        try {
-            $thread = Thread::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
-
-            return redirect()->route('messages');
-        }
-
-        // show current user in list if not a current participant
-        // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
-
-        // don't show the current user in list
-        $userId = Auth::id();
-        $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
-
-        $thread->markAsRead($userId);
-
-        return view('messenger.show', compact('thread', 'users'));
-    }
-
+ 
     /**
      * Creates a new message thread.
      * currently used to display modal of users to create a new thread with
@@ -94,8 +89,33 @@ class MessagesController extends Controller
      *
      * @return mixed
      */
-    public function store($userId)
+    public function store($userId): Response
     {
+
+        // Check if conversation already exists between the current user and the second user
+        $conversationExists = Conversation::where(function ($query) use ($userId) {
+            $query->where('sender', Auth::id())
+                ->where('recipient', $userId);
+        })->orWhere(function ($query) use ($userId) {
+            $query->where('sender', $userId)
+                ->where('recipient', Auth::id());
+        })->exists();
+
+        if ($conversationExists){
+            return Inertia::render('Messages/Index');
+        }
+        // // If conversation exists, redirect to the existing conversation
+        // if ($conversationExists) {
+        //     $conversation = Conversation::where(function ($query) use ($userId) {
+        //         $query->where('sender', Auth::id())
+        //             ->where('recipient', $userId);
+        //     })->orWhere(function ($query) use ($userId) {
+        //         $query->where('sender', $userId)
+        //             ->where('recipient', Auth::id());
+        //     })->first();
+
+        //     return redirect()->route('messages.show', $conversation->id);
+        // }
 
         //creating both objects for now
         $thread = Thread::create([
@@ -105,51 +125,33 @@ class MessagesController extends Controller
         $convo = Conversation::create([
             'sender' => Auth::id(),
             'recipient' => $userId,
-            'threadId' => $thread->id ?? 0,
+            'threadId' => $thread->id,
         ]);
+        //TODO:open convoModal of the new conversation
 
-
-        return redirect()->route('messages');
+        return Inertia::render('Messages/Index');
+       
     }
+     /*
+      *
+      *  Adds a new message to the conversation
+      */
+    public function update(Request $request): RedirectResponse
+    {
 
-    // /**
-    //  * Adds a new message to a current thread.
-    //  *
-    //  * @param $id
-    //  * @return mixed
-    //  */
-    // public function update($id)
-    // {
-    //     try {
-    //         $thread = Thread::findOrFail($id);
-    //     } catch (ModelNotFoundException $e) {
-    //         Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
+        $message = $request->input('message');
+        $threadId = $request->input('threadId'); 
+        
 
-    //         return redirect()->route('messages');
-    //     }
+        // Message
+        Message::create([
+            'thread_id' => $threadId,
+            'user_id' => Auth::id(),
+            'body' => $message,
+        ]);
+       error_log("Message created: " . $message);      
+  
 
-    //     $thread->activateAllParticipants();
-
-    //     // Message
-    //     Message::create([
-    //         'thread_id' => $thread->id,
-    //         'user_id' => Auth::id(),
-    //         'body' => Request::input('message'),
-    //     ]);
-
-    //     // Add replier as a participant
-    //     $participant = Participant::firstOrCreate([
-    //         'thread_id' => $thread->id,
-    //         'user_id' => Auth::id(),
-    //     ]);
-    //     $participant->last_read = new Carbon();
-    //     $participant->save();
-
-    //     // Recipients
-    //     if (Request::has('recipients')) {
-    //         $thread->addParticipant(Request::input('recipients'));
-    //     }
-
-    //     return redirect()->route('messages.show', $id);
-    // }
+        return redirect()->back();
+    }
 }

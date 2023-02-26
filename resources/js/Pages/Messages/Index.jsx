@@ -3,11 +3,24 @@ import React, { useState, useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DisplayConvos from "./Partials/DisplayConvos";
 import ChooseRecipientModal from "./Partials/ChooseRecipientModal";
+import { Head } from "@inertiajs/react";
 
-function Index({ auth, friends, messages, threads }) {
+
+function Index({
+    auth,
+    friends,
+    messagesByConversation,
+    conversations,
+    errors,
+    success,
+}) {   
     const [showModal, setShowModal] = useState(false);
     const [users, setUsers] = useState([]);
     const [csrfToken, setCsrfToken] = useState("");
+
+     function handleModalClose() {
+         setShowModal(false);         
+     }
 
     useEffect(() => {
         // Fetch the CSRF token from the server and store it in state
@@ -37,7 +50,18 @@ function Index({ auth, friends, messages, threads }) {
 
     return (
         <div>
+            <Head title="Messages" />
             <AuthenticatedLayout auth={auth}>
+                {errors && (
+                    <div className="alert alert-danger">
+                        {Object.values(errors).map((error, index) => (
+                            <div key={index}>{error}</div>
+                        ))}
+                    </div>
+                )}
+                {success && (
+                    <div className="alert alert-success">{success}</div>
+                )}
                 <div className="w-1/4 h-1/2 bg-gray-100  px-4 py-8">
                     <h1 className="font-medium text-lg mb-4">
                         Conversations{" "}
@@ -65,12 +89,18 @@ function Index({ auth, friends, messages, threads }) {
                         </span>
                     </h1>
                     {showModal && (
-                        <ChooseRecipientModal users={users} csrf={csrfToken} />
+                        <ChooseRecipientModal
+                            users={users}
+                            csrf={csrfToken}
+                            onClose={handleModalClose}
+                        />
                     )}
                     <DisplayConvos
                         friends={friends}
-                        messages={messages}
-                        threads={threads}
+                        messagesByConversation={messagesByConversation}
+                        conversations={conversations}
+                        auth={auth}
+                       
                     />
                 </div>
             </AuthenticatedLayout>
