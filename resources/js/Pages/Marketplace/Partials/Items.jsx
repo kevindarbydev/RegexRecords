@@ -71,8 +71,11 @@ export default function Index({ users, albums, collections, collection_albums, c
                                             <PrimaryButton className="mr-1" processing={processing}>
                                                 Add to Cart
                                             </PrimaryButton>
-                                            <PrimaryButton className="" processing={processing}>
+                                            <PrimaryButton className="mr-1" processing={processing}>
                                                 Add to Wishlist
+                                            </PrimaryButton>
+                                            <PrimaryButton className="" processing={processing}>
+                                                Contact Seller
                                             </PrimaryButton>
                                         </td>
                                     </tr>
