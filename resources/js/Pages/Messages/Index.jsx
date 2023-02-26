@@ -13,14 +13,14 @@ function Index({
     conversations,
     errors,
     success,
-}) {
-    //TODO:
-    /*
-    implement something so that when 'esc' key is pressed, modal closes
-    */
+}) {   
     const [showModal, setShowModal] = useState(false);
     const [users, setUsers] = useState([]);
     const [csrfToken, setCsrfToken] = useState("");
+
+     function handleModalClose() {
+         setShowModal(false);         
+     }
 
     useEffect(() => {
         // Fetch the CSRF token from the server and store it in state
@@ -50,7 +50,7 @@ function Index({
 
     return (
         <div>
-            <Head title="Messages" />;
+            <Head title="Messages" />
             <AuthenticatedLayout auth={auth}>
                 {errors && (
                     <div className="alert alert-danger">
@@ -89,13 +89,18 @@ function Index({
                         </span>
                     </h1>
                     {showModal && (
-                        <ChooseRecipientModal users={users} csrf={csrfToken} />
+                        <ChooseRecipientModal
+                            users={users}
+                            csrf={csrfToken}
+                            onClose={handleModalClose}
+                        />
                     )}
                     <DisplayConvos
                         friends={friends}
                         messagesByConversation={messagesByConversation}
                         conversations={conversations}
                         auth={auth}
+                       
                     />
                 </div>
             </AuthenticatedLayout>
