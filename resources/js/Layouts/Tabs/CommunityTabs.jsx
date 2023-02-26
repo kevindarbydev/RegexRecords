@@ -31,8 +31,8 @@ export default function CommunityTabs() {
                 <Tab>
                     {" "}
                     <NavLink
-                    // href={route("###.index")}
-                    // active={route().current("###.index")}
+                        href={route("messages.index")}
+                        active={route().current("messages.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Messaging

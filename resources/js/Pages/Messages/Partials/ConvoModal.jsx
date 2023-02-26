@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Modal from "../../../components/Modal";
 import axios from "axios";
 
 function ConvoModal({ conversation, convoId }) {
@@ -63,8 +62,8 @@ function ConvoModal({ conversation, convoId }) {
                     <p className="text-gray-700 text-lg">
                         {msgs.map((key, index) => (
                             <p key={key}>
-                                {msgs[index].body}|||{" "}
-                                <span className="text-blue-500 opacity-75">
+                                {msgs[index].body}{" "}
+                                <span className="text-blue-500 text-sm opacity-75">
                                     {" "}
                                     sent at {msgs[index].created_at}{" "}
                                 </span>
