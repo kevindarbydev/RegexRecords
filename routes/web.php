@@ -46,7 +46,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::post('/albums', [AlbumController::class, 'addAlbumToCollection'])->name('dashboard.album.to.collection');
     // -------------------------
     Route::get('/collections', [CollectionController::class, 'index'])->name('dashboard.collections');
-    Route::get('/collections/{collection}/albums', [CollectionController::class, 'showAlbums'])->name('dashboard.collections.albums');
     Route::post('/collections/store', [CollectionController::class, 'store'])->name('dashboard.collections.store');
     Route::patch('/collections/album/update', [CollectionController::class, 'updateForSale'])->name('dashboard.collections.album.sell');
     Route::patch('/collections/{collection}', [CollectionController::class, 'update'])->name('dashboard.collections.update');
@@ -82,7 +81,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
 // MARKETPLACE
 Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::get('/', [MarketplaceController::class, 'index'])->name('marketplace.index');
-    
+
     //CRUD Orders 
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/order_items', [OrderController::class, 'showOrderItems'])->name('marketplace.orders.order_items');
