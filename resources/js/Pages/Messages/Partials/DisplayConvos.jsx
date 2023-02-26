@@ -31,9 +31,9 @@ function DisplayConvos({ messagesByConversation, conversations, auth }) {
         console.log(
             "This conversation has these names: " +
                 senderName +
-                "|||" +
+                "," +
                 recipientName +
-                ": " +
+                " AND most recent msg: " +
                 mostRecentMessage
         );
         return {

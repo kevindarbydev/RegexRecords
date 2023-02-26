@@ -4,11 +4,9 @@ function ChooseRecipientModal({ users, csrf, onClose }) {
     useEffect(() => {
         function handleKeyDown(event) {
             if (event.keyCode === 27) {
-                onClose();
-                console.log("Escape key pressed");
+                onClose(); //closes modal window                
             }
         }
-
         document.addEventListener("keydown", handleKeyDown);
 
         return () => {

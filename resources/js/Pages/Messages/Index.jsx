@@ -13,22 +13,14 @@ function Index({
     conversations,
     errors,
     success,
-}) {
-    //TODO:
-    /*
-    implement something so that when 'esc' key is pressed, modal closes
-    disallow multiple conversations to start w the same person
-    */
+}) {   
     const [showModal, setShowModal] = useState(false);
     const [users, setUsers] = useState([]);
     const [csrfToken, setCsrfToken] = useState("");
 
-
      function handleModalClose() {
          setShowModal(false);         
      }
-
-    
 
     useEffect(() => {
         // Fetch the CSRF token from the server and store it in state

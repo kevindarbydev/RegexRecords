@@ -132,8 +132,10 @@ class MessagesController extends Controller
         return Inertia::render('Messages/Index');
        
     }
-
-    //add a new message to the conversation
+     /*
+      *
+      *  Adds a new message to the conversation
+      */
     public function update(Request $request): RedirectResponse
     {
 
