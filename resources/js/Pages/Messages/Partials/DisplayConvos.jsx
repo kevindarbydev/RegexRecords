@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import ConvoModal from "./ConvoModal";
+
+
 function DisplayConvos({    
     messagesByConversation,
     conversations,
@@ -34,7 +36,7 @@ function DisplayConvos({
     }
 
     return (
-        <div>
+        <div>            
             <div className="flex h-screen">
                 <ul className="space-y-4">
                     {conversationsWithNames.map((convo) => (
@@ -61,7 +63,10 @@ function DisplayConvos({
             </div>
             {/* Render the conversation modal */}
             {selectedConversation && (
-                <ConvoModal conversation={selectedConversation} convoId={selectedConversation.id} />
+                <ConvoModal
+                    conversation={selectedConversation}
+                    convoId={selectedConversation.id}
+                />
             )}
         </div>
     );

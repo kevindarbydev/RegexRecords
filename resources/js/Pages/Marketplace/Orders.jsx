@@ -4,7 +4,7 @@ import { useForm, Head } from '@inertiajs/react';
 
 import PrimaryButton from '@/Components/PrimaryButton';
 
-export default function Index({ auth, order_items }) {
+export default function Orders({ auth, order_items }) {
 
  
     return (

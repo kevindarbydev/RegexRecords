@@ -7,7 +7,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { useForm, usePage } from "@inertiajs/react";
 import Album from "@/Pages/Dashboard/Partials/Album";
 
-import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import { MusicalNoteIcon } from "@heroicons/react/24/solid";
 import Collection_Album from "./Collection_Album";
 
 dayjs.extend(relativeTime);
@@ -31,33 +31,16 @@ export default function Collection({ collection }) {
     return (
         <>
             <div className="p-6 flex space-x-2">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
-                    />
-                </svg>
-
                 <div className="flex-1">
                     <div className="flex justify-between items-center">
-                        <div>
-                            <span className="text-gray-800">
+                        <div className="flex flex-row">
+                            <MusicalNoteIcon className="mr-2 w-4 h-4 self-center" />
+                            <span className="text-gray-800 dark:text-white">
                                 {collection.collection_name}
                             </span>
-                            {/* <small className="ml-2 text-sm text-gray-600">
-                                {dayjs(collection.created_at).fromNow()}
-                            </small> */}
                             {collection.created_at !==
                                 collection.updated_at && (
-                                <small className="text-sm text-gray-600">
+                                <small className="text-sm text-gray-600 self-center ml-2">
                                     {" "}
                                     &middot; edited
                                 </small>
@@ -98,36 +81,22 @@ export default function Collection({ collection }) {
                             </Dropdown>
                         )}
                     </div>
-                    <div className="flex flex-row flex-wrap">
-                        <a
-                            href={route(
-                                "dashboard.collections.albums",
-                                collection.id
-                            )}
-                            active={route().current(
-                                "dashboard.collections.albums"
-                            )}
-                            className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-black hover:bg-gray-100 dark:hover:bg-gray-100"
-                        >
-                            View Collection
-                        </a>
-                    </div>
                     {editing ? (
                         <form onSubmit={submit}>
-                            <textarea
+                            <input
                                 value={data.collection_name}
                                 onChange={(e) =>
                                     setData("collection_name", e.target.value)
                                 }
                                 className="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                            ></textarea>
+                            ></input>
                             <InputError message={errors.message} class="mt-2" />
                             <div className="space-x-2">
-                                <PrimaryButton className="mt-4">
+                                <PrimaryButton className="mt-4 text-white rounded m-2 bg-blue-400 hover:bg-violet-600">
                                     Save
                                 </PrimaryButton>
                                 <button
-                                    className="mt-4"
+                                    className="px-3 py-1 text-white rounded m-2 bg-blue-400 hover:bg-violet-600"
                                     onClick={() => {
                                         setEditing(false);
                                         reset();

@@ -74,7 +74,7 @@ export default function Index({
                     >
                         <aside
                             id="default-sidebar"
-                            class="sticky top-0 left-0 z-40 sm:w-64 h-screen transition-transform sm:translate-x-0 "
+                            class="sticky top-0 left-0 z-40 sm:w-80 h-screen transition-transform sm:translate-x-0 "
                             aria-label="Sidebar"
                         >
                             <div class="h-full px-3 py-4 overflow-y-auto bg-violet-300 dark:bg-gray-800">
@@ -123,16 +123,7 @@ export default function Index({
                                             <div>
                                                 {collections.map(
                                                     (collection) => (
-                                                        <div className="mt-6 bg-white shadow-sm rounded-lg">
-                                                            <a
-                                                                onClick={() =>
-                                                                    handleComponentChange(
-                                                                        collection.collection_name
-                                                                    )
-                                                                }
-                                                            >
-                                                                Clickme
-                                                            </a>
+                                                        <div className="mt-6 bg-violet-300 shadow-xl rounded-lg border-2 border-violet-700 dark:bg-gray-800">
                                                             <Collection
                                                                 key={
                                                                     collection.id
@@ -141,6 +132,16 @@ export default function Index({
                                                                     collection
                                                                 }
                                                             />
+                                                            <button
+                                                                className="px-3 py-1 font-bold text-white rounded m-2 bg-blue-400 hover:bg-violet-600"
+                                                                onClick={() =>
+                                                                    handleComponentChange(
+                                                                        collection.collection_name
+                                                                    )
+                                                                }
+                                                            >
+                                                                View
+                                                            </button>
                                                         </div>
                                                     )
                                                 )}

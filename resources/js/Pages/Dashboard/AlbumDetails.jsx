@@ -1,6 +1,6 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useForm, Head } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 
 export default function AlbumDetails({ auth, album, tracks }) {
     const subgenres = album.subgenres;
@@ -65,14 +65,30 @@ export default function AlbumDetails({ auth, album, tracks }) {
                     </div>
                     <div>
                         <h4 className="text-lg font-medium mb-4">Tracklist</h4>
-                        <ul>
-                            {tracks.map((track, index) => (
-                                <li className="text-lg mb-2" key={track.id}>
-                                    <span>{index + 1}. </span>
-                                    {track.title} <span>{track.duration}</span>
-                                </li>
-                            ))}
-                        </ul>
+                        <table className="w-3/4 table border-collapse">
+                            <thead>
+                                <tr>
+                                    <th className="text-left font-medium pr-4 py-2">
+                                        Track
+                                    </th>
+                                    <th className="text-right font-medium py-2">
+                                        Duration
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {tracks.map((track, index) => (
+                                    <tr key={track.id}>
+                                        <td className="text-lg border-b py-2">
+                                            {index + 1}. {track.title}
+                                        </td>
+                                        <td className="text-lg text-right border-b py-2">
+                                            {track.duration}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

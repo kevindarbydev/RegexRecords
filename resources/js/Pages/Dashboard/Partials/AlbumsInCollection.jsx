@@ -61,23 +61,33 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <form onSubmit={submit}>
-                                                    <input
-                                                        type="radio"
-                                                        name="for_sale"
-                                                        value={
-                                                            collection_album.id
-                                                        }
-                                                        onChange={(e) => {
-                                                            setData(
-                                                                "cAlbum",
-                                                                e.target.value
-                                                            );
-                                                        }}
-                                                    />{" "}
-                                                    Sell
-                                                    <button className="ml-5 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                                        Submit
-                                                    </button>
+                                                    <div className="flex flex-row">
+                                                        <input
+                                                            className="self-center"
+                                                            type="radio"
+                                                            name="for_sale"
+                                                            value={
+                                                                collection_album.id
+                                                            }
+                                                            onChange={(e) => {
+                                                                setData(
+                                                                    "cAlbum",
+                                                                    e.target
+                                                                        .value
+                                                                );
+                                                            }}
+                                                        />{" "}
+                                                        <label
+                                                            className="ml-2 self-center w-10"
+                                                            htmlFor="for_sale"
+                                                        >
+                                                            {" "}
+                                                            Sell
+                                                        </label>
+                                                        <button className="ml-5 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                            Submit
+                                                        </button>
+                                                    </div>
                                                 </form>
                                             </td>
                                         </>
@@ -88,23 +98,33 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <form onSubmit={submit}>
-                                                    <input
-                                                        type="radio"
-                                                        name="for_sale"
-                                                        value={
-                                                            collection_album.id
-                                                        }
-                                                        onChange={(e) => {
-                                                            setData(
-                                                                "cAlbum",
-                                                                e.target.value
-                                                            );
-                                                        }}
-                                                    />{" "}
-                                                    Don't Sell
-                                                    <button className="ml-5 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                                        Submit
-                                                    </button>
+                                                    <div className="flex flex-row">
+                                                        <input
+                                                            className="self-center"
+                                                            type="radio"
+                                                            name="for_sale"
+                                                            value={
+                                                                collection_album.id
+                                                            }
+                                                            onChange={(e) => {
+                                                                setData(
+                                                                    "cAlbum",
+                                                                    e.target
+                                                                        .value
+                                                                );
+                                                            }}
+                                                        />{" "}
+                                                        <label
+                                                            className="ml-2 self-center w-16"
+                                                            htmlFor="for_sale"
+                                                        >
+                                                            {" "}
+                                                            Don't Sell
+                                                        </label>
+                                                        <button className="ml-5 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                            Submit
+                                                        </button>
+                                                    </div>
                                                 </form>
                                             </td>
                                         </>
