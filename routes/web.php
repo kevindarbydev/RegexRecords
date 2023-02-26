@@ -91,12 +91,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::patch('/orders/{order}', [OrderController::class, 'destroy'])->name('marketplace.orders.destroy');
 });
 
-// TODO:
-// add this to the marketplace controller eventually
-// Route::resource('orders', OrderController::class)
-//     ->only(['index', 'store', 'update', 'destroy'])
-//     ->middleware(['auth', 'verified']);
-
 // PROFILE
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
