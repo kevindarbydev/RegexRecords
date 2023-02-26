@@ -12,7 +12,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Transition } from "@headlessui/react";
 
-function Friends({ auth, currentFriendships, pendingFriendships }) {
+function Friends({ auth, currentFriendships, pendingFriendships, current_user }) {
     const [currentComp, setCurrentComp] = useState("friends");
     const [isShowing, setIsShowing] = useState(true);
 
@@ -25,7 +25,7 @@ function Friends({ auth, currentFriendships, pendingFriendships }) {
         componentToShow = (
             <div className="flex flex-row flex-wrap m-10">
                 {currentFriendships.map((friendship) => (
-                    <Friendship key={friendship.id} friendship={friendship} />
+                    <Friendship key={friendship.id} friendship={friendship} user={current_user} />
                 ))}
             </div>
         );
@@ -73,11 +73,10 @@ function Friends({ auth, currentFriendships, pendingFriendships }) {
                                     <li>
                                         <a
                                             href="#"
-                                            class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                                                currentComp === "friends"
-                                                    ? "bg-white"
-                                                    : ""
-                                            }`}
+                                            class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${currentComp === "friends"
+                                                ? "bg-white"
+                                                : ""
+                                                }`}
                                             onClick={() =>
                                                 handleComponentChange("friends")
                                             }
@@ -89,11 +88,10 @@ function Friends({ auth, currentFriendships, pendingFriendships }) {
                                     <li>
                                         <a
                                             href="#"
-                                            class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                                                currentComp === "pending"
-                                                    ? "bg-white"
-                                                    : ""
-                                            }`}
+                                            class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${currentComp === "pending"
+                                                ? "bg-white"
+                                                : ""
+                                                }`}
                                             onClick={() =>
                                                 handleComponentChange("pending")
                                             }
