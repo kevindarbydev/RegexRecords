@@ -65,7 +65,10 @@ function ConvoModal({ conversation, convoId }) {
                                 {msgs[index].body}{" "}
                                 <span className="text-blue-500 text-sm opacity-75">
                                     {" "}
-                                    sent at {msgs[index].created_at}{" "}
+                                    sent at{" "}
+                                    {new Date(
+                                        msgs[index].created_at
+                                    ).toLocaleString()}{" "}
                                 </span>
                             </p>
                         ))}

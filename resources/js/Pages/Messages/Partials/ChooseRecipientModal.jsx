@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ChooseRecipientModal({ users, csrf }) {
+function ChooseRecipientModal({ users, csrf, onClose }) {
      console.log(csrf);
     function handleSelectUser(user, event) {
         event.preventDefault();       
@@ -15,9 +15,7 @@ function ChooseRecipientModal({ users, csrf }) {
             body: JSON.stringify({ user_id: id }),
         })
             .then((response) => response.json())
-            .then((data) => {
-                console.log("New conversation created:", data);
-            })
+            .then(onClose())
             .catch((error) => console.error(error));
     }
     return (
@@ -31,6 +29,7 @@ function ChooseRecipientModal({ users, csrf }) {
                         <span className="mt-2">{user.name}</span>
                         <a
                             className="mt-2"
+                            href="#"
                             onClick={(event) => handleSelectUser(user, event)}
                         >
                             +

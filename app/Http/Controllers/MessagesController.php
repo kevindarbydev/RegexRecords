@@ -89,7 +89,7 @@ class MessagesController extends Controller
      *
      * @return mixed
      */
-    public function store($userId): RedirectResponse
+    public function store($userId): Response
     {
         error_log("here");
         //creating both objects for now
@@ -108,16 +108,13 @@ class MessagesController extends Controller
        
     }
 
-    
+    //add a new message to the conversation
     public function update(Request $request): RedirectResponse
     {
 
         $message = $request->input('message');
-        $threadId = $request->input('threadId');
-        $myStr = "Found data: " . $message . "" . $threadId;
-        error_log($myStr);
-        // error_log("Received message: " . $message);
-        // error_log("Received threadId: " . $threadId);
+        $threadId = $request->input('threadId'); 
+        
 
         // Message
         Message::create([
@@ -125,8 +122,7 @@ class MessagesController extends Controller
             'user_id' => Auth::id(),
             'body' => $message,
         ]);
-       
-      
+       error_log("Message created: " . $message);      
   
 
         return redirect()->back();
