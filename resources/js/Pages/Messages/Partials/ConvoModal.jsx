@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function ConvoModal({ conversation, convoId }) {
+function ConvoModal({ conversation, convoId, onClose }) {
     const [convo, setConvo] = useState(null);
     const [messages, setMessages] = useState(null);
     const [newMessage, setNewMessage] = useState("");
@@ -22,23 +22,20 @@ function ConvoModal({ conversation, convoId }) {
          };
      }, []);
      
-    useEffect(() => {
-        fetch(`/messages/${convoId}`)
-            .then((response) => response.json())
-            .then((data) => {
-                
-                console.log("response data: " + data);
-            })
-            .catch((error) => {
-                console.error("Response error: " + error);
-            });
-    }, [convoId]);
-    console.dir(conversation.messages.messages);
+    // useEffect(() => {
+    //     fetch(`/messages/${convoId}`)
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             setConvo(data);
+    //             console.log("response data: " + data);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Response error: " + error);
+    //         });
+    // }, [convoId]);
+   
     const msgs = conversation.messages.messages || {};
-    //const messageKeys = Object.keys(msgs);
-    
-    // console.log("m" + messages.length);
-    // console.log("MK " + messageKeys);
+  
     const handleNewMessageChange = (e) => {
         setNewMessage(e.target.value);
     };
@@ -49,7 +46,7 @@ function ConvoModal({ conversation, convoId }) {
              return; // message is empty, do not send
          }
       
-        // Add the new message to the conversation's messages array        
+        // Add the new message to the components's messages array        
        const newMessages = Array.isArray(messages)
            ? [...messages, { body: newMessage }]
            : [{ body: newMessage }];
@@ -100,7 +97,7 @@ function ConvoModal({ conversation, convoId }) {
                         type="text"
                         placeholder="Send a message..."
                         value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
+                        onChange={(e) => handleNewMessageChange(e.target.value)}
                     />
                     <button className="bg-blue-500 text-white py-2 px-4 rounded ml-4">
                         Send

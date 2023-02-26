@@ -1,25 +1,22 @@
 import React, { useState } from "react";
 import ConvoModal from "./ConvoModal";
 
-
-function DisplayConvos({    
-    messagesByConversation,
-    conversations,
-    auth,
-}) {
+function DisplayConvos({ messagesByConversation, conversations, auth }) {
     const [selectedConversation, setSelectedConversation] = useState(null);
-   // console.dir(messagesByConversation);
+
     // Create a new array containing conversations with sender and recipient names and the most recent message
     const conversationsWithNames = conversations.map((convo) => {
         console.dir(messagesByConversation[convo.id].messages);
         console.log(messagesByConversation[convo.id].messages.length);
-        let index = messagesByConversation[convo.id].messages.length -1;
+        let index = messagesByConversation[convo.id].messages.length - 1;
         if (index >= 0) {
-         console.log(messagesByConversation[convo.id].messages[index].body);   
+            console.log(messagesByConversation[convo.id].messages[index].body);
         }
-        
+
         const senderName = messagesByConversation[convo.id]?.sender || "";
         const recipientName = messagesByConversation[convo.id]?.recipient || "";
+
+       
         const mostRecentMessage =
             messagesByConversation[convo.id]?.messages?.reduce(
                 (prev, current) => {
@@ -30,13 +27,6 @@ function DisplayConvos({
                 },
                 {}
             ).body || "";
-       
-        // Find the message with the highest id value for this conversation
-    //    const mostRecentMessage = messagesByConversation[
-    //        convo.id
-    //    ]?.messages?.reduce((prev, current) => {
-    //        return prev.id > current.id ? prev : current;
-    //    }, {});
 
         console.log(
             "This conversation has these names: " +
@@ -53,6 +43,12 @@ function DisplayConvos({
             mostRecentMessage: mostRecentMessage,
         };
     });
+
+
+    
+     function handleModalClose() {
+         setSelectedConversation(null);
+     }
 
     function handleConversationClick(convo) {
         let selectedId = convo.id;
@@ -96,6 +92,7 @@ function DisplayConvos({
                 <ConvoModal
                     conversation={selectedConversation}
                     convoId={selectedConversation.id}
+                    onClose={handleModalClose}
                 />
             )}
         </div>

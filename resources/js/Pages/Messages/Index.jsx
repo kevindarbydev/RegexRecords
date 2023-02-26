@@ -97,13 +97,18 @@ function Index({
                         </span>
                     </h1>
                     {showModal && (
-                        <ChooseRecipientModal users={users} csrf={csrfToken} onClose={handleModalClose} />
+                        <ChooseRecipientModal
+                            users={users}
+                            csrf={csrfToken}
+                            onClose={handleModalClose}
+                        />
                     )}
                     <DisplayConvos
                         friends={friends}
                         messagesByConversation={messagesByConversation}
                         conversations={conversations}
                         auth={auth}
+                       
                     />
                 </div>
             </AuthenticatedLayout>
