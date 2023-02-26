@@ -19,9 +19,7 @@ class OrderController extends Controller
     public function index(): Response
     {
         return Inertia::render('Marketplace/Orders', [
-            'orders' => Order::with('user')->where('user_id', Auth::user()->id)->get(),
             'order_items' => Order_Item::with('order','album')->latest()->get(),
-            'albums' => Album::with('user')->latest()->get(),
 
         ]);
     }

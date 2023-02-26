@@ -33,7 +33,7 @@ export default function Orders({ auth, order_items }) {
                     <tbody>
                         <tr>
                             <td>
-                                {item.id}
+                                {item.album.cover_image_url}
                             </td>
                             <td>
                                 {item.price}
