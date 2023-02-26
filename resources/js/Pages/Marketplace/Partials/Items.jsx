@@ -11,10 +11,11 @@ export default function Index({ users, albums, collections, collection_albums, c
         sort: "",
     });
 
-    // const submit = (e) => {
-    //     e.preventDefault();
-    //     post(route("collections.store"), { onSuccess: () => reset() });
-    // };
+    const submit = (e) => {
+        console.log("")
+        e.preventDefault();
+        post(route("marketplace.orders.store"), { onSuccess: () => reset() });
+    };
 
     return (
         <table className="w-screen text-sm text-left text-gray-500 dark:text-gray-400 mx-auto mt-10">

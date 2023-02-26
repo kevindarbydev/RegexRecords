@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\User;
 
 class OrderItemController extends Controller
 {
@@ -17,7 +18,7 @@ class OrderItemController extends Controller
     {
         return Inertia::render('Order_Items/Index', [
             //return order items
-            'order_items' => Order_Item::with('order','album')->latest()->get(),
+            // 'order_items' => Order_Item::with('order','album')->latest()->get(),
         ]);
     }
 
@@ -34,7 +35,16 @@ class OrderItemController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'subtotal' => 'required|int',
+            'shipping' => 'required|int',
+            'tax' => 'required|int',
+            'totalPrice' => 'required|int',
+        ]);
+ 
+        $request->user()->orders()->create($validated);
+ 
+        return redirect(route('orders.index'));
     }
 
     /**
@@ -64,8 +74,8 @@ class OrderItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order_Item $order_Item): RedirectResponse
+    public function destroy(User $user,Order_Item $order_Item): RedirectResponse
     {
-        //
+        // return $this->update($user, $order_Item);
     }
 }
