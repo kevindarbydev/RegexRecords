@@ -1,7 +1,6 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Wishlist from "@/Pages/Dashboard/Partials/Wishlist";
-import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
@@ -19,9 +18,14 @@ export default function Index({ auth, wishlist_albums }) {
     return (
         <AuthenticatedLayout auth={auth}>
             <DashboardTabs />
-            <Head title="Create Wishlist" />
+            <Head title="Wishlist" />
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-                My Wishlist
+                <p>My Wishlist
+                    </p> 
+                    <p>
+                    <PrimaryButton className="mt-4">Add Albums</PrimaryButton>    
+                    </p>
+                
                 <table className="w-1/2 text-sm text-left text-gray-500 dark:text-gray-400 mx-auto mt-10">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <th scope="col" class="px-10 py-3">
