@@ -75,6 +75,19 @@ class CollectionController extends Controller
         return redirect(route('dashboard.collections'));
     }
 
+    public function removeFromCollection(Request $request)
+    {
+        // error_log($request->cAlbum);
+
+        $cAlbum = Collection_Album::where('id', $request->cAlbum)->first();
+
+        // error_log($cAlbum);
+
+        $cAlbum->delete();
+
+        return redirect(route('dashboard.collections'));
+    }
+
     // delete collection
     public function destroy(Collection $collection): RedirectResponse
     {
