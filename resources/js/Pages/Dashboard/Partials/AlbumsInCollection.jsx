@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "@inertiajs/react";
+import Dropdown from "@/Components/Dropdown";
 
 function AlbumsInCollection({ collection, collection_albums, albums }) {
     const { data, setData, patch, processing, reset, errors } = useForm({
@@ -12,6 +13,13 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
             onSuccess: () => reset(),
         });
     };
+
+    const remove = (e) => {
+        e.preventDefault();
+        patch(route("dashboard.collections.remove.album"), {
+            onSuccess: () => reset(),
+        });
+    }
     return (
         <div className="relative overflow-x-auto">
             <h5 className="mt-2 mb-2 text-center">
@@ -36,7 +44,7 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                 {collection_albums.map((collection_album) =>
                     albums.map((album) =>
                         album.id == collection_album.album_id &&
-                        collection_album.collection_id == collection.id ? (
+                            collection_album.collection_id == collection.id ? (
                             <tbody>
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th
@@ -60,35 +68,34 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                                 <p className="mr-10">No</p>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <form onSubmit={submit}>
-                                                    <div className="flex flex-row">
-                                                        <input
-                                                            className="self-center"
-                                                            type="radio"
-                                                            name="for_sale"
-                                                            value={
-                                                                collection_album.id
-                                                            }
-                                                            onChange={(e) => {
-                                                                setData(
-                                                                    "cAlbum",
-                                                                    e.target
-                                                                        .value
-                                                                );
-                                                            }}
-                                                        />{" "}
-                                                        <label
-                                                            className="ml-2 self-center w-10"
-                                                            htmlFor="for_sale"
-                                                        >
-                                                            {" "}
-                                                            Sell
-                                                        </label>
-                                                        <button className="ml-5 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                                            Submit
+                                                <Dropdown>
+                                                    <Dropdown.Trigger>
+                                                        <button onClick={() => {
+                                                            setData('cAlbum', collection_album.id);
+                                                        }}>
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                className="h-4 w-4 text-gray-400"
+                                                                viewBox="0 0 20 20"
+                                                                fill="currentColor"
+                                                            >
+                                                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                            </svg>
                                                         </button>
-                                                    </div>
-                                                </form>
+                                                    </Dropdown.Trigger>
+                                                    <Dropdown.Content>
+                                                        <form>
+                                                            <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={submit}>
+                                                                Sell Album
+                                                            </button>
+                                                            <button
+                                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={remove}
+                                                            >
+                                                                Remove Album
+                                                            </button>
+                                                        </form>
+                                                    </Dropdown.Content>
+                                                </Dropdown>
                                             </td>
                                         </>
                                     ) : (
@@ -97,35 +104,34 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                                 <p className="mr-10">Yes</p>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <form onSubmit={submit}>
-                                                    <div className="flex flex-row">
-                                                        <input
-                                                            className="self-center"
-                                                            type="radio"
-                                                            name="for_sale"
-                                                            value={
-                                                                collection_album.id
-                                                            }
-                                                            onChange={(e) => {
-                                                                setData(
-                                                                    "cAlbum",
-                                                                    e.target
-                                                                        .value
-                                                                );
-                                                            }}
-                                                        />{" "}
-                                                        <label
-                                                            className="ml-2 self-center w-16"
-                                                            htmlFor="for_sale"
-                                                        >
-                                                            {" "}
-                                                            Don't Sell
-                                                        </label>
-                                                        <button className="ml-5 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                                            Submit
+                                                <Dropdown>
+                                                    <Dropdown.Trigger>
+                                                        <button onClick={() => {
+                                                            setData('cAlbum', collection_album.id);
+                                                        }}>
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                className="h-4 w-4 text-gray-400"
+                                                                viewBox="0 0 20 20"
+                                                                fill="currentColor"
+                                                            >
+                                                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                            </svg>
                                                         </button>
-                                                    </div>
-                                                </form>
+                                                    </Dropdown.Trigger>
+                                                    <Dropdown.Content>
+                                                        <form>
+                                                            <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={submit}>
+                                                                Stop Selling Album
+                                                            </button>
+                                                            <button
+                                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={remove}
+                                                            >
+                                                                Remove Album
+                                                            </button>
+                                                        </form>
+                                                    </Dropdown.Content>
+                                                </Dropdown>
                                             </td>
                                         </>
                                     )}

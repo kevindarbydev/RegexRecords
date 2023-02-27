@@ -23,7 +23,6 @@ class CommunityController extends Controller
     public function search(Request $request): Response
     {
         $keySearch = $request->search;
-
         if ($keySearch != "") {
             $users = User::where(function ($query) use ($request) {
                 $query->where('name', 'LIKE', '%' . $request->search . '%')
@@ -31,8 +30,7 @@ class CommunityController extends Controller
             })
                 ->where(function ($query) {
                     $query->where('id', '!=', Auth::user()->id); //preventing logged in user from showing up as querry
-                })
-                ->latest()->get();
+                })->paginate(5)->appends($request->all());
             return Inertia::render('Community/Search', [
                 'users' => $users
             ]);

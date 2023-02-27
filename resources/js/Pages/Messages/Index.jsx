@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DisplayConvos from "./Partials/DisplayConvos";
 import ChooseRecipientModal from "./Partials/ChooseRecipientModal";
+import CommunityTabs from "@/Layouts/Tabs/CommunityTabs";
 import { Head } from "@inertiajs/react";
 
 
@@ -51,7 +52,9 @@ function Index({
     return (
         <div>
             <Head title="Messages" />
+
             <AuthenticatedLayout auth={auth}>
+                <CommunityTabs />
                 {errors && (
                     <div className="alert alert-danger">
                         {Object.values(errors).map((error, index) => (
@@ -62,10 +65,13 @@ function Index({
                 {success && (
                     <div className="alert alert-success">{success}</div>
                 )}
-                <div className="w-1/4 h-1/2 bg-gray-100  px-4 py-8">
-                    <h1 className="font-medium text-lg mb-4">
-                        Conversations{" "}
-                        <span>
+                <div className="w-1/4 h-1/2 bg-gray-200 px-4 py-8 ">
+                    <h1
+                        className="font-medium text-lg mb-4"
+                        style={{ display: "flex", alignItems: "center" }}
+                    >
+                        Conversations &nbsp;&nbsp;
+                        <span style={{ display: "flex", alignItems: "center" }}>
                             <a
                                 href={route("messages.create")}
                                 onClick={handleCreateClick}
@@ -100,7 +106,6 @@ function Index({
                         messagesByConversation={messagesByConversation}
                         conversations={conversations}
                         auth={auth}
-                       
                     />
                 </div>
             </AuthenticatedLayout>
