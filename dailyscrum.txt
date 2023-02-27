@@ -570,14 +570,13 @@ github actions if it doesnt work out
 
 2/27/2023 Nathaniel
 1. Done/not done since last scrum:
-- Routed Wishlist with Dashboard,
-- Created Wishlist page
-- Created Wishlist table
-- Created Ordered Items Table
--
+- Formatted Orders/Checkout table
+- cart icon for dropdown menu
+- Wishlist shows Album details
+- Orders shows Album details
 2. To do until next Scrum:
-- Finish Checkout Table
 - Show price, subtotal, taxes, etc in Cart
+- Add to list, Delete from list buttons
 - Link Checkout to Payment
 3. Need assistance / figure things out:
-- Show images in table
+- Add to list, Delete from list buttons
