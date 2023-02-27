@@ -18,7 +18,9 @@ export default function Authenticated({ auth, header, children }) {
         setDarkMode((prevDarkMode) => !prevDarkMode);
     }
 
-    function quantity() {}
+    function quantity() {
+        
+    }
 
     return (
         <div className={`min-h-screen ${darkMode ? "dark" : ""}`}>
