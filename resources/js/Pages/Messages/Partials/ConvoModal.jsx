@@ -65,6 +65,7 @@ function ConvoModal({ conversation, convoId, onClose }) {
         <div className="modal">
             <div className="modal-content">
                 <h2 className="text-lg font-medium mb-4">Conversation</h2>
+
                 {msgs ? (
                     <div>
                         {msgs.map((key, index) => (
@@ -95,6 +96,9 @@ function ConvoModal({ conversation, convoId, onClose }) {
                         Send
                     </button>
                 </form>
+                <p>
+                    <a>Close</a>
+                </p>
             </div>
         </div>
     );
