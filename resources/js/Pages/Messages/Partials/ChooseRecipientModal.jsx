@@ -35,9 +35,13 @@ function ChooseRecipientModal({ users, csrf, onClose }) {
             {users.length > 0 ? (
                 <ul className="modal-content">
                     <h3 className="text-xl font-bold underline">
-                        Choose a recipient
+                        Choose a recipient <br />
+                        <span className="text-sm font-normal no-underline">
+                            <a className="">Close</a> (not impltd yet, use
+                            'esc' key to close modals)
+                        </span>
                     </h3>
-                    <p><a>Close</a></p>
+
                     {users.map((user) => (
                         <li key={user.id} className={"modalListItem"}>
                             <span className="mt-2">{user.name}</span>
@@ -53,8 +57,6 @@ function ChooseRecipientModal({ users, csrf, onClose }) {
                         </li>
                     ))}
                 </ul>
-                
-               
             ) : (
                 <p className="modal-content">
                     No Friends Found...{" "}
@@ -74,7 +76,8 @@ function ChooseRecipientModal({ users, csrf, onClose }) {
                             />
                         </svg>
                     </span>
-                    <a>Close</a>
+                    <a>Close</a> (not implemented yet, use 'esc' key to close
+                    modals)
                 </p>
             )}
         </div>
