@@ -19,60 +19,60 @@ export default function Index({ auth, wishlist_albums }) {
         <AuthenticatedLayout auth={auth}>
             <DashboardTabs />
             <Head title="Wishlist" />
-            <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-                <p>My Wishlist
-                    </p> 
-                    <p>
-                    <PrimaryButton className="mt-4">Add Albums</PrimaryButton>    
-                    </p>
-                
-                <table className=" w-1/2 text-sm text-center text-gray-500 dark:text-gray-400 mx-auto mt-10 bg-white">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
-                    <th scope="col" class="px-20 py-3">
-                            Album Name
-                        </th>
-                        <th scope="col" class="px-20 py-3">
-                            Album
-                        </th>
-                        <th scope="col" class="px-20 py-3">
-                            Artist
-                        </th>
-                        <th scope="col" class="px-20 py-3">
-                            Date Added
-                        </th>
-                        <th scope="col" class="px-10 py-3">
-                            Actions
-                        </th>
-                    </thead>
-                {wishlist_albums.map(item =>
-                    <tbody>
-                        <tr>
-                            <td>
-                                {item.album.album_name}
-                            </td>
-                            <td>
-                            <img
-                            src={item.album.cover_image_url}
-                            alt=""
-                            className="w-24 h-24 rounded-lg object-cover mr-8 mt-2 mx-auto"
-                        />
-                            </td>
-                            <td>
-                                {item.album.artist}
-                            </td>
-                            <td>
-                                {item.created_at}
-                            </td>
-                            <td>
-                            <PrimaryButton className="mt-2" >Remove</PrimaryButton>
-                            <PrimaryButton className="mt-2" >Details</PrimaryButton>
+            <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 ">
+                <div className="flex justify-center items-center">
+                    My Wishlist
+                </div>
+                <div className="flex justify-center items-center">
+                    <PrimaryButton className="mt-4">Add Albums</PrimaryButton>
+                </div>
 
-                            </td>
-                        </tr>
-                    </tbody>
-                    )}
-                    
-                </table>
+                <div className="flex justify-center items-center">
+                    <table className=" w-1/2 text-sm text-center text-gray-500 dark:text-gray-400 mx-auto mt-10 bg-white">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                            <th scope="col" class="px-20 py-3">
+                                Album Name
+                            </th>
+                            <th scope="col" class="px-20 py-3">
+                                Album
+                            </th>
+                            <th scope="col" class="px-20 py-3">
+                                Artist
+                            </th>
+                            <th scope="col" class="px-20 py-3">
+                                Date Added
+                            </th>
+                            <th scope="col" class="px-10 py-3">
+                                Actions
+                            </th>
+                        </thead>
+                        {wishlist_albums.map((item) => (
+                            <tbody>
+                                <tr>
+                                    <td>{item.album.album_name}</td>
+                                    <td>
+                                        <img
+                                            src={item.album.cover_image_url}
+                                            alt=""
+                                            className="w-24 h-24 rounded-lg object-cover mr-8 mt-2 mx-auto"
+                                        />
+                                    </td>
+                                    <td>{item.album.artist}</td>
+                                    <td>{item.created_at}</td>
+                                    <td>
+                                        <PrimaryButton className="mt-2">
+                                            Remove
+                                        </PrimaryButton>
+                                        <PrimaryButton className="mt-2">
+                                            Details
+                                        </PrimaryButton>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        ))}
+                    </table>
+                </div>
+
                 {/* <form name="createForm" onSubmit={submit}>
                     <div className="flex flex-col">
                         <div className="mb-4">

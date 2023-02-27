@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Wishlist_Album extends Model
 {
     use HasFactory;
+
     public function wishlist(): BelongsTo
     {
         return $this->belongsTo(Wishlist::class);

@@ -16,7 +16,7 @@ export default function Index({ auth, albums, collections }) {
     const submit = (e) => {
         console.log("test");
         e.preventDefault();
-        post(route("dashboard.albums.store"), { onSuccess: () => reset() });
+        post(route("dashboard.album.to.wishlist"), { onSuccess: () => reset() });
     };
 
     return (
