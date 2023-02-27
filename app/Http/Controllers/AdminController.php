@@ -29,8 +29,16 @@ class AdminController extends Controller
     public function deleteAlbum($album_id)
     {
         $album = Album::find($album_id);
-        error_log("Received request to delete album ID:{" . $album_id . "} , NAME:{" . $album->album_name . "}");
+        error_log("Deleting album ID:{" . $album_id . "} , NAME:{" . $album->album_name . "}");
         $album->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function deleteUser($user_id)
+    {
+        $user = User::find($user_id);
+        error_log("Deleting user ID:{" . $user_id . "} , NAME:{" . $user->name . "}");
+        $user->delete();
         return response()->json(['success' => true]);
     }
 }
