@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AdminUserTable from "./Partials/AdminUserTable";
 import AdminAlbumTable from "./Partials/AdminAlbumTable";
 import AdminMessageTable from "./Partials/AdminMessageTable";
