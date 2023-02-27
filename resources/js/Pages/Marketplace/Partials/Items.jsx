@@ -14,7 +14,7 @@ export default function Index({ users, albums, collections, collection_albums, c
     const submit = (e) => {
         console.log("")
         e.preventDefault();
-        post(route("marketplace.orders.store"), { onSuccess: () => reset() });
+        post(route("dashboard.album.to.wishlist"), { onSuccess: () => reset() });
     };
 
     return (
@@ -72,7 +72,7 @@ export default function Index({ users, albums, collections, collection_albums, c
                                             <PrimaryButton className="mr-1" processing={processing}>
                                                 Add to Cart
                                             </PrimaryButton>
-                                            <PrimaryButton className="mr-1" processing={processing}>
+                                            <PrimaryButton className="mr-1" processing={processing} onClick={submit} >
                                                 Add to Wishlist
                                             </PrimaryButton>
                                             <PrimaryButton className="" processing={processing}>

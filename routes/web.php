@@ -53,8 +53,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::delete('/collections/{collection}', [CollectionController::class, 'destroy'])->name('dashboard.collections.destroy');
     // -------------------------
     Route::get('/wishlists', [WishlistController::class, 'index'])->name('dashboard.wishlists');
-    Route::get('/wishlists/wishlist_albums', [WishlistController::class, 'showWishlistAlbums'])->name('dashboard.wishlists.albums');
-    Route::post('/wishlists/store', [WishlistController::class, 'store'])->name('dashboard.wishlists.store');
+    Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('dashboard.album.to.wishlist');
     Route::patch('/wishlists/{wishlist}', [WishlistController::class, 'update'])->name('dashboard.wishlists.update');
     Route::delete('/wishlists/{wishlist}', [WishlistController::class, 'destroy'])->name('dashboard.wishlists.destroy');
 });
@@ -99,14 +98,17 @@ Route::middleware('auth')->group(function () {
 });
 
 // ADMIN
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin'], function () {
     //get tables
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/albums', [AdminController::class, 'albums'])->name('admin.albums.index');
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/albums', [AdminController::class, 'albums'])->name('admin.albums.index'); //not sure im using this one?
 
     //delete
-    Route::delete('/admin/albums/{id}', [AdminController::class, 'deleteAlbum'])->name('admin.albums.delete');
+    Route::delete('/albums/{id}', [AdminController::class, 'deleteAlbum'])->name('admin.albums.delete');
+    Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
 });
+
+
 
 // MESSAGES
 Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'messages'], function () {
