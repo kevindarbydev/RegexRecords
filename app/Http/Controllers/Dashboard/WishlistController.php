@@ -19,7 +19,6 @@ class WishlistController extends Controller
         
         return Inertia::render('Dashboard/Wishlists', [
             'wishlist_albums' => Wishlist_Album::with('wishlist','album')->latest()->get(),
-            'albums' => Album::with('user')->latest()->get(),
 
         ]);
     }

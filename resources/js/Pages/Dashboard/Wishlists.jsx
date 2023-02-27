@@ -26,13 +26,16 @@ export default function Index({ auth, wishlist_albums }) {
                     <PrimaryButton className="mt-4">Add Albums</PrimaryButton>    
                     </p>
                 
-                <table className="w-1/2 text-sm text-center text-gray-500 dark:text-gray-400 mx-auto mt-10">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className=" w-1/2 text-sm text-center text-gray-500 dark:text-gray-400 mx-auto mt-10 bg-white">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                     <th scope="col" class="px-20 py-3">
                             Album Name
                         </th>
                         <th scope="col" class="px-20 py-3">
                             Album
+                        </th>
+                        <th scope="col" class="px-20 py-3">
+                            Artist
                         </th>
                         <th scope="col" class="px-20 py-3">
                             Date Added
@@ -51,14 +54,19 @@ export default function Index({ auth, wishlist_albums }) {
                             <img
                             src={item.album.cover_image_url}
                             alt=""
-                            className="w-24 h-24 rounded-lg object-cover mr-8 mt-2"
+                            className="w-24 h-24 rounded-lg object-cover mr-8 mt-2 mx-auto"
                         />
+                            </td>
+                            <td>
+                                {item.album.artist}
                             </td>
                             <td>
                                 {item.created_at}
                             </td>
                             <td>
-                            <PrimaryButton className="mt-4" >Remove from Wishlist</PrimaryButton>
+                            <PrimaryButton className="mt-2" >Remove</PrimaryButton>
+                            <PrimaryButton className="mt-2" >Details</PrimaryButton>
+
                             </td>
                         </tr>
                     </tbody>
