@@ -13,6 +13,13 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
             onSuccess: () => reset(),
         });
     };
+
+    const remove = (e) => {
+        e.preventDefault();
+        patch(route("dashboard.collections.remove.album"), {
+            onSuccess: () => reset(),
+        });
+    }
     return (
         <div className="relative overflow-x-auto">
             <h5 className="mt-2 mb-2 text-center">
@@ -81,8 +88,10 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                                             <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={submit}>
                                                                 Sell Album
                                                             </button>
-                                                            <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out">
-                                                                Remove from Collection
+                                                            <button
+                                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={remove}
+                                                            >
+                                                                Remove Album
                                                             </button>
                                                         </form>
                                                     </Dropdown.Content>
@@ -115,8 +124,10 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                                             <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={submit}>
                                                                 Stop Selling Album
                                                             </button>
-                                                            <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out">
-                                                                Remove from Collection
+                                                            <button
+                                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={remove}
+                                                            >
+                                                                Remove Album
                                                             </button>
                                                         </form>
                                                     </Dropdown.Content>

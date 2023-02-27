@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::post('/collections/store', [CollectionController::class, 'store'])->name('dashboard.collections.store');
     Route::patch('/collections/album/update', [CollectionController::class, 'updateForSale'])->name('dashboard.collections.album.sell');
     Route::patch('/collections/{collection}', [CollectionController::class, 'update'])->name('dashboard.collections.update');
+    Route::patch('/collections/remove/album}', [CollectionController::class, 'removeFromCollection'])->name('dashboard.collections.remove.album');
     Route::delete('/collections/{collection}', [CollectionController::class, 'destroy'])->name('dashboard.collections.destroy');
     // -------------------------
     Route::get('/wishlists', [WishlistController::class, 'index'])->name('dashboard.wishlists');
