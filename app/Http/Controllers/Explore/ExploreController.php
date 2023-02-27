@@ -57,7 +57,7 @@ class ExploreController extends Controller
 
 
         //? ----- NEW RELEASES: ALBUMS THIS WEEK -----
-        //TODO: check this next week
+
         $recentAlbums = Album::whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::MONDAY), Carbon::now()->endOfWeek(Carbon::SUNDAY)])->inRandomOrder()->limit($limit)->get();
 
 
@@ -76,13 +76,13 @@ class ExploreController extends Controller
         // days are 0-6 where sunday is 0, monday is 1, etc
         switch ($weekday) {
             case 0:
-                $subgenreList = ["Punk", "Melodic Hardcore", "Hardcore"];
-                $selectedSubgenre = "Punk";
+                $subgenreList = ["Blues", "Rhythm & Blues", "Piano Blues"];
+                $selectedSubgenre = "Blues";
                 $subgenre = process($subgenreList);
                 break;
             case 1:
-                $subgenreList = ["Blues", "Rhythm & Blues", "Piano Blues"];
-                $selectedSubgenre = "Blues";
+                $subgenreList = ["Punk", "Melodic Hardcore", "Hardcore"];
+                $selectedSubgenre = "Punk";
                 $subgenre = process($subgenreList);
                 break;
                 //! from here on will adjust subgenres the more we add/go live
