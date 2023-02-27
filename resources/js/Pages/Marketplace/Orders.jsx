@@ -14,10 +14,13 @@ export default function Orders({ auth, order_items }) {
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                 Review Items
             <div >
-            <table className="w-1/2 text-sm text-left text-gray-500 dark:text-gray-400 mx-auto mt-10">
+            <table className="w-1/2 text-sm text-center text-gray-500 dark:text-gray-400 mx-auto mt-10">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <th scope="col" class="px-10 py-3">
-                            ID
+                    <th scope="col" class="px-20 py-3">
+                            Album Name
+                        </th>
+                        <th scope="col" class="px-20 py-3">
+                            Album
                         </th>
                         <th scope="col" class="px-10 py-3">
                             Price
@@ -26,14 +29,21 @@ export default function Orders({ auth, order_items }) {
                             Quantity
                         </th>
                         <th scope="col" class="px-10 py-3">
-                            Remove
+                            Actions
                         </th>
                     </thead>
                 {order_items.map(item =>
                     <tbody>
                         <tr>
+                        <td>
+                                {item.album.album_name}
+                            </td>
                             <td>
-                                {item.album.cover_image_url}
+                            <img
+                            src={item.album.cover_image_url}
+                            alt=""
+                            className="w-24 h-24 rounded-lg object-cover mr-8"
+                        />
                             </td>
                             <td>
                                 {item.price}
@@ -42,6 +52,7 @@ export default function Orders({ auth, order_items }) {
                                 {item.quantity}
                             </td>
                             <td>
+                                {/* <a href={route('orders.destroy', chirp.id)}></a> */}
                             <PrimaryButton className="mt-4" >Remove</PrimaryButton>
                             </td>
                         </tr>

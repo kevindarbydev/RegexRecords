@@ -10,7 +10,7 @@ export default function Index({ auth, users }) {
         <AuthenticatedLayout auth={auth}>
             <Head title="Search" />
             <CommunityTabs />
-            <SearchBar />
+
             <div className="flex flex-row flex-wrap m-10">
                 {users.map((user) => (
                     <SearchedUser key={user.id} user={user} />

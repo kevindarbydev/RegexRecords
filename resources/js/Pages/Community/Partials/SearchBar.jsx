@@ -13,7 +13,7 @@ function SearchBar() {
     };
 
     return (
-        <div class="w-1/2 mx-auto mt-4">
+        <div class="w-64 mt-4">
             <form class="flex items-center" onSubmit={submit}>
                 <label for="simple-search" class="sr-only">
                     Search
@@ -39,7 +39,7 @@ function SearchBar() {
                         id="simple-search"
                         value={data.search}
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search"
+                        placeholder="Search for a friend"
                         required
                         onChange={(e) => setData("search", e.target.value)}
                     />
