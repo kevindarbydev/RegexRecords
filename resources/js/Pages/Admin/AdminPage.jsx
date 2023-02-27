@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AdminUserTable from "./Partials/AdminUserTable";
 import AdminAlbumTable from "./Partials/AdminAlbumTable";
 import AdminMessageTable from "./Partials/AdminMessageTable";
@@ -7,19 +7,18 @@ import AdminReviewTable from "./Partials/AdminReviewTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 function AdminPage({ auth, users, albums }) {
-    //TODO: CSRF token
     const [currentTable, setCurrentTable] = useState("users");
     const [csrfToken, setCsrfToken] = useState("");
 
-     useEffect(() => {        
-         fetch("/csrf-token")
-             .then((response) => response.json())
-             .then((data) => setCsrfToken(data.csrfToken))
-             .catch((error) => console.error(error));
-     }, []);
-     if (csrfToken !== "") {
-         console.log("Csrf token: " + csrfToken);
-     }
+    useEffect(() => {
+        fetch("/csrf-token")
+            .then((response) => response.json())
+            .then((data) => setCsrfToken(data.csrfToken))
+            .catch((error) => console.error(error));
+    }, []);
+    if (csrfToken !== "") {
+        console.log("Csrf token: " + csrfToken);
+    }
 
     const handleTableChange = (newTable) => {
         setCurrentTable(newTable);
@@ -27,13 +26,17 @@ function AdminPage({ auth, users, albums }) {
 
     let currentTableComponent;
     if (currentTable === "users") {
-        currentTableComponent = <AdminUserTable users={users} />;
+        currentTableComponent = (
+            <AdminUserTable users={users} csrf={csrfToken} />
+        );
     } else if (currentTable === "albums") {
-        currentTableComponent = <AdminAlbumTable albums={albums} />;
+        currentTableComponent = (
+            <AdminAlbumTable albums={albums} csrf={csrfToken} />
+        );
     } else if (currentTable === "messages") {
-        currentTableComponent = <AdminMessageTable />;
+        currentTableComponent = <AdminMessageTable csrf={csrfToken} />;
     } else if (currentTable === "reviews") {
-        currentTableComponent = <AdminReviewTable />;
+        currentTableComponent = <AdminReviewTable csrf={csrfToken} />;
     }
 
     return (

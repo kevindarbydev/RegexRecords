@@ -1,6 +1,28 @@
 
 
 function AdminUserTable(props) {
+
+     //change from albums to users
+    // const handleDelete = async (albumId) => {
+    //     console.log("id: " + albumId);
+    //     console.log("csrf: " + csrfToken);
+
+    //     try {
+    //         const response = await fetch(`/admin/albums/${albumId}`, {
+    //             method: "DELETE",
+    //             headers: {
+    //                 "X-CSRF-TOKEN": csrfToken,
+    //             },
+    //         });
+    //         if (response.ok) {
+    //             console.log(response);
+    //         } else {
+    //             console.log(response);
+    //         }
+    //     } catch (error) {
+    //         console.error("Error deleting album:", error);
+    //     }
+    // };
     return (
         <div>
             <h3>Manage Users</h3>

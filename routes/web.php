@@ -98,14 +98,16 @@ Route::middleware('auth')->group(function () {
 });
 
 // ADMIN
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin'], function () {
     //get tables
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/albums', [AdminController::class, 'albums'])->name('admin.albums.index');
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/albums', [AdminController::class, 'albums'])->name('admin.albums.index'); //not sure im using this one?
 
     //delete
-    Route::delete('/admin/albums/{id}', [AdminController::class, 'deleteAlbum'])->name('admin.albums.delete');
+    Route::delete('/albums/{id}', [AdminController::class, 'deleteAlbum'])->name('admin.albums.delete');
 });
+
+
 
 // MESSAGES
 Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'messages'], function () {
