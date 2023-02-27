@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('/wishlists', [WishlistController::class, 'index'])->name('dashboard.wishlists');
     Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('dashboard.album.to.wishlist');
     Route::patch('/wishlists/{wishlist}', [WishlistController::class, 'update'])->name('dashboard.wishlists.update');
-    Route::delete('/wishlists/{wishlist}', [WishlistController::class, 'destroy'])->name('dashboard.wishlists.destroy');
+    Route::delete('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('dashboard.wishlists.remove.album');
 });
 
 // EXPLORE

@@ -11,9 +11,11 @@ export default function Index({ auth, wishlist_albums }) {
     });
 
     const submit = (e) => {
+        console.log("submit works");
         e.preventDefault();
-        post(route("wishlists.store"), { onSuccess: () => reset() });
+        post(route("dashboard.wishlists.remove.album"), { onSuccess: () => reset() });
     };
+
 
     return (
         <AuthenticatedLayout auth={auth}>
@@ -60,9 +62,12 @@ export default function Index({ auth, wishlist_albums }) {
                                     <td>{item.album.artist}</td>
                                     <td>{item.created_at}</td>
                                     <td>
-                                        <PrimaryButton className="mt-2">
+                                        <a href={route("dashboard.wishlists.remove.album",wishlist_albums.id)}>
+
+                                            <PrimaryButton className="mt-2">
                                             Remove
                                         </PrimaryButton>
+                                            </a>
                                         <PrimaryButton className="mt-2">
                                             Details
                                         </PrimaryButton>
