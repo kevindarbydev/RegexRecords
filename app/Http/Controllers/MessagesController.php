@@ -102,7 +102,7 @@ class MessagesController extends Controller
         })->exists();
 
         if ($conversationExists){
-            return Inertia::render('Messages/Index');
+            return Inertia::render('Messages/Index'); //trying to reload page
         }
         // // If conversation exists, redirect to the existing conversation
         // if ($conversationExists) {
@@ -135,8 +135,9 @@ class MessagesController extends Controller
      /*
       *
       *  Adds a new message to the conversation
+      *  temporarily returning all msgs in the conversation
       */
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request)
     {
 
         $message = $request->input('message');
@@ -144,14 +145,18 @@ class MessagesController extends Controller
         
 
         // Message
-        Message::create([
+        $newMsg = Message::create([
             'thread_id' => $threadId,
             'user_id' => Auth::id(),
             'body' => $message,
         ]);
-       error_log("Message created: " . $message);      
+
+        $allMessages = Message::where('thread_id', $threadId)->get();
+       foreach ($allMessages as $mzg){
+        error_log($mzg);
+       }   
   
 
-        return redirect()->back();
+        return $newMsg; //return the new message, to be added into the view
     }
 }

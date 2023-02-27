@@ -48,7 +48,7 @@ export default function AlbumDetails({ auth, album, tracks }) {
                             </div>
                         )}
                         <div className="flex-1 flex justify-end mr-12">
-                            <p>
+                       
                                 <div>
                                     {album.value !== 0 ? (
                                         <p className="text-lg font-medium">
@@ -60,7 +60,7 @@ export default function AlbumDetails({ auth, album, tracks }) {
                                         </p>
                                     )}
                                 </div>
-                            </p>
+                          
                         </div>
                     </div>
                     <div>

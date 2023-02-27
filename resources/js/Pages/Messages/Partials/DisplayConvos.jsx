@@ -5,18 +5,15 @@ function DisplayConvos({ messagesByConversation, conversations, auth }) {
     const [selectedConversation, setSelectedConversation] = useState(null);
 
     // Create a new array containing conversations with sender and recipient names and the most recent message
-    const conversationsWithNames = conversations.map((convo) => {
-        console.dir(messagesByConversation[convo.id].messages);
-        console.log(messagesByConversation[convo.id].messages.length);
+    const conversationsWithNames = conversations.map((convo) => {    
         let index = messagesByConversation[convo.id].messages.length - 1;
         if (index >= 0) {
-            console.log(messagesByConversation[convo.id].messages[index].body);
+            console.log(messagesByConversation[convo.id].messages[index].body); //should b the most recent msg in the conversation
         }
 
         const senderName = messagesByConversation[convo.id]?.sender || "";
         const recipientName = messagesByConversation[convo.id]?.recipient || "";
 
-       
         const mostRecentMessage =
             messagesByConversation[convo.id]?.messages?.reduce(
                 (prev, current) => {
@@ -27,28 +24,33 @@ function DisplayConvos({ messagesByConversation, conversations, auth }) {
                 },
                 {}
             ).body || "";
+        
+            const timeOfMsg =
+                messagesByConversation[convo.id]?.messages[index]?.created_at;
 
-        console.log(
-            "This conversation has these names: " +
-                senderName +
-                "," +
-                recipientName +
-                " AND most recent msg: " +
-                mostRecentMessage
-        );
+            console.log(
+                "This conversation has these names: " +
+                    senderName +
+                    "," +
+                    recipientName +
+                    " AND most recent msg: " +
+                    mostRecentMessage +
+                    ", at time: " +
+                    timeOfMsg
+            );
+        
         return {
             ...convo,
             sender: senderName,
             recipient: recipientName,
             mostRecentMessage: mostRecentMessage,
+            timeOfMsg: timeOfMsg,
         };
     });
 
-
-    
-     function handleModalClose() {
-         setSelectedConversation(null);
-     }
+    function handleModalClose() {
+        setSelectedConversation(null);
+    }
 
     function handleConversationClick(convo) {
         let selectedId = convo.id;
@@ -60,33 +62,38 @@ function DisplayConvos({ messagesByConversation, conversations, auth }) {
     }
 
     return (
-        <div>
-            <div className="flex h-screen">
+        <div className="flex">
+           
                 <ul className="space-y-4">
                     {conversationsWithNames.map((convo) => (
                         <li key={convo.id}>
                             <a
                                 href="javascript:void(0)"
                                 className="convo-link"
-                                onClick={(event) =>
-                                    handleConversationClick(convo)
-                                }
+                                onClick={() => handleConversationClick(convo)}
                             >
-                                <div className="flex justify-between">
+                                <div className="flex">
                                     <p className="text-blue-500">
                                         {convo.mostRecentMessage}
                                     </p>
-                                    <span className="text-blue-600 opacity-75 self-end">
+                                    .
+                                    <span className="text-blue-500 opacity-60">
                                         {convo.sender === auth.user.name
                                             ? convo.recipient
                                             : convo.sender}
+                                    </span>
+                                    |
+                                    <span className="text-blue-500 opacity-60">
+                                        {new Date(
+                                            convo.timeOfMsg
+                                        ).toLocaleString()}{" "}
                                     </span>
                                 </div>
                             </a>
                         </li>
                     ))}
                 </ul>
-            </div>
+            
             {/* Render the conversation modal */}
             {selectedConversation && (
                 <ConvoModal

@@ -65,10 +65,13 @@ function Index({
                 {success && (
                     <div className="alert alert-success">{success}</div>
                 )}
-                <div className="w-1/4 h-1/2 bg-gray-200 px-4 py-8">
-                    <h1 className="font-medium text-lg mb-4">
-                        Conversations{" "}
-                        <span>
+                <div className="w-1/4 h-1/2 bg-gray-200 px-4 py-8 ">
+                    <h1
+                        className="font-medium text-lg mb-4"
+                        style={{ display: "flex", alignItems: "center" }}
+                    >
+                        Conversations &nbsp;&nbsp;
+                        <span style={{ display: "flex", alignItems: "center" }}>
                             <a
                                 href={route("messages.create")}
                                 onClick={handleCreateClick}
