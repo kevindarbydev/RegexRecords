@@ -16,8 +16,32 @@ use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, X-Requested-With');
+
+
+
+
+Route::get('/proxy', function (Request $request) {
+  
+    $url = $request->query('url');
+    
+    $searchQuery = $request->query('q');
+    $accessToken = env('DISCOGS_ACCESS_TOKEN');
+
+    $url .= '?q=' . urlencode($searchQuery) . '&token=' . urlencode($accessToken);
+    error_log($url);
+    $response = Http::withHeaders([
+        'User-Agent' => 'StudentProjectDiscogsClone/1.0',
+    ])->get($url);
+
+    return $response;
+});
 
 // LANDING PAGE
 Route::get('/', function () {
