@@ -16,7 +16,7 @@ export default function Index({ auth, albums, collections }) {
     const submit = (e) => {
         console.log("test");
         e.preventDefault();
-        post(route("dashboard.album.to.wishlist"), { onSuccess: () => reset() });
+        post(route("dashboard.albums.store"), { onSuccess: () => reset() });
     };
 
     return (
@@ -56,7 +56,11 @@ export default function Index({ auth, albums, collections }) {
                     </form>
                     <div className="flex flex-row flex-wrap">
                         {albums.map((album) => (
-                            <Album key={album.id} album={album} collections={collections} />
+                            <Album
+                                key={album.id}
+                                album={album}
+                                collections={collections}
+                            />
                         ))}
                     </div>
                 </div>

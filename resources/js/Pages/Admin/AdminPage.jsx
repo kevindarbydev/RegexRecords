@@ -6,7 +6,7 @@ import AdminMessageTable from "./Partials/AdminMessageTable";
 import AdminReviewTable from "./Partials/AdminReviewTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-function AdminPage({ auth, users, albums }) {
+function AdminPage({ auth, users, albums, messages }) {
     const [currentTable, setCurrentTable] = useState("users");
     const [csrfToken, setCsrfToken] = useState("");
 
@@ -34,17 +34,17 @@ function AdminPage({ auth, users, albums }) {
             <AdminAlbumTable albums={albums} csrf={csrfToken} />
         );
     } else if (currentTable === "messages") {
-        currentTableComponent = <AdminMessageTable csrf={csrfToken} />;
+        currentTableComponent = <AdminMessageTable messages={messages} csrf={csrfToken} />;
     } else if (currentTable === "reviews") {
         currentTableComponent = <AdminReviewTable csrf={csrfToken} />;
     }
 
     return (
         <AuthenticatedLayout auth={auth}>
-            <div className="flex justify-center">
-                <Head title="Admin Interface" />
+            <Head title="Admin Interface" />
+            <div className="flex justify-center mr-32">
                 <div className="flex flex-col w-full max-w-md">
-                    <div className="flex justify-between mb-4">
+                    <div className="flex justify-between mb-4 mt-8">
                         <button
                             className={`py-2 px-4 text-sm font-medium focus:outline-none ${
                                 currentTable === "users"

@@ -14,6 +14,7 @@ function Index({
     conversations,
     errors,
     success,
+    currentUserId,
 }) {   
     const [showModal, setShowModal] = useState(false);
     const [users, setUsers] = useState([]);
@@ -23,6 +24,7 @@ function Index({
          setShowModal(false);         
      }
 
+    
     useEffect(() => {
         // Fetch the CSRF token from the server and store it in state
         fetch("/csrf-token")
@@ -106,6 +108,7 @@ function Index({
                         messagesByConversation={messagesByConversation}
                         conversations={conversations}
                         auth={auth}
+                        currentUserId={currentUserId}
                     />
                 </div>
             </AuthenticatedLayout>
