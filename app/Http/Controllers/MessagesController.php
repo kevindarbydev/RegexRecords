@@ -6,17 +6,13 @@ use App\Models\Conversation;
 use App\Models\User;
 use Carbon\Carbon;
 use Cmgmyr\Messenger\Models\Message;
-use Cmgmyr\Messenger\Models\Participant;
 use Cmgmyr\Messenger\Models\Thread;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Inertia\Response;
-use Multicaret\Acquaintances\Traits\Friendable;
-use Cmgmyr\Messenger\Traits\Messagable;
 
 
 class MessagesController extends Controller
@@ -32,6 +28,7 @@ class MessagesController extends Controller
 
         $friends = $user->getFriendsList();
 
+        //conversation lets us get threadId and sender/recipient information
         $conversations = Conversation::where('sender', $user->id)
             ->orWhere('recipient', $user->id)
             ->get();
@@ -53,8 +50,7 @@ class MessagesController extends Controller
                 'sender' => $sender->name,
                 'recipient' => $recipient->name,
             ];
-
-            //error_log("Content of messagesbyconversation: " . $conversationId . ": " . $messagesByConversation[$conversationId]);
+          
         }
         return Inertia::render(
             'Messages/Index',
@@ -158,6 +154,6 @@ class MessagesController extends Controller
        }   
   
 
-        return $newMsg; //return the new message, to be added into the view
+        return $allMessages; 
     }
 }
