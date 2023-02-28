@@ -8,14 +8,14 @@ function ConvoModal({
     currentUserId,
     updateConversationList,
 }) {
-    const [convo, setConvo] = useState(null);
+    const [convo, setConvo] = useState(conversation);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
 
     useEffect(() => {
         function handleKeyDown(event) {
             if (event.keyCode === 27) {
-                onClose();               
+                onClose(updatedConversation);               
             }
         }
 
@@ -26,12 +26,11 @@ function ConvoModal({
         };
     }, []);
 
-    // console.log(currentUserId);
-    //const msgs = conversation.messages.messages || {};
+ 
     useEffect(() => {
         setMessages(conversation.messages.messages);
-        setConvo(messages);
-    }, [convo]);
+        setConvo(conversation);
+    }, [conversation]);
 
     const handleNewMessageChange = (e) => {
         setNewMessage(e.target.value);
@@ -56,15 +55,17 @@ function ConvoModal({
             })
             .then((data) => {
                
-                const updatedConversation = {
-                    ...convo,
+                
+               
+                const updatedConversation = {          
+                    id:convoId,          
                     messages: data.data,
                     timeOfMsg: data.data[data.data.length - 1].created_at,
                     mostRecentMessage: data.data[data.data.length - 1].body,
                 };
-                console.dir(updatedConversation);
-                updateConversationList(updatedConversation);
-                setMessages(data.data);
+                //setMessages([...messages, updatedConversation.mostRecentMessage]);                 
+                updateConversationList(updatedConversation);        
+                setMessages(data.data);        
                 setNewMessage("");
             })
             .catch((error) => {

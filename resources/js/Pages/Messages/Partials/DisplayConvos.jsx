@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ConvoModal from "./ConvoModal";
 
 function DisplayConvos({
@@ -8,72 +8,49 @@ function DisplayConvos({
     currentUserId,
 }) {
     const [selectedConversation, setSelectedConversation] = useState(null);
-    const [convos, setConvos] = useState(conversations);
+    const [conversationsWithNames, setConversationsWithNames] = useState([]);
 
-    const conversationsWithNames = processConversationsWithNames(
-        conversations,
-        messagesByConversation
-    );
-    console.dir(conversationsWithNames);  
+    useEffect(() => {
+        const updatedConversationsWithNames = processConversationsWithNames(
+            conversations,
+            messagesByConversation
+        );
+        setConversationsWithNames(updatedConversationsWithNames);
+    }, [conversations, messagesByConversation]);
 
-    function handleModalClose() {
-        setSelectedConversation(null);
-    }
-    // function updateConversationList(newConversation) {
-    //     console.log("received data!");
-    //     console.dir(newConversation.messages);
-    //     console.log("convo state before operations\n");
-    //     console.dir(convos);
-
-    //     const conversationIndex = convos.findIndex(
-    //         (conversation) => conversation.id === newConversation.id
-    //     );
-    //     const updatedConvo = { ...newConversation }; // make a copy of newConversation
-    //     if (conversationIndex !== -1) {
-    //         // if the conversation already exists in convos
-    //         convos.splice(conversationIndex, 1); // remove the conversation from convos
-    //     }
-
-    //     // add the updated conversation to the front of convos
-    //     setConvos([
-    //         updatedConvo,
-    //         ...convos.filter(
-    //             (conversation) => conversation.id !== updatedConvo.id
-    //         ),
-    //     ]);
-    //     console.log("convo state after operations\n");
-    //     console.dir(convos);
-    // }
-
+   function handleModalClose(updatedConversation) {
+       setSelectedConversation(null);
+       setConversationsWithNames((prevConversations) => {
+           return prevConversations.map((convo) => {
+               if (convo.id === updatedConversation.id) {
+                   console.log("FOUND GIVEN CONVO");
+                   return {
+                       ...convo,
+                       mostRecentMessage: updatedConversation.mostRecentMessage,
+                       timeOfMsg: updatedConversation.timeOfMsg,
+                   };
+               }
+               return convo;
+           });
+       });
+   }
 
     function updateConversationList(newConversation) {
-        console.log("received data!");
-        console.dir(newConversation.messages);
-        console.log("convo state before operations\n");
-        console.dir(convos);
-
-        const conversationIndex = convos.findIndex(
-            (conversation) => conversation.id === newConversation.id
-        );
-        const updatedConvo = { ...newConversation }; // make a copy of newConversation
-        let newConvos = [];
-
-        if (conversationIndex !== -1) {
-            // if the conversation already exists in convos
-            newConvos = [
-                updatedConvo,
-                ...convos.slice(0, conversationIndex),
-                ...convos.slice(conversationIndex + 1),
-            ];
-        } else {
-            // add the updated conversation to the front of convos
-            newConvos = [updatedConvo, ...convos];
-        }
-
-        setConvos(newConvos);
-
-        console.log("convo state after operations\n");
-        console.dir(convos);
+        console.log("in display");
+        console.dir(newConversation);
+       setConversationsWithNames((prevConversations) => {
+           return prevConversations.map((convo) => {
+               if (convo.id === newConversation.id) {
+                console.log("FOUND GIVEN CONVO");
+                   return {
+                       ...convo,
+                       mostRecentMessage: newConversation.mostRecentMessage,
+                       timeOfMsg: newConversation.timeOfMsg,
+                   };
+               }
+               return convo;
+           });
+       });
     }
 
     function handleConversationClick(convo) {
