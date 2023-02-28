@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function ConvoModal({ conversation, convoId, onClose }) {
+function ConvoModal({ conversation, convoId, onClose, currentUserId }) {
     const [convo, setConvo] = useState(null);
     const [messages, setMessages] = useState(null);
     const [newMessage, setNewMessage] = useState("");
@@ -22,13 +22,11 @@ function ConvoModal({ conversation, convoId, onClose }) {
     }, []);
 
     //TODO: stop using 'msgs' and only use messages State, clean up this component in general
-  
+    console.log(currentUserId);
     const msgs = conversation.messages.messages || {};
     useEffect(() => {
-        setMessages(msgs); 
-        
-        
-    }, [messages]);
+        setMessages(conversation.messages.messages);
+    }, [conversation]);
 
     const handleNewMessageChange = (e) => {
         setNewMessage(e.target.value);
@@ -66,11 +64,18 @@ function ConvoModal({ conversation, convoId, onClose }) {
             <div className="modal-content">
                 <h2 className="text-lg font-medium mb-4">Conversation</h2>
 
-                {msgs ? (
+                {messages ? (
                     <div>
-                        {msgs.map((key, index) => (
-                            <p className="text-gray-700 text-lg" key={index}>
-                                {msgs[index].body}{" "}
+                        {messages.map((message, index) => (
+                            <p
+                                className={`text-gray-700 text-lg ${
+                                    message.user_id === currentUserId
+                                        ? "text-right"
+                                        : "text-left"
+                                }`}
+                                key={index}
+                            >
+                                {message.body}{" "}
                                 <span className="text-blue-500 text-sm opacity-75">
                                     {new Date(
                                         msgs[index].created_at
@@ -97,8 +102,9 @@ function ConvoModal({ conversation, convoId, onClose }) {
                     </button>
                 </form>
                 <p>
-                    <a>Close</a> (not implemented yet, use 'esc' key to close
-                    modals)
+                    <a href="#" onClick={onClose}>
+                        Close
+                    </a>
                 </p>
             </div>
         </div>
