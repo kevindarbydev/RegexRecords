@@ -19,7 +19,10 @@ class ExploreController extends Controller
     public function index(): Response
     {
 
+        //* once pagination is involved, can likely remove limit from everywhere
+
         //* limit setting for all 3 partials on explore/index:
+
         $limit = 4;
 
 
@@ -159,5 +162,11 @@ class ExploreController extends Controller
             'albums' => Album::all(),
 
         ]);
+    }
+
+
+    public function advSearch(): Response
+    {
+        return Inertia::render('Explore/AdvSearch', []);
     }
 }

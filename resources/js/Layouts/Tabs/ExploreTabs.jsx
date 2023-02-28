@@ -10,6 +10,16 @@ export default function ExploreTabs() {
                 </Tab>
                 <Tab Index={1}>
                     <NavLink
+                        href={route("explore.index")}
+                        active={route().current("explore.index")}
+                    >
+                        <span className=" dark:text-white dark:hover:bg-gray-700">
+                            Discover
+                        </span>
+                    </NavLink>
+                </Tab>
+                <Tab Index={1}>
+                    <NavLink
                         href={route("explore.viewAllAlbums")}
                         active={route().current("explore.viewAllAlbums")}
                     >
@@ -20,18 +30,8 @@ export default function ExploreTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    // href={route("wishlists.index")}
-                    // active={route().current("wishlists.index")}
-                    >
-                        <span className=" dark:text-white dark:hover:bg-gray-700">
-                            New Releases
-                        </span>
-                    </NavLink>
-                </Tab>
-                <Tab>
-                    <NavLink
-                    // href={route("submissions.index")}
-                    // active={route().current("submissions.index")}
+                        href={route("explore.advSearch")}
+                        active={route().current("submissions.advSearch")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Advanced Search

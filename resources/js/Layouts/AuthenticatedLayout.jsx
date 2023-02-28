@@ -18,9 +18,7 @@ export default function Authenticated({ auth, header, children }) {
         setDarkMode((prevDarkMode) => !prevDarkMode);
     }
 
-    function quantity() {
-        
-    }
+    function quantity() {}
 
     return (
         <div className={`min-h-screen ${darkMode ? "dark" : ""}`}>
@@ -54,24 +52,7 @@ export default function Authenticated({ auth, header, children }) {
                                         Explore
                                     </span>
                                 </NavLink>
-                                {/* <NavLink
-                                    href={route("collections.index")}
-                                    active={route().current(
-                                        "collections.index"
-                                    )}
-                                >
-                                    <span className=" dark:text-white dark:hover:bg-gray-700">
-                                        Collections
-                                    </span>
-                                </NavLink>
-                                <NavLink
-                                    href={route("wishlists.index")}
-                                    active={route().current("wishlists.index")}
-                                >
-                                    <span className=" dark:text-white dark:hover:bg-gray-700">
-                                        Wishlist
-                                    </span>
-                                </NavLink> */}
+
                                 <NavLink
                                     href={route("community.index")}
                                     active={route().current("community.index")}

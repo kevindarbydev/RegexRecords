@@ -14,6 +14,16 @@ export default function DashboardTabs() {
                         active={route().current("dashboard.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
+                            Add New Album
+                        </span>
+                    </NavLink>
+                </Tab>
+                <Tab>
+                    <NavLink
+                        href={route("dashboard.index")}
+                        active={route().current("dashboard.index")}
+                    >
+                        <span className=" dark:text-white dark:hover:bg-gray-700">
                             My Albums
                         </span>
                     </NavLink>
@@ -31,8 +41,8 @@ export default function DashboardTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    href={route("dashboard.wishlists")}
-                    active={route().current("wishlists.index")}
+                        href={route("dashboard.wishlists")}
+                        active={route().current("wishlists.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Wishlists
@@ -41,19 +51,8 @@ export default function DashboardTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    // href={route("submissions.index")}
-                    // active={route().current("submissions.index")}
-                    >
-                        <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Submissions
-                        </span>
-                    </NavLink>
-                </Tab>
-                <Tab>
-                    {" "}
-                    <NavLink
-                    // href={route("export.index")}
-                    // active={route().current("export.index")}
+                        href={route("dashboard.export")}
+                        active={route().current("dashboard.export")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Export
