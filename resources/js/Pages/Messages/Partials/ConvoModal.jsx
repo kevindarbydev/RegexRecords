@@ -3,7 +3,7 @@ import axios from "axios";
 
 function ConvoModal({ conversation, convoId, onClose, currentUserId }) {
     const [convo, setConvo] = useState(null);
-    const [messages, setMessages] = useState(null);
+    const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
 
     useEffect(() => {
@@ -26,7 +26,8 @@ function ConvoModal({ conversation, convoId, onClose, currentUserId }) {
     const msgs = conversation.messages.messages || {};
     useEffect(() => {
         setMessages(conversation.messages.messages);
-    }, [conversation]);
+        setConvo(messages);
+    }, [convo]);
 
     const handleNewMessageChange = (e) => {
         setNewMessage(e.target.value);
@@ -39,19 +40,19 @@ function ConvoModal({ conversation, convoId, onClose, currentUserId }) {
         }
 
         // Add the new message to the components's messages array
-        const newMessages = Array.isArray(msgs)
-            ? [...msgs, { body: newMessage }]
+        const newMessages = Array.isArray(messages)
+            ? [...messages, { body: newMessage }]
             : [{ body: newMessage }];
 
-        const newConversation = { ...conversation, messages: newMessages };
+       // const newConversation = { ...conversation, messages: newMessages };
         axios
             .post(`/messages/${convoId}`, {
                 message: newMessage,
                 threadId: convoId,
             })
             .then((data) => {
-                setMessages(data.data);
-                setConvo(newConversation);
+                console.dir(data);
+                 setMessages(data.data);                
                 setNewMessage("");
             })
             .catch((error) => {
@@ -78,7 +79,7 @@ function ConvoModal({ conversation, convoId, onClose, currentUserId }) {
                                 {message.body}{" "}
                                 <span className="text-blue-500 text-sm opacity-75">
                                     {new Date(
-                                        msgs[index].created_at
+                                        message.created_at
                                     ).toLocaleString()}{" "}
                                 </span>
                             </p>

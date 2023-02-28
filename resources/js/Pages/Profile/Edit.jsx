@@ -35,21 +35,20 @@ export default function Edit({ auth, mustVerifyEmail, status, user }) {
                         <DeleteUserForm className="max-w-xl" />
                     </div>
 
-                   {user.is_admin  ? (
+                    {user.is_admin ? (
                         <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                             <h3 className="text-lg text-gray-800 leading-tight">
                                 Admin Panel
                             </h3>
-                            <PrimaryButton className="mt-4 bg-blue-500">
-                                <a href={route("admin.index")}>
+                            <a href={route("admin.index")}>
+                                <PrimaryButton className="mt-4 bg-blue-500">
                                     Go to admin page
-                                </a>
-                            </PrimaryButton>
+                                </PrimaryButton>
+                            </a>
                         </div>
                     ) : (
-                        <div>
-                            </div>
-                     )}
+                        <div></div>
+                    )}
                 </div>
             </div>
         </AuthenticatedLayout>

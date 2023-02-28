@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
 use App\Models\Album;
+use Cmgmyr\Messenger\Models\Message;
 
 class AdminController extends Controller
 {
@@ -20,9 +21,11 @@ class AdminController extends Controller
         //retrieve everything on index and switch between tables
         $users = User::all();
         $albums = Album::with('user')->orderByDesc('created_at')->get();
+        $messages = Message::all();
         return Inertia::render('Admin/AdminPage', [
             'users' => $users,
             'albums' => $albums,
+            'messages' => $messages,
         ]);
     }
 
