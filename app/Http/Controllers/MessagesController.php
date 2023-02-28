@@ -24,6 +24,7 @@ class MessagesController extends Controller
      */
     public function index(): Response
     {
+        
         $user = auth()->user();
 
         $friends = $user->getFriendsList();

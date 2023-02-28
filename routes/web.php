@@ -102,6 +102,7 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin'], fu
     //delete
     Route::delete('/albums/{id}', [AdminController::class, 'deleteAlbum'])->name('admin.albums.delete');
     Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+    Route::delete('/messages/{id}', [AdminController::class, 'deleteMessage'])->name('admin.messages.delete');
 });
 
 

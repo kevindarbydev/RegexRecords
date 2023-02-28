@@ -6,10 +6,11 @@ import AdminMessageTable from "./Partials/AdminMessageTable";
 import AdminReviewTable from "./Partials/AdminReviewTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-function AdminPage({ auth, users, albums, messages }) {
+function AdminPage({ auth, users, albums, messages, currentUser }) {
     const [currentTable, setCurrentTable] = useState("users");
     const [csrfToken, setCsrfToken] = useState("");
 
+    console.dir(messages);
     useEffect(() => {
         fetch("/csrf-token")
             .then((response) => response.json())
@@ -27,14 +28,20 @@ function AdminPage({ auth, users, albums, messages }) {
     let currentTableComponent;
     if (currentTable === "users") {
         currentTableComponent = (
-            <AdminUserTable users={users} csrf={csrfToken} />
+            <AdminUserTable
+                users={users}
+                csrf={csrfToken}
+                currentUser={currentUser}
+            />
         );
     } else if (currentTable === "albums") {
         currentTableComponent = (
             <AdminAlbumTable albums={albums} csrf={csrfToken} />
         );
     } else if (currentTable === "messages") {
-        currentTableComponent = <AdminMessageTable messages={messages} csrf={csrfToken} />;
+        currentTableComponent = (
+            <AdminMessageTable messages={messages} csrf={csrfToken} />
+        );
     } else if (currentTable === "reviews") {
         currentTableComponent = <AdminReviewTable csrf={csrfToken} />;
     }
@@ -42,7 +49,7 @@ function AdminPage({ auth, users, albums, messages }) {
     return (
         <AuthenticatedLayout auth={auth}>
             <Head title="Admin Interface" />
-            <div className="flex justify-center mr-32">
+            <div className="flex justify-center mr-64">
                 <div className="flex flex-col w-full max-w-md">
                     <div className="flex justify-between mb-4 mt-8">
                         <button

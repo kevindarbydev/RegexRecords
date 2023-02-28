@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 function AdminUserTable(props) {
 const [userList, setUserList] = useState(props.users);
-console.log(props.users);
+    console.log(props.currentUser);
     const handleDelete = async (userId) => {
         console.log("id: " + userId);
         console.log("csrf: " + props.csrf);
 
+        if (userId === props.currentUser){
+            return;//TOAST
+        }
         try {
             const response = await fetch(`/admin/users/${userId}`, {
                 method: "DELETE",
@@ -25,8 +28,8 @@ console.log(props.users);
         }
     };
     return (
-        <div>
-            <h3>Manage Users</h3>
+        <div className="text-center">
+            <h3 className="text-lg font-semibold mb-4">Manage Albums</h3>
             <table className="table-auto w-full text-left divide-y divide-gray-200 shadow overflow-hidden sm:rounded-lg">
                 <thead className="bg-gray-50">
                     <tr>

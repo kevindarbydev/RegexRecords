@@ -14,10 +14,13 @@ use App\Models\User;
 use App\Models\Album;
 use Cmgmyr\Messenger\Models\Message;
 
+
+
 class AdminController extends Controller
 {
     public function index()
     {
+        $user = auth()->user();
         //retrieve everything on index and switch between tables
         $users = User::all();
         $albums = Album::with('user')->orderByDesc('created_at')->get();
@@ -26,6 +29,7 @@ class AdminController extends Controller
             'users' => $users,
             'albums' => $albums,
             'messages' => $messages,
+            'currentUser' => $user->id,
         ]);
     }
 
@@ -42,6 +46,14 @@ class AdminController extends Controller
         $user = User::find($user_id);
         error_log("Deleting user ID:{" . $user_id . "} , NAME:{" . $user->name . "}");
         $user->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function deleteMessage($message_id)
+    {
+        $msg = Message::find($message_id);
+        error_log("Deleting message ID:{" . $message_id . "} , CONTENT:{" . $msg->body . "}");
+        $msg->delete();
         return response()->json(['success' => true]);
     }
 }
