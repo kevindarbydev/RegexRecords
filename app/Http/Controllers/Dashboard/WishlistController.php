@@ -26,7 +26,7 @@ class WishlistController extends Controller
     }
     public function addAlbumToWishlist(Request $request): RedirectResponse {
         
-        $wishlist = Wishlist::with('user','album')->where('list_name', $request->list_name)->first();
+        $wishlist = Wishlist::with('user')->where('id', $request->id)->first();
         $wAlbum = new Wishlist_Album();
         $wAlbum->wishlist_id = 1;
         $wAlbum->album_id = $request->album_id;

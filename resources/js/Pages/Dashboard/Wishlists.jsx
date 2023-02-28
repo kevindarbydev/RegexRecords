@@ -22,7 +22,7 @@ export default function Index({ auth, wishlist_albums }) {
     const removefromWishlist = (e) => {
         console.log("remove button passed");
         e.preventDefault();
-        post(route("dashboard.wishlists.remove.album", wishlist_albums.id), { onSuccess: () => reset() });
+        post(route("dashboard.wishlists.remove.album"), { onSuccess: () => reset() });
     };
 
 
@@ -73,7 +73,7 @@ export default function Index({ auth, wishlist_albums }) {
                                     <td>
                                         
 
-                                            <PrimaryButton className="mt-2" onClick={removefromWishlist}>
+                                            <PrimaryButton className="mt-2" onClick={removefromWishlist} id={item.id}>
                                             Remove
                                         </PrimaryButton>
                                          
