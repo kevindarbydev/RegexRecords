@@ -97,8 +97,9 @@ function ConvoModal({ conversation, convoId, onClose }) {
                     </button>
                 </form>
                 <p>
-                    <a>Close</a> (not implemented yet, use 'esc' key to close
-                    modals)
+                    <a href="#" onClick={onClose}>
+                        Close
+                    </a>
                 </p>
             </div>
         </div>
