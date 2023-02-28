@@ -37,24 +37,7 @@ class OrderItemController extends Controller
         return redirect(route('orders.index'));
     }
 
-    public function addAlbumToOrder(Request $request): RedirectResponse {
-    
-        $order = Order::with('user')->where('id', $request->id)->first();
-        $orderitem = new Order_Item();
-        $orderitem->quantity = 1;
-        $orderitem->order_id = $request->order_id;
-        $orderitem->album_id = $request->album_id;
-        $orderitem->price = $request->price;
 
-        $order2 = DB::table('order__items')->where('order_id', 1)->where('album_id', $orderitem->album_id)->first();
-        if ($order2 != null) {
-            return redirect()->route('orders.index');
-        }
-
-        $orderitem->order_item()->save($order);
-        return redirect()->route('marketplace.index');
-
-    }
 
     
 }

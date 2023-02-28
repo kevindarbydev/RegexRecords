@@ -17,6 +17,18 @@ export default function Index({ users, albums, collections, collection_albums, c
         post(route("dashboard.album.to.wishlist"), { onSuccess: () => reset() });
     };
 
+    const addtoWishlist = (e) => {
+        console.log("add passed")
+        e.preventDefault();
+        post(route("dashboard.album.to.wishlist"), { onSuccess: () => reset() });
+    };
+
+    const addtoOrder = (e) => {
+        console.log("order passed")
+        e.preventDefault();
+        post(route("marketplace.album.to.order"), { onSuccess: () => reset() });
+    };
+
     return (
         <table className="w-screen text-sm text-left text-gray-500 dark:text-gray-400 mx-auto mt-10">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -69,10 +81,10 @@ export default function Index({ users, albums, collections, collection_albums, c
                                             }
                                         </td>
                                         <td class="px-3 py-2">
-                                            <PrimaryButton className="mr-1" processing={processing}>
+                                            <PrimaryButton className="mr-1" processing={processing} onClick={addtoOrder}>
                                                 Add to Cart
                                             </PrimaryButton>
-                                            <PrimaryButton className="mr-1" processing={processing} onClick={submit} >
+                                            <PrimaryButton className="mr-1" processing={processing} onClick={addtoWishlist} >
                                                 Add to Wishlist
                                             </PrimaryButton>
                                             <PrimaryButton className="" processing={processing}>
