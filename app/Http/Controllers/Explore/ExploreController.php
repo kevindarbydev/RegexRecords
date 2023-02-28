@@ -19,7 +19,10 @@ class ExploreController extends Controller
     public function index(): Response
     {
 
+        //* once pagination is involved, can likely remove limit from everywhere
+
         //* limit setting for all 3 partials on explore/index:
+
         $limit = 4;
 
 
@@ -85,10 +88,9 @@ class ExploreController extends Controller
                 $selectedSubgenre = "Punk";
                 $subgenre = process($subgenreList);
                 break;
-                //! from here on will adjust subgenres the more we add/go live
             case 2:
-                $subgenreList = ["Blues", "Rhythm & Blues", "Piano Blues"];
-                $selectedSubgenre = "Blues";
+                $subgenreList = ["Hardcore Hip-Hop", "Thug Rap", "Pop Rap", "Boom Bap", "Gangsta"];
+                $selectedSubgenre = "Hip Hop";
                 $subgenre = process($subgenreList);
                 break;
             case 3:
@@ -130,7 +132,7 @@ class ExploreController extends Controller
         //     $weekday++;
         // }
 
-        // error_log($topPicks);
+        error_log($topPicks);
 
 
         return Inertia::render(
@@ -159,5 +161,11 @@ class ExploreController extends Controller
             'albums' => Album::all(),
 
         ]);
+    }
+
+
+    public function advSearch(): Response
+    {
+        return Inertia::render('Explore/AdvSearch', []);
     }
 }

@@ -13,7 +13,7 @@ function SearchBar() {
     };
 
     return (
-        <div class="w-64 mt-4">
+        <div class="w-64">
             <form class="flex items-center" onSubmit={submit}>
                 <label for="simple-search" class="sr-only">
                     Search

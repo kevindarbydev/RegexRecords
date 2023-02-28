@@ -6,7 +6,6 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
 import FlashMessage from "@/Components/FlashMessage";
-import SearchBar from "@/Pages/Community/Partials/SearchBar";
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -14,16 +13,29 @@ export default function Authenticated({ auth, header, children }) {
 
     const [darkMode, setDarkMode] = useState(false);
 
-    function toggleDarkMode() {
-        setDarkMode((prevDarkMode) => !prevDarkMode);
+    let theme;
+
+    if (localStorage) {
+        theme = localStorage.getItem("theme");
     }
 
-    function quantity() {
-        
+    function toggleDarkMode() {
+        if (theme === "dark") {
+            setDarkMode((prevDarkMode) => !prevDarkMode);
+
+            localStorage.setItem("theme", "light");
+            theme = "light";
+        } else {
+            setDarkMode((prevDarkMode) => !prevDarkMode);
+            localStorage.setItem("theme", "dark");
+            theme = "dark";
+        }
     }
+
+    function quantity() {}
 
     return (
-        <div className={`min-h-screen ${darkMode ? "dark" : ""}`}>
+        <div className={`min-h-screen ${theme == "dark" ? "dark" : ""}`}>
             <nav className=" border-b border-gray-100">
                 {/* main-nav */}
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,24 +66,7 @@ export default function Authenticated({ auth, header, children }) {
                                         Explore
                                     </span>
                                 </NavLink>
-                                {/* <NavLink
-                                    href={route("collections.index")}
-                                    active={route().current(
-                                        "collections.index"
-                                    )}
-                                >
-                                    <span className=" dark:text-white dark:hover:bg-gray-700">
-                                        Collections
-                                    </span>
-                                </NavLink>
-                                <NavLink
-                                    href={route("wishlists.index")}
-                                    active={route().current("wishlists.index")}
-                                >
-                                    <span className=" dark:text-white dark:hover:bg-gray-700">
-                                        Wishlist
-                                    </span>
-                                </NavLink> */}
+
                                 <NavLink
                                     href={route("community.index")}
                                     active={route().current("community.index")}
@@ -92,7 +87,7 @@ export default function Authenticated({ auth, header, children }) {
                                     </span>
                                 </NavLink>
                                 {/* FIXME: responsive overlap with icons */}
-                                <SearchBar />
+                                {/* <SearchBar /> */}
                             </div>
                         </div>
 
@@ -272,7 +267,7 @@ export default function Authenticated({ auth, header, children }) {
                             onClick={toggleDarkMode}
                             className="h-6 w-6 self-center"
                         >
-                            {darkMode ? (
+                            {theme == "dark" ? (
                                 <MoonIcon className=" text-white" />
                             ) : (
                                 <SunIcon className=" text-gray-600" />

@@ -6,14 +6,25 @@ import { useForm, Head } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
 export default function Index({ auth, wishlist_albums }) {
-    const { data, setData, post, processing, reset, errors } = useForm({
+    const { data, setData, post, processing, reset, errors, get } = useForm({
         list_name: "",
     });
 
     const submit = (e) => {
+        console.log("submit works");
         e.preventDefault();
-        post(route("wishlists.store"), { onSuccess: () => reset() });
+        post(route("dashboard.wishlists.remove.album"), { onSuccess: () => reset() });
     };
+    const addAlbums = (e) => {
+        e.preventDefault();
+        get(route("marketplace.index"), { onSuccess: () => reset() });
+    };
+    const removefromWishlist = (e) => {
+        console.log("remove button passed");
+        e.preventDefault();
+        post(route("dashboard.wishlists.remove.album", wishlist_albums.id), { onSuccess: () => reset() });
+    };
+
 
     return (
         <AuthenticatedLayout auth={auth}>
@@ -24,7 +35,7 @@ export default function Index({ auth, wishlist_albums }) {
                     My Wishlist
                 </div>
                 <div className="flex justify-center items-center">
-                    <PrimaryButton className="mt-4">Add Albums</PrimaryButton>
+                    <PrimaryButton className="mt-4" onClick={addAlbums}>Add Albums</PrimaryButton>
                 </div>
 
                 <div className="flex justify-center items-center">
@@ -60,9 +71,12 @@ export default function Index({ auth, wishlist_albums }) {
                                     <td>{item.album.artist}</td>
                                     <td>{item.created_at}</td>
                                     <td>
-                                        <PrimaryButton className="mt-2">
+                                        
+
+                                            <PrimaryButton className="mt-2" onClick={removefromWishlist}>
                                             Remove
                                         </PrimaryButton>
+                                         
                                         <PrimaryButton className="mt-2">
                                             Details
                                         </PrimaryButton>

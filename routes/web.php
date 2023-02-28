@@ -2,31 +2,22 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Dashboard\CollectionController;
-use App\Http\Controllers\Marketplace\MarketplaceController;
-use App\Http\Controllers\Dashboard\AlbumController;
-use App\Http\Controllers\Community\FriendController;
 use App\Http\Controllers\Community\CommunityController;
+use App\Http\Controllers\Community\FriendController;
+use App\Http\Controllers\Dashboard\AlbumController;
+use App\Http\Controllers\Dashboard\CollectionController;
+use App\Http\Controllers\Dashboard\ExportController;
+use App\Http\Controllers\Dashboard\WishlistController;
 use App\Http\Controllers\Explore\ExploreController;
+use App\Http\Controllers\Marketplace\MarketplaceController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\Dashboard\WishlistController;
 use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\ProfileController;
 
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 // LANDING PAGE
 Route::get('/', function () {
@@ -55,13 +46,16 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('/wishlists', [WishlistController::class, 'index'])->name('dashboard.wishlists');
     Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('dashboard.album.to.wishlist');
     Route::patch('/wishlists/{wishlist}', [WishlistController::class, 'update'])->name('dashboard.wishlists.update');
-    Route::delete('/wishlists/{wishlist}', [WishlistController::class, 'destroy'])->name('dashboard.wishlists.destroy');
+    Route::delete('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('dashboard.wishlists.remove.album');
+    // -------------------------
+    Route::get('/export', [ExportController::class, 'index'])->name('dashboard.export');
 });
 
 // EXPLORE
 Route::group(['middleware' => 'auth', 'prefix' => 'explore'], function () {
     Route::get('/', [ExploreController::class, 'index'])->name('explore.index');
     Route::get('/viewAllAlbums', [ExploreController::class, 'viewAllAlbums'])->name('explore.viewAllAlbums');
+    Route::get('/advSearch', [ExploreController::class, 'advSearch'])->name('explore.advSearch');
 });
 
 // COMMUNITY
@@ -82,7 +76,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
 Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::get('/', [MarketplaceController::class, 'index'])->name('marketplace.index');
 
-    //CRUD Orders 
+    //CRUD Orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/order_items', [OrderController::class, 'showOrderItems'])->name('marketplace.orders.order_items');
     Route::post('/orders/store', [OrderItemController::class, 'store'])->name('order_item.store');

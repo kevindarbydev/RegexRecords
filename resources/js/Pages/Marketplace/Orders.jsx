@@ -4,7 +4,15 @@ import { useForm, Head } from "@inertiajs/react";
 
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function Orders({ auth, order_items }) {
+// function subTotal(order_items) {
+//     var quantity = order_items.quantity;
+//     var itemPrice = order_items.price;
+//     var total = quantity * itemPrice;
+
+//     console.log(quantity);
+// }
+
+export default function Orders({ auth, order_items, orders }) {
     return (
         <AuthenticatedLayout auth={auth}>
             <Head title="Orders" />
@@ -43,8 +51,8 @@ export default function Orders({ auth, order_items }) {
                                             className="w-24 h-24 rounded-lg object-cover mr-8 mt-2 mx-auto"
                                         />
                                     </td>
-                                    <td>{item.price}</td>
-                                    <td>{item.quantity}</td>
+                                    <td id="price">{item.price}</td>
+                                    <td id="quantity">{item.quantity}</td>
                                     <td>
                                         {/* <a href={route('orders.destroy', chirp.id)}></a> */}
                                         <PrimaryButton className="mt-2">
@@ -59,10 +67,58 @@ export default function Orders({ auth, order_items }) {
                             </tbody>
                         ))}
                     </table>
-                    {/* {order_items.map(item =>
-                        <Order_Item key={item.id} order_item={item} />
-                    )} */}
                 </div>
+                <div className="flex justify-center items-center">
+                    <table className="w-1/2 text-sm text-center text-gray-500 dark:text-gray-400 mx-auto mt-5 bg-white">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                            <th scope="col" class="px-10 py-3">
+                                Ordered Date
+                            </th>
+                            <th scope="col" class="px-10 py-3">
+                                Subtotal
+                            </th>
+                            <th scope="col" class="px-10 py-3">
+                                Shipping
+                            </th>
+                            <th scope="col" class="px-10 py-3">
+                                Tax
+                            </th>
+                            <th scope="col" class="px-10 py-3">
+                                Total Price
+                            </th>
+                        </thead>
+                        {orders.map((order) => (
+                            <tbody>
+                                <tr>
+                                    <td>{order.created_at}</td>
+                                    <td>
+                                        {order.subtotal}
+                                    </td>
+                                    <td>{order.shipping}</td>
+                                    <td>{order.tax}</td>
+                                    <td>
+                                        {order.totalPrice}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        ))}
+                    </table>
+                </div>
+                {/* <div className="price">
+                    <button onClick={subTotal}>TEST</button>
+
+                    <p>SubTotal:</p>
+                    <p id="subtotal">{orders.subtotal}</p>
+
+                    <p>Taxes:</p>
+                    <p id="taxes"></p>
+
+                    <p>Shipping:</p>
+                    <p id="shipping"></p>
+
+                    <p>Final Total:</p>
+                    <p id="finalTotal"></p>
+                </div> */}
                 <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         <PrimaryButton className="mt-4">

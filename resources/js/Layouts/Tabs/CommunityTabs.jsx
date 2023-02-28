@@ -1,5 +1,6 @@
 import { Tab } from "@headlessui/react";
 import NavLink from "@/Components/NavLink";
+import SearchBar from "@/Pages/Community/Partials/SearchBar";
 
 export default function CommunityTabs() {
     return (
@@ -29,6 +30,7 @@ export default function CommunityTabs() {
                         </span>
                     </NavLink>
                 </Tab>
+                <SearchBar />
             </Tab.List>
         </Tab.Group>
     );

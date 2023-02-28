@@ -14,15 +14,23 @@ function Index({
     conversations,
     errors,
     success,
+    currentUserId,
+    newConvo,
 }) {   
     const [showModal, setShowModal] = useState(false);
     const [users, setUsers] = useState([]);
     const [csrfToken, setCsrfToken] = useState("");
-
+    
+ 
      function handleModalClose() {
          setShowModal(false);         
      }
-
+     function onCreateConversation() {
+         setShowModal(false); 
+         location.reload(); //reloading to show conversation, may improve later (use state instead)
+     }
+  
+    
     useEffect(() => {
         // Fetch the CSRF token from the server and store it in state
         fetch("/csrf-token")
@@ -99,6 +107,7 @@ function Index({
                             users={users}
                             csrf={csrfToken}
                             onClose={handleModalClose}
+                            onCreateConversation={onCreateConversation}
                         />
                     )}
                     <DisplayConvos
@@ -106,6 +115,8 @@ function Index({
                         messagesByConversation={messagesByConversation}
                         conversations={conversations}
                         auth={auth}
+                        currentUserId={currentUserId}
+                        
                     />
                 </div>
             </AuthenticatedLayout>
