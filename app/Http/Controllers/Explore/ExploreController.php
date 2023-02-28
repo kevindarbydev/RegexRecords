@@ -71,8 +71,8 @@ class ExploreController extends Controller
         {
             for ($i = 0; $i <  sizeof($subgenreList); $i++) {
                 $subgenre = $subgenreList[$i];
+                return $subgenre;
             }
-            return $subgenre;
         }
 
         $weekday = Carbon::now()->dayOfWeek;
@@ -88,10 +88,9 @@ class ExploreController extends Controller
                 $selectedSubgenre = "Punk";
                 $subgenre = process($subgenreList);
                 break;
-                //! from here on will adjust subgenres the more we add/go live
             case 2:
-                $subgenreList = ["Blues", "Rhythm & Blues", "Piano Blues"];
-                $selectedSubgenre = "Blues";
+                $subgenreList = ["Hardcore Hip-Hop", "Thug Rap", "Pop Rap", "Boom Bap", "Gangsta"];
+                $selectedSubgenre = "Hip Hop";
                 $subgenre = process($subgenreList);
                 break;
             case 3:
@@ -133,7 +132,7 @@ class ExploreController extends Controller
         //     $weekday++;
         // }
 
-        // error_log($topPicks);
+        error_log($topPicks);
 
 
         return Inertia::render(
