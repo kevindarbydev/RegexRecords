@@ -48,11 +48,11 @@ class OrderItemController extends Controller
 
         $order2 = DB::table('order__items')->where('order_id', 1)->where('album_id', $orderitem->album_id)->first();
         if ($order2 != null) {
-            return redirect()->route('marketplace.index');
+            return redirect()->route('orders.index');
         }
 
         $orderitem->order_item()->save($order);
-        return redirect()->route('dashboard.wishlists');
+        return redirect()->route('marketplace.index');
 
     }
 
