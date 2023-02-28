@@ -18,12 +18,25 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Error;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
+
+
 
 class MarketplaceController extends Controller
 {
     public function index(): Response
     {
+        $rowId = "8cbf215baa3b757e910e5305ab981172";
+        $cartItem = Cart::get($rowId);
+
+        $cartContents = Cart::content();
+        error_log($cartContents);
+
+        // $cartContents = Cart::count();
+        // $cartContentsActual = json_decode($cartContents, true); 
+
         return Inertia::render('Marketplace/Index', [
             'current_user' => Auth::user(),
             'collection_albums' => Collection_Album::where('for_sale', true)->latest()->get(),
@@ -33,10 +46,13 @@ class MarketplaceController extends Controller
             'albums' => Album::with('user')->latest()->get(),
             'collections' => Collection::with('user')->latest()->get(),
             'users' => User::all(),
+            'cartContents' => $cartContents,
+            'cartItem' => $cartItem,
         ]);
     }
-    public function addAlbumToOrder(Request $request): RedirectResponse {
-    
+    public function addAlbumToOrder(Request $request): RedirectResponse
+    {
+
         $order = Order::with('user')->where('id', $request->id)->first();
         $orderitem = new Order_Item();
         $orderitem->quantity = 1;
@@ -51,6 +67,13 @@ class MarketplaceController extends Controller
 
         $orderitem->order_item()->save($order);
         return redirect()->route('marketplace.index');
+    }
 
+    // TESTING
+    public function addToCart(Request $request): RedirectResponse
+    {
+        error_log("TESTING -- ADDED TO CART SUCCESSFULLY");
+        Cart::add('293ad', 'Product 1', 1, 9.99);
+        return redirect()->route('marketplace.index');
     }
 }

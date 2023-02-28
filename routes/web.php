@@ -28,9 +28,9 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Author
 
 
 Route::get('/proxy', function (Request $request) {
-  
+
     $url = $request->query('url');
-    
+
     $searchQuery = $request->query('q');
     $accessToken = env('DISCOGS_ACCESS_TOKEN');
 
@@ -108,10 +108,13 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::post('/orders/store', [OrderItemController::class, 'store'])->name('order_item.store');
     Route::patch('/orders/{order}', [OrderController::class, 'update'])->name('marketplace.orders.update');
     Route::patch('/orders/{order}', [OrderController::class, 'destroy'])->name('marketplace.orders.destroy');
-        // -------------------------
-        Route::get('/wishlists', [WishlistController::class, 'index'])->name('marketplace.wishlists');
-        Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('marketplace.album.to.wishlist');
-        Route::delete('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
+    // -------------------------
+    Route::get('/wishlists', [WishlistController::class, 'index'])->name('marketplace.wishlists');
+    Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('marketplace.album.to.wishlist');
+    Route::delete('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
+
+    // ============== TESTING CART PACKAGE ================
+    Route::post('/testing/package', [MarketplaceController::class, 'addToCart'])->name('marketplace.add.to.cart');
 });
 
 // PROFILE

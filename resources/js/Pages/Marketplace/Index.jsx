@@ -7,7 +7,20 @@ import Items from "@/Pages/Marketplace/Partials/Items";
 import { useForm, Head, Link } from "@inertiajs/react";
 import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
 
-export default function Index({ auth, users, albums, collection_albums2, collection_albums3, collection_albums4, collections, collection_albums, current_user }) {
+export default function Index({
+    auth,
+    users,
+    albums,
+    collection_albums2,
+    collection_albums3,
+    collection_albums4,
+    collections,
+    collection_albums,
+    current_user,
+    cartContents,
+    cartItem,
+}) {
+    console.log(cartContents); // cartContents collection is showing up weird in the browser console
     const { data, setData, post, processing, reset, errors } = useForm({
         sort: "",
     });
@@ -23,10 +36,11 @@ export default function Index({ auth, users, albums, collection_albums2, collect
             <MarketplaceTabs />
             <div className="relative overflow-x-auto">
                 <h3 className="mt-2 mb-2 text-center">Marketplace</h3>
-                Sort Listings by: <select
+                Sort Listings by:{" "}
+                <select
                     name="sort"
                     onChange={(e) => {
-                        setData('sort', e.target.value);
+                        setData("sort", e.target.value);
                     }}
                 >
                     <option value="">Default</option>
@@ -34,26 +48,50 @@ export default function Index({ auth, users, albums, collection_albums2, collect
                     <option value="PriceHtoL">Price (Highest to Lowest)</option>
                     <option value="Seller">Seller Name</option>
                 </select>
-                {data.sort == "" ?
-                    <Items users={users} collections={collections} collection_albums={collection_albums} albums={albums} current_user={current_user} />
-                    :
+                {data.sort == "" ? (
+                    <Items
+                        users={users}
+                        collections={collections}
+                        collection_albums={collection_albums}
+                        albums={albums}
+                        current_user={current_user}
+                    />
+                ) : (
                     <></>
-                }
-                {data.sort == "PriceLtoH" ?
-                    <Items users={users} collections={collections} collection_albums={collection_albums2} albums={albums} current_user={current_user} />
-                    :
+                )}
+                {data.sort == "PriceLtoH" ? (
+                    <Items
+                        users={users}
+                        collections={collections}
+                        collection_albums={collection_albums2}
+                        albums={albums}
+                        current_user={current_user}
+                    />
+                ) : (
                     <></>
-                }
-                {data.sort == "PriceHtoL" ?
-                    <Items users={users} collections={collections} collection_albums={collection_albums3} albums={albums} current_user={current_user} />
-                    :
+                )}
+                {data.sort == "PriceHtoL" ? (
+                    <Items
+                        users={users}
+                        collections={collections}
+                        collection_albums={collection_albums3}
+                        albums={albums}
+                        current_user={current_user}
+                    />
+                ) : (
                     <></>
-                }
-                {data.sort == "Seller" ?
-                    <Items users={users} collections={collections} collection_albums={collection_albums4} albums={albums} current_user={current_user} />
-                    :
+                )}
+                {data.sort == "Seller" ? (
+                    <Items
+                        users={users}
+                        collections={collections}
+                        collection_albums={collection_albums4}
+                        albums={albums}
+                        current_user={current_user}
+                    />
+                ) : (
                     <></>
-                }
+                )}
                 {/* <table className="w-1/2 text-sm text-left text-gray-500 dark:text-gray-400 mx-auto mt-10
                 ">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -120,6 +158,9 @@ export default function Index({ auth, users, albums, collection_albums2, collect
                                 ))))}
                 </table> */}
             </div>
+            {/* FIXME: Can't figure out a way to map through the cart content collection being passed through */}
+            {/* <div>{cartContents.map((cartContent) => cartContent.name)}</div> */}
+            {cartItem.id}
         </AuthenticatedLayout>
     );
 }
