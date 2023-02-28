@@ -50,7 +50,6 @@ class MessagesController extends Controller
                 'sender' => $sender->name,
                 'recipient' => $recipient->name,
             ];
-          
         }
         return Inertia::render(
             'Messages/Index',
@@ -63,7 +62,7 @@ class MessagesController extends Controller
         );
     }
 
- 
+
     /**
      * Creates a new message thread.
      * currently used to display modal of users to create a new thread with
@@ -86,7 +85,7 @@ class MessagesController extends Controller
      *
      * @return mixed
      */
-    public function store($userId): Response
+    public function store($userId)
     {
 
         // Check if conversation already exists between the current user and the second user
@@ -98,21 +97,12 @@ class MessagesController extends Controller
                 ->where('recipient', Auth::id());
         })->exists();
 
-        if ($conversationExists){
-            return Inertia::render('Messages/Index'); //trying to reload page
+        if ($conversationExists) {
+            return response()->json([
+                'errors' => 'Conversation already exists'
+            ]);
         }
-        // // If conversation exists, redirect to the existing conversation
-        // if ($conversationExists) {
-        //     $conversation = Conversation::where(function ($query) use ($userId) {
-        //         $query->where('sender', Auth::id())
-        //             ->where('recipient', $userId);
-        //     })->orWhere(function ($query) use ($userId) {
-        //         $query->where('sender', $userId)
-        //             ->where('recipient', Auth::id());
-        //     })->first();
-
-        //     return redirect()->route('messages.show', $conversation->id);
-        // }
+       
 
         //creating both objects for now
         $thread = Thread::create([
@@ -124,12 +114,13 @@ class MessagesController extends Controller
             'recipient' => $userId,
             'threadId' => $thread->id,
         ]);
-        //TODO:open convoModal of the new conversation
 
-        return Inertia::render('Messages/Index');
-       
+        return response()->json([
+            'conversation' => $convo,
+        ]);
+
     }
-     /*
+    /*
       *
       *  Adds a new message to the conversation
       *  temporarily returning all msgs in the conversation
@@ -138,8 +129,8 @@ class MessagesController extends Controller
     {
 
         $message = $request->input('message');
-        $threadId = $request->input('threadId'); 
-        
+        $threadId = $request->input('threadId');
+
 
         // Message
         $newMsg = Message::create([
@@ -149,11 +140,11 @@ class MessagesController extends Controller
         ]);
 
         $allMessages = Message::where('thread_id', $threadId)->get();
-       foreach ($allMessages as $mzg){
-        error_log($mzg);
-       }   
-  
+        foreach ($allMessages as $mzg) {
+            error_log($mzg);
+        }
 
-        return $allMessages; 
+
+        return $allMessages;
     }
 }

@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function ConvoModal({ conversation, convoId, onClose, currentUserId }) {
+function ConvoModal({
+    conversation,
+    convoId,
+    onClose,
+    currentUserId,
+    updateConversationList,
+}) {
     const [convo, setConvo] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
@@ -9,8 +15,7 @@ function ConvoModal({ conversation, convoId, onClose, currentUserId }) {
     useEffect(() => {
         function handleKeyDown(event) {
             if (event.keyCode === 27) {
-                onClose();
-                console.log("Escape key pressed");
+                onClose();               
             }
         }
 
@@ -21,9 +26,8 @@ function ConvoModal({ conversation, convoId, onClose, currentUserId }) {
         };
     }, []);
 
-    //TODO: stop using 'msgs' and only use messages State, clean up this component in general
-    console.log(currentUserId);
-    const msgs = conversation.messages.messages || {};
+    // console.log(currentUserId);
+    //const msgs = conversation.messages.messages || {};
     useEffect(() => {
         setMessages(conversation.messages.messages);
         setConvo(messages);
@@ -44,15 +48,23 @@ function ConvoModal({ conversation, convoId, onClose, currentUserId }) {
             ? [...messages, { body: newMessage }]
             : [{ body: newMessage }];
 
-       // const newConversation = { ...conversation, messages: newMessages };
+        // const newConversation = { ...conversation, messages: newMessages };
         axios
             .post(`/messages/${convoId}`, {
                 message: newMessage,
                 threadId: convoId,
             })
             .then((data) => {
-                console.dir(data);
-                 setMessages(data.data);                
+               
+                const updatedConversation = {
+                    ...convo,
+                    messages: data.data,
+                    timeOfMsg: data.data[data.data.length - 1].created_at,
+                    mostRecentMessage: data.data[data.data.length - 1].body,
+                };
+                console.dir(updatedConversation);
+                updateConversationList(updatedConversation);
+                setMessages(data.data);
                 setNewMessage("");
             })
             .catch((error) => {
@@ -63,9 +75,11 @@ function ConvoModal({ conversation, convoId, onClose, currentUserId }) {
     return (
         <div className="modal">
             <div className="modal-content">
-                <h2 className="text-lg font-medium mb-4">Conversation</h2>
+                <h2 className="text-lg font-medium mb-4 underline">
+                    Conversation
+                </h2>
 
-                {messages ? (
+                {messages.length > 0 ? (
                     <div>
                         {messages.map((message, index) => (
                             <p

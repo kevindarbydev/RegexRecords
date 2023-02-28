@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function ChooseRecipientModal({ users, csrf, onClose }) {
+function ChooseRecipientModal({ users, csrf, onClose, onCreateConversation }) {
     useEffect(() => {
         function handleKeyDown(event) {
             if (event.keyCode === 27) {
@@ -16,8 +16,7 @@ function ChooseRecipientModal({ users, csrf, onClose }) {
 
     function handleSelectUser(user, event) {
         event.preventDefault();
-        var id = user.id;
-        console.log("HERE");
+        var id = user.id;        
         fetch(route("messages.store", { userId: id }), {
             method: "POST",
             headers: {
@@ -27,7 +26,10 @@ function ChooseRecipientModal({ users, csrf, onClose }) {
             body: JSON.stringify({ user_id: id }),
         })
             .then((response) => response.json())
-            .then(onClose())
+            .then((data) => {
+                onCreateConversation();
+                
+            })
             .catch((error) => console.error(error));
     }
     return (
@@ -36,8 +38,7 @@ function ChooseRecipientModal({ users, csrf, onClose }) {
                 {users.length > 0 ? (
                     <ul>
                         <h3 className="text-xl font-bold underline">
-                            Choose a recipient <br />
-                            <span className="text-sm font-normal no-underline"></span>
+                            Choose a recipient
                         </h3>
 
                         {users.map((user) => (
@@ -56,9 +57,12 @@ function ChooseRecipientModal({ users, csrf, onClose }) {
                         ))}
                     </ul>
                 ) : (
-                    <p className="modal-content">
-                        No Friends Found...{" "}
-                        <span>
+                    <p
+                        className="modal-content"
+                        style={{ display: "flex", alignItems: "center" }}
+                    >
+                        No Friends Found... &nbsp;&nbsp;
+                        <span style={{ display: "flex", alignItems: "center" }}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
