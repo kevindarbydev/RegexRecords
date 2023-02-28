@@ -20,6 +20,7 @@ class OrderController extends Controller
     {
         return Inertia::render('Marketplace/Orders', [
             'order_items' => Order_Item::with('order','album')->latest()->get(),
+            'orders' => Order::with('order_item','user')->latest()->get(),
 
         ]);
     }
