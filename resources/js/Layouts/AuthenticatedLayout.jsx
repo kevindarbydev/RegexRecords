@@ -73,7 +73,7 @@ export default function Authenticated({ auth, header, children }) {
                                     </span>
                                 </NavLink>
                                 {/* FIXME: responsive overlap with icons */}
-                                <SearchBar />
+                                {/* <SearchBar /> */}
                             </div>
                         </div>
 
