@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Order_Item;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+
 
 class OrderItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(): Response
     {
         return Inertia::render('Order_Items/Index', [
@@ -22,17 +23,6 @@ class OrderItemController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -47,35 +37,24 @@ class OrderItemController extends Controller
         return redirect(route('orders.index'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Order_Item $order_Item): Response
-    {
-        //
+    public function addAlbumToOrder(Request $request): RedirectResponse {
+    
+        $order = Order::with('user')->where('id', $request->id)->first();
+        $orderitem = new Order_Item();
+        $orderitem->quantity = 1;
+        $orderitem->order_id = $request->order_id;
+        $orderitem->album_id = $request->album_id;
+        $orderitem->price = $request->price;
+
+        $order2 = DB::table('order__items')->where('order_id', 1)->where('album_id', $orderitem->album_id)->first();
+        if ($order2 != null) {
+            return redirect()->route('marketplace.index');
+        }
+
+        $orderitem->order_item()->save($order);
+        return redirect()->route('dashboard.wishlists');
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Order_Item $order_Item): Response
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Order_Item $order_Item): RedirectResponse
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user,Order_Item $order_Item): RedirectResponse
-    {
-        // return $this->update($user, $order_Item);
-    }
+    
 }
