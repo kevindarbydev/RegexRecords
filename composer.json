@@ -13,6 +13,7 @@
         "cmgmyr/messenger": "^2.28",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
+        "hardevine-up/shoppingcart": "^1.0",
         "illuminate/pagination": "*",
         "inertiajs/inertia-laravel": "^0.6.3",
         "laravel/framework": "^10.0",
