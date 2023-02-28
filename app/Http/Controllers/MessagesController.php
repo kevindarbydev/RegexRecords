@@ -62,6 +62,7 @@ class MessagesController extends Controller
                 'conversations' => $conversations,
                 'messagesByConversation' => $messagesByConversation,
                 'friends' => $friends,
+                'currentUserId' => $user->id,
             ]
         );
     }
