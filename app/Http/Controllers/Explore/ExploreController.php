@@ -71,8 +71,8 @@ class ExploreController extends Controller
         {
             for ($i = 0; $i <  sizeof($subgenreList); $i++) {
                 $subgenre = $subgenreList[$i];
-                return $subgenre;
             }
+            return $subgenre;
         }
 
         $weekday = Carbon::now()->dayOfWeek;
