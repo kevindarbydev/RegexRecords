@@ -6,8 +6,9 @@ import { useForm, Head } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
 export default function Index({ auth, wishlist_albums, cartCount }) {
-    const { data, setData, post, processing, reset, errors, get } = useForm({
+    const { data, setData, post, processing, reset, errors, get, patch } = useForm({
         list_name: "",
+        wishlist_album:"",
     });
 
     const submit = (e) => {
@@ -22,7 +23,7 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
     const removefromWishlist = (e) => {
         console.log("remove button passed");
         e.preventDefault();
-        post(route("dashboard.wishlists.remove.album"), { onSuccess: () => reset() });
+        patch(route("dashboard.wishlists.remove.album"), { onSuccess: () => reset() });
     };
 
 
@@ -72,11 +73,15 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
                                     <td>{item.created_at}</td>
                                     <td>
 
+                                    <form onSubmit={removefromWishlist}>
 
-                                        <PrimaryButton className="mt-2" onClick={removefromWishlist} id={item.id}>
+                                        <PrimaryButton className="mt-2" processing={processing}
+                                                        onClick={() => {
+                                                            setData('wishlist_album', item.id);
+                                                        }}>
                                             Remove
                                         </PrimaryButton>
-
+                                                        </form>
                                         <PrimaryButton className="mt-2">
                                             Details
                                         </PrimaryButton>
