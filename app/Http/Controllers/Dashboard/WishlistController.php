@@ -36,7 +36,15 @@ class WishlistController extends Controller
         $wAlbum->wishlist_id = 1;
         $wAlbum->album_id = $request->album;        
 
-        $wishlist->wishlist_albums()->save($wAlbum);
+        $album_id = $request->album;
+        $duplicate = Wishlist_Album::where('album_id', $album_id)->count();
+
+        if ($duplicate ==0) {
+
+            $wishlist->wishlist_albums()->save($wAlbum);
+            return redirect()->route('dashboard.wishlists');
+        }
+
         return redirect()->route('dashboard.wishlists');
     }
 
@@ -49,6 +57,11 @@ class WishlistController extends Controller
 
         return redirect(route('dashboard.wishlists'));
 
+
+    }
+    public function showAlbumDetails(Request $request): RedirectResponse {
+
+        $wAlbum = Wishlist_Album::where('id', $request->id)->first();
 
     }
 }
