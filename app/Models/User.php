@@ -11,12 +11,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Multicaret\Acquaintances\Traits\Friendable;
 use Cmgmyr\Messenger\Traits\Messagable;
-
-
+use Multicaret\Acquaintances\Traits\CanRate;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Friendable, Messagable;
+    use HasApiTokens, HasFactory, Notifiable, Friendable, Messagable, CanRate;
 
     /**
      * The attributes that are mass assignable.

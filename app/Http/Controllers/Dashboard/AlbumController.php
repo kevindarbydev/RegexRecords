@@ -8,6 +8,7 @@ use App\Models\Collection_Album;
 use App\Models\Tracklist;
 use App\Http\Controllers\Controller;
 use App\Models\Track;
+use Error;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -181,5 +182,14 @@ class AlbumController extends Controller
 
         $collection->collection_albums()->save($cAlbum);
         return redirect()->route('dashboard.collections');
+    }
+
+    // rate album 
+    public function rate(Request $request, Album $album): RedirectResponse
+    {
+        $user = Auth()->user();
+        $user->rate($album, $request->rating, 'quality', Album::class);
+
+        return redirect()->route('dashboard.albums.show', $album);
     }
 }
