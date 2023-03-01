@@ -72,13 +72,35 @@ class MarketplaceController extends Controller
     // TESTING
     public function addToCart(Request $request): RedirectResponse
     {
-        error_log("TESTING -- ADDED TO CART SUCCESSFULLY");
-        Cart::add('293ad', 'Product 1', 1, 9.99);
+        error_log("TESTING -- $request->album");
+
+        $album = Album::with('user')->where('id', $request->album)->first();
+
+        error_log($album);
+
+        Cart::add($album->id, $album->album_name, 1, $album->value, ['imageURL' => $album->cover_image_url]);
+
         return redirect()->route('marketplace.index');
     }
 
-    public function viewCart(Request $request): View
+    public function viewCart(Request $request): Response
     {
-        return view('cart');
+        $items = [];
+        $i = 0;
+
+        $subtotal = number_format((float)Cart::subtotal(), 2, '.', '');
+        $tax = number_format((float)Cart::tax(), '2', '.', '');
+
+        foreach (Cart::content() as $item) {
+            $items[$i] = $item;
+            $i++;
+        }
+
+        return Inertia::render('Marketplace/Cart', [
+            'cartContents' => $items,
+            'cartCount' => Cart::count(),
+            'tax' => $tax,
+            'subtotal' => $subtotal,
+        ]);
     }
 }

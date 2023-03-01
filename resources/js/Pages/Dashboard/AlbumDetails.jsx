@@ -1,9 +1,21 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
+import PrimaryButton from "@/Components/PrimaryButton";
+import { useForm } from "@inertiajs/react";
 
 export default function AlbumDetails({ auth, album, tracks, cartCount }) {
     const subgenres = album.subgenres;
+
+    const { data, setData, patch } = useForm({
+        rating: "",
+    });
+    const rateAlbum = (e) => {
+        e.preventDefault();
+        patch(route("dashboard.albums.rate", album.id), {
+            onSuccess: () => reset(),
+        });
+    };
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title={album.album_name} />
@@ -48,7 +60,6 @@ export default function AlbumDetails({ auth, album, tracks, cartCount }) {
                             </div>
                         )}
                         <div className="flex-1 flex justify-end mr-12">
-
                             <div>
                                 {album.value !== 0 ? (
                                     <p className="text-lg font-medium">
@@ -60,7 +71,6 @@ export default function AlbumDetails({ auth, album, tracks, cartCount }) {
                                     </p>
                                 )}
                             </div>
-
                         </div>
                     </div>
                     <div>
@@ -89,6 +99,59 @@ export default function AlbumDetails({ auth, album, tracks, cartCount }) {
                                 ))}
                             </tbody>
                         </table>
+                    </div>
+                    <div>
+                        <form onSubmit={rateAlbum} className="mt-5 space-x-2">
+                            <input
+                                value="1"
+                                type="radio"
+                                name="rating"
+                                checked
+                                onChange={(e) =>
+                                    setData("rating", e.target.value)
+                                }
+                            />
+                            <label>1</label>
+                            <input
+                                value="2"
+                                type="radio"
+                                name="rating"
+                                onChange={(e) =>
+                                    setData("rating", e.target.value)
+                                }
+                            />
+                            <label>2</label>
+                            <input
+                                value="3"
+                                type="radio"
+                                name="rating"
+                                onChange={(e) =>
+                                    setData("rating", e.target.value)
+                                }
+                            />
+                            <label>3</label>
+                            <input
+                                value="4"
+                                type="radio"
+                                name="rating"
+                                onChange={(e) =>
+                                    setData("rating", e.target.value)
+                                }
+                            />
+                            <label>4</label>
+                            <input
+                                value="5"
+                                type="radio"
+                                name="rating"
+                                onChange={(e) =>
+                                    setData("rating", e.target.value)
+                                }
+                            />
+                            <label>5</label>
+                            <PrimaryButton className="ml-3 self-center">
+                                RATE
+                            </PrimaryButton>
+                        </form>
                     </div>
                 </div>
             </div>

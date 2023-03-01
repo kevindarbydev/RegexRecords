@@ -32,7 +32,7 @@ class WishlistController extends Controller
 
         $wishlist = Wishlist::with('user')->where('id', $request->id)->first();
         $wAlbum = new Wishlist_Album();
-        $wAlbum->wishlist_id = 1;
+        $wAlbum->wishlist_id = $wishlist->id;
         $wAlbum->album_id = $request->album_id;
 
         $wAlbum2 = DB::table('wishlist__albums')->where('wishlist_id', 1)->where('album_id', $wAlbum->album_id)->first();
