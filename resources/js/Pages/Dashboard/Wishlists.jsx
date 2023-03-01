@@ -6,25 +6,22 @@ import { useForm, Head } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
 export default function Index({ auth, wishlist_albums, cartCount }) {
-    const { data, setData, post, processing, reset, errors, get, patch } = useForm({
-        list_name: "",
-        id:"",
-    });
+    const { data, setData, post, processing, reset, errors, get, patch } =
+        useForm({
+            list_name: "",
+            id: "",
+        });
 
-    const submit = (e) => {
-        console.log("submit works");
-        e.preventDefault();
-        post(route("dashboard.wishlists.remove.album"), { onSuccess: () => reset() });
-    };
     const addAlbums = (e) => {
         e.preventDefault();
         get(route("marketplace.index"), { onSuccess: () => reset() });
     };
     const removefromWishlist = (e) => {
         e.preventDefault();
-        patch(route("dashboard.wishlists.remove.album"), { onSuccess: () => reset() });
+        patch(route("dashboard.wishlists.remove.album"), {
+            onSuccess: () => reset(),
+        });
     };
-
 
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
@@ -35,7 +32,9 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
                     My Wishlist
                 </div>
                 <div className="flex justify-center items-center">
-                    <PrimaryButton className="mt-4" onClick={addAlbums}>Add Albums</PrimaryButton>
+                    <PrimaryButton className="mt-4" onClick={addAlbums}>
+                        Add Albums
+                    </PrimaryButton>
                 </div>
 
                 <div className="flex justify-center items-center">
@@ -71,16 +70,17 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
                                     <td>{item.album.artist}</td>
                                     <td>{item.created_at}</td>
                                     <td>
-
-                                    <form onSubmit={removefromWishlist}>
-
-                                        <PrimaryButton className="mt-2" processing={processing}
-                                                        onClick={() => {
-                                                            setData('id', item.id);
-                                                        }}>
-                                            Remove
-                                        </PrimaryButton>
-                                                        </form>
+                                        <form onSubmit={removefromWishlist}>
+                                            <PrimaryButton
+                                                className="mt-2"
+                                                processing={processing}
+                                                onClick={() => {
+                                                    setData("id", item.id);
+                                                }}
+                                            >
+                                                Remove
+                                            </PrimaryButton>
+                                        </form>
                                         <PrimaryButton className="mt-2">
                                             Details
                                         </PrimaryButton>
@@ -89,41 +89,6 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
                             </tbody>
                         ))}
                     </table>
-                </div>
-
-                {/* <form name="createForm" onSubmit={submit}>
-                    <div className="flex flex-col">
-                        <div className="mb-4">
-                            <label className="">Wishlist Title</label>
-                            <input
-                                type="text"
-                                className="w-full px-4 py-2"
-                                label="Wishlist Name"
-                                name="list_name"
-                                value={data.list_name}
-                                onChange={(e) =>
-                                    setData("list_name", e.target.value)
-                                }
-                            />
-                            <InputError
-                                message={errors.list_name}
-                                className="mt-2"
-                            />
-                        </div>
-                    </div>
-                    <div className="mt-4">
-                        <button
-                            type="submit"
-                            className="px-6 py-2 font-bold text-white bg-green-500 rounded"
-                        >
-                            Create Wishlist
-                        </button>
-                    </div>
-                </form> */}
-                <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
-                    {/* {wishlist_album.map((album) => (
-                        <Wishlist key={wishlist.id} wishlist={wishlist} />
-                    ))} */}
                 </div>
             </div>
         </AuthenticatedLayout>
