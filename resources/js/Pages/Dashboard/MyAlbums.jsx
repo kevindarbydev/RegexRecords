@@ -20,100 +20,15 @@ export default function Index({ auth, albums, collections, cartCount }) {
     const [searchResults, setSearchResults] = useState([]);
     const [searchTimeout, setSearchTimeout] = useState("");
 
-    //    useEffect(() => {
-    //     console.log("query: " + searchQuery.length);
-    //       if (searchQuery === "") {
-    //         console.log("empty str");
-    //           setSearchResults([]);
-    //           return;
-    //       }
-    //        const delay = setTimeout(() => {
-    //            axios
-    //                .get("/proxy", {
-    //                    params: {
-    //                        url: "https://api.discogs.com/database/search",
-    //                        q: searchQuery,
-    //                        type: "release",
-    //                        per_page: 10,
-    //                    },
-    //                })
-    //                .then((response) => {
-    //                    setSearchResults(response.data.results);
-    //                })
-    //                .catch((error) => {
-    //                    console.log("Error fetching search results:", error);
-    //                });
-    //        }, 500); // wait for 500 milliseconds after the user stops typing
-
-    //        return () => clearTimeout(delay);
-    //    }, [searchQuery]);
+ 
 
     const prevQueryRef = useRef("");
 
-    // useEffect(() => {
-    //     const delay = setTimeout(() => {
-    //         const currentQuery = searchQuery.trim();
 
-    //         if (currentQuery === prevQueryRef.current) {
-    //             return;
-    //         }
-
-    //         prevQueryRef.current = currentQuery;
-
-    //         if (!currentQuery) {
-    //             setSearchResults([]);
-    //             return;
-    //         }
-
-    //         axios
-    //             .get("/proxy", {
-    //                 params: {
-    //                     url: "https://api.discogs.com/database/search",
-    //                     q: currentQuery,
-    //                     type: "release",
-    //                     per_page: 10,
-    //                 },
-    //             })
-    //             .then((response) => {
-    //                 setSearchResults(response.data.results);
-    //             })
-    //             .catch((error) => {
-    //                 console.log("Error fetching search results:", error);
-    //             });
-    //     }, 500);
-
-    //     return () => clearTimeout(delay);
-    // }, [searchQuery]);
 
     useEffect(() => {
         const delay = setTimeout(() => {
             const currentQuery = searchQuery.trim();
-
-            useEffect(() => {
-                if (!searchQuery) {
-                    setSearchResults([]);
-                    return;
-                }
-                const delay = setTimeout(() => {
-                    axios
-                        .get("/proxy", {
-                            params: {
-                                url: "https://api.discogs.com/database/search",
-                                q: searchQuery,
-                                type: "release",
-                                per_page: 10,
-                            },
-                        })
-                        .then((response) => {
-                            setSearchResults(response.data.results);
-                        })
-                        .catch((error) => {
-                            console.log("Error fetching search results:", error);
-                        });
-                }, 500); // wait for 500 milliseconds after the user stops typing
-
-                return () => clearTimeout(delay);
-            }, [searchQuery]);
 
             if (!currentQuery) {
                 console.log("input fields empty, clearing results");
