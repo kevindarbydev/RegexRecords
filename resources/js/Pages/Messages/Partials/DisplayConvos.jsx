@@ -18,22 +18,8 @@ function DisplayConvos({
         setConversationsWithNames(updatedConversationsWithNames);
     }, [conversations, messagesByConversation]);
 
-    function handleModalClose(updatedConversation) {
-        setSelectedConversation(null);
-        setConversationsWithNames((prevConversations) => {
-            return prevConversations.map((convo) => {
-                if (convo.id === updatedConversation.id) {
-                    console.log("FOUND GIVEN CONVO");
-                    return {
-                        ...convo,
-                        mostRecentMessage:
-                            updatedConversation.mostRecentMessage,
-                        timeOfMsg: updatedConversation.timeOfMsg,
-                    };
-                }
-                return convo;
-            });
-        });
+    function handleModalClose() {
+        setSelectedConversation(null);       
     }
 
     function updateConversationList(newConversation) {

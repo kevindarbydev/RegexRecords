@@ -15,7 +15,7 @@ function ConvoModal({
     useEffect(() => {
         function handleKeyDown(event) {
             if (event.keyCode === 27) {
-                onClose(convo);               
+                onClose();               
             }
         }
         document.addEventListener("keydown", handleKeyDown);
