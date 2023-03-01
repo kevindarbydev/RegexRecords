@@ -173,7 +173,7 @@ export default function Index({ auth, albums, collections }) {
                                 {searchResults &&
                                     searchResults.map(
                                         (result, index) =>
-                                            index < 15 && (
+                                            index < 10 && (
                                                 <li key={result.id}>
                                                     {result.title}
                                                 </li>

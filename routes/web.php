@@ -35,8 +35,9 @@ Route::get('/proxy', function (Request $request) {
     $searchQuery = $request->query('q');
     $accessToken = env('DISCOGS_ACCESS_TOKEN');
 
-    $url .= '?q=' . urlencode($searchQuery) . '&token=' . urlencode($accessToken);
-    error_log($url);
+    $url .= '?q=' . urlencode($searchQuery) . '&token=' . urlencode($accessToken)
+    . '&per_page=10&page=1'; // dont really need to always be loading 50 albums (default), this does 10 instead
+    error_log("Found value for url: " . $url);
     $response = Http::withHeaders([
         'User-Agent' => 'StudentProjectDiscogsClone/1.0',
     ])->get($url);
