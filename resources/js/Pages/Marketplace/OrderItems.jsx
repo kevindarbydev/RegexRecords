@@ -4,11 +4,11 @@ import { useForm, Head } from "@inertiajs/react";
 
 import PrimaryButton from "@/Components/PrimaryButton";
 
-const orderDetails = (e) => {
+const albumDetails = (e) => {
     e.preventDefault();
     post(route("dashboard.wishlists.remove.album"), { onSuccess: () => reset() });
 };
-export default function OrderItems({ auth, order_items, orders, cartCount }) {
+export default function OrderItems({ auth, order_items, cartCount }) {
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Order History" />
@@ -50,13 +50,9 @@ export default function OrderItems({ auth, order_items, orders, cartCount }) {
                                     <td id="price">{item.price}</td>
                                     <td id="quantity">{item.quantity}</td>
                                     <td>
-                                        {/* <a href={route('orders.destroy', chirp.id)}></a> */}
-                                        <PrimaryButton className="mt-2">
-                                            Remove
-                                        </PrimaryButton>
-                                        <PrimaryButton className="mt-2">
-                                            {" "}
-                                            Details
+                                        <PrimaryButton className="mt-2" onClick={albumDetails}>
+                                           
+                                            Album Details
                                         </PrimaryButton>
                                     </td>
                                 </tr>

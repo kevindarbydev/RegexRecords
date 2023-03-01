@@ -70,7 +70,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     // -------------------------
     Route::get('/wishlists', [WishlistController::class, 'index'])->name('dashboard.wishlists');
     Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('dashboard.album.to.wishlist');
-    Route::delete('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('dashboard.wishlists.remove.album');
+    Route::patch('/wishlists/remove/album', [WishlistController::class, 'removeFromWishlist'])->name('dashboard.wishlists.remove.album');
     // -------------------------
     Route::get('/export', [ExportController::class, 'index'])->name('dashboard.export');
 });
@@ -101,16 +101,18 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
 Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::get('/', [MarketplaceController::class, 'index'])->name('marketplace.index');
 
-    //CRUD Orders
+    //CRUD Orders-----------------------
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/cart', [OrderController::class, 'cart'])->name('orders.cart');
     Route::get('/orders/order_items', [OrderController::class, 'showOrderItems'])->name('marketplace.orders.order_items');
     Route::post('/orders', [MarketplaceController::class, 'addAlbumToOrder'])->name('marketplace.album.to.order');
 
+    //Order History-----------------------
     Route::post('/orders/store', [OrderItemController::class, 'store'])->name('order_item.store');
     Route::patch('/orders/{order}', [OrderController::class, 'update'])->name('marketplace.orders.update');
     Route::patch('/orders/{order}', [OrderController::class, 'destroy'])->name('marketplace.orders.destroy');
-    // -------------------------
+    
+    // Wishlist-------------------------
     Route::get('/wishlists', [WishlistController::class, 'index'])->name('marketplace.wishlists');
     Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('marketplace.album.to.wishlist');
     Route::delete('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
