@@ -30,10 +30,10 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Author
 //live search
 Route::get('/proxy', function (Request $request) {
     $url = $request->query('url');
-    $searchQuery = $request->query('q');   
+    $searchQuery = $request->query('q');
 
     $accessToken = env('DISCOGS_ACCESS_TOKEN');
-    
+
     $url .= '?q=' . urlencode($searchQuery) . '&token=' . urlencode($accessToken)
         . '&per_page=10&page=1'; // dont really need to always be loading 50 albums (default), this does 10 instead
     error_log("Found value for url: " . $url);
@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('/albums', [AlbumController::class, 'index'])->name('dashboard.index');
     Route::post('/albums/store', [AlbumController::class, 'store'])->name('dashboard.albums.store');
     Route::get('/albums/{album}', [AlbumController::class, 'show'])->name('dashboard.albums.show');
+    Route::patch('/albums/rate/{album}', [AlbumController::class, 'rate'])->name('dashboard.albums.rate');
     Route::post('/albums', [AlbumController::class, 'addAlbumToCollection'])->name('dashboard.album.to.collection');
     // -------------------------
     Route::get('/collections', [CollectionController::class, 'index'])->name('dashboard.collections');
@@ -111,7 +112,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::post('/orders/store', [OrderItemController::class, 'store'])->name('order_item.store');
     Route::patch('/orders/{order}', [OrderController::class, 'update'])->name('marketplace.orders.update');
     Route::patch('/orders/{order}', [OrderController::class, 'destroy'])->name('marketplace.orders.destroy');
-    
+
     // Wishlist-------------------------
     Route::get('/wishlists', [WishlistController::class, 'index'])->name('marketplace.wishlists');
     Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('marketplace.album.to.wishlist');

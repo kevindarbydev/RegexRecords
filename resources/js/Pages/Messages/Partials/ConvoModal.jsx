@@ -29,6 +29,12 @@ function ConvoModal({
  
     useEffect(() => {
         setMessages(conversation.messages.messages);
+        console.log("UE")
+        console.dir(conversation.messages.messages);
+
+
+        console.log("UA");
+        console.dir(messages);
         setConvo(conversation);
     }, [conversation]);
 
@@ -54,7 +60,8 @@ function ConvoModal({
                 threadId: convoId,
             })
             .then((data) => {
-               
+                console.log("on post")
+               console.log(data.data)
                 
                
                 const updatedConversation = {          
@@ -65,7 +72,10 @@ function ConvoModal({
                 };
                 //setMessages([...messages, updatedConversation.mostRecentMessage]);                 
                 updateConversationList(updatedConversation);        
-                setMessages(data.data);        
+                console.log("messages before update:", messages);
+                setMessages(data.data);
+                console.log("messages after update:", messages);
+                setConvo(updatedConversation);       
                 setNewMessage("");
             })
             .catch((error) => {

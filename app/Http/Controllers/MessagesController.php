@@ -144,9 +144,7 @@ class MessagesController extends Controller
         ]);
 
         $allMessages = Message::where('thread_id', $threadId)->get();
-        foreach ($allMessages as $mzg) {
-            error_log($mzg);
-        }
+      
 
 
         return $allMessages;

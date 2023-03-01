@@ -60,11 +60,17 @@ class ExploreController extends Controller
 
         //? -----  TOP PICKS: BY SUBGENRE -----
         // dynamically cycles content by subgenre, different every day
-
+        function process($subgenreList)
+        {
+            for ($i = 0; $i <= sizeof($subgenreList); $i++) {
+                $subgenre = $subgenreList[$i];
+                return $subgenre;
+            }
+        }
         $weekday = Carbon::now()->dayOfWeek;
-        // error_log($weekday);
+        error_log($weekday);
 
-        // days are 0-6 where sunday is 1, monday is 2, etc, oddly enough
+        // days are 0-6 where sunday is 0, monday is 1, etc
         switch ($weekday) {
             case 0:
                 $subgenreList = ["Blues", "Rhythm & Blues", "Piano Blues"];
@@ -82,7 +88,7 @@ class ExploreController extends Controller
                 $subgenre = process($subgenreList);
                 break;
             case 3:
-                $subgenreList = ["Classic Rock"];
+                $subgenreList = ["Classic Rock", "Guitar Rock"];
                 $selectedSubgenre = "Rock";
                 $subgenre = process($subgenreList);
                 break;
@@ -106,13 +112,7 @@ class ExploreController extends Controller
                 break;
         }
 
-        function process($subgenreList)
-        {
-            for ($i = 0; $i <= sizeof($subgenreList); $i++) {
-                $subgenre = $subgenreList[$i];
-                return $subgenre;
-            }
-        }
+
 
         $topPicks = Album::where(function ($query) use ($subgenre) {
             $query->where('subgenres', 'like', '%' . $subgenre . '%');
