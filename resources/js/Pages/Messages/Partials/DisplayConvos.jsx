@@ -18,39 +18,40 @@ function DisplayConvos({
         setConversationsWithNames(updatedConversationsWithNames);
     }, [conversations, messagesByConversation]);
 
-   function handleModalClose(updatedConversation) {
-       setSelectedConversation(null);
-       setConversationsWithNames((prevConversations) => {
-           return prevConversations.map((convo) => {
-               if (convo.id === updatedConversation.id) {
-                   console.log("FOUND GIVEN CONVO");
-                   return {
-                       ...convo,
-                       mostRecentMessage: updatedConversation.mostRecentMessage,
-                       timeOfMsg: updatedConversation.timeOfMsg,
-                   };
-               }
-               return convo;
-           });
-       });
-   }
+    function handleModalClose(updatedConversation) {
+        setSelectedConversation(null);
+        setConversationsWithNames((prevConversations) => {
+            return prevConversations.map((convo) => {
+                if (convo.id === updatedConversation.id) {
+                    console.log("FOUND GIVEN CONVO");
+                    return {
+                        ...convo,
+                        mostRecentMessage:
+                            updatedConversation.mostRecentMessage,
+                        timeOfMsg: updatedConversation.timeOfMsg,
+                    };
+                }
+                return convo;
+            });
+        });
+    }
 
     function updateConversationList(newConversation) {
         console.log("in display");
         console.dir(newConversation);
-       setConversationsWithNames((prevConversations) => {
-           return prevConversations.map((convo) => {
-               if (convo.id === newConversation.id) {
-                console.log("FOUND GIVEN CONVO");
-                   return {
-                       ...convo,
-                       mostRecentMessage: newConversation.mostRecentMessage,
-                       timeOfMsg: newConversation.timeOfMsg,
-                   };
-               }
-               return convo;
-           });
-       });
+        setConversationsWithNames((prevConversations) => {
+            return prevConversations.map((convo) => {
+                if (convo.id === newConversation.id) {
+                    console.log("FOUND GIVEN CONVO");
+                    return {
+                        ...convo,
+                        mostRecentMessage: newConversation.mostRecentMessage,
+                        timeOfMsg: newConversation.timeOfMsg,
+                    };
+                }
+                return convo;
+            });
+        });
     }
 
     function handleConversationClick(convo) {

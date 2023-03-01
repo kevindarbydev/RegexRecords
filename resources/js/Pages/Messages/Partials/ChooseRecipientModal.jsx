@@ -16,7 +16,7 @@ function ChooseRecipientModal({ users, csrf, onClose, onCreateConversation }) {
 
     function handleSelectUser(user, event) {
         event.preventDefault();
-        var id = user.id;        
+        var id = user.id;
         fetch(route("messages.store", { userId: id }), {
             method: "POST",
             headers: {
@@ -28,7 +28,6 @@ function ChooseRecipientModal({ users, csrf, onClose, onCreateConversation }) {
             .then((response) => response.json())
             .then((data) => {
                 onCreateConversation();
-                
             })
             .catch((error) => console.error(error));
     }
