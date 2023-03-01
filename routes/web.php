@@ -27,14 +27,13 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Author
 
 
 
-
+//live search
 Route::get('/proxy', function (Request $request) {
-
     $url = $request->query('url');
+    $searchQuery = $request->query('q');   
 
-    $searchQuery = $request->query('q');
     $accessToken = env('DISCOGS_ACCESS_TOKEN');
-
+    
     $url .= '?q=' . urlencode($searchQuery) . '&token=' . urlencode($accessToken)
     . '&per_page=10&page=1'; // dont really need to always be loading 50 albums (default), this does 10 instead
     error_log("Found value for url: " . $url);

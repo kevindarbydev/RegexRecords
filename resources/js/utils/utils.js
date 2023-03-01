@@ -26,10 +26,7 @@ const makeRequestCreator = (proxyUrl) => {
             const res = await axiosInstance.get("", {
                 params: {
                     url: "https://api.discogs.com/database/search", //
-                    q: query,
-                    type: "release",
-                    per_page: 10,
-                    page:1,
+                    q: query,                  
                 },
                 cancelToken: cancel.token,
             });

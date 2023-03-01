@@ -171,16 +171,22 @@ export default function Index({ auth, albums, collections }) {
                             <ul>
                                 <li>start of results</li>
                                 {searchResults &&
-                                    searchResults.map(
-                                        (result, index) =>
-                                            index < 10 && (
-                                                <li key={result.id}>
-                                                    {result.title}
-                                                </li>
-                                            )
-                                    )}
+                                    searchResults
+                                        .filter(
+                                            (result, index, self) =>
+                                                self.findIndex(
+                                                    (a) =>
+                                                        a.title === result.title
+                                                ) === index
+                                        )                                        
+                                        .map((result) => (
+                                            <li key={result.id}>
+                                                {result.title}
+                                            </li>
+                                        ))}
                             </ul>
                         </div>
+
                         <PrimaryButton className="mt-4" processing={processing}>
                             Post Album
                         </PrimaryButton>
