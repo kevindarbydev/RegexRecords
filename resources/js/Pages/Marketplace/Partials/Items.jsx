@@ -19,16 +19,7 @@ export default function Index({
         album: "",
     });
 
-    const submit = (e) => {
-        console.log("");
-        e.preventDefault();
-        post(route("dashboard.album.to.wishlist"), {
-            onSuccess: () => reset(),
-        });
-    };
-
     const addtoWishlist = (e) => {
-        console.log("add passed");
         e.preventDefault();
         post(route("dashboard.album.to.wishlist"), {
             onSuccess: () => reset(),
@@ -113,13 +104,20 @@ export default function Index({
                                                         </button>
                                                     </Dropdown.Trigger>
                                                     <Dropdown.Content>
+                                                        <form onSubmit={addtoWishlist}>
+
+                                                        
                                                         <button
                                                             className="mr-1"
                                                             processing={processing}
-                                                            onClick={addtoWishlist}
+                                                            onClick={() => {
+                                                                setData('album', album.id);
+                                                                
+                                                            }}
                                                         >
                                                             Add to Wishlist
                                                         </button>
+                                                        </form>
                                                         <button
                                                             className=""
                                                             processing={processing}

@@ -30,15 +30,11 @@ class WishlistController extends Controller
     public function addAlbumToWishlist(Request $request): RedirectResponse
     {
 
-        $wishlist = Wishlist::with('user')->where('id', $request->id)->first();
+        $wishlist = Wishlist::where('id', 1)->first();
+        
         $wAlbum = new Wishlist_Album();
-        $wAlbum->wishlist_id = $wishlist->id;
-        $wAlbum->album_id = $request->album_id;
-
-        $wAlbum2 = DB::table('wishlist__albums')->where('wishlist_id', 1)->where('album_id', $wAlbum->album_id)->first();
-        if ($wAlbum2 != null) {
-            return redirect()->route('dashboard.index');
-        }
+        $wAlbum->wishlist_id = 1;
+        $wAlbum->album_id = $request->album;        
 
         $wishlist->wishlist_albums()->save($wAlbum);
         return redirect()->route('dashboard.wishlists');
