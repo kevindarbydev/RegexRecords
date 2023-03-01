@@ -115,7 +115,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     // Wishlist-------------------------
     Route::get('/wishlists', [WishlistController::class, 'index'])->name('marketplace.wishlists');
     Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('marketplace.album.to.wishlist');
-    Route::delete('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
+    Route::get('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
 
     // ============== TESTING CART PACKAGE ================
     Route::get('/cart', [MarketplaceController::class, 'viewCart'])->name('marketplace.cart');

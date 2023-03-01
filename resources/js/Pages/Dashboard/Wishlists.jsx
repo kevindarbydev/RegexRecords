@@ -8,7 +8,7 @@ import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 export default function Index({ auth, wishlist_albums, cartCount }) {
     const { data, setData, post, processing, reset, errors, get, patch } = useForm({
         list_name: "",
-        wishlist_album:"",
+        id:"",
     });
 
     const submit = (e) => {
@@ -21,7 +21,6 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
         get(route("marketplace.index"), { onSuccess: () => reset() });
     };
     const removefromWishlist = (e) => {
-        console.log("remove button passed");
         e.preventDefault();
         patch(route("dashboard.wishlists.remove.album"), { onSuccess: () => reset() });
     };
@@ -77,7 +76,7 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
 
                                         <PrimaryButton className="mt-2" processing={processing}
                                                         onClick={() => {
-                                                            setData('wishlist_album', item.id);
+                                                            setData('id', item.id);
                                                         }}>
                                             Remove
                                         </PrimaryButton>

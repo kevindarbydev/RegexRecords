@@ -47,8 +47,12 @@ class WishlistController extends Controller
     public function removeFromWishlist(Request $request): RedirectResponse
     {
 
-        $wAlbum = Wishlist_Album::where('id', $request->wAlbum)->first();
-        $wAlbum->delete();
+        $wAlbum = Wishlist_Album::where('id', $request->id)->first();
+        
+        $wAlbum->delete();  
+
         return redirect(route('dashboard.wishlists'));
+
+
     }
 }
