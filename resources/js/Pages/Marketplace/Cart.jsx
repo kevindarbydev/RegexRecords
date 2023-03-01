@@ -8,7 +8,7 @@ import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
 import Dropdown from "@/Components/Dropdown";
 
 
-export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
+export default function Cart({ auth, cartContents, cartCount, tax, subtotal, shipping }) {
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Cart" />
@@ -47,19 +47,34 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
                     <tbody>
                         <tr>
                             <td>
-                                Subtotal: {subtotal}
+                                Subtotal: $ {subtotal}
                             </td>
                         </tr>
                         <tr>
+                            {parseFloat(subtotal) < 100 && parseFloat(subtotal) > 0 ?
+                                <td>
+                                    Shipping: $ {shipping}
+                                </td>
+                                :
+                                <td>
+                                    Shipping: $ 0.00
+                                </td>
+                            }
+                        </tr>
+                        <tr>
                             <td>
-                                Tax: {tax}
+                                Tax: $ {tax}
                             </td>
                         </tr>
                         <tr>
                             <hr />
                         </tr>
                         <tr>
-                            <td>Total: {parseFloat(subtotal) + parseFloat(tax)}</td>
+                            {parseFloat(subtotal) < 100 && parseFloat(subtotal) > 0 ?
+                                <td>Total: $ {parseFloat(subtotal) + shipping + parseFloat(tax)}</td>
+                                :
+                                <td>Total: $ {parseFloat(subtotal) + parseFloat(tax)}</td>
+                            }
                         </tr>
                     </tbody>
                 </table>

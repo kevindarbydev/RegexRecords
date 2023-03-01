@@ -90,6 +90,7 @@ class MarketplaceController extends Controller
 
         $subtotal = number_format((float)Cart::subtotal(), 2, '.', '');
         $tax = number_format((float)Cart::tax(), '2', '.', '');
+        $shipping = 20.00;
 
         foreach (Cart::content() as $item) {
             $items[$i] = $item;
@@ -101,6 +102,7 @@ class MarketplaceController extends Controller
             'cartCount' => Cart::count(),
             'tax' => $tax,
             'subtotal' => $subtotal,
+            'shipping' => $shipping,
         ]);
     }
 }
