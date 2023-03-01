@@ -5,6 +5,7 @@ import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head, Link } from "@inertiajs/react";
 import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
+import Dropdown from "@/Components/Dropdown";
 
 export default function Index({
     users,
@@ -15,6 +16,7 @@ export default function Index({
 }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         sort: "",
+        album: "",
     });
 
     const submit = (e) => {
@@ -85,26 +87,48 @@ export default function Index({
                                         </td>
                                         <td class="px-6 py-4">{user.name}</td>
                                         <td class="px-3 py-2">
-                                            <PrimaryButton
-                                                className="mr-1 ml-10"
-                                                processing={processing}
-                                                onClick={addToCart}
-                                            >
-                                                Add to Cart
-                                            </PrimaryButton>
-                                            <PrimaryButton
-                                                className="mr-1"
-                                                processing={processing}
-                                                onClick={addtoWishlist}
-                                            >
-                                                Add to Wishlist
-                                            </PrimaryButton>
-                                            <PrimaryButton
-                                                className=""
-                                                processing={processing}
-                                            >
-                                                Contact Seller
-                                            </PrimaryButton>
+                                            <div className="flex flex-row">
+                                                <form onSubmit={addToCart}>
+                                                    <PrimaryButton
+                                                        className="mb mr-5"
+                                                        processing={processing}
+                                                        onClick={() => {
+                                                            setData('album', album.id);
+                                                        }}
+                                                    >
+                                                        Add to Cart
+                                                    </PrimaryButton>
+                                                </form>
+                                                <Dropdown>
+                                                    <Dropdown.Trigger>
+                                                        <button className="mt-2">
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                className="h-4 w-4 text-gray-400"
+                                                                viewBox="0 0 20 20"
+                                                                fill="currentColor"
+                                                            >
+                                                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                            </svg>
+                                                        </button>
+                                                    </Dropdown.Trigger>
+                                                    <Dropdown.Content>
+                                                        <button
+                                                            className="mr-1"
+                                                            processing={processing}
+                                                            onClick={addtoWishlist}
+                                                        >
+                                                            Add to Wishlist
+                                                        </button>
+                                                        <button
+                                                            className=""
+                                                            processing={processing}
+                                                        >
+                                                            Contact Seller
+                                                        </button>
+                                                    </Dropdown.Content>
+                                                </Dropdown>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
