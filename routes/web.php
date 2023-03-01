@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\AlbumController;
 use App\Http\Controllers\Dashboard\CollectionController;
 use App\Http\Controllers\Dashboard\ExportController;
 use App\Http\Controllers\Dashboard\WishlistController;
+use App\Http\Controllers\Explore\AdvSearchController;
 use App\Http\Controllers\Explore\ExploreController;
 use App\Http\Controllers\Marketplace\MarketplaceController;
 use App\Http\Controllers\MessagesController;
@@ -78,7 +79,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
 Route::group(['middleware' => 'auth', 'prefix' => 'explore'], function () {
     Route::get('/', [ExploreController::class, 'index'])->name('explore.index');
     Route::get('/viewAllAlbums', [ExploreController::class, 'viewAllAlbums'])->name('explore.viewAllAlbums');
-    Route::get('/advSearch', [ExploreController::class, 'advSearch'])->name('explore.advSearch');
+    Route::get('/advSearch', [AdvSearchController::class, 'advSearch'])->name('explore.advSearch');
+    Route::post('/advSearch', [AdvSearchController::class, 'advSearch'])->name('explore.advSearch');
 });
 
 // COMMUNITY

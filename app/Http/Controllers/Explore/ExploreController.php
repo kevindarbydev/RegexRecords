@@ -2,28 +2,21 @@
 
 namespace App\Http\Controllers\Explore;
 
-use App\Models\User;
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 use App\Models\Album;
-use Inertia\Response;
 use App\Models\Collection;
 use Illuminate\Support\Carbon;
-use App\Http\Controllers\Controller;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ExploreController extends Controller
 {
     public function index(): Response
     {
 
-        //* once pagination is involved, can likely remove limit from everywhere
-
         //* limit setting for all 3 partials on explore/index:
-
-        $limit = 4;
+        $limit = 6;
 
 
         //? ----- SPOTLIGHT: ARTISTS BY STARTING LETTER -----
@@ -67,16 +60,10 @@ class ExploreController extends Controller
         //? -----  TOP PICKS: BY SUBGENRE -----
         // dynamically cycles content by subgenre, different every day
 
-        function process($subgenreList)
-        {
-            for ($i = 0; $i <  sizeof($subgenreList); $i++) {
-                $subgenre = $subgenreList[$i];
-            }
-            return $subgenre;
-        }
-
         $weekday = Carbon::now()->dayOfWeek;
-        // days are 0-6 where sunday is 0, monday is 1, etc
+        // error_log($weekday);
+
+        // days are 0-6 where sunday is 1, monday is 2, etc, oddly enough
         switch ($weekday) {
             case 0:
                 $subgenreList = ["Blues", "Rhythm & Blues", "Piano Blues"];
@@ -94,8 +81,8 @@ class ExploreController extends Controller
                 $subgenre = process($subgenreList);
                 break;
             case 3:
-                $subgenreList = ["Blues", "Rhythm & Blues", "Piano Blues"];
-                $selectedSubgenre = "Blues";
+                $subgenreList = ["Classic Rock"];
+                $selectedSubgenre = "Rock";
                 $subgenre = process($subgenreList);
                 break;
             case 4:
@@ -118,6 +105,13 @@ class ExploreController extends Controller
                 break;
         }
 
+        function process($subgenreList)
+        {
+            for ($i = 0; $i <= sizeof($subgenreList); $i++) {
+                $subgenre = $subgenreList[$i];
+                return $subgenre;
+            }
+        }
 
         $topPicks = Album::where(function ($query) use ($subgenre) {
             $query->where('subgenres', 'like', '%' . $subgenre . '%');
@@ -126,14 +120,28 @@ class ExploreController extends Controller
             ->limit($limit)
             ->get();
 
-        // if query fails this moves the weekday forward in an attempt to render other content instead of blank results
-        // TODO: needs work, leaving it for now
-        // while ($topPicks->isEmpty()) {
-        //     $weekday++;
+        // error handler for if no results gotten via switch - uses broader "genre" search instead of "subgenre"
+
+        //* FIXME: still bugs, may actually just need more records
+        if ($topPicks->isEmpty()) {
+            $topPicks = Album::where(function ($query) use ($selectedSubgenre) {
+                $query->where('genre', 'like', '%' . $selectedSubgenre . '%');
+            })
+                ->inRandomOrder()
+                ->limit($limit)
+                ->get();
+        }
+        // enable below else, try again once more records
+
+        // else {
+        //     // completes the section header phrase if error, logs
+        //     $selectedSubgenre = "general are subjective to the listener";
+        //     error_log("ExploreController.php has failed in 'TopPicks' section");
         // }
 
-        error_log($topPicks);
 
+
+        // error_log($topPicks);
 
         return Inertia::render(
             'Explore/Index',
@@ -161,11 +169,5 @@ class ExploreController extends Controller
             'albums' => Album::all(),
 
         ]);
-    }
-
-
-    public function advSearch(): Response
-    {
-        return Inertia::render('Explore/AdvSearch', []);
     }
 }
