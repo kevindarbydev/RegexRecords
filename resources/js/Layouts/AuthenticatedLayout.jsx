@@ -142,7 +142,7 @@ export default function Authenticated({ auth, header, children, cartCount }) {
                                     </Dropdown.Trigger>
                                     <Dropdown.Content>
                                         <Dropdown.Link
-                                            href={route("orders.cart")}
+                                            href={route("marketplace.cart")}
                                         >
                                             View Cart
                                         </Dropdown.Link>

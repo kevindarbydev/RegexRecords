@@ -104,7 +104,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
 
     //CRUD Orders-----------------------
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/cart', [OrderController::class, 'cart'])->name('orders.cart');
     Route::get('/orders/order_items', [OrderController::class, 'showOrderItems'])->name('marketplace.orders.order_items');
     Route::post('/orders', [MarketplaceController::class, 'addAlbumToOrder'])->name('marketplace.album.to.order');
 
@@ -119,7 +118,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::delete('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
 
     // ============== TESTING CART PACKAGE ================
-    Route::get('/cart', [MarketplaceController::class, 'viewCart'])->name('cart');
+    Route::get('/cart', [MarketplaceController::class, 'viewCart'])->name('marketplace.cart');
     Route::post('/testing/package', [MarketplaceController::class, 'addToCart'])->name('marketplace.add.to.cart');
 });
 
