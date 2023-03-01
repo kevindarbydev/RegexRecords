@@ -26,31 +26,25 @@ class CommunityController extends Controller
 
     public function search(Request $request): Response
     {
-        $keySearch = $request->search;
-        if ($keySearch != "") {
-            $users = User::where(function ($query) use ($request) {
-                $query->where('name', 'LIKE', '%' . $request->search . '%')
-                    ->orWhere('email', 'LIKE', '%' . $request->search . '%');
-            })
-                ->where(function ($query) {
-                    $query->where('id', '!=', Auth::user()->id); //preventing logged in user from showing up as querry
-                })->paginate(5)->appends($request->all());
-            return Inertia::render('Community/Search', [
-                'users' => $users
-            ]);
-        } else {
-            //return empty array if keysearch is just spaces
-            $users = [];
-            return Inertia::render('Community/Search', [
-                'users' => $users,
-                'cartCount' => Cart::count(),
-            ]);
-        }
+        $request->validate([
+            'search' => 'required',
+        ]);
+
+        $users = User::where(function ($query) use ($request) {
+            $query->where('name', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('email', 'LIKE', '%' . $request->search . '%');
+        })
+            ->where(function ($query) {
+                $query->where('id', '!=', Auth::user()->id); //preventing logged in user from showing up as querry
+            })->paginate(5)->appends($request->all());
+        return Inertia::render('Community/Search', [
+            'users' => $users
+        ]);
     }
 
     public function searchPost(Request $request): RedirectResponse
     {
-        return redirect()->route('community.search', ['search' => $request->search])->with('success', 'Search results!');;
+        return redirect()->route('community.search', ['search' => $request->search]);
     }
 
     public function addFriend(Request $request, User $user): RedirectResponse
