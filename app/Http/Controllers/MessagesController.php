@@ -45,12 +45,14 @@ class MessagesController extends Controller
             $conversationId = $conversation->id;
             $sender = User::find($conversation->sender);
             $recipient = User::find($conversation->recipient);
-
-            $messagesByConversation[$conversationId] = [
-                'messages' => $messages,
-                'sender' => $sender->name,
-                'recipient' => $recipient->name,
-            ];
+            if ($sender && $recipient) {
+                $messagesByConversation[$conversationId] = [
+                    'messages' => $messages,
+                    'sender' => $sender->name,
+                    'recipient' => $recipient->name,
+                ];
+            }
+            error_log("Found a thread with a user that has been deleted --- continuing.");
         }
         return Inertia::render(
             'Messages/Index',

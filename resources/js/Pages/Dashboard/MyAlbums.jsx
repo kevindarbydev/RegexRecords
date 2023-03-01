@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import Album from "./Partials/Album";
-import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
+import  makeRequestCreator from "@/utils/utils";
+const search = makeRequestCreator("/proxy");
 
+import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
 export default function Index({ auth, albums, collections }) {
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -13,69 +15,120 @@ export default function Index({ auth, albums, collections }) {
         artist: "",
         value: "",
     });
- 
+
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [searchTimeout, setSearchTimeout] = useState("");
 
-    // useEffect(() => {       
-    //     if (searchQuery !== "") {
+    //    useEffect(() => {
+    //     console.log("query: " + searchQuery.length);
+    //       if (searchQuery === "") {
+    //         console.log("empty str");
+    //           setSearchResults([]);
+    //           return;
+    //       }
+    //        const delay = setTimeout(() => {
+    //            axios
+    //                .get("/proxy", {
+    //                    params: {
+    //                        url: "https://api.discogs.com/database/search",
+    //                        q: searchQuery,
+    //                        type: "release",
+    //                        per_page: 10,
+    //                    },
+    //                })
+    //                .then((response) => {
+    //                    setSearchResults(response.data.results);
+    //                })
+    //                .catch((error) => {
+    //                    console.log("Error fetching search results:", error);
+    //                });
+    //        }, 500); // wait for 500 milliseconds after the user stops typing
+
+    //        return () => clearTimeout(delay);
+    //    }, [searchQuery]);
+
+    const prevQueryRef = useRef("");
+
+    // useEffect(() => {
+    //     const delay = setTimeout(() => {
+    //         const currentQuery = searchQuery.trim();
+
+    //         if (currentQuery === prevQueryRef.current) {
+    //             return;
+    //         }
+
+    //         prevQueryRef.current = currentQuery;
+
+    //         if (!currentQuery) {
+    //             setSearchResults([]);
+    //             return;
+    //         }
+
     //         axios
     //             .get("/proxy", {
     //                 params: {
     //                     url: "https://api.discogs.com/database/search",
-    //                     q: searchQuery,
+    //                     q: currentQuery,
     //                     type: "release",
-    //                     per_page: 10,                        
+    //                     per_page: 10,
     //                 },
     //             })
     //             .then((response) => {
-    //                 console.dir(response);
     //                 setSearchResults(response.data.results);
     //             })
     //             .catch((error) => {
-    //                 console.error("Error fetching search results:", error);
+    //                 console.log("Error fetching search results:", error);
     //             });
-    //     } else {
-    //         setSearchResults([]);
-    //     }
+    //     }, 500);
+
+    //     return () => clearTimeout(delay);
     // }, [searchQuery]);
 
+    useEffect(() => {
+        const delay = setTimeout(() => {
+            const currentQuery = searchQuery.trim();
 
-   useEffect(() => {
-      if (!searchQuery) {
-          setSearchResults([]);
-          return;
-      }
-       const delay = setTimeout(() => {
-           axios
-               .get("/proxy", {
-                   params: {
-                       url: "https://api.discogs.com/database/search",
-                       q: searchQuery,
-                       type: "release",
-                       per_page: 10,
-                   },
-               })
-               .then((response) => {
-                   setSearchResults(response.data.results);
-               })
-               .catch((error) => {
-                   console.log("Error fetching search results:", error);
-               });
-       }, 500); // wait for 500 milliseconds after the user stops typing
+            if (currentQuery === prevQueryRef.current) {
+                console.log("query hasnt changed, wont fire new request");
+                return;
+            }
 
-       return () => clearTimeout(delay);
-   }, [searchQuery]);
+            prevQueryRef.current = currentQuery;
 
+            if (!currentQuery) {
+                 console.log("input fields empty, clearing results");
+                setSearchResults([]);
+                return;
+            }
+            console.log("current q: " + currentQuery);
+            const res = search(currentQuery)
+                .then((results) => {
+                    console.log("results: " + results);
+                    console.dir(results);
+                    setSearchResults(results);
+                })
+                .catch((error) => {
+                    console.log("Error fetching search results:", error);
+                });
+        }, 500);
+
+        return () => clearTimeout(delay);
+    }, [searchQuery]);
 
     const handleSearchQueryChange = (e) => {
         const albumName = data.album_name || "";
         const artist = data.artist || "";
+
+        if (!albumName && !artist) {
+            setSearchQuery("");
+            return;
+        }
+
         setSearchQuery(`${albumName} ${artist}`);
     };
 
     const submit = (e) => {
-        console.log("test");
         e.preventDefault();
         post(route("dashboard.albums.store"), { onSuccess: () => reset() });
     };
@@ -108,9 +161,10 @@ export default function Index({ auth, albums, collections }) {
                             value={data.artist}
                             placeholder="Pink Floyd"
                             className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                            onChange={(e) => {setData("artist", e.target.value);
-                                             handleSearchQueryChange(e);
-                        }}
+                            onChange={(e) => {
+                                setData("artist", e.target.value);
+                                handleSearchQueryChange(e);
+                            }}
                         />
                         <InputError message={errors.artist} className="mt-2" />
                         <div>
