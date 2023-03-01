@@ -21,6 +21,7 @@ use App\Models\User;
 use Error;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 
 
@@ -74,5 +75,10 @@ class MarketplaceController extends Controller
         error_log("TESTING -- ADDED TO CART SUCCESSFULLY");
         Cart::add('293ad', 'Product 1', 1, 9.99);
         return redirect()->route('marketplace.index');
+    }
+
+    public function viewCart(Request $request): View
+    {
+        return view('cart');
     }
 }

@@ -35,7 +35,7 @@ Route::get('/proxy', function (Request $request) {
     $accessToken = env('DISCOGS_ACCESS_TOKEN');
     
     $url .= '?q=' . urlencode($searchQuery) . '&token=' . urlencode($accessToken)
-    . '&per_page=10&page=1'; // dont really need to always be loading 50 albums (default), this does 10 instead
+        . '&per_page=10&page=1'; // dont really need to always be loading 50 albums (default), this does 10 instead
     error_log("Found value for url: " . $url);
     $response = Http::withHeaders([
         'User-Agent' => 'StudentProjectDiscogsClone/1.0',
@@ -116,6 +116,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::delete('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
 
     // ============== TESTING CART PACKAGE ================
+    Route::get('/cart', [MarketplaceController::class, 'viewCart'])->name('cart');
     Route::post('/testing/package', [MarketplaceController::class, 'addToCart'])->name('marketplace.add.to.cart');
 });
 
