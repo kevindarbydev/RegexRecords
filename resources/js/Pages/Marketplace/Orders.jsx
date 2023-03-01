@@ -6,7 +6,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 
 const orderDetails = (e) => {
     e.preventDefault();
-    post(route("dashboard.wishlists.remove.album"), { onSuccess: () => reset() });
+    post(route("marketplace.orders.order_items"), { onSuccess: () => reset() });
 };
 export default function Orders({ auth, order_items, orders, cartCount }) {
     return (
@@ -53,7 +53,7 @@ export default function Orders({ auth, order_items, orders, cartCount }) {
                                         {order.totalPrice}
                                     </td>
                                     <td>
-                                    <PrimaryButton className="mt-4">
+                                    <PrimaryButton className="mt-4" onClick={orderDetails}>
                             Order Details
                         </PrimaryButton>
                                     </td>

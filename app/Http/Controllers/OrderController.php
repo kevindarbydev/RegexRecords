@@ -20,7 +20,6 @@ class OrderController extends Controller
     public function index(): Response
     {
         return Inertia::render('Marketplace/Orders', [
-            'order_items' => Order_Item::with('order', 'album')->latest()->get(),
             'orders' => Order::with('order_item', 'user')->latest()->get(),
             'cartCount' => Cart::count(),
         ]);
@@ -30,10 +29,10 @@ class OrderController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'subtotal' => 'required|int',
-            'shipping' => 'required|int',
-            'tax' => 'required|int',
-            'totalPrice' => 'required|int',
+            'subtotal' => 'required|double',
+            'shipping' => 'required|double',
+            'tax' => 'required|double',
+            'totalPrice' => 'required|double',
         ]);
 
         $request->user()->orders()->create($validated);
