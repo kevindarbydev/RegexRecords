@@ -13,13 +13,15 @@ use Illuminate\Support\Facades\Http;
 use App\Models\User;
 use App\Models\Album;
 use Cmgmyr\Messenger\Models\Message;
-
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 
 class AdminController extends Controller
 {
+
     public function index()
     {
+        $cartCount = Cart::count();
         $user = auth()->user();
         //retrieve everything on index and switch between tables
         $users = User::all();
@@ -30,6 +32,7 @@ class AdminController extends Controller
             'albums' => $albums,
             'messages' => $messages,
             'currentUser' => $user->id,
+            'cartCount' => $cartCount,
         ]);
     }
 

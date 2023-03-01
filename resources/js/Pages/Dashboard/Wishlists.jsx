@@ -5,7 +5,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
-export default function Index({ auth, wishlist_albums }) {
+export default function Index({ auth, wishlist_albums, cartCount }) {
     const { data, setData, post, processing, reset, errors, get } = useForm({
         list_name: "",
     });
@@ -27,7 +27,7 @@ export default function Index({ auth, wishlist_albums }) {
 
 
     return (
-        <AuthenticatedLayout auth={auth}>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <DashboardTabs />
             <Head title="Wishlist" />
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 ">
@@ -71,12 +71,12 @@ export default function Index({ auth, wishlist_albums }) {
                                     <td>{item.album.artist}</td>
                                     <td>{item.created_at}</td>
                                     <td>
-                                        
 
-                                            <PrimaryButton className="mt-2" onClick={removefromWishlist} id={item.id}>
+
+                                        <PrimaryButton className="mt-2" onClick={removefromWishlist} id={item.id}>
                                             Remove
                                         </PrimaryButton>
-                                         
+
                                         <PrimaryButton className="mt-2">
                                             Details
                                         </PrimaryButton>

@@ -2,10 +2,10 @@ import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 
-export default function AlbumDetails({ auth, album, tracks }) {
+export default function AlbumDetails({ auth, album, tracks, cartCount }) {
     const subgenres = album.subgenres;
     return (
-        <AuthenticatedLayout auth={auth}>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title={album.album_name} />
             <div className="flex flex-row mt-6">
                 <div className="p-6 rounded-lg shadow-lg w-3/4 mx-auto">
@@ -48,19 +48,19 @@ export default function AlbumDetails({ auth, album, tracks }) {
                             </div>
                         )}
                         <div className="flex-1 flex justify-end mr-12">
-                       
-                                <div>
-                                    {album.value !== 0 ? (
-                                        <p className="text-lg font-medium">
-                                            Value: ${album.value}
-                                        </p>
-                                    ) : (
-                                        <p className="text-lg font-medium">
-                                            No price data found
-                                        </p>
-                                    )}
-                                </div>
-                          
+
+                            <div>
+                                {album.value !== 0 ? (
+                                    <p className="text-lg font-medium">
+                                        Value: ${album.value}
+                                    </p>
+                                ) : (
+                                    <p className="text-lg font-medium">
+                                        No price data found
+                                    </p>
+                                )}
+                            </div>
+
                         </div>
                     </div>
                     <div>

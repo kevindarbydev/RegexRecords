@@ -62,9 +62,9 @@ export default function Index({
                     collections.map((collection) =>
                         albums.map((album) =>
                             collection_album.collection_id == collection.id &&
-                            collection_album.album_id == album.id &&
-                            collection.user_id == user.id &&
-                            current_user.id != user.id ? (
+                                collection_album.album_id == album.id &&
+                                collection.user_id == user.id &&
+                                current_user.id != user.id ? (
                                 <tbody>
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th
@@ -86,9 +86,9 @@ export default function Index({
                                         <td class="px-6 py-4">{user.name}</td>
                                         <td class="px-3 py-2">
                                             <PrimaryButton
-                                                className="mr-1"
+                                                className="mr-1 ml-10"
                                                 processing={processing}
-                                                onClick={addtoOrder}
+                                                onClick={addToCart}
                                             >
                                                 Add to Cart
                                             </PrimaryButton>
@@ -104,13 +104,6 @@ export default function Index({
                                                 processing={processing}
                                             >
                                                 Contact Seller
-                                            </PrimaryButton>
-                                            <PrimaryButton
-                                                className="mr-1 ml-10"
-                                                processing={processing}
-                                                onClick={addToCart}
-                                            >
-                                                Add to Cart (Test)
                                             </PrimaryButton>
                                         </td>
                                     </tr>

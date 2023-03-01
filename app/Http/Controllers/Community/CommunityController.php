@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +18,10 @@ class CommunityController extends Controller
     {
         $user = Auth()->user();
 
-        return Inertia::render('Community/Index', ['friendCount' => $user->getFriendsCount()]);
+        return Inertia::render('Community/Index', [
+            'friendCount' => $user->getFriendsCount(),
+            'cartCount' => Cart::count(),
+        ]);
     }
 
     public function search(Request $request): Response
@@ -38,7 +42,8 @@ class CommunityController extends Controller
             //return empty array if keysearch is just spaces
             $users = [];
             return Inertia::render('Community/Search', [
-                'users' => $users
+                'users' => $users,
+                'cartCount' => Cart::count(),
             ]);
         }
     }

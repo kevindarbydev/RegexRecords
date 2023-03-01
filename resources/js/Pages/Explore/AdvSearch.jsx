@@ -7,7 +7,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import Album from "../Dashboard/Partials/Album";
 import AdvSearchResults from "./Partials/AdvSearchResults";
 
-export default function AdvSearch({ auth, albums, collections }) {
+export default function AdvSearch({ auth, albums, collections, cartCount }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         album_name: "",
         artist: "",
@@ -23,7 +23,7 @@ export default function AdvSearch({ auth, albums, collections }) {
     };
 
     return (
-        <AuthenticatedLayout auth={auth}>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Advanced Search" />
             <ExploreTabs />
             <h1 className="text-4xl m-4">Advanced Search 🔎</h1>

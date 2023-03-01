@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\User;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 
 
@@ -20,6 +21,7 @@ class OrderItemController extends Controller
         return Inertia::render('Order_Items/Index', [
             //return order items
             // 'order_items' => Order_Item::with('order','album')->latest()->get(),
+            'cartCount' => Cart::count(),
         ]);
     }
 
@@ -31,13 +33,9 @@ class OrderItemController extends Controller
             'tax' => 'required|int',
             'totalPrice' => 'required|int',
         ]);
- 
+
         $request->user()->orders()->create($validated);
- 
+
         return redirect(route('orders.index'));
     }
-
-
-
-    
 }

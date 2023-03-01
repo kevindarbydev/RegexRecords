@@ -8,6 +8,7 @@ use App\Models\Collection_Album;
 use App\Models\Tracklist;
 use App\Http\Controllers\Controller;
 use App\Models\Track;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -28,6 +29,7 @@ class AlbumController extends Controller
             // only returning user albums
             'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
+            'cartCount' => Cart::count(),
 
         ]);
     }
@@ -152,6 +154,7 @@ class AlbumController extends Controller
         return Inertia::render('Dashboard/AlbumDetails', [
             'album' => $album,
             'tracks' => $tracks,
+            'cartCount' => Cart::count(),
         ]);
     }
 

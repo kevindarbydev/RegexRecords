@@ -28,11 +28,10 @@ class MarketplaceController extends Controller
 {
     public function index(): Response
     {
-        $rowId = "8cbf215baa3b757e910e5305ab981172";
-        $cartItem = Cart::get($rowId);
+        // $rowId = "8cbf215baa3b757e910e5305ab981172";
+        // $cartItem = Cart::get($rowId);
 
-        $cartContents = Cart::content();
-        error_log($cartContents);
+        $cartCount = Cart::count();
 
         // $cartContents = Cart::count();
         // $cartContentsActual = json_decode($cartContents, true); 
@@ -46,8 +45,8 @@ class MarketplaceController extends Controller
             'albums' => Album::with('user')->latest()->get(),
             'collections' => Collection::with('user')->latest()->get(),
             'users' => User::all(),
-            'cartContents' => $cartContents,
-            'cartItem' => $cartItem,
+            'cartCount' => $cartCount,
+            // 'cartItem' => $cartItem,
         ]);
     }
     public function addAlbumToOrder(Request $request): RedirectResponse

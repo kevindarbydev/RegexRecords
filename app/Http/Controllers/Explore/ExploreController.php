@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Explore;
 use App\Http\Controllers\Controller;
 use App\Models\Album;
 use App\Models\Collection;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -152,6 +153,7 @@ class ExploreController extends Controller
                 'recentAlbums' => $recentAlbums,
                 'spotlightAlbums' => $spotlightAlbums,
                 'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
+                'cartCount' => Cart::count(),
             ]
         );
     }
@@ -167,6 +169,7 @@ class ExploreController extends Controller
             'totalAlbums' => $totalAlbums,
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
             'albums' => Album::all(),
+            'cartCount' => Cart::count(),
 
         ]);
     }

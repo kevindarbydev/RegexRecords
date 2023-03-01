@@ -8,6 +8,7 @@ use Inertia\Response;
 use Illuminate\Http\Request;
 use App\Models\Collection;
 use App\Http\Controllers\Controller;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 
 class AdvSearchController extends Controller
@@ -32,6 +33,7 @@ class AdvSearchController extends Controller
         return Inertia::render('Explore/AdvSearch', [
             'albums' => $albums,
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
+            'cartCount' => Cart::count(),
         ]);
     }
 }

@@ -14,9 +14,10 @@ export default function Index({
     topPicks,
     selectedSubgenre,
     featureLetter,
+    cartCount
 }) {
     return (
-        <AuthenticatedLayout auth={auth}>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Explore" />
             <ExploreTabs />
 

@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Thread;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class MessagesController extends Controller
      */
     public function index(): Response
     {
-        
+
         $user = auth()->user();
 
         $friends = $user->getFriendsList();
@@ -61,6 +62,7 @@ class MessagesController extends Controller
                 'messagesByConversation' => $messagesByConversation,
                 'friends' => $friends,
                 'currentUserId' => $user->id,
+                'cartCount' => Cart::count(),
             ]
         );
     }
@@ -105,7 +107,7 @@ class MessagesController extends Controller
                 'errors' => 'Conversation already exists'
             ]);
         }
-       
+
 
         //creating both objects for now
         $thread = Thread::create([
@@ -121,7 +123,6 @@ class MessagesController extends Controller
         return response()->json([
             'conversation' => $convo,
         ]);
-
     }
     /*
       *

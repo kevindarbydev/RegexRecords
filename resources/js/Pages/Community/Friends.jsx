@@ -12,7 +12,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Transition } from "@headlessui/react";
 
-function Friends({ auth, currentFriendships, pendingFriendships, current_user }) {
+function Friends({ auth, currentFriendships, pendingFriendships, current_user, cartCount }) {
     const [currentComp, setCurrentComp] = useState("friends");
     const [isShowing, setIsShowing] = useState(true);
 
@@ -43,7 +43,7 @@ function Friends({ auth, currentFriendships, pendingFriendships, current_user })
     }
 
     return (
-        <AuthenticatedLayout auth={auth}>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="MyFriends" />
             <CommunityTabs />
             <div className="flex flex-row">

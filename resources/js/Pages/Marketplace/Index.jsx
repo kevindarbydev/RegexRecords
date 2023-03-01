@@ -17,10 +17,8 @@ export default function Index({
     collections,
     collection_albums,
     current_user,
-    cartContents,
-    cartItem,
+    cartCount,
 }) {
-    console.log(cartContents); // cartContents collection is showing up weird in the browser console
     const { data, setData, post, processing, reset, errors } = useForm({
         sort: "",
     });
@@ -31,7 +29,7 @@ export default function Index({
     // };
 
     return (
-        <AuthenticatedLayout auth={auth}>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Marketplace" />
             <MarketplaceTabs />
             <div className="relative overflow-x-auto">
@@ -92,75 +90,10 @@ export default function Index({
                 ) : (
                     <></>
                 )}
-                {/* <table className="w-1/2 text-sm text-left text-gray-500 dark:text-gray-400 mx-auto mt-10
-                ">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <th scope="col" className="px-6 py-3">
-                            Album
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Price
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Seller
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-
-                        </th>
-                    </thead>
-                    {users.map((user) =>
-                        collections.map((collection) =>
-                            collection_albums.map((collection_album) =>
-                                albums.map((album) =>
-                                    collection_album.id == collection.id && album.id == collection_album.album_id && collection.user_id == user.id ?
-                                        <tbody>
-                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                <th
-                                                    scope="row"
-                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex flex-row"
-                                                >
-                                                    <img
-                                                        className="rounded-t-lg md:h-full md:w-20 md:rounded-none md:rounded-l-lg mr-5"
-                                                        src={
-                                                            album.cover_image_url
-                                                        }
-                                                        alt=""
-                                                    />
-                                                    <p className="pt-5 mr-0">
-                                                        {
-                                                            album.album_name
-                                                        }
-                                                    </p>
-                                                </th>
-                                                <td class="px-6 py-4">
-                                                    {
-                                                        album.value
-                                                    }
-                                                    $
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                    {
-                                                        user.name
-                                                    }
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                    <PrimaryButton className="mr-1" processing={processing}>
-                                                        Add to Cart
-                                                    </PrimaryButton>
-                                                    <PrimaryButton className="" processing={processing}>
-                                                        Add to Wishlist
-                                                    </PrimaryButton>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        :
-                                        <></>
-                                ))))}
-                </table> */}
             </div>
             {/* FIXME: Can't figure out a way to map through the cart content collection being passed through */}
             {/* <div>{cartContents.map((cartContent) => cartContent.name)}</div> */}
-            {cartItem.id}
+            {/* {cartItem.id} */}
         </AuthenticatedLayout>
     );
 }

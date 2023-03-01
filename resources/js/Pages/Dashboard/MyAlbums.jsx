@@ -4,12 +4,12 @@ import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import Album from "./Partials/Album";
-import  makeRequestCreator from "@/utils/utils";
+import makeRequestCreator from "@/utils/utils";
 const search = makeRequestCreator("/proxy");
 
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
-export default function Index({ auth, albums, collections }) {
+export default function Index({ auth, albums, collections, cartCount }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         album_name: "",
         artist: "",
@@ -89,15 +89,34 @@ export default function Index({ auth, albums, collections }) {
         const delay = setTimeout(() => {
             const currentQuery = searchQuery.trim();
 
-            if (currentQuery === prevQueryRef.current) {
-                console.log("query hasnt changed, wont fire new request");
-                return;
-            }
+            useEffect(() => {
+                if (!searchQuery) {
+                    setSearchResults([]);
+                    return;
+                }
+                const delay = setTimeout(() => {
+                    axios
+                        .get("/proxy", {
+                            params: {
+                                url: "https://api.discogs.com/database/search",
+                                q: searchQuery,
+                                type: "release",
+                                per_page: 10,
+                            },
+                        })
+                        .then((response) => {
+                            setSearchResults(response.data.results);
+                        })
+                        .catch((error) => {
+                            console.log("Error fetching search results:", error);
+                        });
+                }, 500); // wait for 500 milliseconds after the user stops typing
 
-            prevQueryRef.current = currentQuery;
+                return () => clearTimeout(delay);
+            }, [searchQuery]);
 
             if (!currentQuery) {
-                 console.log("input fields empty, clearing results");
+                console.log("input fields empty, clearing results");
                 setSearchResults([]);
                 return;
             }
@@ -134,7 +153,7 @@ export default function Index({ auth, albums, collections }) {
     };
 
     return (
-        <AuthenticatedLayout auth={auth}>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Albums" />
             <DashboardTabs />
             <div className="flex flex-row">
@@ -178,7 +197,7 @@ export default function Index({ auth, albums, collections }) {
                                                     (a) =>
                                                         a.title === result.title
                                                 ) === index
-                                        )                                        
+                                        )
                                         .map((result) => (
                                             <li key={result.id}>
                                                 {result.title}
