@@ -68,7 +68,7 @@ class ExploreController extends Controller
             }
         }
         $weekday = Carbon::now()->dayOfWeek;
-        error_log($weekday);
+        // error_log($weekday);
 
         // days are 0-6 where sunday is 0, monday is 1, etc
         switch ($weekday) {

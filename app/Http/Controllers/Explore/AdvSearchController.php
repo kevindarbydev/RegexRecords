@@ -15,23 +15,39 @@ class AdvSearchController extends Controller
 {
     public function advSearch(Request $request): Response
     {
-        //!  WIP
 
         // for testing render
         // $albums = Album::all();
 
-        $keySearch = $request->search;
-        if ($keySearch != "") {
+        $albumNameSearch = $request->album_name;
+        $artistSearch = $request->artist;
+
+        error_log("$albumNameSearch");
+        error_log("$artistSearch");
+
+        if ($albumNameSearch != "" || $artistSearch != "") {
             $albums = Album::where(function ($query) use ($request) {
-                $query->where('album_name', 'LIKE', '%' . $request->search . '%');
-                // ->orWhere('artist', 'LIKE', '%' . $request->search . '%');
-                //etc
-            });
+                $query->where('album_name', 'LIKE', '%' . $request->album_name . '%')
+                    ->orWhere('artist', 'LIKE', '%' . $request->artist . '%');
+            })->get();
+            return Inertia::render('Explore/AdvSearch', [
+
+                'albums' => $albums,
+                'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
+                'cartCount' => Cart::count(),
+            ]);
+        } else {
+            return Inertia::render('Explore/AdvSearch', [
+                'albums' => []
+            ]);
         }
 
 
+
+
         return Inertia::render('Explore/AdvSearch', [
-            'albums' => $albums,
+
+            // 'albums' => $albums,
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
             'cartCount' => Cart::count(),
         ]);

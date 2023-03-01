@@ -22,6 +22,8 @@ export default function AdvSearch({ auth, albums, collections, cartCount }) {
         post(route("explore.advSearch.post"), { onSuccess: () => reset() });
     };
 
+    console.log(albums);
+
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Advanced Search" />
