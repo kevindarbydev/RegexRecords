@@ -3,8 +3,15 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm } from "@inertiajs/react";
+import { StarIcon } from "@heroicons/react/24/solid";
 
-export default function AlbumDetails({ auth, album, tracks, cartCount }) {
+export default function AlbumDetails({
+    auth,
+    album,
+    tracks,
+    cartCount,
+    avgRating,
+}) {
     const subgenres = album.subgenres;
 
     const { data, setData, patch } = useForm({
@@ -29,12 +36,21 @@ export default function AlbumDetails({ auth, album, tracks, cartCount }) {
                         />
                         {album && album.album_name && album.artist && (
                             <div>
-                                <h2 className="text-3xl font-bold">
-                                    {album.album_name}
-                                </h2>
+                                <div className="flex flex-row">
+                                    <h2 className="text-3xl font-bold">
+                                        {album.album_name}
+                                    </h2>
+                                    <h3 className="text-xl font-medium text-gray-500 ml-5 self-center">
+                                        <div className="flex flex-row">
+                                            <StarIcon className="w-5 h-5 self-center" />
+                                            <span> {avgRating}/5</span>
+                                        </div>
+                                    </h3>
+                                </div>
                                 <h3 className="text-xl font-medium text-gray-500">
                                     {album.artist}
                                 </h3>
+
                                 {album.year_of_release && (
                                     <h4 className="text-xl">
                                         {album.year_of_release}
