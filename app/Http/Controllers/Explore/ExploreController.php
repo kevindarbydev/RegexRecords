@@ -168,7 +168,7 @@ class ExploreController extends Controller
             // 'perPage' => $perPage,
             'totalAlbums' => $totalAlbums,
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
-            'albums' => Album::all(),
+            'albums' => Album::paginate(4),
             'cartCount' => Cart::count(),
 
         ]);
