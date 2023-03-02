@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import ExploreTabs from "@/Layouts/Tabs/ExploreTabs";
@@ -7,7 +7,13 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import Album from "../Dashboard/Partials/Album";
 import AdvSearchResults from "./Partials/AdvSearchResults";
 
-export default function AdvSearch({ auth, albums, collections, cartCount }) {
+export default function AdvSearch({
+    auth,
+    albums,
+    collections,
+    cartCount,
+    message,
+}) {
     const { data, setData, post, processing, reset, errors } = useForm({
         album_name: "",
         artist: "",
@@ -15,20 +21,60 @@ export default function AdvSearch({ auth, albums, collections, cartCount }) {
         genre: "",
         subgenres: "",
         year_of_release: "",
+        lowYearRange: "",
+        highYearRange: "",
     });
 
     const submit = (e) => {
         e.preventDefault();
+        // remove onsuccess reset after testing
         post(route("explore.advSearch.post"), { onSuccess: () => reset() });
     };
 
-    console.log(albums);
+    //? --------- YEAR RANGES ---------
+    const currentYear = new Date().getFullYear();
+
+    // used for displaying values to user as slider moves
+    const [lowYear, setLowYear] = useState();
+
+    // called from onChange on slider input
+    //* contains 2 functions so as to have 2 events on onChange at once, but might be/is failing
+    const changeLowYear = (event) => {
+        setLowYear(event.target.value);
+        sendLowYear();
+    };
+    //* supposed to send the data to controller
+    const sendLowYear = (e) => setData("lowYearRange", e.target.value);
+
+    // used for displaying values to user as slider moves
+    const [highYear, setHighYear] = useState();
+
+    const sendHighYear = (e) => setData("highYearRange", e.target.value);
+
+    const changeHighYear = (event) => {
+        setHighYear(event.target.value);
+        sendHighYear();
+    };
+
+    //? --------- PRICE VALUE RANGES ---------
+    //!once year range works, apply logic here, for now all this does is show the user the slider values
+    const [lowPrice, setLowPrice] = useState();
+
+    const changeLowPrice = (event) => {
+        setLowPrice(event.target.value);
+    };
+
+    const [highPrice, setHighPrice] = useState();
+
+    const changeHighPrice = (event) => {
+        setHighPrice(event.target.value);
+    };
 
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Advanced Search" />
             <ExploreTabs />
-            <h1 className="text-4xl m-4">Advanced Search 🔎</h1>
+            <h1 className="text-4xl m-4">🔎 Advanced Search</h1>
 
             <form onSubmit={submit}>
                 <div className="advSearch-container">
@@ -93,49 +139,48 @@ export default function AdvSearch({ auth, albums, collections, cartCount }) {
                                 setData("year_of_release", e.target.value)
                             }
                         />
+
                         <InputError
                             message={errors.year_of_release}
                             className="mt-2"
                         />
                         <h6 className="mt-2">or between...</h6>
-                        <label className="mt-2" htmlFor="yearRange">
-                            Lowest:
+                        <label className="mt-2" htmlFor="lowYear">
+                            Lowest: {lowYear}
                         </label>
 
                         <input
                             type="range"
                             min="1920"
-                            max="2023"
-                            name="YearRangeLow"
-                            value={data.YearRangeLow}
+                            max={currentYear - 1}
+                            name="lowYearRange"
+                            value={data.lowYear}
                             step="1"
                             className="h-2 w-full cursor-pointer appearance-none rounded-lg border-solid bg-blue-500/20 mb-3 mt-2 accent-pink-400"
-                            onChange={(e) =>
-                                setData("YearRangeLow", e.target.value)
-                            }
+                            // onChange={(e) =>
+                            //     setLowYear("lowYear", e.target.value)
+                            // }
+                            onChange={changeLowYear}
                         />
-                        <InputError
-                            message={errors.yearRangeLow}
-                            className="mt-2"
-                        />
-                        <label className="mt-2" htmlFor="yearRangeHigh">
-                            Highest:
+                        <InputError message={errors.lowYear} className="mt-2" />
+                        <label className="mt-2" htmlFor="highYear">
+                            Highest: {highYear}
                         </label>
                         <input
                             type="range"
-                            min="1921"
-                            //* change min to reflect lowest possible in db following a query
-                            max="2024"
-                            name="yearRangeHigh"
-                            value={data.yearRangeHigh}
+                            min={lowYear}
+                            max={currentYear}
+                            name="highYearRange"
+                            value={data.highYear}
                             step="1"
                             className="h-2 w-full cursor-pointer appearance-none rounded-lg border-solid bg-blue-500/20 mb-3 mt-2 accent-pink-400"
-                            onChange={(e) =>
-                                setData("yearRangeHigh", e.target.value)
-                            }
+                            // onChange={(e) =>
+                            //     setData("highYear", e.target.value)
+                            // }
+                            onChange={changeHighYear}
                         />
                         <InputError
-                            message={errors.valueRangeHigh}
+                            message={errors.highYear}
                             className="mt-2"
                         />
                     </div>
@@ -153,43 +198,44 @@ export default function AdvSearch({ auth, albums, collections, cartCount }) {
                         <InputError message={errors.value} className="mt-2" />
 
                         <h6 className="mt-2">or between...</h6>
-                        <label className="mt-2" htmlFor="valueRange">
-                            Lowest:
+                        <label className="mt-2" htmlFor="lowPrice">
+                            Lowest: ${lowPrice}
                         </label>
                         <input
                             type="range"
                             min="0"
-                            max="999"
-                            name="valueRangeLow"
-                            value={data.valueRangeLow}
+                            max={highPrice}
+                            name="lowPrice"
+                            value={lowPrice}
                             step="1"
                             className="h-2 w-full cursor-pointer appearance-none rounded-lg border-solid bg-blue-500/20 mb-3 mt-2 accent-pink-400"
-                            onChange={(e) =>
-                                setData("valueRangeLow", e.target.value)
-                            }
+                            // onChange={(e) =>
+                            //     setData("lowPrice", e.target.value)
+                            // }
+                            onChange={changeLowPrice}
                         />
                         <InputError
-                            message={errors.valueRangeLow}
+                            message={errors.lowPrice}
                             className="mt-2"
                         />
-                        <label className="mt-2" htmlFor="valueRangeHigh">
-                            Highest:
+                        <label className="mt-2" htmlFor="highPrice">
+                            Highest: ${highPrice}
                         </label>
                         <input
                             type="range"
-                            min="0.01"
-                            //? change max to reflect highest possible in db following a query
+                            min={lowPrice}
                             max="1000"
-                            name="valueRangeHigh"
-                            value={data.valueRangeHigh}
+                            name="highPrice"
+                            value={highPrice}
                             step="1"
                             className="h-2 w-full cursor-pointer appearance-none rounded-lg border-solid bg-blue-500/20 mb-3 mt-2 accent-pink-400"
-                            onChange={(e) =>
-                                setData("valueRangeHigh", e.target.value)
-                            }
+                            // onChange={(e) =>
+                            //     setData("valueRangeHigh", e.target.value)
+                            // }
+                            onChange={changeHighPrice}
                         />
                         <InputError
-                            message={errors.valueRangeHigh}
+                            message={errors.highPrice}
                             className="mt-2"
                         />
                     </div>
@@ -201,7 +247,11 @@ export default function AdvSearch({ auth, albums, collections, cartCount }) {
                     </PrimaryButton>
                 </div>
             </form>
-            <AdvSearchResults albums={albums} collections={collections} />
+            <AdvSearchResults
+                albums={albums}
+                collections={collections}
+                message={message}
+            />
         </AuthenticatedLayout>
     );
 }

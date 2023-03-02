@@ -17,6 +17,8 @@ class AdvSearchController extends Controller
 {
     public function advSearch(Request $request): Response
     {
+
+
         // if block prevents all albums showing on page load or performing a search on all-empty fields
         if (
             !isset($request->album_name)
@@ -25,9 +27,11 @@ class AdvSearchController extends Controller
             && !isset($request->subgenres)
             && !isset($request->year_of_release)
             && !isset($request->value)
-        )
+            && !isset($request->lowYearRange)
+            && !isset($request->highYearRange)
+        ) {
             $albums = [];
-        else {
+        } else {
 
             //TODO: add year ranges, price ranges, paginaton, make seach results partial conditional on having results or not, change to table view instead of cards
 
@@ -50,16 +54,32 @@ class AdvSearchController extends Controller
                 ->when(request('value'), function ($q) {
                     return $q->where('value', '=', request('value'));
                 })
+                ->when((request('lowYearRange') && request('highYearRange')), function ($q) {
+                    return $q->whereBetween('year_of_release', [request('lowYearRange'), request('highYearRange')]);
+                })
 
                 ->get();
 
             // error_log($albums);
         }
-        //maybe add if/else here for no results check
+
+
+        $searchTotal = count($albums);
+        $message = "";
+        if ($searchTotal >= 2) {
+            $message = "Found $searchTotal records: ";
+        } else if ($searchTotal == 1) {
+            $message = "Found $searchTotal record: ";
+        } else {
+            $message = "No results found";
+        }
+
 
         return Inertia::render('Explore/AdvSearch', [
             'albums' => $albums,
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
+            'message' => $message,
+            // 'searchTotal' => $searchTotal,
             'cartCount' => Cart::count(),
         ]);
     }
