@@ -149,17 +149,17 @@ class AlbumController extends Controller
     public function show(Album $album): Response
     {
         $avgRating = $album->averageRatingAllTypes();
+        $allRaters = $album->raters(true)->get();
         $album = Album::with('tracklist')->find($album->id);
         $tracklistId = $album->tracklist->id;
         $tracks = Track::where('tracklist_id', $tracklistId)->get();
-
-
 
         return Inertia::render('Dashboard/AlbumDetails', [
             'album' => $album,
             'tracks' => $tracks,
             'cartCount' => Cart::count(),
             'avgRating' => $avgRating,
+            'allRaters' => $allRaters,
         ]);
     }
 
