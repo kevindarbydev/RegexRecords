@@ -693,13 +693,13 @@ of live search
 ------------------------------------------------------------------
 3/02/2023 Kevin
 1. Done/not done since last scrum:
-- 3/4 admin tables complete
-- started on live search impl
-- messages bug fixs
+- message bug fixes
+- delete a conversation
+-dropdown list
 2. To do until next Scrum:
-- more messages debugging
-- modernize search results list
-of live search
+- optimize searching by artist
++ release_title 
+-handle cases of only 1 search term
 3. Need assistance / figure things out:
 -
 
