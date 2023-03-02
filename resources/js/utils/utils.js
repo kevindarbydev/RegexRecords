@@ -20,23 +20,27 @@ const makeRequestCreator = (proxyUrl) => {
 
         const [releaseTitle, artistName] = query.split(",");
 
-        if (artistName && !releaseTitle) {
-            // Artist name provided, but no release title
-            console.log("Artist name provided, but no release title");
-            preciseQuery = `artist=${artistName}`;
-        } else if (releaseTitle && !artistName) {
-            // Release title provided, but no artist name
-            console.log("Release title provided, but no artist name");
-            preciseQuery = `release_title=${encodeURIComponent(
-                releaseTitle.trim()
-            )}`;
+        // if (artistName && !releaseTitle) {
+        //     // Artist name provided, but no release title
+        //     console.log("Artist name provided, but no release title");
+        //     preciseQuery = `artist=${artistName}`;
+        // } else if (releaseTitle && !artistName) {
+        //     // Release title provided, but no artist name
+        //     console.log("Release title provided, but no artist name");
+        //     preciseQuery = `release_title=${encodeURIComponent(
+        //         releaseTitle.trim()
+        //     )}`;
 
-        } else if (artistName && releaseTitle) {
+        // } else 
+        if (artistName && releaseTitle) {
             // Both release title and artist name provided
             console.log("Both release title and artist name provided");
             preciseQuery = `release_title=${encodeURIComponent(
                 releaseTitle.trim()
             )}&artist=${encodeURIComponent(artistName.trim())}`;
+        } else {
+            console.log("Missing either artist or release title, firing general search");
+            preciseQuery = `q=${encodeURIComponent(query.trim())}`;
         }
 
         console.log("preciseQuery:", preciseQuery);

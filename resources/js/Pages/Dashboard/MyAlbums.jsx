@@ -22,7 +22,7 @@ export default function Index({ auth, albums, collections, cartCount }) {
     const [searchResults, setSearchResults] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
 
-    useEffect(() => {        
+    useEffect(() => {
         const delay = setTimeout(() => {
             const currentQuery = searchQuery.trim();
 
@@ -44,7 +44,7 @@ export default function Index({ auth, albums, collections, cartCount }) {
                     console.log("Error fetching search results:", error);
                 });
         }, 500);
-      
+
         return () => clearTimeout(delay);
     }, [searchQuery]);
 
@@ -58,21 +58,14 @@ export default function Index({ auth, albums, collections, cartCount }) {
             return;
         }
 
-        if (!albumName && artist) {
-            console.log("Found artist, no album");
-              setSearchQuery(`artist:${encodeURIComponent(artist)}`);
-        }
-        if (albumName && !artist){
-            console.log("found album ,no artist");
-            setSearchQuery(`release_title:${encodeURIComponent(albumName)}`);
-        }
-        if (albumName && artist){
+        if (!albumName || !artist) {
+            console.log("Found either artist or album, not both");
+            const impreciseQuery = albumName || artist;
+            setSearchQuery(impreciseQuery);
+        } else {
             console.log("found both, trying precise query");
- setSearchQuery(
-     `${encodeURIComponent(albumName)},${encodeURIComponent(artist)}`
- );
+            setSearchQuery(`${albumName},${artist}`);
         }
-       
     };
 
     const submit = (e) => {

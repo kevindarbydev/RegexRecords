@@ -31,7 +31,7 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Author
 Route::get('/proxy', function (Request $request) {
     $url = $request->query('url');
     //$searchQuery = $request->query('q');
-    $searchQuery = urldecode($request->query('q'));
+    $searchQuery = $request->query('q');
     error_log("decoded " . $searchQuery);
     $accessToken = env('DISCOGS_ACCESS_TOKEN');
 
