@@ -12,7 +12,13 @@ import {
 } from "@heroicons/react/24/solid";
 import { Transition } from "@headlessui/react";
 
-function Friends({ auth, currentFriendships, pendingFriendships, current_user, cartCount }) {
+function Friends({
+    auth,
+    currentFriendships,
+    pendingFriendships,
+    current_user,
+    cartCount,
+}) {
     const [currentComp, setCurrentComp] = useState("friends");
     const [isShowing, setIsShowing] = useState(true);
 
@@ -24,20 +30,36 @@ function Friends({ auth, currentFriendships, pendingFriendships, current_user, c
     if (currentComp === "friends") {
         componentToShow = (
             <div className="flex flex-row flex-wrap m-10">
-                {currentFriendships.map((friendship) => (
-                    <Friendship key={friendship.id} friendship={friendship} user={current_user} />
-                ))}
+                {currentFriendships.map((friendship) =>
+                    //  FIXME: works for now, but will try and set FK relationship in DB and set friendships to cascade delete on user delete
+                    friendship.sender == null ||
+                    friendship.recipient == null ? (
+                        <></>
+                    ) : (
+                        <Friendship
+                            key={friendship.id}
+                            friendship={friendship}
+                            user={current_user}
+                        />
+                    )
+                )}
             </div>
         );
     } else if (currentComp === "pending") {
         componentToShow = (
             <div className="flex flex-row flex-wrap m-10">
-                {pendingFriendships.map((friendship) => (
-                    <FriendshipPending
-                        key={friendship.id}
-                        friendship={friendship}
-                    />
-                ))}
+                {pendingFriendships.map((friendship) =>
+                    //  FIXME: works for now, but will try and set FK relationship in DB and set friendships to cascade delete on user delete
+                    friendship.sender == null ||
+                    friendship.recipient == null ? (
+                        <></>
+                    ) : (
+                        <FriendshipPending
+                            key={friendship.id}
+                            friendship={friendship}
+                        />
+                    )
+                )}
             </div>
         );
     }
@@ -73,10 +95,11 @@ function Friends({ auth, currentFriendships, pendingFriendships, current_user, c
                                     <li>
                                         <a
                                             href="#"
-                                            class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${currentComp === "friends"
-                                                ? "bg-white"
-                                                : ""
-                                                }`}
+                                            class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${
+                                                currentComp === "friends"
+                                                    ? "bg-white"
+                                                    : ""
+                                            }`}
                                             onClick={() =>
                                                 handleComponentChange("friends")
                                             }
@@ -88,10 +111,11 @@ function Friends({ auth, currentFriendships, pendingFriendships, current_user, c
                                     <li>
                                         <a
                                             href="#"
-                                            class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${currentComp === "pending"
-                                                ? "bg-white"
-                                                : ""
-                                                }`}
+                                            class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${
+                                                currentComp === "pending"
+                                                    ? "bg-white"
+                                                    : ""
+                                            }`}
                                             onClick={() =>
                                                 handleComponentChange("pending")
                                             }
