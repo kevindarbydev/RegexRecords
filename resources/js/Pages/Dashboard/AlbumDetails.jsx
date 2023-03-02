@@ -29,7 +29,7 @@ export default function AlbumDetails({
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title={album.album_name} />
             <div className="flex flex-row mt-6">
-                <div className="p-6 rounded-lg shadow-lg w-3/4 mx-auto">
+                <div className="p-6 rounded-lg shadow-lg w-full mx-auto md:w-3/4">
                     <div className="flex items-center mb-8">
                         <img
                             src={album.cover_image_url}
