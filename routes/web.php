@@ -30,11 +30,12 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Author
 //live search
 Route::get('/proxy', function (Request $request) {
     $url = $request->query('url');
+    //$searchQuery = $request->query('q');
     $searchQuery = $request->query('q');
-
+    error_log("decoded " . $searchQuery);
     $accessToken = env('DISCOGS_ACCESS_TOKEN');
 
-    $url .= '?q=' . urlencode($searchQuery) . '&token=' . urlencode($accessToken)
+    $url .= '?' . $searchQuery . '&token=' . urlencode($accessToken)
         . '&per_page=10&page=1'; // dont really need to always be loading 50 albums (default), this does 10 instead
     error_log("Found value for url: " . $url);
     $response = Http::withHeaders([
@@ -116,7 +117,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::get('/wishlists', [WishlistController::class, 'index'])->name('marketplace.wishlists');
     Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('marketplace.album.to.wishlist');
     Route::get('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
-    Route::get('/wishlists/album/details/{id}', [WishlistController::class, 'showAlbumDetails'])->name('marketplace.wishlists.album.details');
+    Route::get('/wishlists/album/details/{id}', [WishlistController::class, 'AlbumDetails'])->name('marketplace.wishlists.album.details');
+
+    // Contact Seller-------------------------
+    Route::get('/seller/{id}', [MarketplaceController::class, 'contactSeller'])->name('marketplace.contact.seller');
 
 
     // ============== TESTING CART PACKAGE ================
@@ -152,5 +156,14 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'messages'], function
     Route::post('/store/{userId}', [MessagesController::class, 'store'])->name('messages.store');
     Route::get('/{userId}', [MessagesController::class, 'show'])->name('messages.show');
     Route::post('/{userId}', [MessagesController::class, 'update'])->name('messages.update');
+
+    Route::delete('/{threadId}', [MessagesController::class, 'delete'])->name('messages.delete');
 });
+
+// PAYPAL
+
+Route::get('paypal/make-payment', 'App\Http\Controllers\PayPalPaymentController@handlePayment')->name('paypal.make.payment');
+Route::get('paypal/cancel-payment', 'App\Http\Controllers\PayPalPaymentController@paymentCancel')->name('paypal.cancel.payment');
+Route::get('paypal/payment-success', 'App\Http\Controllers\PayPalPaymentController@paymentSuccess')->name('paypal.success.payment');
+
 require __DIR__ . '/auth.php';

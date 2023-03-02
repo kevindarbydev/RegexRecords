@@ -51,7 +51,7 @@ class WishlistController extends Controller
     public function removeFromWishlist(Request $request): RedirectResponse
     {
 
-        $wAlbum = Wishlist_Album::where('id', $request->id)->first();
+        $wAlbum = Wishlist_Album::where('id', $request->album_id)->first();
         
         $wAlbum->delete();  
 
@@ -59,9 +59,10 @@ class WishlistController extends Controller
 
 
     }
-    public function showAlbumDetails(Request $request): RedirectResponse {
+    public function AlbumDetails(Request $request): RedirectResponse {
 
-        $wAlbum = Wishlist_Album::where('id', $request->id)->first();
+        $wAlbum = Wishlist_Album::where('id', $request->album_id)->first();
 
+        return redirect(route('marketplace.wishlists.album.details'));
     }
 }

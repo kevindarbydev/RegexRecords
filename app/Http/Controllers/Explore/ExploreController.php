@@ -113,7 +113,6 @@ class ExploreController extends Controller
         }
 
 
-
         $topPicks = Album::where(function ($query) use ($subgenre) {
             $query->where('subgenres', 'like', '%' . $subgenre . '%');
         })
@@ -161,14 +160,11 @@ class ExploreController extends Controller
     public function viewAllAlbums(): Response
     {
         $albums = Album::all();
-        $totalAlbums = count($albums);
-        // $perPage = 3;
 
         return Inertia::render('Explore/ViewAllAlbums', [
-            // 'perPage' => $perPage,
-            'totalAlbums' => $totalAlbums,
+            'totalAlbums' => count($albums),
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
-            'albums' => Album::all(),
+            'albums' => Album::paginate(4),
             'cartCount' => Cart::count(),
 
         ]);

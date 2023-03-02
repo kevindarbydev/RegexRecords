@@ -95,7 +95,7 @@ export default function Authenticated({ auth, header, children, cartCount }) {
                                 <button
                                     type="button"
                                     className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                // Route to messages once it exists
+                                    // Route to messages once it exists
                                 >
                                     <a href={route("messages.index")}>
                                         <svg
@@ -270,6 +270,24 @@ export default function Authenticated({ auth, header, children, cartCount }) {
                             active={route().current("dashboard.index")}
                         >
                             Home
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("explore.index")}
+                            active={route().current("explore.index")}
+                        >
+                            Explore
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("community.index")}
+                            active={route().current("community.index")}
+                        >
+                            Community
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("marketplace.index")}
+                            active={route().current("marketplace.index")}
+                        >
+                            Marketplace
                         </ResponsiveNavLink>
                     </div>
 

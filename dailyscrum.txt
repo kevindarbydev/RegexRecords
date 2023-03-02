@@ -690,3 +690,54 @@ of live search
 - Add to list, Delete from list buttons
 
 
+------------------------------------------------------------------
+3/02/2023 Kevin
+1. Done/not done since last scrum:
+- message bug fixes
+- delete a conversation
+-dropdown list
+2. To do until next Scrum:
+- optimize searching by artist
++ release_title 
+-handle cases of only 1 search term
+3. Need assistance / figure things out:
+-
+
+3/02/2023 Matthew
+1. Done/not done since last scrum:
+- In session cart implemented
+- Start of Paypal implementation
+2. To do until next Scrum:
+- Continue working on PayPal API
+- Work on other Payment APIs
+3. Need assistance / figure things out:
+
+
+3/02/2023 Chris
+1. Done/not done since last scrum:
+- advanced search
+2. To do until next Scrum:
+- finish up ranges on search, assist in landing page, moving to user profile page upgrade
+3. Need assistance / figure things out:
+-
+
+3/02/2023 Seena
+1. Done/not done since last scrum:
+- implement reviewing albums (users can view other reviews + leave reviews)
+- pagination for viewAllAlbums
+- bug fix for null user & friendship
+2. To do until next Scrum:
+- user can view friends' collection & rate it
+- work on landing page
+3. Need assistance / figure things out:
+-
+
+3/02/2023 Nathaniel
+1. Done/not done since last scrum:
+- CRUD Wishlist completed
+2. To do until next Scrum:
+- Link Album Details to each album with id
+- interactive search
+3. Need assistance / figure things out:
+
+

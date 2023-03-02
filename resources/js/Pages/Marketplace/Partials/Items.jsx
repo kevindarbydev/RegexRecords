@@ -26,14 +26,14 @@ export default function Index({
         });
     };
 
-    const addtoOrder = (e) => {
-        console.log("order passed");
-        e.preventDefault();
-        post(route("marketplace.album.to.order"), { onSuccess: () => reset() });
-    };
     const addToCart = (e) => {
         e.preventDefault();
         post(route("marketplace.add.to.cart"), { onSuccess: () => reset() });
+    };
+
+    const contactSeller = (e) => {
+        e.preventDefault();
+        post(route("marketplace.contact.seller"), { onSuccess: () => reset() });
     };
 
     return (
@@ -55,9 +55,9 @@ export default function Index({
                     collections.map((collection) =>
                         albums.map((album) =>
                             collection_album.collection_id == collection.id &&
-                                collection_album.album_id == album.id &&
-                                collection.user_id == user.id &&
-                                current_user.id != user.id ? (
+                            collection_album.album_id == album.id &&
+                            collection.user_id == user.id &&
+                            current_user.id != user.id ? (
                                 <tbody>
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th
@@ -84,7 +84,10 @@ export default function Index({
                                                         className="mb mr-5"
                                                         processing={processing}
                                                         onClick={() => {
-                                                            setData('album', album.id);
+                                                            setData(
+                                                                "album",
+                                                                album.id
+                                                            );
                                                         }}
                                                     >
                                                         Add to Cart
@@ -104,26 +107,46 @@ export default function Index({
                                                         </button>
                                                     </Dropdown.Trigger>
                                                     <Dropdown.Content>
-                                                        <form onSubmit={addtoWishlist}>
-
-                                                        
-                                                        <button
-                                                            className="mr-1"
-                                                            processing={processing}
-                                                            onClick={() => {
-                                                                setData('album', album.id);
-                                                                
-                                                            }}
+                                                        <form
+                                                            onSubmit={
+                                                                addtoWishlist
+                                                            }
                                                         >
-                                                            Add to Wishlist
-                                                        </button>
+                                                            <button
+                                                                className="mr-1"
+                                                                processing={
+                                                                    processing
+                                                                }
+                                                                onClick={() => {
+                                                                    setData(
+                                                                        "album",
+                                                                        album.id
+                                                                    );
+                                                                }}
+                                                            >
+                                                                Add to Wishlist
+                                                            </button>
                                                         </form>
-                                                        <button
-                                                            className=""
-                                                            processing={processing}
+                                                        <form
+                                                            onSubmit={
+                                                                contactSeller
+                                                            }
                                                         >
-                                                            Contact Seller
-                                                        </button>
+                                                            <button
+                                                                className=""
+                                                                processing={
+                                                                    processing
+                                                                }
+                                                                onClick={() => {
+                                                                    setData(
+                                                                        "album",
+                                                                        album.id
+                                                                    );
+                                                                }}
+                                                            >
+                                                                Contact Seller
+                                                            </button>
+                                                        </form>
                                                     </Dropdown.Content>
                                                 </Dropdown>
                                             </div>

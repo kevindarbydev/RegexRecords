@@ -42,8 +42,8 @@ export default function MarketplaceTabs() {
                 <Tab>
                     {" "}
                     <NavLink
-                    href={route("orders.index")}
-                    // active={route().current("cart.index")}
+                    href={route("marketplace.cart")}
+                    active={route().current("marketplace.cart")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Cart

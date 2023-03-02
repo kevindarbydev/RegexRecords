@@ -17,13 +17,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
+use App\Models\Conversation;
 use App\Models\User;
 use Error;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-
-
+use PSpell\Config;
 
 class MarketplaceController extends Controller
 {
@@ -88,9 +88,9 @@ class MarketplaceController extends Controller
         $items = [];
         $i = 0;
 
-        $subtotal = number_format((float)Cart::subtotal(), 2, '.', '');
-        $tax = number_format((float)Cart::tax(), '2', '.', '');
-        $shipping = 20.00;
+        $subtotal = (float)Cart::subtotal();
+        $tax = (float)number_format((float)Cart::tax(), '2', '.', '');
+        $shipping = 20;
 
         foreach (Cart::content() as $item) {
             $items[$i] = $item;
@@ -105,4 +105,16 @@ class MarketplaceController extends Controller
             'shipping' => $shipping,
         ]);
     }
+
+    public function contactSeller(Request $request): Response {
+        
+
+        return Inertia::render('Marketplace/ContactSeller', [
+            'album' => Album::where('id', $request->album_id)->get(),
+            'conversation' => Conversation::where('album_id', $request->album_id)->get(),
+
+        ]);
+
+    }
+
 }

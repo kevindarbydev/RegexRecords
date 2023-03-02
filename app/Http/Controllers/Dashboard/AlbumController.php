@@ -69,16 +69,13 @@ class AlbumController extends Controller
                 // Get the first item in the results array (usually will be correct)
                 $item = $data['results'][0];
 
-                // Get the album img, genre, year from the response obj
-                $cover_image_url = $item['cover_image'];
-
-
-                if (isset($item['year'])) { //nullcheck on year as it is no always included
-
+                if (isset($item['year'])) { //nullcheck on year as it is not always included
                     $validated['year_of_release'] = $item['year'];
                 } else if (isset($data['results'][1]['year'])) { //check 2nd item in response if 1st year is null (it often is)
                     $validated['year_of_release'] = $data['results'][1]['year'];
                 }
+                // Get the album img, genre, year from the response obj
+                $cover_image_url = $item['cover_image'];
 
                 // Upload the cover image to DigitalOcean Spaces bucket and get the URL
                 $cover_image_spaces_url = $spaceController->uploadCoverImageToSpace($cover_image_url);
@@ -90,9 +87,18 @@ class AlbumController extends Controller
 
                 $validated['subgenres'] = $item['style'];
 
-                $validated['discogs_album_id'] = $item['id']; // discogs_album_id is the ID thats used for the API request
+                $validated['discogs_album_id'] = $item['id']; // discogs_album_id is the ID thats used for the 2nd API request
+                error_log("id: " . $item['id']);
+                $title = $item['title'];
 
-
+                // Split the title string on the dash and assume the first part is the artist name and the second part is the album name
+                $titleParts = explode(' - ', $title);
+                $artistName = $titleParts[0];
+                $albumName = $titleParts[1];
+                //save these fields as whatever the API returns
+                $validated['artist'] = $artistName;
+                $validated['album_name'] = $albumName;
+                
 
                 //perform 2nd API call with discogs_album_id
                 $response2 = Http::get("https://api.discogs.com/releases/{$item['id']}");
@@ -116,7 +122,6 @@ class AlbumController extends Controller
 
                     // Loop through each track in the tracklist and create a new Track model
                     foreach ($tracklist as $trackData) {
-
                         $track = new Track();
                         $track->tracklist_id = $tracklistModel->id;
                         $track->track_number = $trackData['position'];
@@ -132,14 +137,14 @@ class AlbumController extends Controller
                     // The second API call failed
                     $status_code = $response2->status();
                     $error_message = $response2->body();
-                    echo "2nd API Call -> " .  $status_code . ': ' . $error_message;
+                    error_log("2nd API Call -> " .  $status_code . ': ' . $error_message);
                 }
             }
         } else {
             // The API call failed
             $status_code = $response->status();
             $error_message = $response->body();
-            echo "1st API Call -> " .  $status_code . ': ' . $error_message;
+            error_log("1st API Call -> " .  $status_code . ': ' . $error_message);
         }
 
         return redirect()->route('dashboard.index');
@@ -149,17 +154,17 @@ class AlbumController extends Controller
     public function show(Album $album): Response
     {
         $avgRating = $album->averageRatingAllTypes();
+        $allRaters = $album->raters(true)->get();
         $album = Album::with('tracklist')->find($album->id);
         $tracklistId = $album->tracklist->id;
         $tracks = Track::where('tracklist_id', $tracklistId)->get();
-
-
 
         return Inertia::render('Dashboard/AlbumDetails', [
             'album' => $album,
             'tracks' => $tracks,
             'cartCount' => Cart::count(),
             'avgRating' => $avgRating,
+            'allRaters' => $allRaters,
         ]);
     }
 

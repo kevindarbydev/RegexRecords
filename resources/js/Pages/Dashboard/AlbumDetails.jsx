@@ -4,6 +4,7 @@ import { Head } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm } from "@inertiajs/react";
 import { StarIcon } from "@heroicons/react/24/solid";
+import AllRatersModal from "./Partials/allRatersModal";
 
 export default function AlbumDetails({
     auth,
@@ -11,6 +12,7 @@ export default function AlbumDetails({
     tracks,
     cartCount,
     avgRating,
+    allRaters,
 }) {
     const subgenres = album.subgenres;
 
@@ -27,7 +29,7 @@ export default function AlbumDetails({
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title={album.album_name} />
             <div className="flex flex-row mt-6">
-                <div className="p-6 rounded-lg shadow-lg w-3/4 mx-auto">
+                <div className="p-6 rounded-lg shadow-lg w-full mx-auto md:w-3/4">
                     <div className="flex items-center mb-8">
                         <img
                             src={album.cover_image_url}
@@ -117,56 +119,63 @@ export default function AlbumDetails({
                         </table>
                     </div>
                     <div>
-                        <form onSubmit={rateAlbum} className="mt-5 space-x-2">
-                            <input
-                                value="1"
-                                type="radio"
-                                name="rating"
-                                checked
-                                onChange={(e) =>
-                                    setData("rating", e.target.value)
-                                }
-                            />
-                            <label>1</label>
-                            <input
-                                value="2"
-                                type="radio"
-                                name="rating"
-                                onChange={(e) =>
-                                    setData("rating", e.target.value)
-                                }
-                            />
-                            <label>2</label>
-                            <input
-                                value="3"
-                                type="radio"
-                                name="rating"
-                                onChange={(e) =>
-                                    setData("rating", e.target.value)
-                                }
-                            />
-                            <label>3</label>
-                            <input
-                                value="4"
-                                type="radio"
-                                name="rating"
-                                onChange={(e) =>
-                                    setData("rating", e.target.value)
-                                }
-                            />
-                            <label>4</label>
-                            <input
-                                value="5"
-                                type="radio"
-                                name="rating"
-                                onChange={(e) =>
-                                    setData("rating", e.target.value)
-                                }
-                            />
-                            <label>5</label>
+                        <form
+                            onSubmit={rateAlbum}
+                            className="mt-5 space-x-2 flex flex-row"
+                        >
+                            {" "}
+                            <div className="space-x-2 flex flex-row mt-2 mr-4">
+                                <input
+                                    value="1"
+                                    type="radio"
+                                    name="rating"
+                                    checked
+                                    onChange={(e) =>
+                                        setData("rating", e.target.value)
+                                    }
+                                />
+                                <label>1</label>
+                                <input
+                                    value="2"
+                                    type="radio"
+                                    name="rating"
+                                    onChange={(e) =>
+                                        setData("rating", e.target.value)
+                                    }
+                                />
+                                <label>2</label>
+                                <input
+                                    value="3"
+                                    type="radio"
+                                    name="rating"
+                                    onChange={(e) =>
+                                        setData("rating", e.target.value)
+                                    }
+                                />
+                                <label>3</label>
+                                <input
+                                    value="4"
+                                    type="radio"
+                                    name="rating"
+                                    onChange={(e) =>
+                                        setData("rating", e.target.value)
+                                    }
+                                />
+                                <label>4</label>
+                                <input
+                                    value="5"
+                                    type="radio"
+                                    name="rating"
+                                    onChange={(e) =>
+                                        setData("rating", e.target.value)
+                                    }
+                                />
+                                <label>5</label>
+                            </div>
                             <PrimaryButton className="ml-3 self-center">
                                 RATE
                             </PrimaryButton>
+                            <AllRatersModal allRaters={allRaters} />
                         </form>
                     </div>
                 </div>
