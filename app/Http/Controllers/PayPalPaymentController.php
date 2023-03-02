@@ -21,8 +21,8 @@ class PayPalPaymentController extends Controller
 
         $product['invoice_id'] = 1;
         $product['invoice_description'] = "Order #{$product['invoice_id']} Bill";
-        $product['return_url'] = route('success.payment');
-        $product['cancel_url'] = route('cancel.payment');
+        $product['return_url'] = route('paypal.success.payment');
+        $product['cancel_url'] = route('paypal.cancel.payment');
         $product['total'] = 224;
 
         $paypalModule = new ExpressCheckout;

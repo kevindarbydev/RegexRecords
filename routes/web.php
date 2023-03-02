@@ -155,9 +155,9 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'messages'], function
 });
 
 // PAYPAL
-Route::group(['middleware' => 'auth', 'prefix' => 'paypal'], function () {
-    Route::get('/make-payment', 'PayPalPaymentController@handlePayment')->name('paypal.make.payment');
-    Route::get('/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('paypal.cancel.payment');
-    Route::get('/payment-success', 'PayPalPaymentController@paymentSuccess')->name('paypal.success.payment');
-});
+
+Route::get('paypal/make-payment', 'App\Http\Controllers\PayPalPaymentController@handlePayment')->name('paypal.make.payment');
+Route::get('paypal/cancel-payment', 'App\Http\Controllers\PayPalPaymentController@paymentCancel')->name('paypal.cancel.payment');
+Route::get('paypal/payment-success', 'App\Http\Controllers\PayPalPaymentController@paymentSuccess')->name('paypal.success.payment');
+
 require __DIR__ . '/auth.php';
