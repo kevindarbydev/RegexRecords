@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 function AdminUserTable(props) {
-const [userList, setUserList] = useState(props.users);
+    const [userList, setUserList] = useState(props.users);
     console.log(props.currentUser);
+
     const handleDelete = async (userId) => {
         console.log("id: " + userId);
         console.log("csrf: " + props.csrf);
 
-        if (userId === props.currentUser){
-            return;//TOAST
+        if (userId === props.currentUser) {
+            return; //TOAST
         }
         try {
             const response = await fetch(`/admin/users/${userId}`, {
@@ -27,6 +28,7 @@ const [userList, setUserList] = useState(props.users);
             console.error("Error deleting album:", error);
         }
     };
+    
     return (
         <div className="text-center">
             <h3 className="text-lg font-semibold mb-4">Manage Albums</h3>

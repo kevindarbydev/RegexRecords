@@ -142,4 +142,24 @@ class MessagesController extends Controller
         ]);   
         return $newMsg;
     }
+
+    //deletes selected conversation and all related entities
+    public function delete($threadId){       
+        $thread = Thread::find($threadId);
+        $thread->delete();
+
+        $convo = Conversation::where('threadId', $threadId)->first();
+        if (!$convo){
+            error_log("trying to delete a conversation that doesnt exist");
+            return;
+        }
+        $convo->delete();
+
+        Message::where('thread_id', $threadId)->delete();
+
+        error_log("Deleted conversation #" . $threadId);
+
+        return response()->json(['message' => 'Conversation deleted successfully.'], 200);
+
+    }
 }

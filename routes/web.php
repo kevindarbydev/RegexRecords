@@ -152,6 +152,8 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'messages'], function
     Route::post('/store/{userId}', [MessagesController::class, 'store'])->name('messages.store');
     Route::get('/{userId}', [MessagesController::class, 'show'])->name('messages.show');
     Route::post('/{userId}', [MessagesController::class, 'update'])->name('messages.update');
+
+    Route::delete('/{threadId}', [MessagesController::class, 'delete'])->name('messages.delete');
 });
 
 // PAYPAL
