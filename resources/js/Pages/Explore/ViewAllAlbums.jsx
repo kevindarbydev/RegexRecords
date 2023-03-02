@@ -3,6 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useForm, Head, Link } from "@inertiajs/react";
 import ExploreTabs from "@/Layouts/Tabs/ExploreTabs";
 import Album from "../Dashboard/Partials/Album";
+import Pagination from "@/Components/Pagination";
 
 export default function ViewAllAlbums({
     auth,
@@ -10,7 +11,7 @@ export default function ViewAllAlbums({
     totalAlbums,
     perPage,
     collections,
-    cartCount
+    cartCount,
 }) {
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
@@ -29,7 +30,7 @@ export default function ViewAllAlbums({
 
             <div className="p-4 sm:p-6 lg:p-8 ml-10">
                 <div className="flex flex-row flex-wrap">
-                    {albums.map((album) => (
+                    {albums.data.map((album) => (
                         <Album
                             key={album.id}
                             album={album}
@@ -38,6 +39,7 @@ export default function ViewAllAlbums({
                     ))}
                 </div>
             </div>
+            <Pagination links={albums.links} />
         </AuthenticatedLayout>
     );
 }
