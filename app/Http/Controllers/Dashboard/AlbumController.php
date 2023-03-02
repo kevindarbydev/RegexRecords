@@ -87,15 +87,15 @@ class AlbumController extends Controller
 
                 $validated['subgenres'] = $item['style'];
 
-                $validated['discogs_album_id'] = $item['id']; // discogs_album_id is the ID thats used for the API request
-
+                $validated['discogs_album_id'] = $item['id']; // discogs_album_id is the ID thats used for the 2nd API request
+                error_log("id: " . $item['id']);
                 $title = $item['title'];
 
                 // Split the title string on the dash and assume the first part is the artist name and the second part is the album name
                 $titleParts = explode(' - ', $title);
                 $artistName = $titleParts[0];
                 $albumName = $titleParts[1];
-                //save these fields as whatever the API call returns
+                //save these fields as whatever the API returns
                 $validated['artist'] = $artistName;
                 $validated['album_name'] = $albumName;
                 
@@ -122,7 +122,6 @@ class AlbumController extends Controller
 
                     // Loop through each track in the tracklist and create a new Track model
                     foreach ($tracklist as $trackData) {
-
                         $track = new Track();
                         $track->tracklist_id = $tracklistModel->id;
                         $track->track_number = $trackData['position'];
@@ -145,7 +144,7 @@ class AlbumController extends Controller
             // The API call failed
             $status_code = $response->status();
             $error_message = $response->body();
-            echo "1st API Call -> " .  $status_code . ': ' . $error_message;
+            error_log("1st API Call -> " .  $status_code . ': ' . $error_message);
         }
 
         return redirect()->route('dashboard.index');
