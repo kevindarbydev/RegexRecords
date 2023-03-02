@@ -12,37 +12,41 @@ class PayPalPaymentController extends Controller
     {
         $items = [];
         $i = 0;
-
-        foreach (Cart::content() as $item) {
-            $items[$i] = $item;
-            $i++;
-        }
+        $subtotal = (float)Cart::subtotal();
 
         $product = [];
         $product['items'] = [
-            [
-                'name' => $items[0]->name,
-                'price' => 110, // adding $items[0]->price doesn't work
-                'desc'  => 'Running shoes for Men',
-                'qty' => 1
-            ],
+
+            // [
+            //     'name' => $items[0]->name,
+            //     'price' => $items[0]->price, // adding $items[0]->price doesn't work
+            //     'desc'  => 'Running shoes for Men',
+            //     'qty' => 1
+            // ],
             // [
             //     'name' => $items[1]->name,
-            //     'price' => 100,
-            //     'desc' => 'Album',
+            //     'price' => $items[1]->price, // adding $items[0]->price doesn't work
+            //     'desc'  => 'Running shoes for Men',
             //     'qty' => 1
             // ]
         ];
-
+        foreach (Cart::content() as $item) {
+            $items[$i] = $item;
+            $product['items'][] = array(
+                'name' => $items[$i]->name,
+                'price' => $items[$i]->price,
+            );
+            $i++;
+        }
         $product['invoice_id'] = 1;
         $product['invoice_description'] = "Order #{$product['invoice_id']} Bill";
         $product['return_url'] = route('paypal.success.payment');
         $product['cancel_url'] = route('paypal.cancel.payment');
-        $product['total'] = 110;
+        $product['total'] = $subtotal;
 
         $paypalModule = new ExpressCheckout();
 
-        $res = $paypalModule->setExpressCheckout($product);
+        // $res = $paypalModule->setExpressCheckout($product);
         $res = $paypalModule->setExpressCheckout($product, true);
 
         return redirect($res['paypal_link']);
