@@ -84,6 +84,14 @@ export default function Index({ auth, albums, collections, cartCount }) {
    
         setShowDropdown(false);
     };
+    //calling reduce on searchResults directly was crashing the page
+    const copy = searchResults;
+    const uniqueTitles = copy.reduce((acc, current) => {
+        if (!acc.some((item) => item.title === current.title)) {
+            acc.push(current);
+        }
+        return acc;
+    }, []);
 
     const submit = (e) => {
         e.preventDefault();
@@ -129,6 +137,28 @@ export default function Index({ auth, albums, collections, cartCount }) {
                                 message={errors.artist}
                                 className="mt-2"
                             />
+                            {/* Search result menu */}
+                            {searchResults && showDropdown && (
+                                <div className="absolute z-10 w-1/2 mt-2 rounded-md shadow-lg">
+                                    <div className="bg-white rounded-md shadow-xs">
+                                        <ul className="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-32">
+                                            {uniqueTitles.map((result) => (
+                                                <li
+                                                    key={result.id}
+                                                    className="cursor-pointer text-gray-900 hover:bg-indigo-400 hover:text-white py-2 px-3"
+                                                    onClick={() =>
+                                                        handleDropdownItemClick(
+                                                            result
+                                                        )
+                                                    }
+                                                >
+                                                    {result.title}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            )}
 
                             <PrimaryButton
                                 className="mt-4"
@@ -137,28 +167,6 @@ export default function Index({ auth, albums, collections, cartCount }) {
                                 Post Album
                             </PrimaryButton>
                         </form>
-                    {/* Search result menu */}
-                        {searchResults && showDropdown && (
-                            <div className="absolute z-10 w-1/2 mt-2 rounded-md shadow-lg">
-                                <div className="bg-white rounded-md shadow-xs">
-                                    <ul className="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-32">
-                                        {searchResults.map((result) => (
-                                            <li
-                                                key={result.id}
-                                                className="cursor-pointer text-gray-900 hover:bg-indigo-400 hover:text-white py-2 px-3"
-                                                onClick={() =>
-                                                    handleDropdownItemClick(
-                                                        result
-                                                    )
-                                                }
-                                            >
-                                                {result.title}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        )}
                     </div>
                     <div className="flex flex-row flex-wrap">
                         {albums.map((album) => (
