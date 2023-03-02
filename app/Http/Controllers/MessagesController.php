@@ -132,7 +132,6 @@ class MessagesController extends Controller
       */
     public function update(Request $request)
     {
-
         $message = $request->input('message');
         $threadId = $request->input('threadId');
         
@@ -140,9 +139,7 @@ class MessagesController extends Controller
             'thread_id' => $threadId,
             'user_id' => Auth::id(),
             'body' => $message,
-        ]);
-        //TODO: just return newMsg, components will need to be refactored
-        $allMessages = Message::where('thread_id', $threadId)->get();
-        return $allMessages;
+        ]);   
+        return $newMsg;
     }
 }

@@ -7,8 +7,7 @@ function ConvoModal({
     onClose,
     currentUserId,
     updateConversationList,
-}) {
-    const [convo, setConvo] = useState(conversation);
+}) {    
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
 
@@ -27,8 +26,7 @@ function ConvoModal({
 
  
     useEffect(() => {
-        setMessages(conversation.messages.messages);                      
-        setConvo(conversation);
+        setMessages(conversation.messages.messages);                     
     }, [conversation]);
 
     const handleNewMessageChange = (e) => {
@@ -47,23 +45,26 @@ function ConvoModal({
                 threadId: convoId,
             })
             .then((data) => {              
-
+       
                 const updatedConversation = {
                     id: convoId,
-                    messages: data.data,
-                    timeOfMsg: data.data[data.data.length - 1].created_at,
-                    mostRecentMessage: data.data[data.data.length - 1].body,
+                    messages: {
+                        messages: [
+                            ...conversation.messages.messages,
+                            data.data,
+                        ],
+                    },
+                    timeOfMsg: data.data.created_at,
+                    mostRecentMessage: data.data.body,
                 };          
-                //not thrilled with this implementation but it works
-                //updating state and the conversation vars directly
-                //state is for the new msg to show in the modal right away,
-                //and without setting conversation.messages.messages directly here,
-                //the new messages would disappear without a page refresh
-                const updatedMessages = data.data;
+                // //not thrilled with this implementation but it works
+                // //updating state and the conversation vars directly
+                // //state is for the new msg to show in the modal right away,
+                // //and without setting conversation.messages.messages directly here,
+                // //the new messages would disappear without a page refresh                
                 updateConversationList(updatedConversation);
-                conversation.messages.messages = updatedMessages;
-                setMessages(updatedMessages);
-                setConvo(updatedConversation);
+                conversation.messages.messages = [...conversation.messages.messages, data.data];
+                setMessages([...messages, data.data]);                
                 setNewMessage("");
             })
             .catch((error) => {
@@ -77,7 +78,6 @@ function ConvoModal({
                 <h2 className="text-lg font-medium mb-4 underline">
                     Conversation
                 </h2>
-
                 {messages.length > 0 ? (
                     <div>
                         {messages.map((message, index) => (
