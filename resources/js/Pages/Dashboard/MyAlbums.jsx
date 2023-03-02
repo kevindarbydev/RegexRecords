@@ -10,6 +10,8 @@ const search = makeRequestCreator("/proxy");
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
 export default function Index({ auth, albums, collections, cartCount }) {
+    //TODO: fix ->dropdown list still shows after album is added
+    // make options in the list clickable (fill in fields)
     const { data, setData, post, processing, reset, errors } = useForm({
         album_name: "",
         artist: "",
@@ -18,21 +20,16 @@ export default function Index({ auth, albums, collections, cartCount }) {
 
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    const [searchTimeout, setSearchTimeout] = useState("");
+    const [showDropdown, setShowDropdown] = useState(false);
 
- 
-
-    const prevQueryRef = useRef("");
-
-
-
-    useEffect(() => {
+    useEffect(() => {        
         const delay = setTimeout(() => {
             const currentQuery = searchQuery.trim();
 
             if (!currentQuery) {
                 console.log("input fields empty, clearing results");
                 setSearchResults([]);
+                setShowDropdown(false);
                 return;
             }
             console.log("current q: " + currentQuery);
@@ -41,12 +38,13 @@ export default function Index({ auth, albums, collections, cartCount }) {
                     console.log("results: " + results);
                     console.dir(results);
                     setSearchResults(results);
+                    setShowDropdown(true);
                 })
                 .catch((error) => {
                     console.log("Error fetching search results:", error);
                 });
         }, 500);
-
+      
         return () => clearTimeout(delay);
     }, [searchQuery]);
 
@@ -56,6 +54,7 @@ export default function Index({ auth, albums, collections, cartCount }) {
 
         if (!albumName && !artist) {
             setSearchQuery("");
+            setShowDropdown(false);
             return;
         }
 
@@ -73,58 +72,70 @@ export default function Index({ auth, albums, collections, cartCount }) {
             <DashboardTabs />
             <div className="flex flex-row">
                 <div className="p-4 sm:p-6 lg:p-8 ml-10">
-                    <form className="w-full md:w-1/2 m-6" onSubmit={submit}>
-                        <label htmlFor="AlbumName">Album Name</label>
-                        <input
-                            name="AlbumName"
-                            value={data.album_name}
-                            placeholder="Dark Side of the Moon"
-                            className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                            onChange={(e) => {
-                                setData("album_name", e.target.value);
-                                handleSearchQueryChange(e);
-                            }}
-                        />
-                        <InputError
-                            message={errors.album_name}
-                            className="mt-2"
-                        />
-                        <label htmlFor="artist">Artist</label>
-                        <input
-                            name="artist"
-                            value={data.artist}
-                            placeholder="Pink Floyd"
-                            className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                            onChange={(e) => {
-                                setData("artist", e.target.value);
-                                handleSearchQueryChange(e);
-                            }}
-                        />
-                        <InputError message={errors.artist} className="mt-2" />
-                        <div>
-                            <ul>
-                                <li>start of results</li>
-                                {searchResults &&
-                                    searchResults
-                                        .filter(
-                                            (result, index, self) =>
-                                                self.findIndex(
-                                                    (a) =>
-                                                        a.title === result.title
-                                                ) === index
-                                        )
-                                        .map((result) => (
-                                            <li key={result.id}>
+                    <div className="relative">
+                        <form className="w-full md:w-1/2 m-6" onSubmit={submit}>
+                            <label htmlFor="AlbumName">Album Name</label>
+                            <input
+                                name="AlbumName"
+                                value={data.album_name}
+                                placeholder="Dark Side of the Moon"
+                                className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                                onChange={(e) => {
+                                    setData("album_name", e.target.value);
+                                    handleSearchQueryChange(e);
+                                }}
+                            />
+                            <InputError
+                                message={errors.album_name}
+                                className="mt-2"
+                            />
+                            <label htmlFor="artist">Artist</label>
+                            <input
+                                name="artist"
+                                value={data.artist}
+                                placeholder="Pink Floyd"
+                                className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                                onChange={(e) => {
+                                    setData("artist", e.target.value);
+                                    handleSearchQueryChange(e);
+                                }}
+                                list="albumList"
+                            />
+                            <InputError
+                                message={errors.artist}
+                                className="mt-2"
+                            />
+
+                            <PrimaryButton
+                                className="mt-4"
+                                processing={processing}
+                            >
+                                Post Album
+                            </PrimaryButton>
+                        </form>
+
+                        {searchResults && showDropdown && (
+                            <div className="absolute z-10 w-full mt-2 rounded-md shadow-lg">
+                                <div className="bg-white rounded-md shadow-xs">
+                                    <ul className="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-32">
+                                        {searchResults.map((result) => (
+                                            <li
+                                                key={result.id}
+                                                className="cursor-pointer text-gray-900 hover:bg-indigo-400 hover:text-white py-2 px-3"
+                                                onClick={() =>
+                                                    handleDropdownItemClick(
+                                                        result
+                                                    )
+                                                }
+                                            >
                                                 {result.title}
                                             </li>
                                         ))}
-                            </ul>
-                        </div>
-
-                        <PrimaryButton className="mt-4" processing={processing}>
-                            Post Album
-                        </PrimaryButton>
-                    </form>
+                                    </ul>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                     <div className="flex flex-row flex-wrap">
                         {albums.map((album) => (
                             <Album
