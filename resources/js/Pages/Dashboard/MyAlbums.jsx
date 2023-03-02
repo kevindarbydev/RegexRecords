@@ -57,10 +57,22 @@ export default function Index({ auth, albums, collections, cartCount }) {
             setShowDropdown(false);
             return;
         }
-        //formatting for API, expected format: /search?release_title=nevermind&artist=nirvana
-        setSearchQuery(
-            `${encodeURIComponent(albumName)},${encodeURIComponent(artist)}`
-        );
+
+        if (!albumName && artist) {
+            console.log("Found artist, no album");
+              setSearchQuery(`artist:${encodeURIComponent(artist)}`);
+        }
+        if (albumName && !artist){
+            console.log("found album ,no artist");
+            setSearchQuery(`release_title:${encodeURIComponent(albumName)}`);
+        }
+        if (albumName && artist){
+            console.log("found both, trying precise query");
+ setSearchQuery(
+     `${encodeURIComponent(albumName)},${encodeURIComponent(artist)}`
+ );
+        }
+       
     };
 
     const submit = (e) => {
