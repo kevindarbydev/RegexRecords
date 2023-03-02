@@ -8,7 +8,13 @@ import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
 import Dropdown from "@/Components/Dropdown";
 
 
-export default function Cart({ auth, cartContents, cartCount, tax, subtotal, shipping }) {
+export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
+    const { data, setData, post, processing, reset, errors } = useForm({
+        cart: "",
+    });
+
+    var shipping = subtotal / 2;
+
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Cart" />
@@ -37,7 +43,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal, shi
                                     <p className="mt-4">{cartItem.name}</p>
                                 </th>
                                 <td className="px-6 py-4">
-                                    {cartItem.price}
+                                    ${cartItem.price}
                                 </td>
                             </tr>
                         </tbody>
@@ -47,23 +53,23 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal, shi
                     <tbody>
                         <tr>
                             <td>
-                                Subtotal: $ {subtotal}
+                                Subtotal: ${subtotal.toFixed(2)}
                             </td>
                         </tr>
                         <tr>
                             {parseFloat(subtotal) < 100 && parseFloat(subtotal) > 0 ?
                                 <td>
-                                    Shipping: $ {shipping}
+                                    Shipping: ${shipping.toFixed(2)}
                                 </td>
                                 :
                                 <td>
-                                    Shipping: $ 0.00
+                                    Shipping: $0.00
                                 </td>
                             }
                         </tr>
                         <tr>
                             <td>
-                                Tax: $ {tax}
+                                Tax: ${tax.toFixed(2)}
                             </td>
                         </tr>
                         <tr>
@@ -71,10 +77,18 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal, shi
                         </tr>
                         <tr>
                             {parseFloat(subtotal) < 100 && parseFloat(subtotal) > 0 ?
-                                <td>Total: $ {parseFloat(subtotal) + shipping + parseFloat(tax)}</td>
+                                <td>Total: $ {(subtotal + shipping + tax).toFixed(2)}</td>
                                 :
-                                <td>Total: $ {parseFloat(subtotal) + parseFloat(tax)}</td>
+                                <td>Total: $ {(subtotal + tax).toFixed(2)}</td>
                             }
+                        </tr>
+                        <tr>
+                            <a
+                                className="items-center px-2 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ${processing && 'opacity-25"
+                                href={route('paypal.make.payment')}
+                            >
+                                Checkout with PayPal
+                            </a>
                         </tr>
                     </tbody>
                 </table>

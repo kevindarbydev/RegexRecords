@@ -153,4 +153,11 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'messages'], function
     Route::get('/{userId}', [MessagesController::class, 'show'])->name('messages.show');
     Route::post('/{userId}', [MessagesController::class, 'update'])->name('messages.update');
 });
+
+// PAYPAL
+
+Route::get('paypal/make-payment', 'App\Http\Controllers\PayPalPaymentController@handlePayment')->name('paypal.make.payment');
+Route::get('paypal/cancel-payment', 'App\Http\Controllers\PayPalPaymentController@paymentCancel')->name('paypal.cancel.payment');
+Route::get('paypal/payment-success', 'App\Http\Controllers\PayPalPaymentController@paymentSuccess')->name('paypal.success.payment');
+
 require __DIR__ . '/auth.php';
