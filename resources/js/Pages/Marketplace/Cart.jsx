@@ -79,7 +79,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
                             {parseFloat(subtotal) < 100 && parseFloat(subtotal) > 0 ?
                                 <td>Total: $ {(subtotal + shipping + tax).toFixed(2)}</td>
                                 :
-                                <td>Total: $ {parseFloat(subtotal) + parseFloat(tax)}</td>
+                                <td>Total: $ {(subtotal + tax).toFixed(2)}</td>
                             }
                         </tr>
                         <tr>
