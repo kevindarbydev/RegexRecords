@@ -19,19 +19,7 @@ const makeRequestCreator = (proxyUrl) => {
         }
 
         const [releaseTitle, artistName] = query.split(",");
-
-        // if (artistName && !releaseTitle) {
-        //     // Artist name provided, but no release title
-        //     console.log("Artist name provided, but no release title");
-        //     preciseQuery = `artist=${artistName}`;
-        // } else if (releaseTitle && !artistName) {
-        //     // Release title provided, but no artist name
-        //     console.log("Release title provided, but no artist name");
-        //     preciseQuery = `release_title=${encodeURIComponent(
-        //         releaseTitle.trim()
-        //     )}`;
-
-        // } else 
+    
         if (artistName && releaseTitle) {
             // Both release title and artist name provided
             console.log("Both release title and artist name provided");
@@ -43,17 +31,7 @@ const makeRequestCreator = (proxyUrl) => {
             preciseQuery = `q=${encodeURIComponent(query.trim())}`;
         }
 
-        console.log("preciseQuery:", preciseQuery);
-        //const preciseQuery = `release_title=${params.release_title}&artist=${params.artist}`;
-
-        // const params = {
-        //     release_title: releaseTitle,
-        //     artist: artistName,
-        // };
-
-        // const preciseQuery = `release_title=${encodeURIComponent(
-        //     params.release_title
-        // )}&artist=${encodeURIComponent(params.artist)}`;
+        console.log("preciseQuery:", preciseQuery);      
 
         if (cancel) {
             // Cancel the previous request before making a new request
@@ -85,7 +63,7 @@ const makeRequestCreator = (proxyUrl) => {
         } catch (error) {
             if (axios.isCancel(error)) {
                 // Handle if request was cancelled
-                console.log("Request canceled", error.message);
+                console.log("Request canceled: ", error.message);
             } else {
                 // Handle usual errors
                 console.log("Something went wrong: ", error.message);

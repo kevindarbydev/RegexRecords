@@ -48,6 +48,7 @@ export default function Index({ auth, albums, collections, cartCount }) {
     }, [searchQuery]);
 
     const handleSearchQueryChange = (e) => {
+        console.log("inside")
         const albumName = data.album_name || "";
         const artist = data.artist || "";
 
@@ -70,12 +71,17 @@ export default function Index({ auth, albums, collections, cartCount }) {
     useEffect(() => {
         console.log("After setData: ", data);
     }, [data]);
+
     const handleDropdownItemClick = (result) => {
         const [artist, album_name] = result.title.split(" - ");
-        console.log("Before setData: ", data);
+        console.log(artist);
+        console.log(album_name);
+      
+        console.log("Before setData: ", data.album_name);
         setData("album_name", album_name);
+        console.log("After setData: ", data.album_name);
         setData("artist", artist);
-        console.log("After setData: ", data);
+   
         setShowDropdown(false);
     };
 
@@ -131,9 +137,9 @@ export default function Index({ auth, albums, collections, cartCount }) {
                                 Post Album
                             </PrimaryButton>
                         </form>
-
+                    {/* Search result menu */}
                         {searchResults && showDropdown && (
-                            <div className="absolute z-10 w-full mt-2 rounded-md shadow-lg">
+                            <div className="absolute z-10 w-1/2 mt-2 rounded-md shadow-lg">
                                 <div className="bg-white rounded-md shadow-xs">
                                     <ul className="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-32">
                                         {searchResults.map((result) => (
