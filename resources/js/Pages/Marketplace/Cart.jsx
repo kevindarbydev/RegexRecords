@@ -15,6 +15,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
 
     var shipping = subtotal / 2;
 
+    console.log(cartContents);
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Cart" />
@@ -53,11 +54,11 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
                     <tbody>
                         <tr>
                             <td>
-                                Subtotal: ${subtotal.toFixed(2)}
+                                Subtotal: ${subtotal}
                             </td>
                         </tr>
                         <tr>
-                            {parseFloat(subtotal) < 100 && parseFloat(subtotal) > 0 ?
+                            {subtotal < 100 && subtotal > 0 ?
                                 <td>
                                     Shipping: ${shipping.toFixed(2)}
                                 </td>
@@ -76,7 +77,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
                             <hr />
                         </tr>
                         <tr>
-                            {parseFloat(subtotal) < 100 && parseFloat(subtotal) > 0 ?
+                            {subtotal < 100 && subtotal > 0 ?
                                 <td>Total: $ {(subtotal + shipping + tax).toFixed(2)}</td>
                                 :
                                 <td>Total: $ {(subtotal + tax).toFixed(2)}</td>

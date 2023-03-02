@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\ExpressCheckout;
 
@@ -9,23 +10,37 @@ class PayPalPaymentController extends Controller
 {
     public function handlePayment()
     {
+        $items = [];
+        $i = 0;
+
+        foreach (Cart::content() as $item) {
+            $items[$i] = $item;
+            $i++;
+        }
+
         $product = [];
         $product['items'] = [
             [
-                'name' => 'Nike Joyride 2',
-                'price' => 112,
+                'name' => $items[0]->name,
+                'price' => 110, // adding $items[0]->price doesn't work
                 'desc'  => 'Running shoes for Men',
-                'qty' => 2
-            ]
+                'qty' => 1
+            ],
+            // [
+            //     'name' => $items[1]->name,
+            //     'price' => 100,
+            //     'desc' => 'Album',
+            //     'qty' => 1
+            // ]
         ];
 
         $product['invoice_id'] = 1;
         $product['invoice_description'] = "Order #{$product['invoice_id']} Bill";
         $product['return_url'] = route('paypal.success.payment');
         $product['cancel_url'] = route('paypal.cancel.payment');
-        $product['total'] = 224;
+        $product['total'] = 110;
 
-        $paypalModule = new ExpressCheckout;
+        $paypalModule = new ExpressCheckout();
 
         $res = $paypalModule->setExpressCheckout($product);
         $res = $paypalModule->setExpressCheckout($product, true);
@@ -40,7 +55,7 @@ class PayPalPaymentController extends Controller
 
     public function paymentSuccess(Request $request)
     {
-        $paypalModule = new ExpressCheckout;
+        $paypalModule = new ExpressCheckout();
         $response = $paypalModule->getExpressCheckoutDetails($request->token);
 
         if (in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
