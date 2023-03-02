@@ -11,17 +11,45 @@ const makeRequestCreator = (proxyUrl) => {
 
     return async (query) => {
         console.log(query);
+        let preciseQuery;
+        if (!query) {
+            // No query provided
+            console.log("No query provided");
+            return;
+        }
+
         const [releaseTitle, artistName] = query.split(",");
-        const params = {
-            release_title: releaseTitle,
-            artist: artistName,
-        };
-      
-        const preciseQuery = `release_title=${encodeURIComponent(
-            params.release_title
-        )}&artist=${encodeURIComponent(params.artist)}`;   
-  
-        console.log("pq: " + preciseQuery);
+
+        if (artistName && !releaseTitle) {
+            // Artist name provided, but no release title
+            console.log("Artist name provided, but no release title");
+            preciseQuery = `artist=${artistName}`;
+        } else if (releaseTitle && !artistName) {
+            // Release title provided, but no artist name
+            console.log("Release title provided, but no artist name");
+            preciseQuery = `release_title=${encodeURIComponent(
+                releaseTitle.trim()
+            )}`;
+
+        } else if (artistName && releaseTitle) {
+            // Both release title and artist name provided
+            console.log("Both release title and artist name provided");
+            preciseQuery = `release_title=${encodeURIComponent(
+                releaseTitle.trim()
+            )}&artist=${encodeURIComponent(artistName.trim())}`;
+        }
+
+        console.log("preciseQuery:", preciseQuery);
+        //const preciseQuery = `release_title=${params.release_title}&artist=${params.artist}`;
+
+        // const params = {
+        //     release_title: releaseTitle,
+        //     artist: artistName,
+        // };
+
+        // const preciseQuery = `release_title=${encodeURIComponent(
+        //     params.release_title
+        // )}&artist=${encodeURIComponent(params.artist)}`;
 
         if (cancel) {
             // Cancel the previous request before making a new request
@@ -31,11 +59,11 @@ const makeRequestCreator = (proxyUrl) => {
         // Create a new CancelToken
         cancel = axios.CancelToken.source();
         try {
-            const cacheKey = `${releaseTitle},${artistName}`;
+            const cacheKey = preciseQuery;
             if (resources[cacheKey]) {
                 // Return result if it exists
                 console.log("Found values already cached!");
-                return resources[query];
+                return resources[preciseQuery];
             }
             const res = await axiosInstance.get("", {
                 params: {
@@ -47,7 +75,7 @@ const makeRequestCreator = (proxyUrl) => {
 
             const result = res.data.results;
             // Store response
-            resources[query] = result;
+            resources[preciseQuery] = result;
 
             return result;
         } catch (error) {
@@ -63,3 +91,5 @@ const makeRequestCreator = (proxyUrl) => {
 };
 
 export default makeRequestCreator;
+
+function parseParams(searchParams) {}
