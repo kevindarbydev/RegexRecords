@@ -9,7 +9,7 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
     const { data, setData, post, processing, reset, errors, get, patch } =
         useForm({
             list_name: "",
-            id: "",
+            album_id: "",
         });
 
     const addAlbums = (e) => {
@@ -19,6 +19,13 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
     const removefromWishlist = (e) => {
         e.preventDefault();
         patch(route("dashboard.wishlists.remove.album"), {
+            onSuccess: () => reset(),
+        });
+    };
+    const showAlbumDetails = (e) => {
+        console.log('showDetails button passed');
+        e.preventDefault();
+        patch(route("marketplace.wishlists.album.details"), {
             onSuccess: () => reset(),
         });
     };
@@ -75,15 +82,23 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
                                                 className="mt-2"
                                                 processing={processing}
                                                 onClick={() => {
-                                                    setData("id", item.id);
+                                                    setData("album_id", item.id);
                                                 }}
                                             >
                                                 Remove
                                             </PrimaryButton>
                                         </form>
-                                        <PrimaryButton className="mt-2">
-                                            Details
-                                        </PrimaryButton>
+                                        <form onSubmit={showAlbumDetails}>
+                                            <PrimaryButton
+                                                className="mt-2"
+                                                processing={processing}
+                                                onClick={() => {
+                                                    setData("album_id", item.id);
+                                                }}
+                                            >
+                                                Details
+                                            </PrimaryButton>
+                                        </form>
                                     </td>
                                 </tr>
                             </tbody>
