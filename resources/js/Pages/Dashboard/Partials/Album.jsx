@@ -8,7 +8,6 @@ import PrimaryButton from "@/Components/PrimaryButton";
 dayjs.extend(relativeTime);
 
 export default function Album({ album, collections }) {
-
     const { data, setData, post, processing, reset, errors } = useForm({
         album_id: album.id,
         collection_name: "",
@@ -21,7 +20,7 @@ export default function Album({ album, collections }) {
             onSuccess: () => reset(),
         });
         console.log("Post Passed");
-    }
+    };
 
     return (
         <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-6">
@@ -59,8 +58,7 @@ export default function Album({ album, collections }) {
                     <small className="text-sm text-gray-600">
                         Added {dayjs(album.created_at).fromNow()}
                     </small>
-                </p>
-                {" "}
+                </p>{" "}
                 {/* <button
                         type="submit"
                         onClick={submit}
@@ -70,14 +68,20 @@ export default function Album({ album, collections }) {
                     </button> */}
                 <form onSubmit={submit}>
                     <select
+                        className="text-black"
                         name="collection"
                         onChange={(e) =>
                             setData("collection_name", e.target.value)
                         }
                     >
-                        <option value="" hidden> Select a collection </option>
+                        <option value="" hidden>
+                            {" "}
+                            Select a collection{" "}
+                        </option>
                         {collections.map((collection) => (
-                            <option>{collection.collection_name}</option>
+                            <option className="text-black">
+                                {collection.collection_name}
+                            </option>
                         ))}
                     </select>
 
@@ -86,6 +90,6 @@ export default function Album({ album, collections }) {
                     </PrimaryButton>
                 </form>
             </div>
-        </div >
+        </div>
     );
 }
