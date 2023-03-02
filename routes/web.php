@@ -120,7 +120,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::get('/wishlists/album/details/{id}', [WishlistController::class, 'AlbumDetails'])->name('marketplace.wishlists.album.details');
 
     // Contact Seller-------------------------
-    Route::get('/contact/seller', [MarketplaceController::class, 'contactSeller'])->name('marketplace.contact.seller');
+    Route::get('/seller/{id}', [MarketplaceController::class, 'contactSeller'])->name('marketplace.contact.seller');
 
 
     // ============== TESTING CART PACKAGE ================

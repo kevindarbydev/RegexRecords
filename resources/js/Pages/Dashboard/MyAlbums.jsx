@@ -10,8 +10,7 @@ const search = makeRequestCreator("/proxy");
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
 export default function Index({ auth, albums, collections, cartCount }) {
-    //TODO: fix ->dropdown list still shows after album is added
-    // make options in the list clickable (fill in fields)
+    //TODO: fix ->dropdown list still shows after album is added, either empty thin white div or the entire list still shows 
     const { data, setData, post, processing, reset, errors } = useForm({
         album_name: "",
         artist: "",
@@ -66,6 +65,18 @@ export default function Index({ auth, albums, collections, cartCount }) {
             console.log("found both, trying precise query");
             setSearchQuery(`${albumName},${artist}`);
         }
+    };
+
+    useEffect(() => {
+        console.log("After setData: ", data);
+    }, [data]);
+    const handleDropdownItemClick = (result) => {
+        const [artist, album_name] = result.title.split(" - ");
+        console.log("Before setData: ", data);
+        setData("album_name", album_name);
+        setData("artist", artist);
+        console.log("After setData: ", data);
+        setShowDropdown(false);
     };
 
     const submit = (e) => {

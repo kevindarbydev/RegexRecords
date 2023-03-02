@@ -4,12 +4,14 @@ import Wishlist from "@/Pages/Dashboard/Partials/Wishlist";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
+import AlbumDetails from "./AlbumDetails";
 
 export default function Index({ auth, wishlist_albums, cartCount }) {
     const { data, setData, post, processing, reset, errors, get, patch } =
         useForm({
             list_name: "",
             album_id: "",
+            album: "",
         });
 
     const addAlbums = (e) => {
@@ -23,9 +25,8 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
         });
     };
     const showAlbumDetails = (e) => {
-        console.log('showDetails button passed');
         e.preventDefault();
-        patch(route("marketplace.wishlists.album.details"), {
+        patch(route("dashboard.albums.show"), {
             onSuccess: () => reset(),
         });
     };
@@ -93,7 +94,7 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
                                                 className="mt-2"
                                                 processing={processing}
                                                 onClick={() => {
-                                                    setData("album_id", item.id);
+                                                    setData("album", item.album.id);
                                                 }}
                                             >
                                                 Details
