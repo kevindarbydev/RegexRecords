@@ -18,19 +18,7 @@ export default function LandingPage(props) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="flex flex-col items-center">
-                            <h2 class="text-center text-xl">Report a bug</h2>
-                            <div class="mx-auto max-w-640 w-1/2">
-                                <iframe
-                                    src="https://docs.google.com/forms/d/e/1FAIpQLSdCcwNenPaADqmsyT-XBkvM9G36hVHHWfdde-ZdE7hNfO4R2A/viewform?embedded=true"
-                                    width="100%"
-                                    height="645"
-                                    frameborder="0"
-                                    marginheight="0"
-                                    marginwidth="0"
-                                >
-                                    Loading…
-                                </iframe>
-                            </div>
+                          <h3>You're logged in!</h3>
                         </div>
                     </div>
                 </div>
