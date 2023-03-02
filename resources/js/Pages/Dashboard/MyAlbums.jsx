@@ -57,8 +57,10 @@ export default function Index({ auth, albums, collections, cartCount }) {
             setShowDropdown(false);
             return;
         }
-
-        setSearchQuery(`${albumName} ${artist}`);
+        //formatting for API, expected format: /search?release_title=nevermind&artist=nirvana
+        setSearchQuery(
+            `${encodeURIComponent(albumName)},${encodeURIComponent(artist)}`
+        );
     };
 
     const submit = (e) => {
