@@ -5,7 +5,7 @@ import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationFor
 import { Head } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function Edit({ auth, mustVerifyEmail, status, user }) {
+export default function Edit({ auth, mustVerifyEmail, status, user, cartCount }) {
     return (
         <AuthenticatedLayout
             auth={auth}
@@ -14,6 +14,7 @@ export default function Edit({ auth, mustVerifyEmail, status, user }) {
                     Profile
                 </h2>
             }
+            cartCount={cartCount}
         >
             <Head title="Profile" />
 

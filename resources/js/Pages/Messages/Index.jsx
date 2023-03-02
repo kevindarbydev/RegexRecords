@@ -16,21 +16,22 @@ function Index({
     success,
     currentUserId,
     newConvo,
-}) {   
+    cartCount
+}) {
     const [showModal, setShowModal] = useState(false);
     const [users, setUsers] = useState([]);
     const [csrfToken, setCsrfToken] = useState("");
-    
- 
-     function handleModalClose() {
-         setShowModal(false);         
-     }
-     function onCreateConversation() {
-         setShowModal(false); 
-         location.reload(); //reloading to show conversation, may improve later (use state instead)
-     }
-  
-    
+
+
+    function handleModalClose() {
+        setShowModal(false);
+    }
+    function onCreateConversation() {
+        setShowModal(false);
+        location.reload(); //reloading to show conversation, may improve later (use state instead)
+    }
+
+
     useEffect(() => {
         // Fetch the CSRF token from the server and store it in state
         fetch("/csrf-token")
@@ -61,7 +62,7 @@ function Index({
         <div>
             <Head title="Messages" />
 
-            <AuthenticatedLayout auth={auth}>
+            <AuthenticatedLayout auth={auth} cartCount={cartCount}>
                 <CommunityTabs />
                 {errors && (
                     <div className="alert alert-danger">
@@ -116,7 +117,7 @@ function Index({
                         conversations={conversations}
                         auth={auth}
                         currentUserId={currentUserId}
-                        
+
                     />
                 </div>
             </AuthenticatedLayout>

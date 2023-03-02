@@ -8,6 +8,8 @@ use App\Models\Collection_Album;
 use App\Models\Tracklist;
 use App\Http\Controllers\Controller;
 use App\Models\Track;
+use Error;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -28,6 +30,7 @@ class AlbumController extends Controller
             // only returning user albums
             'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
+            'cartCount' => Cart::count(),
 
         ]);
     }
@@ -145,13 +148,18 @@ class AlbumController extends Controller
     // show album track details
     public function show(Album $album): Response
     {
+        $avgRating = $album->averageRatingAllTypes();
         $album = Album::with('tracklist')->find($album->id);
         $tracklistId = $album->tracklist->id;
         $tracks = Track::where('tracklist_id', $tracklistId)->get();
 
+
+
         return Inertia::render('Dashboard/AlbumDetails', [
             'album' => $album,
             'tracks' => $tracks,
+            'cartCount' => Cart::count(),
+            'avgRating' => $avgRating,
         ]);
     }
 
@@ -178,5 +186,14 @@ class AlbumController extends Controller
 
         $collection->collection_albums()->save($cAlbum);
         return redirect()->route('dashboard.collections');
+    }
+
+    // rate album 
+    public function rate(Request $request, Album $album): RedirectResponse
+    {
+        $user = Auth()->user();
+        $user->rate($album, $request->rating, 'quality', Album::class);
+
+        return redirect()->route('dashboard.albums.show', $album);
     }
 }

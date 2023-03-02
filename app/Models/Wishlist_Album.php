@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Wishlist_Album extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'album_id',
+    ];
 
     public function wishlist(): BelongsTo
     {

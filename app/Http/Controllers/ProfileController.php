@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ class ProfileController extends Controller
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
             'user' => $user,
+            'cartCount' => Cart::count(),
         ]);
     }
 

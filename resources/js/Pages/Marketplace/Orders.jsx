@@ -4,70 +4,28 @@ import { useForm, Head } from "@inertiajs/react";
 
 import PrimaryButton from "@/Components/PrimaryButton";
 
-// function subTotal(order_items) {
-//     var quantity = order_items.quantity;
-//     var itemPrice = order_items.price;
-//     var total = quantity * itemPrice;
+export default function Orders({ auth, order_items, orders, cartCount }) {
+    const { data, setData, post, processing, reset, errors } = useForm({
+        sort: "",
+        order: "",
+    });
+    
+    const orderDetails = (e) => {
+        e.preventDefault();
+        get(route("marketplace.orders.order_items"), {
+            onSuccess: () => reset(),
+        });
+    };
 
-//     console.log(quantity);
-// }
-
-export default function Orders({ auth, order_items, orders }) {
     return (
-        <AuthenticatedLayout auth={auth}>
-            <Head title="Orders" />
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
+            <Head title="Order History" />
 
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                 <div className="flex justify-center items-center">
-                    Review Items
+                    Order History
                 </div>
-                <div className="flex justify-center items-center">
-                    <table className="w-1/2 text-sm text-center text-gray-500 dark:text-gray-400 mx-auto mt-10 bg-white">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
-                            <th scope="col" class="px-20 py-3">
-                                Album Name
-                            </th>
-                            <th scope="col" class="px-20 py-3">
-                                Album
-                            </th>
-                            <th scope="col" class="px-10 py-3">
-                                Price
-                            </th>
-                            <th scope="col" class="px-10 py-3">
-                                Quantity
-                            </th>
-                            <th scope="col" class="px-10 py-3">
-                                Actions
-                            </th>
-                        </thead>
-                        {order_items.map((item) => (
-                            <tbody>
-                                <tr>
-                                    <td>{item.album.album_name}</td>
-                                    <td>
-                                        <img
-                                            src={item.album.cover_image_url}
-                                            alt=""
-                                            className="w-24 h-24 rounded-lg object-cover mr-8 mt-2 mx-auto"
-                                        />
-                                    </td>
-                                    <td id="price">{item.price}</td>
-                                    <td id="quantity">{item.quantity}</td>
-                                    <td>
-                                        {/* <a href={route('orders.destroy', chirp.id)}></a> */}
-                                        <PrimaryButton className="mt-2">
-                                            Remove
-                                        </PrimaryButton>
-                                        <PrimaryButton className="mt-2">
-                                            {" "}
-                                            Details
-                                        </PrimaryButton>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        ))}
-                    </table>
-                </div>
+
                 <div className="flex justify-center items-center">
                     <table className="w-1/2 text-sm text-center text-gray-500 dark:text-gray-400 mx-auto mt-5 bg-white">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
@@ -86,46 +44,35 @@ export default function Orders({ auth, order_items, orders }) {
                             <th scope="col" class="px-10 py-3">
                                 Total Price
                             </th>
+                            <th scope="col" class="px-10 py-3">
+                                Actions
+                            </th>
                         </thead>
                         {orders.map((order) => (
                             <tbody>
                                 <tr>
                                     <td>{order.created_at}</td>
-                                    <td>
-                                        {order.subtotal}
-                                    </td>
+                                    <td>{order.subtotal}</td>
                                     <td>{order.shipping}</td>
                                     <td>{order.tax}</td>
+                                    <td>{order.totalPrice}</td>
                                     <td>
-                                        {order.totalPrice}
+                                        <form onSubmit={orderDetails}>
+                                            <PrimaryButton
+                                                className="mt-4"
+                                                processing={processing}
+                                                onClick={() => {
+                                                    setData("order", order.id);
+                                                }}
+                                            >
+                                                Order Details
+                                            </PrimaryButton>
+                                        </form>
                                     </td>
                                 </tr>
                             </tbody>
                         ))}
                     </table>
-                </div>
-                {/* <div className="price">
-                    <button onClick={subTotal}>TEST</button>
-
-                    <p>SubTotal:</p>
-                    <p id="subtotal">{orders.subtotal}</p>
-
-                    <p>Taxes:</p>
-                    <p id="taxes"></p>
-
-                    <p>Shipping:</p>
-                    <p id="shipping"></p>
-
-                    <p>Final Total:</p>
-                    <p id="finalTotal"></p>
-                </div> */}
-                <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                        <PrimaryButton className="mt-4">
-                            {/* To Payment/Stirp API page */}
-                            Checkout
-                        </PrimaryButton>
-                    </p>
                 </div>
             </div>
         </AuthenticatedLayout>

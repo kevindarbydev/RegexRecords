@@ -13,6 +13,7 @@ class Wishlist extends Model
     use HasFactory;
     protected $fillable = [
         'list_name',
+        
     ];
     public function user(): HasOne
     {

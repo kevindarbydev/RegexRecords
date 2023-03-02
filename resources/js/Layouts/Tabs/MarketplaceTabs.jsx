@@ -21,8 +21,8 @@ export default function MarketplaceTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    // href={route("wishlists.index")}
-                    // active={route().current("wishlists.index")}
+                    href={route("marketplace.wishlists")}
+                    active={route().current("marketplace.wishlists")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Wishlists

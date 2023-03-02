@@ -10,14 +10,39 @@ use App\Http\Controllers\Dashboard\AlbumController;
 use App\Http\Controllers\Dashboard\CollectionController;
 use App\Http\Controllers\Dashboard\ExportController;
 use App\Http\Controllers\Dashboard\WishlistController;
+use App\Http\Controllers\Explore\AdvSearchController;
 use App\Http\Controllers\Explore\ExploreController;
 use App\Http\Controllers\Marketplace\MarketplaceController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, X-Requested-With');
+
+
+
+//live search
+Route::get('/proxy', function (Request $request) {
+    $url = $request->query('url');
+    $searchQuery = $request->query('q');
+
+    $accessToken = env('DISCOGS_ACCESS_TOKEN');
+
+    $url .= '?q=' . urlencode($searchQuery) . '&token=' . urlencode($accessToken)
+        . '&per_page=10&page=1'; // dont really need to always be loading 50 albums (default), this does 10 instead
+    error_log("Found value for url: " . $url);
+    $response = Http::withHeaders([
+        'User-Agent' => 'StudentProjectDiscogsClone/1.0',
+    ])->get($url);
+
+    return $response;
+});
 
 // LANDING PAGE
 Route::get('/', function () {
@@ -34,6 +59,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('/albums', [AlbumController::class, 'index'])->name('dashboard.index');
     Route::post('/albums/store', [AlbumController::class, 'store'])->name('dashboard.albums.store');
     Route::get('/albums/{album}', [AlbumController::class, 'show'])->name('dashboard.albums.show');
+    Route::patch('/albums/rate/{album}', [AlbumController::class, 'rate'])->name('dashboard.albums.rate');
     Route::post('/albums', [AlbumController::class, 'addAlbumToCollection'])->name('dashboard.album.to.collection');
     // -------------------------
     Route::get('/collections', [CollectionController::class, 'index'])->name('dashboard.collections');
@@ -45,8 +71,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     // -------------------------
     Route::get('/wishlists', [WishlistController::class, 'index'])->name('dashboard.wishlists');
     Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('dashboard.album.to.wishlist');
-    Route::patch('/wishlists/{wishlist}', [WishlistController::class, 'update'])->name('dashboard.wishlists.update');
-    Route::delete('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('dashboard.wishlists.remove.album');
+    Route::patch('/wishlists/remove/album', [WishlistController::class, 'removeFromWishlist'])->name('dashboard.wishlists.remove.album');
     // -------------------------
     Route::get('/export', [ExportController::class, 'index'])->name('dashboard.export');
 });
@@ -55,7 +80,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
 Route::group(['middleware' => 'auth', 'prefix' => 'explore'], function () {
     Route::get('/', [ExploreController::class, 'index'])->name('explore.index');
     Route::get('/viewAllAlbums', [ExploreController::class, 'viewAllAlbums'])->name('explore.viewAllAlbums');
-    Route::get('/advSearch', [ExploreController::class, 'advSearch'])->name('explore.advSearch');
+    Route::get('/advSearch', [AdvSearchController::class, 'advSearch'])->name('explore.advSearch');
+    Route::post('/advSearch', [AdvSearchController::class, 'advSearch'])->name('explore.advSearch.post');
 });
 
 // COMMUNITY
@@ -76,12 +102,26 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
 Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::get('/', [MarketplaceController::class, 'index'])->name('marketplace.index');
 
-    //CRUD Orders
+    //CRUD Orders-----------------------
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/order_items', [OrderController::class, 'showOrderItems'])->name('marketplace.orders.order_items');
+    Route::post('/orders', [MarketplaceController::class, 'addAlbumToOrder'])->name('marketplace.album.to.order');
+
+    //Order History-----------------------
     Route::post('/orders/store', [OrderItemController::class, 'store'])->name('order_item.store');
     Route::patch('/orders/{order}', [OrderController::class, 'update'])->name('marketplace.orders.update');
     Route::patch('/orders/{order}', [OrderController::class, 'destroy'])->name('marketplace.orders.destroy');
+
+    // Wishlist-------------------------
+    Route::get('/wishlists', [WishlistController::class, 'index'])->name('marketplace.wishlists');
+    Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('marketplace.album.to.wishlist');
+    Route::get('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
+    Route::get('/wishlists/album/details/{id}', [WishlistController::class, 'showAlbumDetails'])->name('marketplace.wishlists.album.details');
+
+
+    // ============== TESTING CART PACKAGE ================
+    Route::get('/cart', [MarketplaceController::class, 'viewCart'])->name('marketplace.cart');
+    Route::post('/testing/package', [MarketplaceController::class, 'addToCart'])->name('marketplace.add.to.cart');
 });
 
 // PROFILE
@@ -100,6 +140,7 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin'], fu
     //delete
     Route::delete('/albums/{id}', [AdminController::class, 'deleteAlbum'])->name('admin.albums.delete');
     Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+    Route::delete('/messages/{id}', [AdminController::class, 'deleteMessage'])->name('admin.messages.delete');
 });
 
 

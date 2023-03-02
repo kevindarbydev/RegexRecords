@@ -584,15 +584,14 @@ github actions if it doesnt work out
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 2/28/2023 Kevin
 1. Done/not done since last scrum:
-- Messages almost complete
-- albumDetails styling
-- set up jenkins pipeline
-2. To do until next Scrum:
-- Finish messaging
-- improve conversation modal
-(show who sent each msg)
+- 2/4 admin tables complete
+- optimized Messaging
 - modal event handlers
+2. To do until next Scrum:
+- bug fixes for messaging
+(new msgs do not persist within the modal, but they do get created)
 - finish admin section
+- start on live search
 3. Need assistance / figure things out:
 -
 
@@ -620,7 +619,7 @@ github actions if it doesnt work out
 - pagination implemented
 2. To do until next Scrum:
 - implement reviewing albums (users can view other reviews + leave reviews)
-- pagination for viewAllAlbums? 
+- pagination for viewAllAlbums?
 3. Need assistance / figure things out:
 -
 
@@ -633,6 +632,58 @@ github actions if it doesnt work out
 - changed routing to store album
 2. To do until next Scrum:
 - Show price, subtotal, taxes, etc in Cart
+- Add to list, Delete from list buttons
+- Link Checkout to Payment
+3. Need assistance / figure things out:
+- Add to list, Delete from list buttons
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+3/01/2023 Kevin
+1. Done/not done since last scrum:
+- 3/4 admin tables complete
+- started on live search impl
+- messages bug fixs
+2. To do until next Scrum:
+- more messages debugging
+- modernize search results list
+of live search
+3. Need assistance / figure things out:
+-
+
+3/01/2023 Matthew
+1. Done/not done since last scrum:
+- Started working on in session Cart
+2. To do until next Scrum:
+- Finish implementation of cart
+- Start implementing APIs
+3. Need assistance / figure things out:
+
+
+3/01/2023 Chris
+1. Done/not done since last scrum:
+- built advanced search, fixed up explore
+2. To do until next Scrum:
+- finish adv search controller
+3. Need assistance / figure things out:
+- advanced search
+
+3/01/2023 Seena
+1. Done/not done since last scrum:
+- dark mode in local storage
+- assist in cart impl
+2. To do until next Scrum:
+- implement reviewing albums (users can view other reviews + leave reviews)
+- pagination for viewAllAlbums
+- assist in cart impl
+3. Need assistance / figure things out:
+-
+
+3/01/2023 Nathaniel
+1. Done/not done since last scrum:
+- Order History page formatting
+- Order Items page
+- Add to Order button
+2. To do until next Scrum:
+- Get album_id from table when removing from wishlist
 - Add to list, Delete from list buttons
 - Link Checkout to Payment
 3. Need assistance / figure things out:

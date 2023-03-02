@@ -14,6 +14,7 @@ export default function Index({
     collections,
     collection_albums,
     albums,
+    cartCount
 }) {
     const [currentComp, setCurrentComp] = useState();
     const [isShowing, setIsShowing] = useState(true);
@@ -52,7 +53,7 @@ export default function Index({
     }
 
     return (
-        <AuthenticatedLayout auth={auth}>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <DashboardTabs />
             <Head title="Collection" />
             <div className="flex flex-row">

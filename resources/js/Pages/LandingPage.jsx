@@ -11,6 +11,7 @@ export default function LandingPage(props) {
                     Landing Page
                 </h2>
             }
+            cartCount={props.cartCount}
         >
             <Head title="Landing" />
             <div className="py-12">

@@ -15,10 +15,9 @@ function ConvoModal({
     useEffect(() => {
         function handleKeyDown(event) {
             if (event.keyCode === 27) {
-                onClose(updatedConversation);               
+                onClose();               
             }
         }
-
         document.addEventListener("keydown", handleKeyDown);
 
         return () => {
@@ -28,7 +27,7 @@ function ConvoModal({
 
  
     useEffect(() => {
-        setMessages(conversation.messages.messages);
+        setMessages(conversation.messages.messages);                      
         setConvo(conversation);
     }, [conversation]);
 
@@ -42,30 +41,29 @@ function ConvoModal({
             return; // message is empty, do not send
         }
 
-        // Add the new message to the components's messages array
-        const newMessages = Array.isArray(messages)
-            ? [...messages, { body: newMessage }]
-            : [{ body: newMessage }];
-
-        // const newConversation = { ...conversation, messages: newMessages };
         axios
             .post(`/messages/${convoId}`, {
                 message: newMessage,
                 threadId: convoId,
             })
-            .then((data) => {
-               
-                
-               
-                const updatedConversation = {          
-                    id:convoId,          
+            .then((data) => {              
+
+                const updatedConversation = {
+                    id: convoId,
                     messages: data.data,
                     timeOfMsg: data.data[data.data.length - 1].created_at,
                     mostRecentMessage: data.data[data.data.length - 1].body,
-                };
-                //setMessages([...messages, updatedConversation.mostRecentMessage]);                 
-                updateConversationList(updatedConversation);        
-                setMessages(data.data);        
+                };          
+                //not thrilled with this implementation but it works
+                //updating state and the conversation vars directly
+                //state is for the new msg to show in the modal right away,
+                //and without setting conversation.messages.messages directly here,
+                //the new messages would disappear without a page refresh
+                const updatedMessages = data.data;
+                updateConversationList(updatedConversation);
+                conversation.messages.messages = updatedMessages;
+                setMessages(updatedMessages);
+                setConvo(updatedConversation);
                 setNewMessage("");
             })
             .catch((error) => {

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\User;
 use Error;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Multicaret\Acquaintances\Models\Friendship;
 
 class FriendController extends Controller
@@ -25,6 +26,7 @@ class FriendController extends Controller
             'currentFriendships' => $currentFriendships,
             'pendingFriendships'  => $pendingFriendships,
             'current_user' => $user,
+            'cartCount' => Cart::count(),
         ]);
     }
 

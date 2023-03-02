@@ -10,9 +10,10 @@ export default function ViewAllAlbums({
     totalAlbums,
     perPage,
     collections,
+    cartCount
 }) {
     return (
-        <AuthenticatedLayout auth={auth}>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="All Albums" />
             <ExploreTabs />
 

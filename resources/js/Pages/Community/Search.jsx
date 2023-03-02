@@ -6,10 +6,10 @@ import SearchedUser from "./Partials/SearchedUser";
 import CommunityTabs from "@/Layouts/Tabs/CommunityTabs";
 import Pagination from "@/Components/Pagination";
 
-export default function Index({ auth, users }) {
+export default function Index({ auth, users, cartCount }) {
     console.log(users.links);
     return (
-        <AuthenticatedLayout auth={auth}>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Search" />
             <CommunityTabs />
 

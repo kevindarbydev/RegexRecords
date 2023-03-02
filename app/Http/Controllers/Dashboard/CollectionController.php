@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Collection;
 use App\Models\Collection_Album;
 use Error;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -24,6 +25,7 @@ class CollectionController extends Controller
             // 'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
             'collection_albums' => Collection_Album::with('collection', 'album')->latest()->get(),
             'albums' => Album::with('user')->latest()->get(),
+            'cartCount' => Cart::count(),
 
         ]);
     }

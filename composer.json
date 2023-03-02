@@ -13,6 +13,7 @@
         "cmgmyr/messenger": "^2.28",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
+        "hardevine-up/shoppingcart": "^1.0",
         "illuminate/pagination": "*",
         "inertiajs/inertia-laravel": "^0.6.3",
         "laravel/framework": "^10.0",
@@ -20,6 +21,7 @@
         "laravel/tinker": "^2.8",
         "multicaret/laravel-acquaintances": "^3.5",
         "sendgrid/sendgrid": "^8.0",
+        "srmklive/paypal": "^3.0",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {

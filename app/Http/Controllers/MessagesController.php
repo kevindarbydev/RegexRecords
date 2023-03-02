@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Thread;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class MessagesController extends Controller
      */
     public function index(): Response
     {
+
         $user = auth()->user();
 
         $friends = $user->getFriendsList();
@@ -44,12 +46,14 @@ class MessagesController extends Controller
             $conversationId = $conversation->id;
             $sender = User::find($conversation->sender);
             $recipient = User::find($conversation->recipient);
-
-            $messagesByConversation[$conversationId] = [
-                'messages' => $messages,
-                'sender' => $sender->name,
-                'recipient' => $recipient->name,
-            ];
+            if ($sender && $recipient) {
+                $messagesByConversation[$conversationId] = [
+                    'messages' => $messages,
+                    'sender' => $sender->name,
+                    'recipient' => $recipient->name,
+                ];
+            }
+            error_log("Found a thread with a user that has been deleted --- continuing.");
         }
         return Inertia::render(
             'Messages/Index',
@@ -58,6 +62,7 @@ class MessagesController extends Controller
                 'messagesByConversation' => $messagesByConversation,
                 'friends' => $friends,
                 'currentUserId' => $user->id,
+                'cartCount' => Cart::count(),
             ]
         );
     }
@@ -87,7 +92,10 @@ class MessagesController extends Controller
      */
     public function store($userId)
     {
-
+        $user1 = User::find($userId);
+        $user2 = Auth::user();
+        $subStr= "Conversation with: " . $user1->name . "+" . $user2->name;
+        error_log($subStr);
         // Check if conversation already exists between the current user and the second user
         $conversationExists = Conversation::where(function ($query) use ($userId) {
             $query->where('sender', Auth::id())
@@ -102,11 +110,9 @@ class MessagesController extends Controller
                 'errors' => 'Conversation already exists'
             ]);
         }
-       
 
-        //creating both objects for now
         $thread = Thread::create([
-            'subject' => 'New Message',
+            'subject' => $subStr,
         ]);
 
         $convo = Conversation::create([
@@ -118,7 +124,6 @@ class MessagesController extends Controller
         return response()->json([
             'conversation' => $convo,
         ]);
-
     }
     /*
       *
@@ -130,21 +135,14 @@ class MessagesController extends Controller
 
         $message = $request->input('message');
         $threadId = $request->input('threadId');
-
-
-        // Message
+        
         $newMsg = Message::create([
             'thread_id' => $threadId,
             'user_id' => Auth::id(),
             'body' => $message,
         ]);
-
+        //TODO: just return newMsg, components will need to be refactored
         $allMessages = Message::where('thread_id', $threadId)->get();
-        foreach ($allMessages as $mzg) {
-            error_log($mzg);
-        }
-
-
         return $allMessages;
     }
 }

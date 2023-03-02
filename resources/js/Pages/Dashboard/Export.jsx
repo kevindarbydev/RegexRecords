@@ -3,9 +3,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
-export default function Index({ auth }) {
+export default function Index({ auth, cartCount }) {
     return (
-        <AuthenticatedLayout auth={auth}>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Export" />
             <DashboardTabs />
 
