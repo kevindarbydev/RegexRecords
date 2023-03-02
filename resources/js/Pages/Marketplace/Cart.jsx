@@ -8,10 +8,12 @@ import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
 import Dropdown from "@/Components/Dropdown";
 
 
-export default function Cart({ auth, cartContents, cartCount, tax, subtotal, shipping }) {
+export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         cart: "",
     });
+
+    var shipping = subtotal / 2;
 
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
@@ -41,7 +43,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal, shi
                                     <p className="mt-4">{cartItem.name}</p>
                                 </th>
                                 <td className="px-6 py-4">
-                                    {cartItem.price}
+                                    ${cartItem.price}
                                 </td>
                             </tr>
                         </tbody>
@@ -51,23 +53,23 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal, shi
                     <tbody>
                         <tr>
                             <td>
-                                Subtotal: $ {subtotal}
+                                Subtotal: ${subtotal.toFixed(2)}
                             </td>
                         </tr>
                         <tr>
                             {parseFloat(subtotal) < 100 && parseFloat(subtotal) > 0 ?
                                 <td>
-                                    Shipping: $ {shipping}
+                                    Shipping: ${shipping.toFixed(2)}
                                 </td>
                                 :
                                 <td>
-                                    Shipping: $ 0.00
+                                    Shipping: $0.00
                                 </td>
                             }
                         </tr>
                         <tr>
                             <td>
-                                Tax: $ {tax}
+                                Tax: ${tax.toFixed(2)}
                             </td>
                         </tr>
                         <tr>
@@ -75,7 +77,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal, shi
                         </tr>
                         <tr>
                             {parseFloat(subtotal) < 100 && parseFloat(subtotal) > 0 ?
-                                <td>Total: $ {Number(subtotal) + Number(shipping) + Number(tax)}</td>
+                                <td>Total: $ {(subtotal + shipping + tax).toFixed(2)}</td>
                                 :
                                 <td>Total: $ {parseFloat(subtotal) + parseFloat(tax)}</td>
                             }

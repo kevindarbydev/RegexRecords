@@ -88,9 +88,9 @@ class MarketplaceController extends Controller
         $items = [];
         $i = 0;
 
-        $subtotal = number_format((float)Cart::subtotal(), 2, '.', '');
-        $tax = number_format((float)Cart::tax(), '2', '.', '');
-        $shipping = 20.00;
+        $subtotal = (float)Cart::subtotal();
+        $tax = (float)number_format((float)Cart::tax(), '2', '.', '');
+        $shipping = 20;
 
         foreach (Cart::content() as $item) {
             $items[$i] = $item;
