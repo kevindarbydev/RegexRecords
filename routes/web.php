@@ -118,8 +118,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('marketplace.album.to.wishlist');
     Route::get('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
     Route::get('/wishlists/album/details/{id}', [WishlistController::class, 'AlbumDetails'])->name('marketplace.wishlists.album.details');
+    
+    // Contact Seller-------------------------
+    Route::get('/contact/seller', [MarketplaceController::class, 'contactSeller'])->name('marketplace.contact.seller');
 
-
+    
     // ============== TESTING CART PACKAGE ================
     Route::get('/cart', [MarketplaceController::class, 'viewCart'])->name('marketplace.cart');
     Route::post('/testing/package', [MarketplaceController::class, 'addToCart'])->name('marketplace.add.to.cart');
