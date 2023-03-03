@@ -1,13 +1,11 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import Wishlist from "@/Pages/Dashboard/Partials/Wishlist";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
-import AlbumDetails from "./AlbumDetails";
 
 export default function Index({ auth, wishlist_albums, cartCount, album }) {
-    const { data, setData, post, processing, reset, errors, get, patch } =
+    const { setData, processing, reset, get, patch } =
         useForm({
             list_name: "",
             album_id: "",
