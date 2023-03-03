@@ -6,7 +6,6 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -14,15 +13,6 @@ use Illuminate\Http\RedirectResponse;
 
 class CommunityController extends Controller
 {
-    public function index(): Response
-    {
-        $user = Auth()->user();
-
-        return Inertia::render('Community/Index', [
-            'friendCount' => $user->getFriendsCount(),
-            'cartCount' => Cart::count(),
-        ]);
-    }
 
     public function search(Request $request): Response
     {

@@ -79,7 +79,7 @@ function DisplayConvos({
                                 </div>
                             </a>
                         </li>
-                    ) : convo.recipient !== null ? (
+                    ) :  (convo.recipient !== null  && convo.recipient != "") ?(
                         <li className="text-blue-500 opacity-60" key={convo.id}>
                             <a
                                 href="javascript:void(0)"

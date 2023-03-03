@@ -49,13 +49,13 @@ function AdminAlbumTable({ albums, csrf }) {
                                     {album.user.name}
                                 </div>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="text-sm text-gray-900">
+                            <td className="px-4 py-4 whitespace-nowrap">
+                                <div className="text-l  text-gray-900">
                                     {album.album_name}
                                 </div>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="text-sm text-gray-900">
+                            <td className="px-2 py-4 whitespace-nowrap">
+                                <div className="text-l text-gray-900">
                                     {album.artist}
                                 </div>
                             </td>

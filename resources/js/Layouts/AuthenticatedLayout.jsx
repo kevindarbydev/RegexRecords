@@ -66,8 +66,8 @@ export default function Authenticated({ auth, header, children, cartCount }) {
                                 </NavLink>
 
                                 <NavLink
-                                    href={route("community.index")}
-                                    active={route().current("community.index")}
+                                    href={route("friends.index")}
+                                    active={route().current("friends.index")}
                                 >
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
                                         Community
@@ -278,8 +278,8 @@ export default function Authenticated({ auth, header, children, cartCount }) {
                             Explore
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href={route("community.index")}
-                            active={route().current("community.index")}
+                            href={route("friends.index")}
+                            active={route().current("friends.index")}
                         >
                             Community
                         </ResponsiveNavLink>

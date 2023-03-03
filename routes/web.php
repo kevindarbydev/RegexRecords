@@ -87,7 +87,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'explore'], function () {
 
 // COMMUNITY
 Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
-    Route::get('/', [CommunityController::class, 'index'])->name('community.index');
     Route::get('/search', [CommunityController::class, 'search'])->name('community.search');
     Route::post('/search', [CommunityController::class, 'searchPost'])->name('community.search.post');
     Route::patch('/search/{user}', [CommunityController::class, 'addFriend'])->name('community.search.add.friend');
@@ -96,6 +95,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
     Route::patch('/friends/update/{friendship}', [FriendController::class, 'acceptRequest'])->name('friends.update');
     Route::patch('/friends/deny/{friendship}', [FriendController::class, 'denyRequest'])->name('friends.deny');
     Route::delete('/friends/delete/{friendship}', [FriendController::class, 'unfriend'])->name('friends.unfriend');
+    Route::get('/friends/{friend}', [FriendController::class, 'viewFriend'])->name('friends.view.friend');
 });
 
 
@@ -108,7 +108,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::get('/orders/order_items', [OrderController::class, 'showOrderItems'])->name('marketplace.orders.order_items');
     Route::post('/orders', [MarketplaceController::class, 'addAlbumToOrder'])->name('marketplace.album.to.order');
 
-    //Order History-----------------------
+    //Order History-----------------------    
     Route::post('/orders/store', [OrderItemController::class, 'store'])->name('order_item.store');
     Route::patch('/orders/{order}', [OrderController::class, 'update'])->name('marketplace.orders.update');
     Route::patch('/orders/{order}', [OrderController::class, 'destroy'])->name('marketplace.orders.destroy');
