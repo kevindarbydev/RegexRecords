@@ -698,7 +698,7 @@ of live search
 -dropdown list
 2. To do until next Scrum:
 - optimize searching by artist
-+ release_title 
++ release_title
 -handle cases of only 1 search term
 3. Need assistance / figure things out:
 -
@@ -738,6 +738,58 @@ of live search
 2. To do until next Scrum:
 - Link Album Details to each album with id
 - interactive search
+3. Need assistance / figure things out:
+
+------------------------------------------------------------------
+3/03/2023 Kevin
+1. Done/not done since last scrum:
+- small changes to admin section
+and messaging
+- logo favicon
+- split live search into 3 different queries,
+artist, album and artist+album
+2. To do until next Scrum:
+- investigate problems on the hosted site
+   - some entities dont delete in admin interface
+   - messages table not loading
+- continue setting up mail service
+(using mailtrap)
+3. Need assistance / figure things out:
+-
+
+3/03/2023 Matthew
+1. Done/not done since last scrum:
+- PayPal checkout implemented
+2. To do until next Scrum:
+- Create orders and order_items after successful checkout
+- Implement next payment API
+3. Need assistance / figure things out:
+
+
+3/03/2023 Chris
+1. Done/not done since last scrum:
+- advanced search finsihed
+2. To do until next Scrum:
+- export files, bug hunting
+3. Need assistance / figure things out:
+- unit testing
+
+3/03/2023 Seena
+1. Done/not done since last scrum:
+- album rating showing on cards (bout to push)
+2. To do until next Scrum:
+- user can view friends' collection & rate it
+- work on landing page
+3. Need assistance / figure things out:
+-
+
+3/03/2023 Nathaniel
+1. Done/not done since last scrum:
+- Contact Seller
+- Tab links and formatting
+2. To do until next Scrum:
+- Link Album Details to each album with id
+- Order Details
 3. Need assistance / figure things out:
 
 
