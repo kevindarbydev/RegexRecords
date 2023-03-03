@@ -79,7 +79,7 @@ function DisplayConvos({
                                 </div>
                             </a>
                         </li>
-                    ) : (
+                    ) : convo.recipient !== null ? (
                         <li className="text-blue-500 opacity-60" key={convo.id}>
                             <a
                                 href="javascript:void(0)"
@@ -89,7 +89,7 @@ function DisplayConvos({
                                 No messages with {convo.recipient}
                             </a>
                         </li>
-                    )
+                    ) : null
                 )}
             </ul>
 
