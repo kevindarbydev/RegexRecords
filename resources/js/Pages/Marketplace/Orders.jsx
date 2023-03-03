@@ -5,7 +5,7 @@ import { useForm, Head } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Orders({ auth, order_items, orders, cartCount }) {
-    const { data, setData, post, processing, reset, errors } = useForm({
+    const { data, setData, post, processing, reset, errors, get } = useForm({
         sort: "",
         order: "",
     });

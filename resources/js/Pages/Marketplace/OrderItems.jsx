@@ -4,18 +4,16 @@ import { useForm, Head } from "@inertiajs/react";
 
 import PrimaryButton from "@/Components/PrimaryButton";
 
-const albumDetails = (e) => {
-    e.preventDefault();
-    post(route("dashboard.wishlists.remove.album"), { onSuccess: () => reset() });
-};
 export default function OrderItems({ auth, order_items, cartCount }) {
+    
+    
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Order History" />
 
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                 <div className="flex justify-center items-center">
-                    Order History
+                    Order Items
                 </div>
                 <div className="flex justify-center items-center">
                     <table className="w-1/2 text-sm text-center text-gray-500 dark:text-gray-400 mx-auto mt-10 bg-white">
