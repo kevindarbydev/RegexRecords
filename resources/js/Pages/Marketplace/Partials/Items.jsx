@@ -17,6 +17,7 @@ export default function Index({
     const { data, setData, post, processing, reset, errors, get } = useForm({
         sort: "",
         album: "",
+        seller: "",
     });
 
     const addtoWishlist = (e) => {
@@ -55,9 +56,9 @@ export default function Index({
                     collections.map((collection) =>
                         albums.map((album) =>
                             collection_album.collection_id == collection.id &&
-                            collection_album.album_id == album.id &&
-                            collection.user_id == user.id &&
-                            current_user.id != user.id ? (
+                                collection_album.album_id == album.id &&
+                                collection.user_id == user.id &&
+                                current_user.id != user.id ? (
                                 <tbody>
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th
@@ -84,10 +85,10 @@ export default function Index({
                                                         className="mb mr-5"
                                                         processing={processing}
                                                         onClick={() => {
-                                                            setData(
-                                                                "album",
-                                                                album.id
-                                                            );
+                                                            setData({
+                                                                'album': album.id,
+                                                                'seller': user.id,
+                                                            })
                                                         }}
                                                     >
                                                         Add to Cart

@@ -28,8 +28,8 @@ function AdminAlbumTable({ albums, csrf }) {
         }
     };
     return (
-        <div className="my-4 text-center flex flex-col">
-            <h3 className="text-lg font-semibold mb-4">Manage Albums</h3>
+        <div className="my-4 text-center">
+            <h3 className="text-lg font-semibold mb-4 ml-64">Manage Albums</h3>
             <table className="w-full whitespace-nowrap">
                 <thead>
                     <tr className="text-left font-medium text-gray-700 bg-gray-100">

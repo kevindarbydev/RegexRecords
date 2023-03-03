@@ -1,7 +1,12 @@
 import React from "react";
 import Album from "../../Dashboard/Partials/Album";
 
-export default function AdvSearchResults({ albums, collections, message }) {
+export default function AdvSearchResults({
+    albums,
+    collections,
+    message,
+    albumsWithRatings,
+}) {
     return (
         <>
             <h1 className="text-4xl m-4 mt-12">Search Results:</h1>
@@ -13,6 +18,7 @@ export default function AdvSearchResults({ albums, collections, message }) {
                             key={album.id}
                             album={album}
                             collections={collections}
+                            albumsWithRatings={albumsWithRatings}
                         />
                     ))}
                 </div>

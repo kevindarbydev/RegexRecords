@@ -14,7 +14,8 @@ export default function Index({
     topPicks,
     selectedSubgenre,
     featureLetter,
-    cartCount
+    cartCount,
+    albumsWithRatings,
 }) {
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
@@ -25,10 +26,15 @@ export default function Index({
             <NewReleases
                 recentAlbums={recentAlbums}
                 collections={collections}
+                albumsWithRatings={albumsWithRatings}
             />
 
             <h1 className="text-4xl m-4">Top Picks in {selectedSubgenre}:</h1>
-            <TopPicks topPicks={topPicks} collections={collections} />
+            <TopPicks
+                topPicks={topPicks}
+                collections={collections}
+                albumsWithRatings={albumsWithRatings}
+            />
 
             <h1 className="text-4xl m-4">
                 Spotlight: "{featureLetter}" Artists
@@ -36,6 +42,7 @@ export default function Index({
             <Spotlight
                 spotlightAlbums={spotlightAlbums}
                 collections={collections}
+                albumsWithRatings={albumsWithRatings}
             />
         </AuthenticatedLayout>
     );

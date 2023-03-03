@@ -12,6 +12,7 @@ export default function ViewAllAlbums({
     perPage,
     collections,
     cartCount,
+    albumsWithRatings,
 }) {
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
@@ -35,6 +36,7 @@ export default function ViewAllAlbums({
                             key={album.id}
                             album={album}
                             collections={collections}
+                            albumsWithRatings={albumsWithRatings}
                         />
                     ))}
                 </div>

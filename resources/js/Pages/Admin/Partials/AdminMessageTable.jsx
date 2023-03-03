@@ -5,7 +5,7 @@ function AdminMessageTable({ messages, csrf }) {
 
     //console.log(messages.isArra)
     console.log("m:" + messages);
-    console.dir(messages.messages);
+    console.dir(messageList);
     
     const handleDelete = async (messageId) => {
         console.log("id: " + messageId);

@@ -73,12 +73,21 @@ class AdvSearchController extends Controller
             $message = "No results found";
         }
 
+        // sending album + ratings to views
+        $albumsWithRatings = [];
+        $i = 0;
+        $allAlbums = Album::all();
+        foreach ($allAlbums as $album) {
+            $albumsWithRatings['name_and_rating'][$i] = [$album->id, $album->averageRatingAllTypes()];
+            $i++;
+        }
 
         return Inertia::render('Explore/AdvSearch', [
             'albums' => $albums,
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
             'message' => $message,
             'cartCount' => Cart::count(),
+            'albumsWithRatings' => $albumsWithRatings
         ]);
     }
 }
