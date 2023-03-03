@@ -53,6 +53,12 @@ function Friends({
 
         console.log("pending friends");
         console.dir(pendingFriendships);
+        console.log("--------------------------");
+        pendingFriendships.forEach((friendship) => {
+        
+            console.dir(friendship);
+        });
+        console.log("--------------------------");
         componentToShow = (
             <div className="flex flex-row flex-wrap m-10">
                 {pendingFriendships.map((friendship) =>
