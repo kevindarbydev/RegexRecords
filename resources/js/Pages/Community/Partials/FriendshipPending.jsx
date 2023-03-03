@@ -14,6 +14,8 @@ dayjs.extend(relativeTime);
 function FriendshipPending({ friendship }) {
     console.log("component loaded successfully");
     console.dir(friendship)
+    console.log("trying friendship.recipient.id = " + friendship.recipient.id);
+    console.log("trying friendship.recipient_id = " + friendship.recipient_id);
     const user = usePage().props.auth.user;
     const { patch } = useForm({});
     const acceptFriendship = (e) => {
@@ -46,7 +48,7 @@ function FriendshipPending({ friendship }) {
                 </p>
                 <div className="flex flex-row">
                     <form onSubmit={acceptFriendship}>
-                        {friendship.recipient.id == user.id ? (
+                        {friendship.recipient_id == user.id ? (
                             <div className="flex flex-row self-center mt-5">
                                 <UserPlusIcon class="w-5 h-5 self-center" />
                                 <PrimaryButton
@@ -61,7 +63,7 @@ function FriendshipPending({ friendship }) {
                         )}
                     </form>
                     <form onSubmit={denyFriendship}>
-                        {friendship.recipient.id == user.id ? (
+                        {friendship.recipient_id == user.id ? (
                             <div className="flex flex-row self-center mt-5">
                                 <PrimaryButton
                                     onClick={notifyDeny}
