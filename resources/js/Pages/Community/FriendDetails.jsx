@@ -1,12 +1,15 @@
 import React from "react";
+import CommunityTabs from "@/Layouts/Tabs/CommunityTabs";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
 
-function FriendDetails({ friend }) {
+function FriendDetails({ friend, cartCount, auth }) {
     return (
-        <>
-            <div>Friend Id: {friend.id}</div>
-            <div>Friend Name: {friend.name}</div>
-            <div>Friend Email: {friend.email}</div>
-        </>
+        <AuthenticatedLayout auth={auth} cartCount={cartCount}>
+            <Head title="Friend Details" />
+            <CommunityTabs />
+            <div>{friend.name}</div>
+        </AuthenticatedLayout>
     );
 }
 

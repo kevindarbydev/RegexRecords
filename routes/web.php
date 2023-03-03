@@ -87,7 +87,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'explore'], function () {
 
 // COMMUNITY
 Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
-    Route::get('/', [CommunityController::class, 'index'])->name('community.index');
     Route::get('/search', [CommunityController::class, 'search'])->name('community.search');
     Route::post('/search', [CommunityController::class, 'searchPost'])->name('community.search.post');
     Route::patch('/search/{user}', [CommunityController::class, 'addFriend'])->name('community.search.add.friend');

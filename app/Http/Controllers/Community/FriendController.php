@@ -66,6 +66,6 @@ class FriendController extends Controller
     {
         error_log($friend);
 
-        return Inertia::render('Community/FriendDetails', ['friend' => $friend]);
+        return Inertia::render('Community/FriendDetails', ['friend' => $friend, 'cartCount' => Cart::count(),]);
     }
 }
