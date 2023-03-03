@@ -109,7 +109,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::post('/orders', [MarketplaceController::class, 'addAlbumToOrder'])->name('marketplace.album.to.order');
 
     //Order History-----------------------    
-    Route::patch('/orders/{order}', [OrderController::class, 'show'])->name('marketplace.orders.show');
     Route::post('/orders/store', [OrderItemController::class, 'store'])->name('order_item.store');
     Route::patch('/orders/{order}', [OrderController::class, 'update'])->name('marketplace.orders.update');
     Route::patch('/orders/{order}', [OrderController::class, 'destroy'])->name('marketplace.orders.destroy');
