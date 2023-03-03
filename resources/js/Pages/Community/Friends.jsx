@@ -56,12 +56,10 @@ function Friends({
         console.dir(pendingFriendships);
         componentToShow = (
             <div className="flex flex-row flex-wrap m-10">
-
                 {pendingFriendships.map((friendship) =>
-                
                     // FIXME: works for now, but will try and set FK relationship in DB and set friendships to cascade delete on user delete
-                    friendship.sender !== null &&
-                    friendship.recipient !== null ? (
+                    friendship.sender == null ||
+                    friendship.recipient == null ? (
                         <FriendshipPending
                             key={friendship.id}
                             friendship={friendship}
