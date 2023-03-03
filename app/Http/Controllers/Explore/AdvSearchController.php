@@ -7,18 +7,14 @@ use App\Models\Album;
 use Inertia\Response;
 use App\Models\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Query\Builder;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class AdvSearchController extends Controller
 {
     public function advSearch(Request $request): Response
     {
-
-
         // if block prevents all albums showing on page load or performing a search on all-empty fields
         if (
             !isset($request->album_name)
@@ -29,11 +25,11 @@ class AdvSearchController extends Controller
             && !isset($request->value)
             && !isset($request->lowYearRange)
             && !isset($request->highYearRange)
+            && !isset($request->lowPriceRange)
+            && !isset($request->highPriceRange)
         ) {
             $albums = [];
         } else {
-
-            //TODO: add year ranges, price ranges, paginaton, make seach results partial conditional on having results or not, change to table view instead of cards
 
             $albums = Album::query()
                 ->when(request('album_name'), function ($q) {
@@ -57,13 +53,16 @@ class AdvSearchController extends Controller
                 ->when((request('lowYearRange') && request('highYearRange')), function ($q) {
                     return $q->whereBetween('year_of_release', [request('lowYearRange'), request('highYearRange')]);
                 })
+                ->when((request('lowPriceRange') && request('highPriceRange')), function ($q) {
+                    return $q->whereBetween('value', [request('lowPriceRange'), request('highPriceRange')]);
+                })
 
                 ->get();
 
             // error_log($albums);
         }
 
-
+        // manages message header based on # of results
         $searchTotal = count($albums);
         $message = "";
         if ($searchTotal >= 2) {
@@ -79,7 +78,6 @@ class AdvSearchController extends Controller
             'albums' => $albums,
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
             'message' => $message,
-            // 'searchTotal' => $searchTotal,
             'cartCount' => Cart::count(),
         ]);
     }

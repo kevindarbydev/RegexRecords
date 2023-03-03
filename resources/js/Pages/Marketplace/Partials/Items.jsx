@@ -14,7 +14,7 @@ export default function Index({
     collection_albums,
     current_user,
 }) {
-    const { data, setData, post, processing, reset, errors } = useForm({
+    const { data, setData, post, processing, reset, errors, get } = useForm({
         sort: "",
         album: "",
     });
@@ -33,7 +33,7 @@ export default function Index({
 
     const contactSeller = (e) => {
         e.preventDefault();
-        post(route("marketplace.contact.seller"), { onSuccess: () => reset() });
+        get(route("messages.index"), { onSuccess: () => reset() });
     };
 
     return (

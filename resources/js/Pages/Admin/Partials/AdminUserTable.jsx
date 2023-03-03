@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import AdminDeleteButton from "./AdminDeleteButton";
+
 function AdminUserTable(props) {
     const [userList, setUserList] = useState(props.users);
     console.log(props.currentUser);
@@ -6,10 +8,12 @@ function AdminUserTable(props) {
     const handleDelete = async (userId) => {
         console.log("id: " + userId);
         console.log("csrf: " + props.csrf);
-
-        if (userId === props.currentUser) {
-            return; //TOAST
-        }
+         if (userId === props.currentUser) {
+             return; //TOAST
+         }
+        if (
+            window.confirm("Are you sure you want to delete this user?")
+        ) {       
         try {
             const response = await fetch(`/admin/users/${userId}`, {
                 method: "DELETE",
@@ -25,8 +29,9 @@ function AdminUserTable(props) {
                 console.log(response);
             }
         } catch (error) {
-            console.error("Error deleting album:", error);
+            console.error("Error deleting user:", error);
         }
+    }
     };
     
     return (
