@@ -125,16 +125,18 @@ function ConvoModal({
                     )}
                 </div>
                 <form onSubmit={handleSubmit}>
-                    <input
-                        className="border border-gray-300 p-2 rounded w-3/4 mb-4 mt-4"
-                        type="text"
-                        placeholder="Send a message..."
-                        value={newMessage}
-                        onChange={handleNewMessageChange}
-                    />
-                    <button className="bg-blue-500 text-white py-2 px-4 rounded ml-4">
-                        Send
-                    </button>
+                    <div className="flex items-center mb-6 mt-4">
+                        <input
+                            className="border border-gray-300 p-2 rounded w-9/12 mr-4"
+                            type="text"
+                            placeholder="Send a message..."
+                            value={newMessage}
+                            onChange={handleNewMessageChange}
+                        />
+                        <button className="bg-blue-500 text-white py-2 px-4 rounded w-3/12">
+                            Send
+                        </button>
+                    </div>
                 </form>
                 <p className="flex justify-evenly">
                     <a href="#" onClick={onClose}>
