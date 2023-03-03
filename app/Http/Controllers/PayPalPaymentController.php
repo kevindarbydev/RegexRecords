@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Album;
+use App\Models\Collection_Album;
+use App\Models\Order;
+use App\Models\Order_Item;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Srmklive\PayPal\Services\ExpressCheckout;
 
 class PayPalPaymentController extends Controller
@@ -54,18 +62,77 @@ class PayPalPaymentController extends Controller
 
     public function paymentCancel()
     {
-        dd('Your payment has been declend. The payment cancelation page goes here!');
+        dd('Your payment has been declined. The payment cancellation page goes here!');
     }
 
-    public function paymentSuccess(Request $request)
+    public function paymentSuccess(Request $request): RedirectResponse
     {
         $paypalModule = new ExpressCheckout();
         $response = $paypalModule->getExpressCheckoutDetails($request->token);
 
-        if (in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
-            dd('Payment was successfull. The payment success page goes here!');
+        $items = [];
+        $i = 0;
+
+        $user = Auth::user();
+
+        foreach (Cart::content() as $item) {
+            $items[$i] = $item;
+            $i++;
         }
 
-        dd('Error occured!');
+        $subtotal = (float)Cart::subtotal();
+        $tax = (float)Cart::tax();
+
+        if ($subtotal < 100) {
+            $shipping = $subtotal / 2;
+        } else {
+            $shipping = 0;
+        }
+
+        $order = new Order();
+        $order->subtotal = $subtotal;
+        $order->tax = $tax;
+        $order->shipping = $shipping;
+        $order->totalPrice = $subtotal + $tax + $shipping;
+        $order->user_id = $user->id;
+
+        $newOrder = $request->user()->orders()->save($order);
+
+        error_log($newOrder);
+
+        for ($j = 0; $j < sizeof($items); $j++) {
+
+            $album = Album::with('user')->where('album_name', $items[$j]->name)->first();
+            $collection_album = Collection_Album::where('album_id', $album->id)->where('for_sale', true)->get();
+
+            foreach ($collection_album as $c) {
+                $collection = DB::table('collections')->where('id', $c->collection_id)->where('user_id', $items[$j]->options['seller'])->first();
+
+                if ($collection == null) {
+                    continue;
+                } else {
+                    $orderItem = new Order_Item();
+                    $orderItem->order_id = $newOrder->id;
+                    $orderItem->quantity = 1;
+                    $orderItem->album_id = $album->id;
+                    $orderItem->price = $items[$j]->price;
+                    $orderItem->user_id = $collection->user_id;
+
+                    $newOrder->order_item()->save($orderItem);
+
+                    Cart::remove($items[$j]->rowId);
+
+                    break;
+                }
+            }
+        }
+        // Cart::clear();
+
+        if (in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
+            return redirect(route('orders.index'));
+        }
+
+
+        return redirect(route('orders.index'));
     }
 }

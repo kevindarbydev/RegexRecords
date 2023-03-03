@@ -73,12 +73,25 @@ class MarketplaceController extends Controller
     public function addToCart(Request $request): RedirectResponse
     {
         error_log("TESTING -- $request->album");
+        error_log("TESTING -- $request->seller");
 
         $album = Album::with('user')->where('id', $request->album)->first();
+        $cAlbum = Collection_Album::where('album_id', $album->id)->where('for_sale', true)->get();
+
+        foreach ($cAlbum as $c) {
+            $collection = Collection::where('id', $c->collection_id)->where('user_id', $request->seller)->first();
+
+            if ($collection == null) {
+                continue;
+            } else {
+                break;
+            }
+        }
 
         error_log($album);
+        error_log($collection);
 
-        Cart::add($album->id, $album->album_name, 1, $album->value, ['imageURL' => $album->cover_image_url]);
+        Cart::add($album->id, $album->album_name, 1, $album->value, ['imageURL' => $album->cover_image_url, 'seller' => $collection->user_id]);
 
         return redirect()->route('marketplace.index');
     }
@@ -106,15 +119,14 @@ class MarketplaceController extends Controller
         ]);
     }
 
-    public function contactSeller(Request $request): Response {
-        
+    public function contactSeller(Request $request): Response
+    {
+
 
         return Inertia::render('Marketplace/ContactSeller', [
             'album' => Album::where('id', $request->album_id)->get(),
             'conversation' => Conversation::where('album_id', $request->album_id)->get(),
 
         ]);
-
     }
-
 }
