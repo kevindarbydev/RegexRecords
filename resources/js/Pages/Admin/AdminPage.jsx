@@ -49,7 +49,7 @@ function AdminPage({ auth, users, albums, messages, currentUser, cartCount }) {
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Admin Interface" />
-            <div className="flex justify-center">
+            <div className="flex justify-center mr-64">
                 <div className="flex flex-col w-full max-w-md">
                     <div className="flex justify-between mb-4 mt-8">
                         <button
