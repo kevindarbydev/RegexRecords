@@ -59,10 +59,5 @@ class WishlistController extends Controller
 
 
     }
-    public function AlbumDetails(Request $request): RedirectResponse {
 
-        $wAlbum = Wishlist_Album::where('id', $request->album_id)->first();
-
-        return redirect(route('marketplace.wishlists.album.details'));
-    }
 }
