@@ -12,6 +12,8 @@ const notifyDeny = () => toast.error("Friend request denied!");
 dayjs.extend(relativeTime);
 
 function FriendshipPending({ friendship }) {   
+    console.log("inside FP component");
+    console.dir(friendship);
     const user = usePage().props.auth.user;
     const { patch } = useForm({});
     const acceptFriendship = (e) => {
