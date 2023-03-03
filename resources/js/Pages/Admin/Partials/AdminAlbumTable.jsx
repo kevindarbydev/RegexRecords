@@ -1,47 +1,50 @@
 import React, { useState } from "react";
+import AdminDeleteButton from "./AdminDeleteButton";
+
 function AdminAlbumTable({ albums, csrf }) {
     const [albumList, setAlbums] = useState(albums);
-   
-    const handleDelete = async (albumId) => {
-        console.log("id: " + albumId);
-        console.log("csrf: " + csrf);
 
-        try {
-            const response = await fetch(`/admin/albums/${albumId}`, {
-                method: "DELETE",
-                headers: {
-                    "X-CSRF-TOKEN": csrf,
-                },
-            });
-            if (response.ok) {
-                console.log(response);
-                // remove the deleted album from the list of albums
-                setAlbums(albumList.filter((album) => album.id !== albumId));
-            } else {
-                console.log(response);
+    const handleDelete = async (itemId) => {
+        console.log("id: " + itemId);
+        console.log("csrf: " + csrf);
+        if (window.confirm("Are you sure you want to delete this album?")) {
+            try {
+                const response = await fetch(`/admin/albums/${itemId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "X-CSRF-TOKEN": csrf,
+                    },
+                });
+                if (response.ok) {
+                    console.log(response);
+                    // remove the deleted album from the list of albums
+                    setAlbums(albumList.filter((album) => album.id !== itemId));
+                } else {
+                    console.log(response);
+                }
+            } catch (error) {
+                console.error("Error deleting album:", error);
             }
-        } catch (error) {
-            console.error("Error deleting album:", error);
         }
     };
     return (
-        <div className="my-4">
-            <h3 className="text-lg font-semibold mb-4 ">Manage Albums</h3>
+        <div className="my-4 text-center flex flex-col">
+            <h3 className="text-lg font-semibold mb-4">Manage Albums</h3>
             <table className="w-full whitespace-nowrap">
                 <thead>
                     <tr className="text-left font-medium text-gray-700 bg-gray-100">
-                        <th className="px-6 py-4">Uploaded By</th>
+                        <th className="px-4 py-4">Uploaded By</th>
                         <th className="px-6 py-4">Album Name</th>
                         <th className="px-6 py-4">Artist Name</th>
-                        <th className="px-6 py-4">Genre</th>
-                        <th className="px-8 py-4">Image</th>
-                        <th className="px-6 py-4">Actions</th>
+                        <th className="px-4 py-4">Genre</th>
+                        <th className="px-12 py-4">Image</th>
+                        <th className="px-4 py-4">Actions</th>
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                     {albumList.map((album) => (
                         <tr key={album.id}>
-                            <td className="px-6 py-4 whitespace-nowrap">
+                            <td className="px-4 py-4 whitespace-nowrap">
                                 <div className="text-sm text-gray-900">
                                     {album.user.name}
                                 </div>
@@ -56,8 +59,8 @@ function AdminAlbumTable({ albums, csrf }) {
                                     {album.artist}
                                 </div>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="text-sm text-gray-900">
+                            <td className="px-4 py-4 whitespace-nowrap">
+                                <div className="text-sm mr-4  text-gray-900">
                                     {album.genre}
                                 </div>
                             </td>
@@ -71,6 +74,7 @@ function AdminAlbumTable({ albums, csrf }) {
                             <td className="px-6 py-4 whitespace-nowrap">
                                 <button
                                     type="submit"
+                                    className="ml-1"
                                     onClick={() => handleDelete(album.id)}
                                 >
                                     <svg
@@ -89,6 +93,7 @@ function AdminAlbumTable({ albums, csrf }) {
                                     </svg>
                                 </button>
                             </td>
+                            {/* <AdminDeleteButton onDelete={handleDelete} itemId={album.id}/> */}
                         </tr>
                     ))}
                 </tbody>
@@ -97,3 +102,8 @@ function AdminAlbumTable({ albums, csrf }) {
     );
 }
 export default AdminAlbumTable;
+/*
+
+
+ 
+*/
