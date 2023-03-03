@@ -1,7 +1,11 @@
 import React from "react";
 import Album from "../../Dashboard/Partials/Album";
 
-export default function NewReleases({ recentAlbums, collections }) {
+export default function NewReleases({
+    recentAlbums,
+    collections,
+    albumsWithRatings,
+}) {
     return (
         <>
             <div className="p-4 sm:p-6 lg:p-8 ml-10">
@@ -11,6 +15,7 @@ export default function NewReleases({ recentAlbums, collections }) {
                             key={album.id}
                             album={album}
                             collections={collections}
+                            albumsWithRatings={albumsWithRatings}
                         />
                     ))}
                 </div>

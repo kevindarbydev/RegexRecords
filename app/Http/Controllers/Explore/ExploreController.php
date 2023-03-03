@@ -143,6 +143,15 @@ class ExploreController extends Controller
 
         // error_log($topPicks);
 
+        // sending album + ratings to views
+        $albumsWithRatings = [];
+        $i = 0;
+        $allAlbums = Album::all();
+        foreach ($allAlbums as $album) {
+            $albumsWithRatings['name_and_rating'][$i] = [$album->album_name, $album->averageRatingAllTypes()];
+            $i++;
+        }
+
         return Inertia::render(
             'Explore/Index',
             [
@@ -153,6 +162,7 @@ class ExploreController extends Controller
                 'spotlightAlbums' => $spotlightAlbums,
                 'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
                 'cartCount' => Cart::count(),
+                'albumsWithRatings' => $albumsWithRatings
             ]
         );
     }
@@ -161,12 +171,21 @@ class ExploreController extends Controller
     {
         $albums = Album::all();
 
+        // sending album + ratings to views
+        $albumsWithRatings = [];
+        $i = 0;
+        $allAlbums = Album::all();
+        foreach ($allAlbums as $album) {
+            $albumsWithRatings['name_and_rating'][$i] = [$album->album_name, $album->averageRatingAllTypes()];
+            $i++;
+        }
+
         return Inertia::render('Explore/ViewAllAlbums', [
             'totalAlbums' => count($albums),
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
             'albums' => Album::paginate(4),
             'cartCount' => Cart::count(),
-
+            'albumsWithRatings' => $albumsWithRatings,
         ]);
     }
 }

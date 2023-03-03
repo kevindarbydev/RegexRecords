@@ -12,6 +12,7 @@ export default function AdvSearch({
     collections,
     cartCount,
     message,
+    albumsWithRatings,
 }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         album_name: "",
