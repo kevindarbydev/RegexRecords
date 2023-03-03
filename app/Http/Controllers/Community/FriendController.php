@@ -60,4 +60,12 @@ class FriendController extends Controller
 
         return redirect(route('friends.index'));
     }
+
+    // view friend
+    public function viewFriend(User $friend): Response
+    {
+        error_log($friend);
+
+        return Inertia::render('Community/FriendDetails', ['friend' => $friend]);
+    }
 }
