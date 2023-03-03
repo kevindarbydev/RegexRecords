@@ -25,13 +25,21 @@ class AlbumController extends Controller
     public function index(): Response
 
     {
+        $albumsWithRatings = [];
+        $i = 0;
+        $allAlbums = Album::all();
+        foreach ($allAlbums as $album) {
+            $albumsWithRatings['name_and_rating'][$i] = [$album->album_name, $album->averageRatingAllTypes()];
+            $i++;
+        }
+
         return Inertia::render('Dashboard/MyAlbums', [
 
             // only returning user albums
             'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
             'cartCount' => Cart::count(),
-
+            'albumsWithRatings' => $albumsWithRatings,
         ]);
     }
 
@@ -98,7 +106,7 @@ class AlbumController extends Controller
                 //save these fields as whatever the API returns
                 $validated['artist'] = $artistName;
                 $validated['album_name'] = $albumName;
-                
+
 
                 //perform 2nd API call with discogs_album_id
                 $response2 = Http::get("https://api.discogs.com/releases/{$item['id']}");

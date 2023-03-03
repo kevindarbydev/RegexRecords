@@ -4,10 +4,11 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import Dropdown from "@/Components/Dropdown";
 import { useForm, Head } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
+import { StarIcon } from "@heroicons/react/24/solid";
 
 dayjs.extend(relativeTime);
 
-export default function Album({ album, collections }) {
+export default function Album({ album, collections, albumsWithRatings }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         album_id: album.id,
         collection_name: "",
@@ -43,10 +44,23 @@ export default function Album({ album, collections }) {
                 )}
             </a>
             <div className="flex flex-col w-64 justify-between p-4 leading-normal">
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    <a href={route("dashboard.albums.show", album.id)}>
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white flex flex-row">
+                    <a
+                        className="flex-1"
+                        href={route("dashboard.albums.show", album.id)}
+                    >
                         {album.album_name}
                     </a>
+                    <h3 className="text-gray-500 self-center">
+                        <div className="flex flex-row">
+                            <StarIcon className="w-4 h-4 self-center" />
+                            <span className=" text-sm self-center">
+                                {albumsWithRatings.name_and_rating.map((a) =>
+                                    album.album_name == a[0] ? a[1] : <></>
+                                )}
+                            </span>
+                        </div>
+                    </h3>
                 </h5>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     Artist: {album.artist}
