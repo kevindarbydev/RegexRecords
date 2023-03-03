@@ -30,19 +30,11 @@ function Friends({
     if (currentComp === "friends") {
         componentToShow = (
             <div className="flex flex-row flex-wrap m-10">
-                {currentFriendships.map((friendship) =>
-                    //  FIXME: works for now, but will try and set FK relationship in DB and set friendships to cascade delete on user delete
-                    friendship.sender == null ||
-                    friendship.recipient == null ? (
-                        <></>
-                    ) : (
-                        <Friendship
-                            key={friendship.id}
-                            friendship={friendship}
-                            user={current_user}
-                        />
-                    )
-                )}
+                <Friendship
+                    key={friendship.id}
+                    friendship={friendship}
+                    user={current_user}
+                />
             </div>
         );
     } else if (currentComp === "pending") {
@@ -55,24 +47,15 @@ function Friends({
         console.dir(pendingFriendships);
         console.log("--------------------------");
         pendingFriendships.forEach((friendship) => {
-        
             console.dir(friendship);
         });
         console.log("--------------------------");
         componentToShow = (
             <div className="flex flex-row flex-wrap m-10">
-                {pendingFriendships.map((friendship) =>
-                    // FIXME: works for now, but will try and set FK relationship in DB and set friendships to cascade delete on user delete
-                    friendship.sender == null ||
-                    friendship.recipient == null ? (
-                        <></>
-                    ) : (
-                        <FriendshipPending
-                            key={friendship.id}
-                            friendship={friendship}
-                        />
-                    )
-                )}
+                <FriendshipPending
+                    key={friendship.id}
+                    friendship={friendship}
+                />
             </div>
         );
         console.log("if it didnt crash, problem found");
