@@ -36,7 +36,7 @@ function AdminUserTable(props) {
     
     return (
         <div className="text-center">
-            <h3 className="text-lg font-semibold mb-4">Manage Albums</h3>
+            <h3 className="text-lg font-semibold mb-4">Manage Users</h3>
             <table className="table-auto w-full text-left divide-y divide-gray-200 shadow overflow-hidden sm:rounded-lg">
                 <thead className="bg-gray-50">
                     <tr>
