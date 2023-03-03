@@ -9,14 +9,19 @@ const search = makeRequestCreator("/proxy");
 
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
-export default function Index({ auth, albums, collections, cartCount }) {
-    //TODO: fix ->dropdown list still shows after album is added, either empty thin white div or the entire list still shows 
+export default function Index({
+    auth,
+    albums,
+    collections,
+    cartCount,
+    albumsWithRatings,
+}) {
+    //TODO: fix ->dropdown list still shows after album is added, either empty thin white div or the entire list still shows
     const { data, setData, post, processing, reset, errors } = useForm({
         album_name: "",
         artist: "",
         value: "",
     });
-
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -48,7 +53,7 @@ export default function Index({ auth, albums, collections, cartCount }) {
     }, [searchQuery]);
 
     const handleSearchQueryChange = (e) => {
-        console.log("inside")
+        console.log("inside");
         const albumName = data.album_name || "";
         const artist = data.artist || "";
 
@@ -76,12 +81,12 @@ export default function Index({ auth, albums, collections, cartCount }) {
         const [artist, album_name] = result.title.split(" - ");
         console.log(artist);
         console.log(album_name);
-      
+
         console.log("Before setData: ", data.album_name);
         setData("album_name", album_name);
         console.log("After setData: ", data.album_name);
         setData("artist", artist);
-   
+
         setShowDropdown(false);
     };
     //calling reduce on searchResults directly was crashing the page
@@ -174,6 +179,7 @@ export default function Index({ auth, albums, collections, cartCount }) {
                                 key={album.id}
                                 album={album}
                                 collections={collections}
+                                albumsWithRatings={albumsWithRatings}
                             />
                         ))}
                     </div>
