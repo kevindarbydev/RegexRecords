@@ -29,7 +29,7 @@ class AlbumController extends Controller
         $i = 0;
         $allAlbums = Album::all();
         foreach ($allAlbums as $album) {
-            $albumsWithRatings['name_and_rating'][$i] = [$album->album_name, $album->averageRatingAllTypes()];
+            $albumsWithRatings['name_and_rating'][$i] = [$album->id, $album->averageRatingAllTypes()];
             $i++;
         }
 

@@ -53,12 +53,18 @@ export default function Album({ album, collections, albumsWithRatings }) {
                     </a>
                     <h3 className="text-gray-500 self-center">
                         <div className="flex flex-row">
-                            <StarIcon className="w-4 h-4 self-center" />
-                            <span className=" text-sm self-center">
-                                {albumsWithRatings.name_and_rating.map((a) =>
-                                    album.album_name == a[0] ? a[1] : <></>
-                                )}
-                            </span>
+                            {albumsWithRatings.name_and_rating.map((a) =>
+                                album.id == a[0] && a[1] != null ? (
+                                    <>
+                                        <StarIcon className="w-4 h-4 self-center" />
+                                        <span className=" text-sm self-center">
+                                            {a[1]}
+                                        </span>
+                                    </>
+                                ) : (
+                                    <></>
+                                )
+                            )}
                         </div>
                     </h3>
                 </h5>
