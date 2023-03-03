@@ -29,7 +29,7 @@ function Friends({
     let componentToShow;
     if (currentComp === "friends") {
         componentToShow = (
-            <div className="flex flex-row flex-wrap m-10">
+            <div className="flex flex-col md:flex-wrap m-10 h-screen">
                 {currentFriendships.map((friendship) =>
                     //  FIXME: works for now, but will try and set FK relationship in DB and set friendships to cascade delete on user delete
                     friendship.sender == null ||
@@ -47,7 +47,7 @@ function Friends({
         );
     } else if (currentComp === "pending") {
         componentToShow = (
-            <div className="flex flex-row flex-wrap m-10">
+            <div className="flex flex-col lg:flex-wrap m-10 h-screen">
                 {pendingFriendships.map((friendship) =>
                     //  FIXME: works for now, but will try and set FK relationship in DB and set friendships to cascade delete on user delete
                     friendship.sender == null ||
