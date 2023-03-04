@@ -13,9 +13,11 @@ export default function AlbumDetails({
     cartCount,
     avgRating,
     allRaters,
+    forSaleCount,
 }) {
     const subgenres = album.subgenres;
     const price = album.value;
+    
 
     const { data, setData, patch } = useForm({
         rating: "",
@@ -88,6 +90,11 @@ export default function AlbumDetails({
                                     <p className="text-lg font-medium">
                                         No price data found
                                     </p>
+                                )}
+                                {forSaleCount > 0 && (
+                                    <div className="block text-lg">
+                                        {forSaleCount} available on the marketplace
+                                    </div>
                                 )}
                             </div>
                         </div>
