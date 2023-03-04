@@ -166,13 +166,16 @@ class AlbumController extends Controller
         $album = Album::with('tracklist')->find($album->id);
         $tracklistId = $album->tracklist->id;
         $tracks = Track::where('tracklist_id', $tracklistId)->get();
-
+        $forSaleCount = Collection_Album::where('album_id', $album->id)
+            ->where('for_sale', 1)
+            ->count();
         return Inertia::render('Dashboard/AlbumDetails', [
             'album' => $album,
             'tracks' => $tracks,
             'cartCount' => Cart::count(),
             'avgRating' => $avgRating,
             'allRaters' => $allRaters,
+            'forSaleCount' => $forSaleCount,
         ]);
     }
 
