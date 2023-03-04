@@ -80,8 +80,6 @@ body {
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    /* max-width: 80%;
-    min-width: 40%; */
 }
 
 .advSearch-left {
@@ -99,4 +97,17 @@ body {
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
+}
+
+.carousel-container {
+    position: relative;
+}
+
+.text-on-image {
+    position: absolute;
+    left: 5%;
+    top: 3%;
+    background-color: rgba(182, 182, 182, 0.3);
+    opacity: 0.8;
+    width: 50%;
 }
