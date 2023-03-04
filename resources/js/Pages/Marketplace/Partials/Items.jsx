@@ -34,7 +34,7 @@ export default function Index({
 
     const contactSeller = (e) => {
         e.preventDefault();
-        get(route("marketplace.contact.seller"), { onSuccess: () => reset() });
+        get(route("messages.create"), { onSuccess: () => reset() });
     };
 
     return (
@@ -140,8 +140,8 @@ export default function Index({
                                                                 }
                                                                 onClick={() => {
                                                                     setData(
-                                                                        "album",
-                                                                        album.id
+                                                                        "userID",
+                                                                        user.id
                                                                     );
                                                                 }}
                                                             >

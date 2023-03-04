@@ -22,6 +22,7 @@
         "multicaret/laravel-acquaintances": "^3.5",
         "sendgrid/sendgrid": "^8.0",
         "srmklive/paypal": "~1.0",
+        "stripe/stripe-php": "^10.8",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
