@@ -119,6 +119,11 @@ class MarketplaceController extends Controller
         ]);
     }
 
+    public function removeFromCart(Request $request)
+    {
+        Cart::remove($request->rowId);
+    }
+
     public function contactSeller(Request $request): Response
     {
 

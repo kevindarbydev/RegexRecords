@@ -7,6 +7,7 @@ use App\Models\Order_Item;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -17,7 +18,7 @@ class OrderController extends Controller
     public function index(): Response
     {
         return Inertia::render('Marketplace/Orders', [
-            'orders' => Order::with('order_item', 'user')->latest()->get(),
+            'orders' => Order::with('order_item', 'user')->where('user_id', Auth::user()->id)->latest()->get(),
             'cartCount' => Cart::count(),
         ]);
     }
@@ -64,14 +65,13 @@ class OrderController extends Controller
         return redirect(route('orders.index'));
     }
 
-    public function showOrderItems(Request $request): Response {
-        
+    public function showOrderItems(Request $request): Response
+    {
+
         return Inertia::render('Marketplace/OrderItems', [
             //return order items
-            'order_items' => Order_Item::with('order','album')->where('order_id', $request->order)->latest()->get(),
+            'order_items' => Order_Item::with('order', 'album')->where('order_id', $request->order)->latest()->get(),
             'cartCount' => Cart::count(),
         ]);
-
     }
-
 }

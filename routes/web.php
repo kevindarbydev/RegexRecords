@@ -125,6 +125,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     // ============== TESTING CART PACKAGE ================
     Route::get('/cart', [MarketplaceController::class, 'viewCart'])->name('marketplace.cart');
     Route::post('/testing/package', [MarketplaceController::class, 'addToCart'])->name('marketplace.add.to.cart');
+    Route::post('/cart/remove', [MarketplaceController::class, 'removeFromCart'])->name('cart.remove');
 });
 
 // PROFILE
@@ -159,8 +160,11 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'messages'], function
     Route::delete('/{threadId}', [MessagesController::class, 'delete'])->name('messages.delete');
 });
 
-// PAYPAL
+// STRIPE
+Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe.pay.get');
+Route::post('stripe', ['App\Http\Controllers\StripeController', 'stripePost'])->name('stripe.pay.post');
 
+// PAYPAL
 Route::get('paypal/make-payment', 'App\Http\Controllers\PayPalPaymentController@handlePayment')->name('paypal.make.payment');
 Route::get('paypal/cancel-payment', 'App\Http\Controllers\PayPalPaymentController@paymentCancel')->name('paypal.cancel.payment');
 Route::get('paypal/payment-success', 'App\Http\Controllers\PayPalPaymentController@paymentSuccess')->name('paypal.success.payment');

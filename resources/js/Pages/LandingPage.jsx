@@ -1,5 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
+import DashCarousel from "./Dashboard/Partials/DashCarousel";
 
 export default function LandingPage(props) {
     return (
@@ -13,16 +14,17 @@ export default function LandingPage(props) {
             }
             cartCount={props.cartCount}
         >
-            <Head title="Landing" />
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="flex flex-col items-center">
-                          <h3>You're logged in!</h3>
+            <Head title="Home" />
+            <div className="py-6">
+                <div className="max-w-6xl mx-auto sm:px-5 lg:px-7">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg dark:bg-black">
+                        <div className="p-4 text-lg text-gray-900 dark:text-white">
+                            Welcome to Regex Records, {props.auth.user.name}!
                         </div>
                     </div>
                 </div>
             </div>
+            <DashCarousel />
         </AuthenticatedLayout>
     );
 }

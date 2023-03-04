@@ -9,7 +9,7 @@ export default function Orders({ auth, orders, cartCount }) {
         sort: "",
         order: "",
     });
-    
+
     const orderDetails = (e) => {
         e.preventDefault();
         get(route("marketplace.orders.order_items"), {
@@ -52,10 +52,10 @@ export default function Orders({ auth, orders, cartCount }) {
                             <tbody>
                                 <tr>
                                     <td>{order.created_at}</td>
-                                    <td>{order.subtotal}</td>
-                                    <td>{order.shipping}</td>
-                                    <td>{order.tax}</td>
-                                    <td>{order.totalPrice}</td>
+                                    <td>${(order.subtotal).toFixed(2)}</td>
+                                    <td>${(order.shipping).toFixed(2)}</td>
+                                    <td>${(order.tax).toFixed(2)}</td>
+                                    <td>${(order.totalPrice).toFixed(2)}</td>
                                     <td>
                                         <form onSubmit={orderDetails}>
                                             <PrimaryButton
