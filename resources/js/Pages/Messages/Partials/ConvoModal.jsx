@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function ConvoModal({
+    auth,
     conversation,
     convoId,
     onClose,
@@ -49,7 +50,19 @@ function ConvoModal({
                 });
         }
     };
-
+    console.dir(conversation)
+    let idForEmail;
+    let recipientName =
+        conversation.messages.sender === auth.user.name
+            ? conversation.messages.recipient
+            : conversation.messages.sender;
+    if (conversation.messages.recipient === recipientName) {
+        idForEmail = conversation.messages.recipientId;
+    } else if (conversation.messages.sender === recipientName) {
+        idForEmail = conversation.messages.senderId;
+    }
+    console.log("the other pserson is : " + recipientName + "," + idForEmail);
+  
     const handleSubmit = (e) => {
         e.preventDefault();
         if (newMessage.trim() === "") {
@@ -60,6 +73,7 @@ function ConvoModal({
             .post(`/messages/${convoId}`, {
                 message: newMessage,
                 threadId: convoId,
+                idForEmail: idForEmail,
             })
             .then((data) => {
                 const updatedConversation = {

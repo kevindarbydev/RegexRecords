@@ -96,6 +96,7 @@ function DisplayConvos({
             {/* Render the conversation modal */}
             {selectedConversation && (
                 <ConvoModal
+                auth={auth}
                     conversation={selectedConversation}
                     convoId={selectedConversation.id}
                     onClose={handleModalClose}
