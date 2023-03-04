@@ -15,11 +15,11 @@ export default function LandingPage(props) {
             cartCount={props.cartCount}
         >
             <Head title="Home" />
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            Some kind of short welcome
+            <div className="py-6">
+                <div className="max-w-6xl mx-auto sm:px-5 lg:px-7">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg dark:bg-black">
+                        <div className="p-4 text-lg text-gray-900 dark:text-white">
+                            Welcome to Regex Records, {props.auth.user.name}!
                         </div>
                     </div>
                 </div>

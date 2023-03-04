@@ -99,15 +99,18 @@ body {
     justify-content: center;
 }
 
-.carousel-container {
-    position: relative;
-}
-
 .text-on-image {
     position: absolute;
-    left: 5%;
+    left: 2%;
     top: 3%;
     background-color: rgba(182, 182, 182, 0.3);
     opacity: 0.8;
-    width: 50%;
+    width: 60%;
+}
+
+@layer base {
+    .custom-font-outline {
+        text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000,
+            -0.5px 0.5px 0 #000, 1px 1px 0 #000;
+    }
 }
