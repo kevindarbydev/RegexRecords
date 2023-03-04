@@ -17,11 +17,17 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
         expYear: "",
         cvv: "",
         shipping: "",
+        rowId: "",
     });
 
     const checkout = (e) => {
         e.preventDefault();
         post(route('stripe.pay.post'), { onSuccess: () => reset() });
+    }
+
+    const remove = (e) => {
+        e.preventDefault();
+        post(route('cart.remove'), { onSuccess: () => reset() });
     }
 
     if (subtotal < 100) {
@@ -33,7 +39,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
 
     var total = subtotal + tax + shipping;
 
-    console.log(cartContents);
+    // console.log(cartContents);
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Cart" />
@@ -45,6 +51,9 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
                         </th>
                         <th scope="col" className="px-6 py-3 text-left">
                             Price
+                        </th>
+                        <th scope="col">
+
                         </th>
                     </thead>
                     {cartContents.map((cartItem) =>
@@ -63,6 +72,32 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
                                 </th>
                                 <td className="px-6 py-4">
                                     ${cartItem.price}
+                                </td>
+                                <td className="px-6 py-4">
+                                    <Dropdown>
+                                        <Dropdown.Trigger>
+                                            <button onClick={() => {
+                                                setData('rowId', cartItem.rowId)
+                                            }}>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="h-4 w-4 text-gray-400"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                </svg>
+                                            </button>
+                                        </Dropdown.Trigger>
+                                        <Dropdown.Content>
+                                            <button
+                                                onClick={remove}
+                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                            >
+                                                Remove from Cart
+                                            </button>
+                                        </Dropdown.Content>
+                                    </Dropdown>
                                 </td>
                             </tr>
                         </tbody>
@@ -120,7 +155,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
                     </tbody>
                 </table>
             </div>
-            {data.checkout == "regular" ?
+            {data.checkout == "regular" && total > 0 ?
                 <div style={{ marginLeft: '-40em', marginRight: '10em' }} className="grid grid-cols-1 place-items-end">
                     <form className="text-left w-1/4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-6" onSubmit={checkout}>
                         <div className="mt-3 mb-3 ml-2">

@@ -125,6 +125,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     // ============== TESTING CART PACKAGE ================
     Route::get('/cart', [MarketplaceController::class, 'viewCart'])->name('marketplace.cart');
     Route::post('/testing/package', [MarketplaceController::class, 'addToCart'])->name('marketplace.add.to.cart');
+    Route::post('/cart/remove', [MarketplaceController::class, 'removeFromCart'])->name('cart.remove');
 });
 
 // PROFILE
