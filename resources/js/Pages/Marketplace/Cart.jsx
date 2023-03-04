@@ -31,6 +31,8 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
         var shipping = 0
     }
 
+    var total = subtotal + tax + shipping;
+
     console.log(cartContents);
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
@@ -93,11 +95,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
                             <hr />
                         </tr>
                         <tr>
-                            {subtotal < 100 && subtotal > 0 ?
-                                <td>Total: $ {(subtotal + shipping + tax).toFixed(2)}</td>
-                                :
-                                <td>Total: $ {(subtotal + tax).toFixed(2)}</td>
-                            }
+                            <td>Total: ${total.toFixed(2)}</td>
                         </tr>
                         <tr>
                             <hr className="mb-3" />
@@ -183,7 +181,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
                             <PrimaryButton processing={processing} className="ml-2 mb-3" onClick={() => {
                                 setData('shipping', shipping);
                             }}>
-                                Pay Now
+                                Pay ${total.toFixed(2)}
                             </PrimaryButton>
                         </div>
                     </form>
