@@ -159,8 +159,11 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'messages'], function
     Route::delete('/{threadId}', [MessagesController::class, 'delete'])->name('messages.delete');
 });
 
-// PAYPAL
+// STRIPE
+Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe.pay.get');
+Route::post('stripe', ['App\Http\Controllers\StripeController', 'stripePost'])->name('stripe.pay.post');
 
+// PAYPAL
 Route::get('paypal/make-payment', 'App\Http\Controllers\PayPalPaymentController@handlePayment')->name('paypal.make.payment');
 Route::get('paypal/cancel-payment', 'App\Http\Controllers\PayPalPaymentController@paymentCancel')->name('paypal.cancel.payment');
 Route::get('paypal/payment-success', 'App\Http\Controllers\PayPalPaymentController@paymentSuccess')->name('paypal.success.payment');
