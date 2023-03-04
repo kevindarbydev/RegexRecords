@@ -10,7 +10,9 @@ import toast, { Toaster } from "react-hot-toast";
 
 const notify = () => toast.success("Logging in...");
 
-export default function Login({ status, canResetPassword }) {
+const notify1 = () => toast.success("Registration successful! Please log in");
+
+export default function Login({ status, canResetPassword, registerSuccess }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
@@ -48,6 +50,11 @@ export default function Login({ status, canResetPassword }) {
                 </div>
             )}
 
+            {registerSuccess && (
+                <div className="mb-4 font-medium text-sm text-green-600">
+                    {registerSuccess}
+                </div>
+            )}
             <form onSubmit={submit}>
                 <div>
                     <InputLabel forInput="email" value="Email" />

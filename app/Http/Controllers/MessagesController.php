@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Conversation;
 use App\Models\User;
+use App\Mail\NewMessage;
 use Carbon\Carbon;
 use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Thread;
@@ -12,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -51,6 +53,8 @@ class MessagesController extends Controller
                     'messages' => $messages,
                     'sender' => $sender->name,
                     'recipient' => $recipient->name,
+                    'senderId' => $sender->id,
+                    'recipientId' => $recipient->id,
                 ];
             }
             error_log("Found a thread with a user that has been deleted --- continuing.");
@@ -134,12 +138,16 @@ class MessagesController extends Controller
     {
         $message = $request->input('message');
         $threadId = $request->input('threadId');
-        
+        $notifyUser = $request->input('idForEmail');
+        error_log("Found id: " . $notifyUser);
+        $user = User::findOrFail($notifyUser);
+         error_log("Found user: " . $user->name);
         $newMsg = Message::create([
             'thread_id' => $threadId,
             'user_id' => Auth::id(),
             'body' => $message,
-        ]);   
+        ]);
+        Mail::to($user->email)->send(new NewMessage($user));
         return $newMsg;
     }
 
