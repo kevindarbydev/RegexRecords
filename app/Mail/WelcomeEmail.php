@@ -24,8 +24,8 @@ class WelcomeEmail extends Mailable
     }
     public function build()
     {
-        return $this->from('regexrecords@gmail.com', 'Regex records')
-        ->subject('Welcome to our website')
+        return $this->from('regexrecords@gmail.com', 'Regex Records')
+        ->subject('Welcome to our Website')
         ->view('emails.welcome', ['user' => $this->user]);
 
     }

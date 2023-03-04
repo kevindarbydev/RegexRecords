@@ -15,6 +15,7 @@ export default function AlbumDetails({
     allRaters,
 }) {
     const subgenres = album.subgenres;
+    const price = album.value;
 
     const { data, setData, patch } = useForm({
         rating: "",
@@ -28,7 +29,7 @@ export default function AlbumDetails({
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title={album.album_name} />
-            <div className="flex flex-row mt-6">
+            <div className="flex flex-col md:flex-row mt-6">
                 <div className="p-6 rounded-lg shadow-lg w-full mx-auto md:w-3/4">
                     <div className="flex items-center mb-8">
                         <img
@@ -38,7 +39,7 @@ export default function AlbumDetails({
                         />
                         {album && album.album_name && album.artist && (
                             <div>
-                                <div className="flex flex-row">
+                                <div className="flex flex-col md:flex-row">
                                     <h2 className="text-3xl font-bold">
                                         {album.album_name}
                                     </h2>
@@ -77,8 +78,8 @@ export default function AlbumDetails({
                                 )}
                             </div>
                         )}
-                        <div className="flex-1 flex justify-end mr-12">
-                            <div>
+                        <div className="flex-1 flex justify-end mr-64">
+                            <div className="hidden md:block">
                                 {album.value !== 0 ? (
                                     <p className="text-lg font-medium">
                                         Value: ${album.value}
@@ -92,6 +93,18 @@ export default function AlbumDetails({
                         </div>
                     </div>
                     <div>
+                        <div className="block mb-2 md:hidden">
+                            {" "}
+                            {album.value !== 0 ? (
+                                <p className="text-lg font-medium">
+                                    Value: ${price}
+                                </p>
+                            ) : (
+                                <p className="text-lg font-medium">
+                                    No price data found
+                                </p>
+                            )}
+                        </div>
                         <h4 className="text-lg font-medium mb-4">Tracklist</h4>
                         <table className="w-3/4 table border-collapse">
                             <thead>
