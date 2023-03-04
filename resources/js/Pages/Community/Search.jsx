@@ -11,14 +11,20 @@ export default function Index({ auth, users, cartCount }) {
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Search" />
-            <CommunityTabs />
+            <div class="flex flex-col h-screen justify-between">
+                <CommunityTabs />
 
-            <div className="flex flex-row flex-wrap m-10">
-                {users.data.map((user) => (
-                    <SearchedUser key={user.id} user={user} />
-                ))}
+                <main class="mb-auto">
+                    <div className="flex flex-col md:flex-wrap m-4 h-[30rem]">
+                        {users.data.map((user) => (
+                            <SearchedUser key={user.id} user={user} />
+                        ))}
+                    </div>
+                </main>
+                <footer class="mb-10">
+                    <Pagination links={users.links} />
+                </footer>
             </div>
-            <Pagination links={users.links} />
         </AuthenticatedLayout>
     );
 }

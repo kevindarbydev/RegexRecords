@@ -1,17 +1,14 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import Wishlist from "@/Pages/Dashboard/Partials/Wishlist";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
-import AlbumDetails from "./AlbumDetails";
 
-export default function Index({ auth, wishlist_albums, cartCount }) {
-    const { data, setData, post, processing, reset, errors, get, patch } =
+export default function Index({ auth, wishlist_albums, cartCount, album }) {
+    const { setData, processing, reset, get, patch } =
         useForm({
             list_name: "",
             album_id: "",
-            album: "",
         });
 
     const addAlbums = (e) => {
@@ -21,12 +18,6 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
     const removefromWishlist = (e) => {
         e.preventDefault();
         patch(route("dashboard.wishlists.remove.album"), {
-            onSuccess: () => reset(),
-        });
-    };
-    const showAlbumDetails = (e) => {
-        e.preventDefault();
-        patch(route("dashboard.albums.show"), {
             onSuccess: () => reset(),
         });
     };
@@ -83,23 +74,25 @@ export default function Index({ auth, wishlist_albums, cartCount }) {
                                                 className="mt-2"
                                                 processing={processing}
                                                 onClick={() => {
-                                                    setData("album_id", item.id);
+                                                    setData(
+                                                        "album_id",
+                                                        item.id
+                                                    );
                                                 }}
                                             >
                                                 Remove
                                             </PrimaryButton>
                                         </form>
-                                        <form onSubmit={showAlbumDetails}>
-                                            <PrimaryButton
-                                                className="mt-2"
-                                                processing={processing}
-                                                onClick={() => {
-                                                    setData("album", item.album.id);
-                                                }}
-                                            >
+                                        <a
+                                            href={route(
+                                                "dashboard.albums.show",
+                                                { album: item.album.id }
+                                            )}
+                                        >
+                                            <PrimaryButton className="mt-2">
                                                 Details
                                             </PrimaryButton>
-                                        </form>
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>

@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Community;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\User;
-use Error;
+use App\Models\Collection;
+use App\Models\Collection_Album;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Multicaret\Acquaintances\Models\Friendship;
 
@@ -64,8 +64,26 @@ class FriendController extends Controller
     // view friend
     public function viewFriend(User $friend): Response
     {
-        error_log($friend);
+        $user = Auth()->user();
 
-        return Inertia::render('Community/FriendDetails', ['friend' => $friend, 'cartCount' => Cart::count(),]);
+        $friendCollections = Collection::where('user_id', $friend->id)->get();
+        $ids = [];
+        $i = 0;
+        foreach ($friendCollections as $collection) {
+            $ids[$i] = [$collection->id];
+            $i++;
+        }
+        $friendsCollectionsWithAlbums = Collection_Album::with('collection', 'album')->whereIn('collection_id', $ids)->get();
+        $mutualFriends = $user->getMutualFriends($friend);
+        $mutualFriendsCount = $user->getMutualFriendsCount($friend);
+
+        return Inertia::render('Community/FriendDetails', [
+            'friend' => $friend,
+            'cartCount' => Cart::count(),
+            'mutualFriends' => $mutualFriends,
+            'mutualFriendsCount' => $mutualFriendsCount,
+            'friendCollections' => $friendCollections,
+            'friendsCollectionsWithAlbums' => $friendsCollectionsWithAlbums,
+        ]);
     }
 }

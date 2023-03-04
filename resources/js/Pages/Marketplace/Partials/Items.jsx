@@ -34,7 +34,7 @@ export default function Index({
 
     const contactSeller = (e) => {
         e.preventDefault();
-        get(route("messages.index"), { onSuccess: () => reset() });
+        get(route("marketplace.contact.seller"), { onSuccess: () => reset() });
     };
 
     return (

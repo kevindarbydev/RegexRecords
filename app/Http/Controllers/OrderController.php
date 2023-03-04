@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Order_Item;
-use App\Models\Album;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\Auth;
-
 
 
 class OrderController extends Controller

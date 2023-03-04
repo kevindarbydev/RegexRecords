@@ -11,8 +11,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 
 class WishlistController extends Controller
@@ -27,6 +25,7 @@ class WishlistController extends Controller
 
         ]);
     }
+    //Add Album to Wishlist
     public function addAlbumToWishlist(Request $request): RedirectResponse
     {
 
@@ -48,6 +47,7 @@ class WishlistController extends Controller
         return redirect()->route('dashboard.wishlists');
     }
 
+    //Remove Album from Wishlist
     public function removeFromWishlist(Request $request): RedirectResponse
     {
 
@@ -59,10 +59,5 @@ class WishlistController extends Controller
 
 
     }
-    public function AlbumDetails(Request $request): RedirectResponse {
 
-        $wAlbum = Wishlist_Album::where('id', $request->album_id)->first();
-
-        return redirect(route('marketplace.wishlists.album.details'));
-    }
 }
