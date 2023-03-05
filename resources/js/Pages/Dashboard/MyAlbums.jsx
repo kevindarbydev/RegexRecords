@@ -29,18 +29,15 @@ export default function Index({
     useEffect(() => {
         const delay = setTimeout(() => {
             const currentQuery = searchQuery.trim();
-
             if (!currentQuery) {
-                console.log("input fields empty, clearing results");
+               
                 setSearchResults([]);
                 setShowDropdown(false);
                 return;
-            }
-            console.log("current q: " + currentQuery);
+            }    
             const res = search(currentQuery)
                 .then((results) => {
-                    console.log("results: " + results);
-                    console.dir(results);
+                   
                     setSearchResults(results);
                     setShowDropdown(true);
                 })
@@ -53,7 +50,6 @@ export default function Index({
     }, [searchQuery]);
 
     const handleSearchQueryChange = (e) => {
-        console.log("inside");
         const albumName = data.album_name || "";
         const artist = data.artist || "";
 
@@ -63,12 +59,10 @@ export default function Index({
             return;
         }
 
-        if (!albumName || !artist) {
-            console.log("Found either artist or album, not both");
+        if (!albumName || !artist) {          
             const impreciseQuery = albumName || artist;
             setSearchQuery(impreciseQuery);
-        } else {
-            console.log("found both, trying precise query");
+        } else {           
             setSearchQuery(`${albumName},${artist}`);
         }
     };
@@ -79,18 +73,11 @@ export default function Index({
 
     const handleDropdownItemClick = (result) => {
         const [artist, album_name] = result.title.split(" - ");
-        console.log("Found artist name in the response: " + artist);
-        console.log("Found album name in the response: " + album_name);
-
-        console.log("Before setData: ", data.album_name);
        setData((prevData) => ({
            ...prevData,
            album_name: album_name,
            artist: artist,
-       }));
-        console.log("After setData: ", data.album_name);
-    
-
+       }));    
         setShowDropdown(false);
     };
     //calling reduce on searchResults directly was crashing the page

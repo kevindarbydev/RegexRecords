@@ -3,8 +3,7 @@ import { useState } from "react";
 function AdminDeleteButton({ onDelete, itemId }) {
     
     const handleClick = () => {
-        onDelete();
-        console.log("deleting: " + itemId);
+        onDelete();   
     };
 
     return (

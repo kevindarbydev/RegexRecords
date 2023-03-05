@@ -17,9 +17,6 @@ function AdminPage({ auth, users, albums, messages, currentUser, cartCount }) {
             .then((data) => setCsrfToken(data.csrfToken))
             .catch((error) => console.error(error));
     }, []);
-    if (csrfToken !== "") {
-        console.log("Csrf token: " + csrfToken);
-    }
 
     const handleTableChange = (newTable) => {
         setCurrentTable(newTable);

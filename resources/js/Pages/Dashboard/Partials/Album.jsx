@@ -15,12 +15,11 @@ export default function Album({ album, collections, albumsWithRatings }) {
     });
 
     const submit = (e) => {
-        console.log("submit button works");
         e.preventDefault();
         post(route("dashboard.album.to.collection"), {
             onSuccess: () => reset(),
         });
-        console.log("Post Passed");
+    
     };
 
     return (
