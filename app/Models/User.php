@@ -15,7 +15,8 @@ use Cmgmyr\Messenger\Traits\Messagable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Multicaret\Acquaintances\Traits\CanRate;
 
-class User extends Authenticatable implements MustVerifyEmail
+// implements MustVerifyEmail
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Friendable, Messagable, CanRate;
 
