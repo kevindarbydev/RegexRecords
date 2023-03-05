@@ -120,7 +120,7 @@ export default function Index({
                                                                 }
                                                                 onClick={() => {
                                                                     setData(
-                                                                        "album",
+                                                                        "alsellerum",
                                                                         album.id
                                                                     );
                                                                 }}

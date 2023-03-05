@@ -22,13 +22,10 @@ function DisplayConvos({
         setSelectedConversation(null);       
     }
 
-    function updateConversationList(newConversation) {
-        console.log("in display");
-        console.dir(newConversation);
+    function updateConversationList(newConversation) { 
         setConversationsWithNames((prevConversations) => {
             return prevConversations.map((convo) => {
-                if (convo.id === newConversation.id) {
-                    console.log("FOUND GIVEN CONVO");
+                if (convo.id === newConversation.id) {                 
                     return {
                         ...convo,
                         mostRecentMessage: newConversation.mostRecentMessage,

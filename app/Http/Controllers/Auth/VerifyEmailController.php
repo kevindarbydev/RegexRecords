@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\RedirectResponse;
 
 class VerifyEmailController extends Controller
 {
+
+  
     /**
      * Mark the authenticated user's email address as verified.
      */
@@ -23,6 +26,6 @@ class VerifyEmailController extends Controller
             event(new Verified($request->user()));
         }
 
-        return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
+        return redirect()->route('login')->with('verified', true);
     }
 }

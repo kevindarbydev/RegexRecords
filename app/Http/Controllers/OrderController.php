@@ -74,4 +74,14 @@ class OrderController extends Controller
             'cartCount' => Cart::count(),
         ]);
     }
+
+    public function showPurchases(Request $request): Response
+    {
+
+        return Inertia::render('Marketplace/OrderItems', [
+            //return order items
+            'order_items' => Order_Item::with('order', 'album', 'users')->latest()->get(),
+            'cartCount' => Cart::count(),
+        ]);
+    }
 }

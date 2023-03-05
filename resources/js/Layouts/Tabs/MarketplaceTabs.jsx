@@ -11,8 +11,8 @@ export default function MarketplaceTabs() {
                 <Tab>
                     <NavLink
                     //? collections as placeholder for now
-                    // href={route("collections.index")}
-                    // active={route().current("collections.index")}
+                    href={route("marketplace.index")}
+                    active={route().current("marketplace.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             All Items

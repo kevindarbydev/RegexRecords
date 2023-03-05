@@ -49,9 +49,10 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-        Mail::to($user->email)->send(new WelcomeEmail($user));
+        // Mail::to($user->email)->send(new WelcomeEmail($user));
+        $user->sendEmailVerificationNotification();
         // Auth::login($user);
-        Session::flash('registerSuccess', 'Registration successful! Please log in.');
+        //Session::flash('registerSuccess', 'Registration successful! Please log in.');
 
         return
             redirect('/login');

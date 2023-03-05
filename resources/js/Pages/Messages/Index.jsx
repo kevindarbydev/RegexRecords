@@ -38,10 +38,7 @@ function Index({
             .then((response) => response.json())
             .then((data) => setCsrfToken(data.csrfToken))
             .catch((error) => console.error(error));
-    }, []);
-    if (csrfToken !== "") {
-        console.log("Csrf token: " + csrfToken);
-    }
+    }, []);   
 
     function handleCreateClick(event) {
         event.preventDefault();
@@ -74,7 +71,7 @@ function Index({
                 {success && (
                     <div className="alert alert-success">{success}</div>
                 )}
-                <div className="w-3/4 lg:w-1/4 h-1/2 bg-gray-200 px-4 py-8 ">
+                <div className="w-1/2 lg:w-1/4 h-1/2 bg-gray-200 px-4 py-8 ">
                     <h1
                         className="font-medium text-lg mb-4"
                         style={{ display: "flex", alignItems: "center" }}

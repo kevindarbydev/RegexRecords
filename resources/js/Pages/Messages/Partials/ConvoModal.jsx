@@ -50,7 +50,8 @@ function ConvoModal({
                 });
         }
     };
-    console.dir(conversation)
+    //verifying the id of the user who will
+    //receive the message so we know who to email
     let idForEmail;
     let recipientName =
         conversation.messages.sender === auth.user.name
@@ -60,9 +61,8 @@ function ConvoModal({
         idForEmail = conversation.messages.recipientId;
     } else if (conversation.messages.sender === recipientName) {
         idForEmail = conversation.messages.senderId;
-    }
-    console.log("the other pserson is : " + recipientName + "," + idForEmail);
-  
+    }  
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (newMessage.trim() === "") {

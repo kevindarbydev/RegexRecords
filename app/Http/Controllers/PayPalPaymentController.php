@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\Collection;
 use App\Models\Collection_Album;
 use App\Models\Order;
 use App\Models\Order_Item;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -106,7 +106,7 @@ class PayPalPaymentController extends Controller
             $collection_album = Collection_Album::where('album_id', $album->id)->where('for_sale', true)->get();
 
             foreach ($collection_album as $c) {
-                $collection = DB::table('collections')->where('id', $c->collection_id)->where('user_id', $items[$j]->options['seller'])->first();
+                $collection = Collection::with('user:id')->where('id', $c->collection_id)->where('user_id', $items[$j]->options['seller'])->first();
 
                 if ($collection == null) {
                     continue;
@@ -121,6 +121,8 @@ class PayPalPaymentController extends Controller
                     $newOrder->order_item()->save($orderItem);
 
                     Cart::remove($items[$j]->rowId);
+
+                    $c->delete($c);
 
                     break;
                 }

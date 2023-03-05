@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use \Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Multicaret\Acquaintances\Traits\Friendable;
 use Cmgmyr\Messenger\Traits\Messagable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Multicaret\Acquaintances\Traits\CanRate;
+
 
 class User extends Authenticatable
 {
