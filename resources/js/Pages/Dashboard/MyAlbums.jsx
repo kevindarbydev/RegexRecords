@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
@@ -114,7 +114,7 @@ export default function Index({
             <div className="flex flex-row">
                 <div className="p-4 sm:p-6 lg:p-8 ml-10">
                     <div className="relative">
-                        <form className="w-full md:w-1/2 m-6" onSubmit={submit}>
+                        <form className="w-3/4 md:w-1/5 m-6" onSubmit={submit}>
                             <label htmlFor="AlbumName">Album Name</label>
                             <input
                                 name="AlbumName"
@@ -148,7 +148,7 @@ export default function Index({
                             />
                             {/* Search result menu */}
                             {searchResults && showDropdown && (
-                                <div className="absolute z-10 w-1/2 mt-2 rounded-md shadow-lg">
+                                <div className="absolute z-10 w-full md:w-1/5 mt-2 rounded-md shadow-lg">
                                     <div className="bg-white rounded-md shadow-xs">
                                         <ul className="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-32">
                                             {uniqueTitles.map((result) => (

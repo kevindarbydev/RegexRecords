@@ -77,11 +77,6 @@ class AlbumController extends Controller
                 // Get the first item in the results array (usually will be correct)
                 $item = $data['results'][0];
 
-                if (isset($item['year'])) { //nullcheck on year as it is not always included
-                    $validated['year_of_release'] = $item['year'];
-                } else if (isset($data['results'][1]['year'])) { //check 2nd item in response if 1st year is null (it often is)
-                    $validated['year_of_release'] = $data['results'][1]['year'];
-                }
                 // Get the album img, genre, year from the response obj
                 $cover_image_url = $item['cover_image'];
 
@@ -95,8 +90,9 @@ class AlbumController extends Controller
 
                 $validated['subgenres'] = $item['style'];
 
-                $validated['discogs_album_id'] = $item['id']; // discogs_album_id is the ID thats used for the 2nd API request
-                error_log("id: " . $item['id']);
+                $validated['discogs_album_id'] = $item['master_id']; // discogs_album_id is the ID thats used for the 2nd API request
+                error_log("master ID: " . $item['master_id']);
+               
                 $title = $item['title'];
 
                 // Split the title string on the dash and assume the first part is the artist name and the second part is the album name
@@ -109,20 +105,20 @@ class AlbumController extends Controller
 
 
                 //perform 2nd API call with discogs_album_id
-                $response2 = Http::get("https://api.discogs.com/releases/{$item['id']}");
-                if ($response2->ok()) {
-                    //2nd query gives us access to "lowest_price" for value
-                    if ($response2->json()['lowest_price'] === null) {
-                        $validated['value'] = "0"; //TODO: make value string so i can put  "not found"
-                    } else {
-                        $validated['value'] = $response2->json()['lowest_price'];
-                    }
+                $data2 = Http::get("https://api.discogs.com/masters/{$item['master_id']}")->json();
+                if (!empty($data2)) {
+                    error_log("year: " . $data2['year']);
+                    error_log("price: " .$data2['lowest_price']);
 
+
+
+                    $validated['year_of_release'] = $data2['year'] ?? null;
+                    $validated['value'] = $data2['lowest_price'] ?? 0;
 
                     //save the album obj and save it to a var to grab album_id for tracklist
                     $album = $request->user()->albums()->create($validated);
                     // Second API call was successful
-                    $tracklist = $response2->json()['tracklist'];
+                    $tracklist = $data2['tracklist'];
 
                     $tracklistModel = new Tracklist();
                     $tracklistModel->album_id = $album->id;
