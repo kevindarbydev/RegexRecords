@@ -141,10 +141,11 @@ export default function Index({
                                                                     processing
                                                                 }
                                                                 onClick={() => {
-                                                                    setData(
-                                                                        "album",
-                                                                        album.id
-                                                                    );
+                                                                    setData({
+                                                                        'album': album.id,
+                                                                        'seller': user.id,
+        
+                                                                    });
                                                                 }}
                                                             >
                                                                 Contact Seller

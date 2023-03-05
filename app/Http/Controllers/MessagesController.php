@@ -176,14 +176,18 @@ class MessagesController extends Controller
         $conversationlist = Conversation::all();
 
         $conversation = new Conversation();
+        $conversation->sender = Auth::id();
         $conversation->recipient = $request-> seller;
+        $conversation->threadid = 1;
         $conversation->album_id = $request -> album;
 
         $album_id = $request->album;
         $duplicate = Conversation::where('album_id', $album_id)->count();
 
         if ($duplicate ==0){
-            $conversationlist->conversations()->create($conversation);
+
+            $request->user()->conversations()->save($conversation);
+            
             return redirect()->route('messages.show');
 
         }
