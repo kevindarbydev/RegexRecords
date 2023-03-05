@@ -10,7 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 const notify = () => toast.success("Logging in...");
 
-const notify1 = () => toast.success("Registration successful! Please log in");
+
 
 export default function Login({ status, canResetPassword, registerSuccess }) {
     const { data, setData, post, processing, errors, reset } = useForm({
