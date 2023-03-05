@@ -83,19 +83,17 @@ export default function Index({
         console.log("Found album name in the response: " + album_name);
 
         console.log("Before setData: ", data.album_name);
-       setData((prevData) => ({
-           ...prevData,
-           album_name: album_name,
-           artist: artist,
-       }));
+        setData((prevData) => ({
+            ...prevData,
+            album_name: album_name,
+            artist: artist,
+        }));
         console.log("After setData: ", data.album_name);
-    
 
         setShowDropdown(false);
     };
-    //calling reduce on searchResults directly was crashing the page
-    const copy = searchResults;
-    const uniqueTitles = copy.reduce((acc, current) => {
+
+    const uniqueTitles = searchResults.reduce((acc, current) => {
         if (!acc.some((item) => item.title === current.title)) {
             acc.push(current);
         }
@@ -147,27 +145,29 @@ export default function Index({
                                 className="mt-2"
                             />
                             {/* Search result menu */}
-                            {searchResults && showDropdown && (
-                                <div className="absolute z-10 w-full md:w-1/5 mt-2 rounded-md shadow-lg">
-                                    <div className="bg-white rounded-md shadow-xs">
-                                        <ul className="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-32">
-                                            {uniqueTitles.map((result) => (
-                                                <li
-                                                    key={result.id}
-                                                    className="cursor-pointer text-gray-900 hover:bg-indigo-400 hover:text-white py-2 px-3"
-                                                    onClick={() =>
-                                                        handleDropdownItemClick(
-                                                            result
-                                                        )
-                                                    }
-                                                >
-                                                    {result.title}
-                                                </li>
-                                            ))}
-                                        </ul>
+                            {searchResults &&
+                                searchResults.length > 0 &&
+                                showDropdown && (
+                                    <div className="absolute z-10 w-full md:w-1/5 mt-2 rounded-md shadow-lg">
+                                        <div className="bg-white rounded-md shadow-xs">
+                                            <ul className="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-32">
+                                                {uniqueTitles.map((result) => (
+                                                    <li
+                                                        key={result.id}
+                                                        className="cursor-pointer text-gray-900 hover:bg-indigo-400 hover:text-white py-2 px-3"
+                                                        onClick={() =>
+                                                            handleDropdownItemClick(
+                                                                result
+                                                            )
+                                                        }
+                                                    >
+                                                        {result?.title}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
 
                             <PrimaryButton
                                 className="mt-4"
