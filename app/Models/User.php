@@ -14,11 +14,12 @@ use Multicaret\Acquaintances\Traits\Friendable;
 use Cmgmyr\Messenger\Traits\Messagable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Multicaret\Acquaintances\Traits\CanRate;
+use Multicaret\Acquaintances\Traits\CanLike;
 
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Friendable, Messagable, CanRate;
+    use HasApiTokens, HasFactory, Notifiable, Friendable, Messagable, CanRate, CanLike;
 
     /**
      * The attributes that are mass assignable.

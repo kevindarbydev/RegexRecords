@@ -309,6 +309,7 @@ export default function AdvSearch({
                 albums={albums}
                 collections={collections}
                 message={message}
+                albumsWithRatings={albumsWithRatings}
             />
         </AuthenticatedLayout>
     );

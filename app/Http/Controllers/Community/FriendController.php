@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Collection;
 use App\Models\Collection_Album;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Multicaret\Acquaintances\Interaction;
 use Multicaret\Acquaintances\Models\Friendship;
 
 class FriendController extends Controller
@@ -77,6 +78,10 @@ class FriendController extends Controller
         $mutualFriends = $user->getMutualFriends($friend);
         $mutualFriendsCount = $user->getMutualFriendsCount($friend);
 
+        $likeStatus = $user->likes(Collection::class)->get();
+
+
+        error_log("LIKE STATUS: $likeStatus");
         return Inertia::render('Community/FriendDetails', [
             'friend' => $friend,
             'cartCount' => Cart::count(),
@@ -84,6 +89,22 @@ class FriendController extends Controller
             'mutualFriendsCount' => $mutualFriendsCount,
             'friendCollections' => $friendCollections,
             'friendsCollectionsWithAlbums' => $friendsCollectionsWithAlbums,
+            'likeStatus' => $likeStatus,
         ]);
+    }
+
+    public function likeCollection(Collection $collection): RedirectResponse
+    {
+        $friend = $collection->user;
+
+        $user = Auth()->user();
+
+        if ($user->hasLiked($collection)) {
+            $user->unlike($collection);
+            return redirect(route('friends.view.friend', $friend));
+        } else {
+            $user->like($collection);
+            return redirect(route('friends.view.friend', $friend));
+        }
     }
 }
