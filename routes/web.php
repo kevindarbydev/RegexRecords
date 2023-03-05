@@ -96,6 +96,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
     Route::patch('/friends/deny/{friendship}', [FriendController::class, 'denyRequest'])->name('friends.deny');
     Route::delete('/friends/delete/{friendship}', [FriendController::class, 'unfriend'])->name('friends.unfriend');
     Route::get('/friends/{friend}', [FriendController::class, 'viewFriend'])->name('friends.view.friend');
+    Route::patch('/friends/like/{collection}', [FriendController::class, 'likeCollection'])->name('friends.like.collection');
 });
 
 

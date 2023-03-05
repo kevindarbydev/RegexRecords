@@ -3,6 +3,8 @@ import CommunityTabs from "@/Layouts/Tabs/CommunityTabs";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import CollectionModal from "./Partials/CollectionModal";
+import { Link } from "@inertiajs/react";
+import { HandThumbUpIcon } from "@heroicons/react/24/solid";
 
 function FriendDetails({
     friend,
@@ -12,6 +14,7 @@ function FriendDetails({
     mutualFriendsCount,
     friendCollections,
     friendsCollectionsWithAlbums,
+    likeStatus,
 }) {
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
@@ -33,12 +36,36 @@ function FriendDetails({
                     </h2>
                     <div>
                         {friendCollections.map((collection) => (
-                            <CollectionModal
-                                collection={collection}
-                                friendsCollectionsWithAlbums={
-                                    friendsCollectionsWithAlbums
-                                }
-                            />
+                            <div class="flex flex-row">
+                                <CollectionModal
+                                    collection={collection}
+                                    friendsCollectionsWithAlbums={
+                                        friendsCollectionsWithAlbums
+                                    }
+                                />
+                                <Link
+                                    href={route("friends.like.collection", [
+                                        collection,
+                                    ])}
+                                    method="patch"
+                                >
+                                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                        {likeStatus.map((status) =>
+                                            status.pivot.relation === "like" &&
+                                            status.id == collection.id ? (
+                                                <HandThumbUpIcon className="rotate-[25deg] w-5 h-5  mt-8 text-violet-700" />
+                                            ) : (
+                                                <HandThumbUpIcon className="w-5 h-5  mt-8 text-violet-700" />
+                                            )
+                                        )}
+                                        {likeStatus.length == 0 ? (
+                                            <HandThumbUpIcon className="w-5 h-5 mt-8 text-violet-700" />
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </h5>
+                                </Link>
+                            </div>
                         ))}
                     </div>
                 </div>

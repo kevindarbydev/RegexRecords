@@ -16,7 +16,7 @@ export default function CollectionModal({
     }
 
     return (
-        <>
+        <div className="flex-1">
             <div className="mt-4">
                 <button
                     type="button"
@@ -131,6 +131,6 @@ export default function CollectionModal({
                     </div>
                 </Dialog>
             </Transition>
-        </>
+        </div>
     );
 }
