@@ -79,13 +79,17 @@ export default function Index({
 
     const handleDropdownItemClick = (result) => {
         const [artist, album_name] = result.title.split(" - ");
-        console.log(artist);
-        console.log(album_name);
+        console.log("Found artist name in the response: " + artist);
+        console.log("Found album name in the response: " + album_name);
 
         console.log("Before setData: ", data.album_name);
-        setData("album_name", album_name);
+       setData((prevData) => ({
+           ...prevData,
+           album_name: album_name,
+           artist: artist,
+       }));
         console.log("After setData: ", data.album_name);
-        setData("artist", artist);
+    
 
         setShowDropdown(false);
     };
