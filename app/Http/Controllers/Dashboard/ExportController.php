@@ -25,25 +25,33 @@ class ExportController extends Controller
         ]);
     }
 
-    public function exportToCSV(): Response
+    public function exportToCSV(): RedirectResponse
     {
+        $collections = Collection::with('user')->where('user_id', Auth::user()->id)->get();
 
-        $table = Album::all();
-        $output = '';
-        foreach ($table as $row) {
-            error_log("row: " . $row);
-            $output .=  implode(",", $row->toArray());
-            error_log("row2: " . $row);
+        foreach ($collections as $collection) {
+            $albums = [];
+            $i = 0;
+            $cAlbums = Collection_Album::where('collection_id', $collection->id)->get();
+
+            foreach ($cAlbums as $cAlbum) {
+                $album = Album::with('user')->where('id', $cAlbum->album_id)->first();
+
+                if ($cAlbum->for_sale == 0) {
+                    $for_sale = 'Not Selling';
+                } else {
+                    $for_sale = 'Selling';
+                }
+                $albums[$i] = array($album->id, $album->album_name, (float)$album->value, $for_sale);
+                $i++;
+            }
+            $handle = fopen($collection->collection_name . '.csv', 'w');
+
+            collect($albums)->each(fn ($row) => fputcsv($handle, $row));
+
+            fclose($handle);
         }
-        $headers = array(
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="aaa.csv"',
-        );
 
-        return Response::make(rtrim($output, "\n"), 200, $headers);
-        // Request $request
-        error_log("YES BUTTON WORKS");
-
-        // return redirect()->route('dashboard.export');
+        return redirect(route('dashboard.export'));
     }
 }
