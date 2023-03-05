@@ -24,4 +24,26 @@ class ExportController extends Controller
             'cartCount' => Cart::count(),
         ]);
     }
+
+    public function exportToCSV(): Response
+    {
+
+        $table = Album::all();
+        $output = '';
+        foreach ($table as $row) {
+            error_log("row: " . $row);
+            $output .=  implode(",", $row->toArray());
+            error_log("row2: " . $row);
+        }
+        $headers = array(
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="aaa.csv"',
+        );
+
+        return Response::make(rtrim($output, "\n"), 200, $headers);
+        // Request $request
+        error_log("YES BUTTON WORKS");
+
+        // return redirect()->route('dashboard.export');
+    }
 }
