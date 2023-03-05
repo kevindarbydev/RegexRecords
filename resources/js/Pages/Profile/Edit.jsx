@@ -6,6 +6,7 @@ import { Head } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Edit({ auth, mustVerifyEmail, status, user, cartCount }) {
+    const isEmailVerified = user.email_verified_at !== null;
     return (
         <AuthenticatedLayout
             auth={auth}
@@ -20,17 +21,28 @@ export default function Edit({ auth, mustVerifyEmail, status, user, cartCount })
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                            className="max-w-xl"
-                        />
-                    </div>
+                    {isEmailVerified ? (
+                        <>
+                            <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                                <UpdateProfileInformationForm
+                                    mustVerifyEmail={mustVerifyEmail}
+                                    status={status}
+                                    className="max-w-xl"
+                                />
+                            </div>
 
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        <UpdatePasswordForm className="max-w-xl" />
-                    </div>
+                            <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                                <UpdatePasswordForm className="max-w-xl" />
+                            </div>
+                        </>
+                    ) : (
+                        <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                            <p className="text-lg text-gray-800 leading-tight">
+                                Please verify your email address to update your
+                                profile information and password.
+                            </p>
+                        </div>
+                    )}
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <DeleteUserForm className="max-w-xl" />
