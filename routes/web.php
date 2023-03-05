@@ -120,8 +120,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('marketplace.album.to.wishlist');
     Route::get('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
 
+    //Purchases----------------------------
+    Route::get('/purchases', [OrderController::class, 'showPurchases'])->name('marketplace.purchases');
+    
     // Contact Seller-------------------------
-    Route::get('/seller', [MarketplaceController::class, 'contactSeller'])->name('marketplace.contact.seller');
+    Route::post('/seller', [MessagesController::class, 'contactSeller'])->name('marketplace.contact.seller');
 
 
     // ============== TESTING CART PACKAGE ================
@@ -135,6 +138,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //Change Profile Pic
+    Route::post('/profile/pic', [ProfileController::class, 'addProfilePic'])->name('profile.add.pic');
+
 });
 
 // ADMIN

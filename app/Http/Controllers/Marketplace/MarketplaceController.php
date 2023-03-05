@@ -53,11 +53,13 @@ class MarketplaceController extends Controller
     public function addAlbumToOrder(Request $request): RedirectResponse
     {
 
-        $order = Order::with('user')->where('id', $request->id)->first();
+        $order = Order::with('user')->where('id', $request->seller)->first();
+        $album = Album::with('user')->where('id', $request->album)->first();
+
         $orderitem = new Order_Item();
         $orderitem->quantity = 1;
         $orderitem->order_id = $request->order_id;
-        $orderitem->album_id = $request->album_id;
+        $orderitem->album_id = $album;
         $orderitem->price = $request->price;
 
         $order2 = DB::table('order__items')->where('order_id', 1)->where('album_id', $orderitem->album_id)->first();
@@ -124,14 +126,5 @@ class MarketplaceController extends Controller
         Cart::remove($request->rowId);
     }
 
-    public function contactSeller(Request $request): Response
-    {
 
-
-        return Inertia::render('Marketplace/ContactSeller', [
-            'album' => Album::where('id', $request->album_id)->get(),
-            'conversation' => Conversation::where('album_id', $request->album_id)->get(),
-
-        ]);
-    }
 }

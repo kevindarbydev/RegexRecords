@@ -66,4 +66,9 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function addProfilePic(Request $request): RedirectResponse {
+        
+    }
+
 }
