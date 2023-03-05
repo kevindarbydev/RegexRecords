@@ -10,8 +10,8 @@ export default function MarketplaceTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    href={route("marketplace.index")}
-                    active={route().current("marketplace.index")}
+                        href={route("marketplace.index")}
+                        active={route().current("marketplace.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             All Items
@@ -20,8 +20,8 @@ export default function MarketplaceTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    href={route("marketplace.wishlists")}
-                    active={route().current("marketplace.wishlists")}
+                        href={route("marketplace.wishlists")}
+                        active={route().current("marketplace.wishlists")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Wishlists
@@ -30,8 +30,8 @@ export default function MarketplaceTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    href={route("marketplace.purchases")}
-                    active={route().current("marketplace.purchases")}
+                        href={route("orders.index")}
+                        active={route().current("orders.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Purchases
