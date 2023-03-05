@@ -10,7 +10,6 @@ export default function MarketplaceTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    //? collections as placeholder for now
                     href={route("marketplace.index")}
                     active={route().current("marketplace.index")}
                     >
@@ -31,22 +30,11 @@ export default function MarketplaceTabs() {
                 </Tab>
                 <Tab>
                     <NavLink
-                    // href={route("purchases.index")}
-                    // active={route().current("purchases.index")}
+                    href={route("marketplace.purchases")}
+                    active={route().current("marketplace.purchases")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Purchases
-                        </span>
-                    </NavLink>
-                </Tab>
-                <Tab>
-                    {" "}
-                    <NavLink
-                    href={route("marketplace.cart")}
-                    active={route().current("marketplace.cart")}
-                    >
-                        <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Cart
                         </span>
                     </NavLink>
                 </Tab>
