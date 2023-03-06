@@ -14,12 +14,15 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm ci'
-                sh 'composer install'
-            }
+     stage('Install Dependencies') {
+    steps {
+        nodejs(nodeJSInstallationName: 'nodejs') {
+            sh 'npm ci'
         }
+        composer 'composer'
+    }
+}
+
 
         stage('Build Assets') {
             steps {
