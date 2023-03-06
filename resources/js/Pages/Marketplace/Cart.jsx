@@ -7,7 +7,6 @@ import { useForm, Head, Link } from "@inertiajs/react";
 import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
 import Dropdown from "@/Components/Dropdown";
 
-
 export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         cart: "",
