@@ -1,19 +1,34 @@
 pipeline {
-    agent { docker { image 'php:8.1.11-alpine' } }
+    agent any
+
+    tools {
+        nodejs "node"
+        composer "composer"
+    }
+
     stages {
-        stage('build') {
+        stage('Checkout') {
             steps {
-                sh 'php --version'
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/kevindarbydev/LaravelLivewire.git']]])
             }
         }
-        stage('test') {
+
+        stage('Install Dependencies') {
             steps {
-                echo 'testing...
+                sh 'npm ci'
+                sh 'composer install'
             }
         }
-        stage('deploy') {
+
+        stage('Build Assets') {
             steps {
-                echo 'deploying...'
+                sh 'npm run build'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Add deployment steps here, such as pushing to a remote server
             }
         }
     }
