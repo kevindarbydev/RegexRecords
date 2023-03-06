@@ -3,6 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useForm, Head } from "@inertiajs/react";
 
 import PrimaryButton from "@/Components/PrimaryButton";
+import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
 
 export default function Orders({ auth, orders, cartCount }) {
     const { data, setData, post, processing, reset, errors, get } = useForm({
@@ -20,7 +21,7 @@ export default function Orders({ auth, orders, cartCount }) {
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Order History" />
-
+            <MarketplaceTabs />
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                 <div className="flex justify-center items-center">
                     Order History

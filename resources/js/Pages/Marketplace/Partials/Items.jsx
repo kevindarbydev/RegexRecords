@@ -70,9 +70,14 @@ export default function Index({
                                                 src={album.cover_image_url}
                                                 alt=""
                                             />
-                                            <p className="pt-5 mr-0">
-                                                {album.album_name}
-                                            </p>
+                                            <a
+                                                className="flex-1"
+                                                href={route("dashboard.albums.show", album.id)}
+                                            >
+                                                <p className="pt-5 mr-0">
+                                                    {album.album_name}
+                                                </p>
+                                            </a>
                                         </th>
                                         <td class="px-6 py-4">
                                             ${(album.value).toFixed(2)}

@@ -5,8 +5,8 @@ import { useForm, Head } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function OrderItems({ auth, order_items, cartCount }) {
-    
-    
+
+
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Order Items" />
@@ -45,11 +45,11 @@ export default function OrderItems({ auth, order_items, cartCount }) {
                                             className="w-24 h-24 rounded-lg object-cover mr-8 mt-2 mx-auto"
                                         />
                                     </td>
-                                    <td id="price">{item.price}</td>
+                                    <td id="price">${(item.price).toFixed(2)}</td>
                                     <td id="quantity">{item.quantity}</td>
                                     <td>
                                         <PrimaryButton className="mt-2" >
-                                           
+
                                             Album Details
                                         </PrimaryButton>
                                     </td>
