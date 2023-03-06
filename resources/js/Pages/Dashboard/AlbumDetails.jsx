@@ -6,6 +6,7 @@ import { useForm } from "@inertiajs/react";
 import { StarIcon } from "@heroicons/react/24/solid";
 import AllRatersModal from "./Partials/AllRatersModal";
 import InputError from "@/Components/InputError";
+import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 
 export default function AlbumDetails({
     auth,
@@ -30,6 +31,7 @@ export default function AlbumDetails({
     };
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
+            <DashboardTabs />
             <Head title={album.album_name} />
             <div className="flex flex-col md:flex-row mt-6">
                 <div className="p-6 rounded-lg shadow-lg w-full mx-auto md:w-3/4">
