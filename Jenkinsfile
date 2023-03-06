@@ -4,7 +4,6 @@ pipeline {
      tools {
         nodejs "node"       
     }
-
     
     stages {
         stage('Checkout') {
@@ -18,7 +17,6 @@ pipeline {
             }
         }  
 
-
         stage('Build Assets') {
             steps {
                 sh 'npm run build'
@@ -27,10 +25,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                 // Push changes to deploy branch
-                 sh "git checkout -b cicd"
-                 sh "git push -u origin cicd"
-
+                 // Push changes to deploy branch                
+                sh "git push -u origin HEAD:deploy"
             }
         }
     }
