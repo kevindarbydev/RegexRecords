@@ -4,6 +4,10 @@ import { useForm, Head } from "@inertiajs/react";
 
 import PrimaryButton from "@/Components/PrimaryButton";
 import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+ 
+dayjs.extend(relativeTime);
 
 export default function Orders({ auth, orders, cartCount }) {
     const { data, setData, post, processing, reset, errors, get } = useForm({
@@ -52,7 +56,7 @@ export default function Orders({ auth, orders, cartCount }) {
                         {orders.map((order) => (
                             <tbody>
                                 <tr>
-                                    <td>{order.created_at}</td>
+                                    <td>{dayjs(order.created_at).format('DD/MM/YYYY')}</td>
                                     <td>${(order.subtotal).toFixed(2)}</td>
                                     <td>${(order.shipping).toFixed(2)}</td>
                                     <td>${(order.tax).toFixed(2)}</td>
