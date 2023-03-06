@@ -2,8 +2,7 @@ pipeline {
     agent any
     
      tools {
-        nodejs "npm"
-        composer "composer"
+        nodejs "node"       
     }
 
     
@@ -13,15 +12,12 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/kevindarbydev/LaravelLivewire.git']]])
             }
         }
-
-     stage('Install Dependencies') {
-    steps {
-        nodejs(nodeJSInstallationName: 'nodejs') {
-            sh 'npm ci'
-        }
-        composer 'composer'
+     stage('Install') {
+          steps {
+              sh 'npm install'
+   
             }
-        }
+        }  
 
 
         stage('Build Assets') {
