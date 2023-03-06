@@ -170,4 +170,27 @@ class MessagesController extends Controller
         return response()->json(['message' => 'Conversation deleted successfully.'], 200);
 
     }
+
+    public function contactSeller(Request $request): RedirectResponse
+    {
+        $conversation = new Conversation();
+        $conversation->sender = Auth::id();
+        $conversation->recipient = $request-> seller;
+        $conversation->threadId = 1;
+        $conversation->album_id = $request -> album;
+
+        $album_id = $request->album;
+        $duplicate = Conversation::where('album_id', $album_id)->count();
+
+        if ($duplicate ==0){
+
+            $request->user()->conversations()->save($conversation);
+            
+            return redirect()->route('messages.show');
+
+        }
+
+        return redirect()->route('marketplace.index');
+
+    }
 }

@@ -55,6 +55,11 @@ export default function AllRatersModal({ allRaters }) {
                                             <span>{rater.name}</span>
                                         </div>
                                     ))}
+                                    {allRaters.length == 0 ? (
+                                        <>No one yet</>
+                                    ) : (
+                                        <></>
+                                    )}
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

@@ -19,10 +19,10 @@ export default function Order_Item({ order_item }) {
                 </p>
 
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                   Quantity: {order_item.quantity}
+                    Quantity: {order_item.quantity}
                 </p>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    Price: {order_item.price}
+                    Price: ${(order_item.price).toFixed(2)}
                 </p>
 
             </div>

@@ -14,7 +14,7 @@ function FriendDetails({
     mutualFriendsCount,
     friendCollections,
     friendsCollectionsWithAlbums,
-    likeStatus,
+    totalLikes,
 }) {
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
@@ -42,6 +42,7 @@ function FriendDetails({
                                     friendsCollectionsWithAlbums={
                                         friendsCollectionsWithAlbums
                                     }
+                                    totalLikes={totalLikes}
                                 />
                                 <Link
                                     href={route("friends.like.collection", [
@@ -50,19 +51,7 @@ function FriendDetails({
                                     method="patch"
                                 >
                                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                        {likeStatus.map((status) =>
-                                            status.pivot.relation === "like" &&
-                                            status.id == collection.id ? (
-                                                <HandThumbUpIcon className="rotate-[25deg] w-5 h-5  mt-8 text-violet-700" />
-                                            ) : (
-                                                <HandThumbUpIcon className="w-5 h-5  mt-8 text-violet-700" />
-                                            )
-                                        )}
-                                        {likeStatus.length == 0 ? (
-                                            <HandThumbUpIcon className="w-5 h-5 mt-8 text-violet-700" />
-                                        ) : (
-                                            <></>
-                                        )}
+                                        <HandThumbUpIcon className="w-5 h-5  mt-10 text-violet-700 hover:rotate-[25deg]" />
                                     </h5>
                                 </Link>
                             </div>

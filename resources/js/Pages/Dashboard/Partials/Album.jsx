@@ -71,7 +71,7 @@ export default function Album({ album, collections, albumsWithRatings }) {
                     Artist: {album.artist}
                 </p>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    {album.value} $
+                    ${(album.value).toFixed(2)}
                 </p>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     <small className="text-sm text-gray-600">

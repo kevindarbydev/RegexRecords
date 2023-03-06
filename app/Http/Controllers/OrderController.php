@@ -80,7 +80,7 @@ class OrderController extends Controller
 
         return Inertia::render('Marketplace/OrderItems', [
             //return order items
-            'order_items' => Order_Item::with('order', 'album', 'users')->latest()->get(),
+            'order_items' => Order_Item::with('user', 'album')->where('user_id', Auth::user()->id)->latest()->get(),
             'cartCount' => Cart::count(),
         ]);
     }

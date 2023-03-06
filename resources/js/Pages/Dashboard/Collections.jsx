@@ -14,8 +14,10 @@ export default function Index({
     collections,
     collection_albums,
     albums,
-    cartCount
+    cartCount,
+    likesInfo,
 }) {
+    console.log(likesInfo);
     const [currentComp, setCurrentComp] = useState();
     const [isShowing, setIsShowing] = useState(true);
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -36,7 +38,7 @@ export default function Index({
     let componentToShow;
     {
         collections.map((collection) =>
-            currentComp === collection.collection_name ? (
+            currentComp === collection.id ? (
                 (componentToShow = (
                     <div className="flex flex-row flex-wrap m-10">
                         <AlbumsInCollection
@@ -132,12 +134,15 @@ export default function Index({
                                                                 collection={
                                                                     collection
                                                                 }
+                                                                likesInfo={
+                                                                    likesInfo
+                                                                }
                                                             />
                                                             <button
                                                                 className="px-3 py-1 font-bold text-white rounded m-2 bg-blue-400 hover:bg-violet-600"
                                                                 onClick={() =>
                                                                     handleComponentChange(
-                                                                        collection.collection_name
+                                                                        collection.id
                                                                     )
                                                                 }
                                                             >

@@ -20,13 +20,20 @@ class CollectionController extends Controller
     // display index with everything
     public function index(): Response
     {
+        $myCollections =  Collection::with('user')->where('user_id', Auth::user()->id)->get();
+        $likesInfo = [];
+        $i = 0;
+        foreach ($myCollections as $collection) {
+            $likesInfo[$i] = [$collection->id, $collection->likersCount(), $collection->likers()->get()];
+            $i++;
+        }
         return Inertia::render('Dashboard/Collections', [
-            'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
+            'collections' => $myCollections,
             // 'collection_albums' => Collection_Album::with('user:id')->latest()->get(),
             'collection_albums' => Collection_Album::with('collection', 'album')->latest()->get(),
             'albums' => Album::with('user')->latest()->get(),
             'cartCount' => Cart::count(),
-
+            'likesInfo' => $likesInfo,
         ]);
     }
 

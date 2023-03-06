@@ -74,4 +74,3 @@ const makeRequestCreator = (proxyUrl) => {
 
 export default makeRequestCreator;
 
-function parseParams(searchParams) {}

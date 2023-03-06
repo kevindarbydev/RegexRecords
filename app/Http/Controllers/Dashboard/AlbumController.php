@@ -83,32 +83,28 @@ class AlbumController extends Controller
                 // Upload the cover image to DigitalOcean Spaces bucket and get the URL
                 $cover_image_spaces_url = $spaceController->uploadCoverImageToSpace($cover_image_url);
 
-                //Assign the data from API to the saved album
+                //save these fields as whatever the API returns
                 $validated['cover_image_url'] = $cover_image_spaces_url;
-
-                $validated['genre'] = $item['genre'][0]; //TODO: change genre to json() to capture all genres in the response
-
+                $validated['genre'] = $item['genre'][0];
                 $validated['subgenres'] = $item['style'];
+                $validated['artist'] = $artist_name;
+                $validated['album_name'] = $album_name;
 
                 $validated['discogs_album_id'] = $item['master_id']; // discogs_album_id is the ID thats used for the 2nd API request
                 error_log("master ID: " . $item['master_id']);
-               
+
                 $title = $item['title'];
 
                 // Split the title string on the dash and assume the first part is the artist name and the second part is the album name
                 $titleParts = explode(' - ', $title);
-                $artistName = $titleParts[0];
-                $albumName = $titleParts[1];
-                //save these fields as whatever the API returns
-                $validated['artist'] = $artistName;
-                $validated['album_name'] = $albumName;
-
+                $artist_name = $titleParts[0];
+                $album_name = $titleParts[1];
 
                 //perform 2nd API call with discogs_album_id
                 $data2 = Http::get("https://api.discogs.com/masters/{$item['master_id']}")->json();
                 if (!empty($data2)) {
                     error_log("year: " . $data2['year']);
-                    error_log("price: " .$data2['lowest_price']);
+                    error_log("price: " . $data2['lowest_price']);
 
 
 
@@ -180,7 +176,7 @@ class AlbumController extends Controller
     {
 
         if ($request->collection_name == null) {
-            return redirect()->route('explore.viewAllAlbums');
+            return redirect()->back()->with('warning', 'You need to select a collection');
         }
 
         $collection = Collection::with('user')->where('collection_name', $request->collection_name)->first();
@@ -193,14 +189,14 @@ class AlbumController extends Controller
         $cAlbum2 = DB::table('collection__albums')->where('collection_id', $cAlbum->collection_id)->where('album_id', $cAlbum->album_id)->first();
 
         if ($cAlbum2 != null) {
-            return redirect()->route('explore.viewAllAlbums');
+            return redirect()->back()->with('warning', 'You already added this album to your collection!');
         }
 
         $collection->collection_albums()->save($cAlbum);
         return redirect()->route('dashboard.collections');
     }
 
-    // rate album 
+    // rate album
     public function rate(Request $request, Album $album): RedirectResponse
     {
         $user = Auth()->user();
