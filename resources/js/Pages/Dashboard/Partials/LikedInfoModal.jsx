@@ -78,6 +78,19 @@ export default function LikedInfoModal({ likesInfo, collection }) {
                                             )
                                         )}
                                     </div>
+                                    <div className="self-center mr-auto text-gray-500">
+                                        {likesInfo.map((likeInfo) =>
+                                            likeInfo[0] == collection.id &&
+                                            likeInfo[1] == 0 ? (
+                                                <>
+                                                    Sorry, no one has liked this
+                                                    collection yet
+                                                </>
+                                            ) : (
+                                                <></>
+                                            )
+                                        )}
+                                    </div>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
