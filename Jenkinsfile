@@ -27,10 +27,8 @@ pipeline {
             steps {
                withCredentials([gitUsernamePassword(credentialsId: 'github-credentials')]) {       
                 sh "git config --global user.email 'kevindarbydev@gmail.com'"
-                sh "git config --global user.name 'Kevin Darby' "
-                sh "git config pull.rebase false"
-                sh "git pull origin deploy"
-                sh "git push origin HEAD:deploy"
+                sh "git config --global user.name 'Kevin Darby' " 
+                sh "git show HEAD"
                }
             }
         }
