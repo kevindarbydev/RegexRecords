@@ -200,6 +200,10 @@ class AlbumController extends Controller
     public function rate(Request $request, Album $album): RedirectResponse
     {
         $user = Auth()->user();
+        error_log($request);
+        $request->validate([
+            'rating' => 'required',
+        ]);
         $user->rate($album, $request->rating, 'quality', Album::class);
 
         return redirect()->route('dashboard.albums.show', $album);
