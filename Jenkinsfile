@@ -25,7 +25,9 @@ pipeline {
 
         stage('Deploy') {
             steps {
-               withCredentials([gitUsernamePassword(credentialsId: 'github-credentials')]) {         
+               withCredentials([gitUsernamePassword(credentialsId: 'github-credentials')]) {       
+                sh "git config --global user.email 'kevindarbydev@gmail.com'"
+                sh "git config --global user.name 'Kevin Darby' "
                 sh "git pull origin deploy"
                 sh "git push origin HEAD:deploy"
                }
