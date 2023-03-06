@@ -18,6 +18,12 @@ class PayPalPaymentController extends Controller
 {
     public function handlePayment()
     {
+        $quantity= Cart::count();
+
+        if ($quantity == 0) {
+            return redirect()->route('marketplace.cart');
+
+        }
         $items = [];
         $i = 0;
         $subtotal = (float)Cart::subtotal();
@@ -56,12 +62,7 @@ class PayPalPaymentController extends Controller
 
         // $res = $paypalModule->setExpressCheckout($product);
         $res = $paypalModule->setExpressCheckout($product, true);
-        $quantity= Cart::count();
 
-        if ($quantity == 0) {
-            return redirect()->route('marketplace.cart');
-
-        }
         return redirect($res['paypal_link']);
     }
 
