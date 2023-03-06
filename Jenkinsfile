@@ -26,6 +26,7 @@ pipeline {
         stage('Deploy') {
             steps {
                withCredentials([gitUsernamePassword(credentialsId: 'github-credentials')]) {         
+                sh "git pull origin deploy"
                 sh "git push origin HEAD:deploy"
                }
             }
