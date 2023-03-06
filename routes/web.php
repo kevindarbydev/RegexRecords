@@ -124,7 +124,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
 
     //Purchases----------------------------
     Route::get('/purchases', [OrderController::class, 'showPurchases'])->name('marketplace.purchases');
-    
+
     // Contact Seller-------------------------
     Route::post('/seller', [MessagesController::class, 'contactSeller'])->name('marketplace.contact.seller');
 
@@ -143,7 +143,6 @@ Route::middleware('auth')->group(function () {
 
     //Change Profile Pic
     Route::post('/profile/pic', [ProfileController::class, 'addProfilePic'])->name('profile.add.pic');
-
 });
 
 // ADMIN
