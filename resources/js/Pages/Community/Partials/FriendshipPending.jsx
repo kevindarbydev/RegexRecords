@@ -11,9 +11,7 @@ const notifyDeny = () => toast.error("Friend request denied!");
 
 dayjs.extend(relativeTime);
 
-function FriendshipPending({ friendship }) {   
-    console.log("inside FP component");
-    console.dir(friendship);
+function FriendshipPending({ friendship }) {
     const user = usePage().props.auth.user;
     const { patch } = useForm({});
     const acceptFriendship = (e) => {
@@ -27,18 +25,6 @@ function FriendshipPending({ friendship }) {
     return (
         <div class="mr-5">
             <Toaster />
-            <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                Component loaded!
-                {/*
-                {friendship.recipient.id == user.id ? (
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        {friendship.sender.name}
-                    </h5>
-                ) : (
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        {friendship.recipient.name}
-                    </h5>
-                )}
             <div class=" lg:w-[32rem] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex lg:flex-row flex-col mb-2">
                 <div className="flex-1">
                     {friendship.recipient.id == user.id ? (
@@ -88,7 +74,7 @@ function FriendshipPending({ friendship }) {
                             <div></div>
                         )}
                     </form>
-                </div>*/}
+                </div>
             </div>
         </div>
     );
