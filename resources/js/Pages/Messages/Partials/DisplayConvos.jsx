@@ -19,13 +19,13 @@ function DisplayConvos({
     }, [conversations, messagesByConversation]);
 
     function handleModalClose() {
-        setSelectedConversation(null);       
+        setSelectedConversation(null);
     }
 
-    function updateConversationList(newConversation) { 
+    function updateConversationList(newConversation) {
         setConversationsWithNames((prevConversations) => {
             return prevConversations.map((convo) => {
-                if (convo.id === newConversation.id) {                 
+                if (convo.id === newConversation.id) {
                     return {
                         ...convo,
                         mostRecentMessage: newConversation.mostRecentMessage,
@@ -58,10 +58,9 @@ function DisplayConvos({
                                 onClick={() => handleConversationClick(convo)}
                             >
                                 <div className="flex">
-                                    <p className="text-blue-500">
+                                    {/* <p className="text-blue-500">
                                         {convo.mostRecentMessage}
-                                    </p>
-                                    .
+                                    </p> */}
                                     <span className="text-blue-500 opacity-60">
                                         {convo.sender === auth.user.name
                                             ? convo.recipient
@@ -76,7 +75,7 @@ function DisplayConvos({
                                 </div>
                             </a>
                         </li>
-                    ) :  (convo.recipient !== null  && convo.recipient != "") ?(
+                    ) : (convo.recipient !== null && convo.recipient != "") ? (
                         <li className="text-blue-500 opacity-60" key={convo.id}>
                             <a
                                 href="javascript:void(0)"
@@ -93,7 +92,7 @@ function DisplayConvos({
             {/* Render the conversation modal */}
             {selectedConversation && (
                 <ConvoModal
-                auth={auth}
+                    auth={auth}
                     conversation={selectedConversation}
                     convoId={selectedConversation.id}
                     onClose={handleModalClose}
