@@ -4,7 +4,8 @@ import { Head } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm } from "@inertiajs/react";
 import { StarIcon } from "@heroicons/react/24/solid";
-import AllRatersModal from "./Partials/allRatersModal";
+import AllRatersModal from "./Partials/AllRatersModal";
+import InputError from "@/Components/InputError";
 
 export default function AlbumDetails({
     auth,
@@ -17,9 +18,8 @@ export default function AlbumDetails({
 }) {
     const subgenres = album.subgenres;
     const price = album.value;
-    
 
-    const { data, setData, patch } = useForm({
+    const { data, setData, patch, errors } = useForm({
         rating: "",
     });
     const rateAlbum = (e) => {
@@ -93,7 +93,8 @@ export default function AlbumDetails({
                                 )}
                                 {forSaleCount > 0 && (
                                     <div className="block text-lg">
-                                        {forSaleCount} available on the marketplace
+                                        {forSaleCount} available on the
+                                        marketplace
                                     </div>
                                 )}
                             </div>
@@ -149,7 +150,6 @@ export default function AlbumDetails({
                                     value="1"
                                     type="radio"
                                     name="rating"
-                                    checked
                                     onChange={(e) =>
                                         setData("rating", e.target.value)
                                     }
@@ -195,6 +195,10 @@ export default function AlbumDetails({
                             <PrimaryButton className="ml-3 self-center">
                                 RATE
                             </PrimaryButton>
+                            <InputError
+                                message={errors.rating}
+                                className="mt-2"
+                            />
                             <AllRatersModal allRaters={allRaters} />
                         </form>
                     </div>

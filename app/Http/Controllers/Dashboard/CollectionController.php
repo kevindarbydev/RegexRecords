@@ -67,21 +67,25 @@ class CollectionController extends Controller
 
     public function updateForSale(Request $request): RedirectResponse
     {
-        $cAlbum = Collection_Album::where('id', $request->cAlbum)->first();
+        try {
+            $cAlbum = Collection_Album::where('id', $request->cAlbum)->first();
 
-        error_log("test $cAlbum");
+            error_log("test $cAlbum");
 
-        if ($cAlbum->for_sale == false) {
-            $cAlbum->for_sale = true;
-        } else {
-            $cAlbum->for_sale = false;
+            if ($cAlbum->for_sale == false) {
+                $cAlbum->for_sale = true;
+            } else {
+                $cAlbum->for_sale = false;
+            }
+
+            $cAlbum->update();
+
+            error_log("test $cAlbum");
+
+            return redirect(route('dashboard.collections'));
+        } catch (\Exception) {
+            return redirect(route('dashboard.collections'))->with('failure', 'Something went wrong!');
         }
-
-        $cAlbum->update();
-
-        error_log("test $cAlbum");
-
-        return redirect(route('dashboard.collections'));
     }
 
     public function removeFromCollection(Request $request)
