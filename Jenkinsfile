@@ -1,11 +1,6 @@
 pipeline {
     agent any
-
-    tools {
-        nodejs "node"
-        composer "composer"
-    }
-
+    
     stages {
         stage('Checkout') {
             steps {
