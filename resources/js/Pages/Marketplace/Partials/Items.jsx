@@ -34,7 +34,7 @@ export default function Index({
 
     const contactSeller = (e) => {
         e.preventDefault();
-        get(route("messages.create"), { onSuccess: () => reset() });
+        post(route("marketplace.contact.seller"), { onSuccess: () => reset() });
     };
 
     return (
@@ -86,9 +86,10 @@ export default function Index({
                                                         processing={processing}
                                                         onClick={() => {
                                                             setData({
-                                                                album: album.id,
-                                                                seller: user.id,
-                                                            });
+                                                                'album': album.id,
+                                                                'seller': user.id,
+
+                                                            })
                                                         }}
                                                     >
                                                         Add to Cart
@@ -119,10 +120,11 @@ export default function Index({
                                                                     processing
                                                                 }
                                                                 onClick={() => {
-                                                                    setData(
-                                                                        "alsellerum",
-                                                                        album.id
-                                                                    );
+                                                                    setData({
+                                                                        'album': album.id,
+                                                                        'seller': user.id,
+        
+                                                                    });
                                                                 }}
                                                             >
                                                                 Add to Wishlist
@@ -139,10 +141,11 @@ export default function Index({
                                                                     processing
                                                                 }
                                                                 onClick={() => {
-                                                                    setData(
-                                                                        "userID",
-                                                                        user.id
-                                                                    );
+                                                                    setData({
+                                                                        'album': album.id,
+                                                                        'seller': user.id,
+        
+                                                                    });
                                                                 }}
                                                             >
                                                                 Contact Seller

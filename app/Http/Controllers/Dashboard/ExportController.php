@@ -6,6 +6,9 @@ use App\Models\Album;
 use App\Http\Controllers\Controller;
 use App\Models\Collection;
 use App\Models\Collection_Album;
+use App\Models\Order;
+use App\Models\Order_Item;
+use App\Models\User;
 use Error;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
@@ -25,7 +28,7 @@ class ExportController extends Controller
         ]);
     }
 
-    public function exportToCSV(): RedirectResponse
+    public function exportCollectionsToCSV(): RedirectResponse
     {
         $collections = Collection::with('user')->where('user_id', Auth::user()->id)->get();
 
@@ -47,10 +50,82 @@ class ExportController extends Controller
             }
             $handle = fopen($collection->collection_name . '.csv', 'w');
 
+            fputcsv($handle, array('Album ID', 'Album Name', 'Value', 'For Sale?'));
+
             collect($albums)->each(fn ($row) => fputcsv($handle, $row));
 
             fclose($handle);
         }
+
+        return redirect(route('dashboard.export'));
+    }
+
+    public function exportAlbumsToCSV(): RedirectResponse
+    {
+
+        $userAlbums = Album::with('user')->where('user_id', Auth::user()->id)->get();
+
+        $albums = [];
+        $i = 0;
+
+        foreach ($userAlbums as $album) {
+            $albums[$i] = array($album->id, $album->album_name);
+            $i++;
+        }
+
+        $handle = fopen('My_Albums.csv', 'w');
+
+        fputcsv($handle, array('Album ID', 'Album Name'));
+
+        collect($albums)->each(fn ($row) => fputcsv($handle, $row));
+
+        fclose($handle);
+
+        return redirect(route('dashboard.export'));
+    }
+
+    public function exportOrdersToCSV(): RedirectResponse
+    {
+        $orders = Order::with('user')->where('user_id', Auth::user()->id)->get();
+
+        $orderArray = [];
+        $i = 0;
+        $orderItemsArray = [];
+        $j = 0;
+
+        foreach ($orders as $order) {
+            $orderArray[$i] = array($order->id, $order->created_at, $order->subtotal, $order->shipping, $order->tax, $order->totalPrice);
+            $i++;
+
+            $orderItems = Order_Item::with('user')->where('order_id', $order->id)->get();
+
+            foreach ($orderItems as $orderItem) {
+                $album = Album::with('user')->where('id', $orderItem->album_id)->first();
+                $user = User::where('id', $orderItem->user_id)->first();
+
+                $orderItemsArray[$j] = array($orderItem->order_id, $album->album_name, $orderItem->price, $user->name);
+
+                $j++;
+            }
+        }
+
+        // File for all orders
+        $handle = fopen('My_Orders.csv', 'w');
+
+        fputcsv($handle, array('Order ID', 'Ordered Date', 'Subtotal', 'Tax', 'Shipping', 'Total'));
+
+        collect($orderArray)->each(fn ($row) => fputcsv($handle, $row));
+
+        fclose($handle);
+
+        // File for Items in each Order
+        $handle2 = fopen('Albums_Purchased.csv', 'w');
+
+        fputcsv($handle2, array('Order ID', 'Album Purchased', 'Price', 'Bought From'));
+
+        collect($orderItemsArray)->each(fn ($row2) => fputcsv($handle2, $row2));
+
+        fclose($handle2);
 
         return redirect(route('dashboard.export'));
     }
