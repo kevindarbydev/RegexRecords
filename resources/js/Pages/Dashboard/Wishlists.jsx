@@ -3,6 +3,10 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+ 
+dayjs.extend(relativeTime);
 
 export default function Index({ auth, wishlist_albums, cartCount, album }) {
     const { setData, processing, reset, get, patch } =
@@ -67,7 +71,7 @@ export default function Index({ auth, wishlist_albums, cartCount, album }) {
                                         />
                                     </td>
                                     <td>{item.album.artist}</td>
-                                    <td>{item.created_at}</td>
+                                    <td>{dayjs(item.created_at).format('DD/MM/YYYY')}</td>
                                     <td>
                                         <form onSubmit={removefromWishlist}>
                                             <PrimaryButton
