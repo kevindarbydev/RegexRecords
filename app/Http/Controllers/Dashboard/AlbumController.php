@@ -176,7 +176,7 @@ class AlbumController extends Controller
     {
 
         if ($request->collection_name == null) {
-            return redirect()->route('explore.viewAllAlbums');
+            return redirect()->back()->with('warning', 'You need to select a collection');
         }
 
         $collection = Collection::with('user')->where('collection_name', $request->collection_name)->first();
