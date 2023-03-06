@@ -2,14 +2,14 @@ pipeline {
     agent any
     
      tools {
-        nodejs "node"       
+        nodejs "nodejs"       
     }
 
     
     stages {
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/kevindarbydev/LaravelLivewire.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: 'jenkins']], userRemoteConfigs: [[url: 'https://github.com/kevindarbydev/LaravelLivewire.git']]])
             }
         }
      stage('Install') {
