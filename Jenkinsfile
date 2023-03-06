@@ -1,8 +1,7 @@
-withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'MY_USERNAME', passwordVariable: 'MY_TOKEN')]) {
 pipeline {
-    agent any
+     agent any
     
-     tools {
+         tools {
         nodejs "node"       
     }
     
@@ -26,10 +25,10 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                 // Push changes to deploy branch                
+               withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'MY_USERNAME', passwordVariable: 'MY_TOKEN')]) {         
                 sh "git push -u origin HEAD:deploy"
+               }
             }
         }
     }
-}
 }
