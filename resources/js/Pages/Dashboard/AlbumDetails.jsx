@@ -4,7 +4,7 @@ import { Head } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm } from "@inertiajs/react";
 import { StarIcon } from "@heroicons/react/24/solid";
-import AllRatersModal from "./Partials/allRatersModal";
+import AllRatersModal from "./Partials/AllRatersModal";
 
 export default function AlbumDetails({
     auth,
