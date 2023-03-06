@@ -20,8 +20,8 @@ pipeline {
             sh 'npm ci'
         }
         composer 'composer'
-    }
-}
+            }
+        }
 
 
         stage('Build Assets') {
