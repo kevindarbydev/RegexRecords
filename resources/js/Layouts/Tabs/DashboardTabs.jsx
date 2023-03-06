@@ -14,16 +14,6 @@ export default function DashboardTabs() {
                         active={route().current("dashboard.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Add New Album
-                        </span>
-                    </NavLink>
-                </Tab>
-                <Tab>
-                    <NavLink
-                        href={route("dashboard.index")}
-                        active={route().current("dashboard.index")}
-                    >
-                        <span className=" dark:text-white dark:hover:bg-gray-700">
                             My Albums
                         </span>
                     </NavLink>
