@@ -28,7 +28,9 @@ pipeline {
         stage('Deploy') {
             steps {
                  // Push changes to deploy branch
-                 sh "git push -u origin jenkins"
+                 sh "git checkout -b cicd"
+                 sh "git push -u origin cicd"
+
             }
         }
     }
