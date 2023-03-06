@@ -12,8 +12,8 @@ class CreateAcquaintancesFriendshipTable extends Migration
 
         Schema::create(config('acquaintances.tables.friendships'), function (Blueprint $table) {
             $table->id();
-            $table->morphs('sender');
-            $table->morphs('recipient');
+            $table->string('sender')->default('App\Models\User')->change();
+            $table->string('recipient')->default('App\Models\User')->change();
             $table->string('status')->default('pending')->comment('pending/accepted/denied/blocked/');
             $table->timestamps();
         });
