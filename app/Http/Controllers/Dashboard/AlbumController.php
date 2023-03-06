@@ -189,7 +189,7 @@ class AlbumController extends Controller
         $cAlbum2 = DB::table('collection__albums')->where('collection_id', $cAlbum->collection_id)->where('album_id', $cAlbum->album_id)->first();
 
         if ($cAlbum2 != null) {
-            return redirect()->route('explore.viewAllAlbums');
+            return redirect()->back()->with('warning', 'You already added this album to your collection!');
         }
 
         $collection->collection_albums()->save($cAlbum);
