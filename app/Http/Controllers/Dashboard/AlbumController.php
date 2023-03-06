@@ -83,12 +83,12 @@ class AlbumController extends Controller
                 // Upload the cover image to DigitalOcean Spaces bucket and get the URL
                 $cover_image_spaces_url = $spaceController->uploadCoverImageToSpace($cover_image_url);
 
-                //Assign the data from API to the saved album
+                //save these fields as whatever the API returns
                 $validated['cover_image_url'] = $cover_image_spaces_url;
-
-                $validated['genre'] = $item['genre'][0]; //TODO: change genre to json() to capture all genres in the response
-
+                $validated['genre'] = $item['genre'][0]; 
                 $validated['subgenres'] = $item['style'];
+                $validated['artist'] = $artistName;
+                $validated['album_name'] = $albumName;
 
                 $validated['discogs_album_id'] = $item['master_id']; // discogs_album_id is the ID thats used for the 2nd API request
                 error_log("master ID: " . $item['master_id']);
@@ -99,11 +99,7 @@ class AlbumController extends Controller
                 $titleParts = explode(' - ', $title);
                 $artistName = $titleParts[0];
                 $albumName = $titleParts[1];
-                //save these fields as whatever the API returns
-                $validated['artist'] = $artistName;
-                $validated['album_name'] = $albumName;
-
-
+                
                 //perform 2nd API call with discogs_album_id
                 $data2 = Http::get("https://api.discogs.com/masters/{$item['master_id']}")->json();
                 if (!empty($data2)) {
