@@ -4,7 +4,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import dashcarousel_explore from "../../../../../public/storage/dashcarousel_explore.jpg";
 import dashcarousel_community from "../../../../../public/storage/dashcarousel_community.jpg";
 import dashcarousel_marketplace from "../../../../../public/storage/dashcarousel_marketplace.jpg";
-dashcarousel_community;
+
 export default function DashCarousel() {
     return (
         <div className="carousel-wrapper m-auto w-5/6 custom-font-outline">

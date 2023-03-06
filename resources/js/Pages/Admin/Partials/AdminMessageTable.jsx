@@ -2,14 +2,9 @@ import React, { useState } from "react";
 import AdminDeleteButton from "./AdminDeleteButton";
 function AdminMessageTable({ messages, csrf }) {
     const [messageList, setMessageList] = useState(messages || []);
-
-    //console.log(messages.isArra)
-    console.log("m:" + messages);
-    console.dir(messageList);
     
     const handleDelete = async (messageId) => {
-        console.log("id: " + messageId);
-        console.log("csrf: " + csrf);
+   
         if (window.confirm("Are you sure you want to delete this message?")) {
             try {
                 const response = await fetch(`/admin/messages/${messageId}`, {
@@ -19,15 +14,15 @@ function AdminMessageTable({ messages, csrf }) {
                     },
                 });
                 if (response.ok) {
-                    console.log("success: " + response);
+              
                     setMessageList(
                         messageList.filter((m) => m.id !== messageId)
                     );
                 } else {
-                    console.log("error: " + response);
+         
                 }
             } catch (error) {
-                console.error("Error deleting message:", error);
+             
             }
         }
     };

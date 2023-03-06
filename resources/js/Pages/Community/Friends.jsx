@@ -2,8 +2,8 @@ import React from "react";
 import { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import Friendship from "./Partials/Friendship";
-import FriendshipPending from "./Partials/FriendshipPending";
+import Friendship  from "./Partials/Friendship";
+import FriendshipPending  from "./Partials/FriendshipPending";
 import CommunityTabs from "@/Layouts/Tabs/CommunityTabs";
 import {
     UsersIcon,
@@ -46,10 +46,23 @@ function Friends({
             </div>
         );
     } else if (currentComp === "pending") {
+        console.log("pending");
+
+        console.log("current friends");
+        console.dir(currentFriendships);
+
+        console.log("pending friends");
+        console.dir(pendingFriendships);
+        console.log("--------------------------");
+        pendingFriendships.forEach((friendship) => {
+        
+            console.dir(friendship);
+        });
+        console.log("--------------------------");
         componentToShow = (
             <div className="flex flex-col lg:flex-wrap m-10 h-screen">
                 {pendingFriendships.map((friendship) =>
-                    //  FIXME: works for now, but will try and set FK relationship in DB and set friendships to cascade delete on user delete
+                    // FIXME: works for now, but will try and set FK relationship in DB and set friendships to cascade delete on user delete
                     friendship.sender == null ||
                     friendship.recipient == null ? (
                         <></>
@@ -62,6 +75,7 @@ function Friends({
                 )}
             </div>
         );
+        console.log("if it didnt crash, problem found");
     }
 
     return (

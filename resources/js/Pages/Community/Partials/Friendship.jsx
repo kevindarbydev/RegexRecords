@@ -7,6 +7,7 @@ import { Link } from "@inertiajs/react";
 dayjs.extend(relativeTime);
 
 function Friendship({ friendship, user }) {
+    console.log("inside friendship component");
     return (
         <div class="mr-5">
             <div class="lg:w-[32rem] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex lg:flex-row flex-col mb-2">
