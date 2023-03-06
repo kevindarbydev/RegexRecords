@@ -8,8 +8,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-               checkout([$class: 'GitSCM', branches: [[name: 'jenkins']], userRemoteConfigs: [[url: 'https://github.com/kevindarbydev/LaravelLivewire.git']]])
-                sh "git fetch origin main:main"
+               checkout([$class: 'GitSCM', branches: [[name: 'jenkins']], userRemoteConfigs: [[url: 'https://github.com/kevindarbydev/RegexRecords.git']]])
+                sh "git fetch origin main:main --force"
                 sh "git checkout main"
             }
         }
