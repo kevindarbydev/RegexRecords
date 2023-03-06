@@ -85,26 +85,26 @@ class AlbumController extends Controller
 
                 //save these fields as whatever the API returns
                 $validated['cover_image_url'] = $cover_image_spaces_url;
-                $validated['genre'] = $item['genre'][0]; 
+                $validated['genre'] = $item['genre'][0];
                 $validated['subgenres'] = $item['style'];
-                $validated['artist'] = $artistName;
-                $validated['album_name'] = $albumName;
+                $validated['artist'] = $artist_name;
+                $validated['album_name'] = $album_name;
 
                 $validated['discogs_album_id'] = $item['master_id']; // discogs_album_id is the ID thats used for the 2nd API request
                 error_log("master ID: " . $item['master_id']);
-               
+
                 $title = $item['title'];
 
                 // Split the title string on the dash and assume the first part is the artist name and the second part is the album name
                 $titleParts = explode(' - ', $title);
-                $artistName = $titleParts[0];
-                $albumName = $titleParts[1];
-                
+                $artist_name = $titleParts[0];
+                $album_name = $titleParts[1];
+
                 //perform 2nd API call with discogs_album_id
                 $data2 = Http::get("https://api.discogs.com/masters/{$item['master_id']}")->json();
                 if (!empty($data2)) {
                     error_log("year: " . $data2['year']);
-                    error_log("price: " .$data2['lowest_price']);
+                    error_log("price: " . $data2['lowest_price']);
 
 
 
@@ -196,7 +196,7 @@ class AlbumController extends Controller
         return redirect()->route('dashboard.collections');
     }
 
-    // rate album 
+    // rate album
     public function rate(Request $request, Album $album): RedirectResponse
     {
         $user = Auth()->user();
