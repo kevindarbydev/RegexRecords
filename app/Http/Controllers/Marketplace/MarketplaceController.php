@@ -19,11 +19,9 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
 use App\Models\Conversation;
 use App\Models\User;
-use Error;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
-use PSpell\Config;
+use App\Models\Status;
 
 class MarketplaceController extends Controller
 {
@@ -125,6 +123,4 @@ class MarketplaceController extends Controller
     {
         Cart::remove($request->rowId);
     }
-
-
 }

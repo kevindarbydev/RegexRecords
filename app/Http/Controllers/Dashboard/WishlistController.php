@@ -6,9 +6,11 @@ use App\Models\Wishlist;
 use App\Models\Wishlist_Album;
 use App\Models\Album;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -29,16 +31,25 @@ class WishlistController extends Controller
     public function addAlbumToWishlist(Request $request): RedirectResponse
     {
 
+        $user = User::where('id', Auth::user()->id)->first();
         $wishlist = Wishlist::where('id', 1)->first();
-        
+
+        if ($wishlist == null) {
+            $wishlist = new Wishlist();
+            $wishlist->user_id = $user->id;
+            $wishlist->list_name = 'My Wishlist';
+
+            $user->wishlists()->save($wishlist);
+        }
+
         $wAlbum = new Wishlist_Album();
         $wAlbum->wishlist_id = 1;
-        $wAlbum->album_id = $request->album;        
+        $wAlbum->album_id = $request->album;
 
         $album_id = $request->album;
         $duplicate = Wishlist_Album::where('album_id', $album_id)->count();
 
-        if ($duplicate ==0) {
+        if ($duplicate == 0) {
 
             $wishlist->wishlist_albums()->save($wAlbum);
             return redirect()->route('dashboard.wishlists');
@@ -52,12 +63,9 @@ class WishlistController extends Controller
     {
 
         $wAlbum = Wishlist_Album::where('id', $request->album_id)->first();
-        
-        $wAlbum->delete();  
+
+        $wAlbum->delete();
 
         return redirect(route('dashboard.wishlists'));
-
-
     }
-
 }
