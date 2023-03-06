@@ -135,8 +135,8 @@ class AlbumController extends Controller
                     }
                 } else {
                     // The second API call failed
-                    $status_code = $response2->status();
-                    $error_message = $response2->body();
+                    $status_code = $data2->status();
+                    $error_message = $data2->body();
                     error_log("2nd API Call -> " .  $status_code . ': ' . $error_message);
                 }
             }

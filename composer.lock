@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4756d89453d8a06de268e210288eaf8",
+    "content-hash": "9a8931d73e29c436d82dd262f322c734",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2624,16 +2624,16 @@
         },
         {
             "name": "multicaret/laravel-acquaintances",
-            "version": "v3.5.7",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/multicaret/laravel-acquaintances.git",
-                "reference": "27b4186e8ae03d6a46848c50fce46bef14af54ea"
+                "url": "https://github.com/kevindarbydev/custom-laravel-friends.git",
+                "reference": "f31085e8b985931f5a69f529cd9f545eb02880d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/multicaret/laravel-acquaintances/zipball/27b4186e8ae03d6a46848c50fce46bef14af54ea",
-                "reference": "27b4186e8ae03d6a46848c50fce46bef14af54ea",
+                "url": "https://api.github.com/repos/kevindarbydev/custom-laravel-friends/zipball/f31085e8b985931f5a69f529cd9f545eb02880d9",
+                "reference": "f31085e8b985931f5a69f529cd9f545eb02880d9",
                 "shasum": ""
             },
             "require": {
@@ -2647,6 +2647,7 @@
                 "mockery/mockery": "1.0.x-dev",
                 "phpunit/phpunit": "5.*"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -2660,7 +2661,17 @@
                     "Multicaret\\Acquaintances\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Tests\\": "tests/"
+                },
+                "classmap": [
+                    "vendor/laravel/laravel/tests/TestCase.php"
+                ],
+                "files": [
+                    "tests/helpers.php"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -2672,10 +2683,8 @@
             ],
             "description": "This light package, with no dependencies, gives Eloquent models the ability to manage friendships (with groups). And interactions such as: Likes, favorites, votes, subscribe, follow, ..etc. And it includes advanced rating system.",
             "keywords": [
-                "Followers",
-                "Rate",
-                "Rating",
                 "eloquent",
+                "followers",
                 "followships",
                 "friend-system",
                 "friends",
@@ -2683,14 +2692,15 @@
                 "interactions",
                 "laravel",
                 "like",
+                "rate",
+                "rating",
                 "social-media",
                 "wish-list"
             ],
             "support": {
-                "issues": "https://github.com/multicaret/laravel-acquaintances/issues",
-                "source": "https://github.com/multicaret/laravel-acquaintances/tree/v3.5.7"
+                "source": "https://github.com/kevindarbydev/custom-laravel-friends/tree/v2.0.1"
             },
-            "time": "2023-02-16T16:37:06+00:00"
+            "time": "2023-03-06T16:51:46+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -9158,7 +9168,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "multicaret/laravel-acquaintances": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -3,13 +3,11 @@ import AdminDeleteButton from "./AdminDeleteButton";
 
 function AdminUserTable(props) {
     const [userList, setUserList] = useState(props.users);
-    console.log(props.currentUser);
 
     const handleDelete = async (userId) => {
-        console.log("id: " + userId);
-        console.log("csrf: " + props.csrf);
+    
          if (userId === props.currentUser) {
-             return; //TOAST
+             return;
          }
         if (
             window.confirm("Are you sure you want to delete this user?")
@@ -21,9 +19,7 @@ function AdminUserTable(props) {
                     "X-CSRF-TOKEN": props.csrf,
                 },
             });
-            if (response.ok) {
-                console.log(response);
-                // remove the deleted album from the list of albums
+            if (response.ok) {         
                 setUserList(userList.filter((user) => user.id !== userId));
             } else {
                 console.log(response);

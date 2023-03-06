@@ -5,8 +5,7 @@ function AdminAlbumTable({ albums, csrf }) {
     const [albumList, setAlbums] = useState(albums);
 
     const handleDelete = async (itemId) => {
-        console.log("id: " + itemId);
-        console.log("csrf: " + csrf);
+   
         if (window.confirm("Are you sure you want to delete this album?")) {
             try {
                 const response = await fetch(`/admin/albums/${itemId}`, {
@@ -15,12 +14,11 @@ function AdminAlbumTable({ albums, csrf }) {
                         "X-CSRF-TOKEN": csrf,
                     },
                 });
-                if (response.ok) {
-                    console.log(response);
+                if (response.ok) {                 
                     // remove the deleted album from the list of albums
                     setAlbums(albumList.filter((album) => album.id !== itemId));
                 } else {
-                    console.log(response);
+                 
                 }
             } catch (error) {
                 console.error("Error deleting album:", error);

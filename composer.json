@@ -6,6 +6,12 @@
         "framework",
         "laravel"
     ],
+    "repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/kevindarbydev/custom-laravel-friends.git"
+    }
+],
     "license": "MIT",
     "require": {
         "php": "^8.1",
@@ -20,7 +26,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
-        "multicaret/laravel-acquaintances": "^3.5",
+        "multicaret/laravel-acquaintances": "dev-master#v2.0.1",
         "sendgrid/sendgrid": "^8.0",
         "srmklive/paypal": "~1.0",
         "stripe/stripe-php": "^10.8",
