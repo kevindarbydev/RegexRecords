@@ -47,42 +47,58 @@ function DisplayConvos({
     }
 
     return (
-        <div className="flex">
-            <ul className="space-y-4">
+        <div className="w-full bg-white rounded-lg shadow">
+            <ul className="divide-y divide-gray-300">
                 {conversationsWithNames.map((convo) =>
                     convo.mostRecentMessage ? (
-                        <li key={convo.id}>
+                        <li
+                            key={convo.id}
+                            className="cursor-pointer hover:bg-gray-100 transition duration-150 ease-in-out"
+                        >
                             <a
-                                href="javascript:void(0)"
-                                className="convo-link"
+                                href="#"
+                                className="block px-4 py-3"
                                 onClick={() => handleConversationClick(convo)}
                             >
-                                <div className="flex">
-                                    {/* <p className="text-blue-500">
-                                        {convo.mostRecentMessage}
-                                    </p> */}
-                                    <span className="text-blue-500 opacity-60">
-                                        {convo.sender === auth.user.name
-                                            ? convo.recipient
-                                            : convo.sender}
-                                    </span>
-                                    |
-                                    <span className="text-blue-500 opacity-60">
+                                <div className="flex justify-between">
+                                    <div className="flex flex-col">
+                                        <h3 className="font-bold text-gray-800">
+                                            {convo.sender === auth.user.name
+                                                ? convo.recipient
+                                                : convo.sender}
+                                        </h3>
+                                        <p className="text-gray-600">
+                                            {convo.mostRecentMessage}
+                                        </p>
+                                    </div>
+                                    <div className="text-gray-600 text-sm">
                                         {new Date(
                                             convo.timeOfMsg
-                                        ).toLocaleString()}{" "}
-                                    </span>
+                                        ).toLocaleString()}
+                                    </div>
                                 </div>
                             </a>
                         </li>
-                    ) : (convo.recipient !== null && convo.recipient != "") ? (
-                        <li className="text-blue-500 opacity-60" key={convo.id}>
+                    ) : convo.recipient !== null && convo.recipient != "" ? (
+                        <li
+                            key={convo.id}
+                            className="cursor-pointer hover:bg-gray-100 transition duration-150 ease-in-out"
+                        >
                             <a
                                 href="javascript:void(0)"
-                                className="convo-link"
+                                className="block px-4 py-3"
                                 onClick={() => handleConversationClick(convo)}
                             >
-                                No messages with {convo.recipient}
+                                <div className="flex justify-between">
+                                    <div className="flex flex-col">
+                                        <h3 className="font-bold text-gray-800">
+                                            {convo.recipient}
+                                        </h3>
+                                        <p className="text-gray-600">
+                                            No messages with {convo.recipient}
+                                        </p>
+                                    </div>
+                                </div>
                             </a>
                         </li>
                     ) : null
