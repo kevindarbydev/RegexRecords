@@ -30,8 +30,11 @@ function Index({
         setShowModal(false);
         location.reload(); //reloading to show conversation, may improve later (use state instead)
     }
-
-
+    console.log("----------------------------------------------------------------");
+    console.dir(messagesByConversation);
+ console.log(
+     "----------------------------------------------------------------"
+ );
     useEffect(() => {
         // Fetch the CSRF token from the server and store it in state
         fetch("/csrf-token")

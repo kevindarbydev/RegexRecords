@@ -30,14 +30,12 @@ export default function Index({
         const delay = setTimeout(() => {
             const currentQuery = searchQuery.trim();
             if (!currentQuery) {
-               
                 setSearchResults([]);
                 setShowDropdown(false);
                 return;
-            }    
+            }
             const res = search(currentQuery)
                 .then((results) => {
-                   
                     setSearchResults(results);
                     setShowDropdown(true);
                 })
@@ -59,10 +57,10 @@ export default function Index({
             return;
         }
 
-        if (!albumName || !artist) {          
+        if (!albumName || !artist) {
             const impreciseQuery = albumName || artist;
             setSearchQuery(impreciseQuery);
-        } else {           
+        } else {
             setSearchQuery(`${albumName},${artist}`);
         }
     };
@@ -73,11 +71,11 @@ export default function Index({
 
     const handleDropdownItemClick = (result) => {
         const [artist, album_name] = result.title.split(" - ");
-       setData((prevData) => ({
-           ...prevData,
-           album_name: album_name,
-           artist: artist,
-       }));    
+        setData((prevData) => ({
+            ...prevData,
+            album_name: album_name,
+            artist: artist,
+        }));
         setShowDropdown(false);
     };
 
@@ -86,7 +84,7 @@ export default function Index({
             acc.push(current);
         }
         return acc;
-    }, []);
+    }, searchResults.slice(0, 1)); // initialize the accumulator with the first element of the array
 
     const submit = (e) => {
         e.preventDefault();
