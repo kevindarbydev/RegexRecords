@@ -69,19 +69,17 @@ class FriendController extends Controller
 
         $friendCollections = Collection::where('user_id', $friend->id)->get();
         $ids = [];
+        $totalLikes = [];
         $i = 0;
         foreach ($friendCollections as $collection) {
             $ids[$i] = [$collection->id];
+            $totalLikes[$i] = [$collection->id, $collection->likersCount()];
             $i++;
         }
         $friendsCollectionsWithAlbums = Collection_Album::with('collection', 'album')->whereIn('collection_id', $ids)->get();
         $mutualFriends = $user->getMutualFriends($friend);
         $mutualFriendsCount = $user->getMutualFriendsCount($friend);
 
-        $likeStatus = $user->likes(Collection::class)->get();
-
-
-        error_log("LIKE STATUS: $likeStatus");
         return Inertia::render('Community/FriendDetails', [
             'friend' => $friend,
             'cartCount' => Cart::count(),
@@ -89,7 +87,7 @@ class FriendController extends Controller
             'mutualFriendsCount' => $mutualFriendsCount,
             'friendCollections' => $friendCollections,
             'friendsCollectionsWithAlbums' => $friendsCollectionsWithAlbums,
-            'likeStatus' => $likeStatus,
+            'totalLikes' => $totalLikes
         ]);
     }
 

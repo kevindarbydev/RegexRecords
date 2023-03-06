@@ -4,6 +4,7 @@ import { Fragment, useState } from "react";
 export default function CollectionModal({
     collection,
     friendsCollectionsWithAlbums,
+    totalLikes,
 }) {
     let [isOpen, setIsOpen] = useState(false);
 
@@ -23,9 +24,20 @@ export default function CollectionModal({
                     onClick={openModal}
                     className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                 >
-                    <h5 className="mt-2 mb-2 text-center">
-                        {collection.collection_name}
-                    </h5>
+                    <div className="flex flex-col">
+                        <h5 className="mt-2 mb-2 mr-auto">
+                            {collection.collection_name}
+                        </h5>
+                        <p className="self-center mr-auto">
+                            {totalLikes.map((t) =>
+                                t[0] == collection.id ? (
+                                    <span>#likes: {t[1]}</span>
+                                ) : (
+                                    <></>
+                                )
+                            )}
+                        </p>
+                    </div>
                 </button>
             </div>
 
