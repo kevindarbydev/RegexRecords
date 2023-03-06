@@ -110,7 +110,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     //CRUD Orders-----------------------
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/order_items', [OrderController::class, 'showOrderItems'])->name('marketplace.orders.order_items');
-    Route::post('/orders', [MarketplaceController::class, 'addAlbumToOrder'])->name('marketplace.album.to.order');
+    Route::get('/orders/albums/sold', [OrderController::class, 'showAlbumsSold'])->name('marketplace.orders.albums.sold');
+    // Route::post('/orders', [MarketplaceController::class, 'addAlbumToOrder'])->name('marketplace.album.to.order');
+    Route::patch('/orders/status', [OrderController::class, 'changeOrderStatus'])->name('marketplace.orders.change.status');
+    Route::patch('/orders/item/shipped', [OrderController::class, 'itemShipped'])->name('marketplace.orders.item.shipped');
+    Route::patch('/orders/item/received', [OrderController::class, 'itemReceived'])->name('marketplace.orders.item.received');
 
     //Order History-----------------------
     Route::post('/orders/store', [OrderItemController::class, 'store'])->name('order_item.store');

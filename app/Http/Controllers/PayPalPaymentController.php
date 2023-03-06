@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Album;
 use App\Models\Collection;
 use App\Models\Collection_Album;
+use App\Models\ItemStatus;
 use App\Models\Order;
 use App\Models\Order_Item;
+use App\Models\OrderStatus;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -101,6 +103,7 @@ class PayPalPaymentController extends Controller
         $order->shipping = $shipping;
         $order->totalPrice = $subtotal + $tax + $shipping;
         $order->user_id = $user->id;
+        $order->status = OrderStatus::Submitted;
 
         $newOrder = $request->user()->orders()->save($order);
 
@@ -123,6 +126,7 @@ class PayPalPaymentController extends Controller
                     $orderItem->album_id = $album->id;
                     $orderItem->price = $items[$j]->price;
                     $orderItem->user_id = $collection->user_id;
+                    $orderItem->status = ItemStatus::Sold;
 
                     $newOrder->order_item()->save($orderItem);
 

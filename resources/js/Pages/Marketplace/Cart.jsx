@@ -70,7 +70,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
                                     <p className="mt-4">{cartItem.name}</p>
                                 </th>
                                 <td className="px-6 py-4">
-                                    ${cartItem.price}
+                                    ${(cartItem.price).toFixed(2)}
                                 </td>
                                 <td className="px-6 py-4">
                                     <Dropdown>

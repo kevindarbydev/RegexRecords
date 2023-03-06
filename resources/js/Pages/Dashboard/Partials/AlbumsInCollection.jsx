@@ -61,7 +61,7 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                         </p>
                                     </th>
                                     <td class="px-6 py-4">{album.artist}</td>
-                                    <td class="px-6 py-4">{album.value}$</td>
+                                    <td class="px-6 py-4">${(album.value).toFixed(2)}</td>
                                     {collection_album.for_sale == 0 ? (
                                         <>
                                             <td className="px-6 py-4">

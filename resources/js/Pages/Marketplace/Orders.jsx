@@ -6,11 +6,11 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
- 
+
 dayjs.extend(relativeTime);
 
-export default function Orders({ auth, orders, cartCount }) {
-    const { data, setData, post, processing, reset, errors, get } = useForm({
+export default function Orders({ auth, orders, cartCount, orderStatus, itemStatus }) {
+    const { data, setData, post, patch, processing, reset, errors, get } = useForm({
         sort: "",
         order: "",
     });
@@ -18,6 +18,14 @@ export default function Orders({ auth, orders, cartCount }) {
     const orderDetails = (e) => {
         e.preventDefault();
         get(route("marketplace.orders.order_items"), {
+            onSuccess: () => reset(),
+        });
+    };
+
+    const submit = (e) => {
+        console.log("submit button works");
+        e.preventDefault();
+        patch(route("marketplace.orders.change.status"), {
             onSuccess: () => reset(),
         });
     };
@@ -50,6 +58,9 @@ export default function Orders({ auth, orders, cartCount }) {
                                 Total Price
                             </th>
                             <th scope="col" class="px-10 py-3">
+                                Status
+                            </th>
+                            <th scope="col" class="px-10 py-3">
                                 Actions
                             </th>
                         </thead>
@@ -61,10 +72,11 @@ export default function Orders({ auth, orders, cartCount }) {
                                     <td>${(order.shipping).toFixed(2)}</td>
                                     <td>${(order.tax).toFixed(2)}</td>
                                     <td>${(order.totalPrice).toFixed(2)}</td>
+                                    <td>{order.status}</td>
                                     <td>
                                         <form onSubmit={orderDetails}>
                                             <PrimaryButton
-                                                className="mt-4"
+                                                className="mt-2 mb-2"
                                                 processing={processing}
                                                 onClick={() => {
                                                     setData("order", order.id);

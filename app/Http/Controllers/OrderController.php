@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ItemStatus;
 use App\Models\Order;
 use App\Models\Order_Item;
+use App\Models\OrderStatus;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,6 +22,8 @@ class OrderController extends Controller
         return Inertia::render('Marketplace/Orders', [
             'orders' => Order::with('order_item', 'user')->where('user_id', Auth::user()->id)->latest()->get(),
             'cartCount' => Cart::count(),
+            'orderStatus' => OrderStatus::cases(),
+            'itemStatus' => ItemStatus::cases(),
         ]);
     }
 
@@ -75,13 +79,65 @@ class OrderController extends Controller
         ]);
     }
 
-    public function showPurchases(Request $request): Response
+    public function showAlbumsSold()
     {
-
-        return Inertia::render('Marketplace/OrderItems', [
+        return Inertia::render('Marketplace/AlbumsSold', [
             //return order items
             'order_items' => Order_Item::with('user', 'album')->where('user_id', Auth::user()->id)->latest()->get(),
             'cartCount' => Cart::count(),
         ]);
+    }
+
+    public function itemShipped(Request $request): RedirectResponse
+    {
+        $orderItem = Order_Item::with('user', 'order')->where('id', $request->orderItem)->first();
+
+        $orderItem->status = ItemStatus::Shipped;
+
+        $orderItem->update();
+
+        $order = Order::with('user')->where('id', $orderItem->order_id)->first();
+
+        $order->status = OrderStatus::Processed;
+
+        $order->update();
+
+        return redirect(route('marketplace.orders.albums.sold'));
+    }
+
+    public function itemReceived(Request $request): RedirectResponse
+    {
+        $orderItem = Order_Item::with('user', 'order')->where('id', $request->orderItem)->first();
+
+        $orderItem->status = ItemStatus::Received;
+
+        $orderItem->update();
+
+        $orderItems = Order_Item::with('user', 'order')->where('order_id', $orderItem->order_id)->get();
+
+        $items = [];
+        $i = 0;
+
+        foreach ($orderItems as $item) {
+            $items[$i] = $item->status;
+            $i++;
+        }
+
+        $count = 0;
+
+        for ($j = 0; $j < sizeof($items); $j++) {
+            if ($items[$j] == "Received") {
+                $count++;
+            }
+            error_log($items[$j]);
+        }
+
+        if ($count == sizeof($items)) {
+            $order = Order::with('user')->where('id', $orderItem->order_id)->first();
+            $order->status = OrderStatus::Completed;
+
+            $order->update();
+        }
+        return redirect(route('orders.index'));
     }
 }
