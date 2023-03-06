@@ -2,7 +2,7 @@ pipeline {
     agent any
     
      tools {
-        nodejs "null"       
+        nodejs "node"       
     }
 
     
