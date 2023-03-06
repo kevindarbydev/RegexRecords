@@ -1,0 +1,89 @@
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
+
+export default function LikedInfoModal({ likesInfo, collection }) {
+    let [isOpen, setIsOpen] = useState(false);
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    return (
+        <div>
+            <div>
+                <button
+                    type="button"
+                    onClick={openModal}
+                    className="rounded-md bg-black bg-opacity-20 px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                >
+                    {/* content of likesInfo:
+                     * likeInfo[0] = collection id
+                     * likeInfo[1] = # of likes for collection
+                     * likeInfo[2] = all users who liked the collection
+                     */}
+                    {likesInfo.map((likeInfo) =>
+                        likeInfo[0] == collection.id ? (
+                            <span>#likes: {likeInfo[1]}</span>
+                        ) : (
+                            <></>
+                        )
+                    )}
+                </button>
+            </div>
+
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <div className="self-center mr-auto text-gray-500">
+                                        {likesInfo.map((likeInfo) =>
+                                            likeInfo[0] == collection.id ? (
+                                                <>
+                                                    {likeInfo[2].map((user) => (
+                                                        <div className="flex flex-col">
+                                                            <span>
+                                                                {user.name}{" "}
+                                                            </span>
+                                                        </div>
+                                                    ))}
+                                                </>
+                                            ) : (
+                                                <></>
+                                            )
+                                        )}
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
+        </div>
+    );
+}

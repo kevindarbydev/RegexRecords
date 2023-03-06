@@ -9,10 +9,11 @@ import Album from "@/Pages/Dashboard/Partials/Album";
 
 import { MusicalNoteIcon } from "@heroicons/react/24/solid";
 import Collection_Album from "./Collection_Album";
+import LikedInfoModal from "./LikedInfoModal";
 
 dayjs.extend(relativeTime);
 
-export default function Collection({ collection }) {
+export default function Collection({ collection, likesInfo }) {
     const { auth } = usePage().props;
 
     const [editing, setEditing] = useState(false);
@@ -35,9 +36,17 @@ export default function Collection({ collection }) {
                     <div className="flex justify-between items-center">
                         <div className="flex flex-row">
                             <MusicalNoteIcon className="mr-2 w-4 h-4 self-center" />
-                            <span className="text-gray-800 dark:text-white">
-                                {collection.collection_name}
-                            </span>
+                            <div className="flex flex-col">
+                                <span className="text-gray-800 dark:text-white">
+                                    {collection.collection_name}
+                                </span>
+                                <p className="self-center mr-auto text-gray-500">
+                                    <LikedInfoModal
+                                        collection={collection}
+                                        likesInfo={likesInfo}
+                                    />
+                                </p>
+                            </div>
                             {collection.created_at !==
                                 collection.updated_at && (
                                 <small className="text-sm text-gray-600 self-center ml-2">

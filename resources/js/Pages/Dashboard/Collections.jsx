@@ -14,8 +14,10 @@ export default function Index({
     collections,
     collection_albums,
     albums,
-    cartCount
+    cartCount,
+    likesInfo,
 }) {
+    console.log(likesInfo);
     const [currentComp, setCurrentComp] = useState();
     const [isShowing, setIsShowing] = useState(true);
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -131,6 +133,9 @@ export default function Index({
                                                                 }
                                                                 collection={
                                                                     collection
+                                                                }
+                                                                likesInfo={
+                                                                    likesInfo
                                                                 }
                                                             />
                                                             <button
