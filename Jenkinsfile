@@ -1,3 +1,4 @@
+withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'MY_USERNAME', passwordVariable: 'MY_TOKEN')]) {
 pipeline {
     agent any
     
@@ -30,4 +31,5 @@ pipeline {
             }
         }
     }
+}
 }
