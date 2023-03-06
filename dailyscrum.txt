@@ -792,4 +792,67 @@ artist, album and artist+album
 - Order Details
 3. Need assistance / figure things out:
 
+------------------------------------------------------------------
+3/06/2023 Kevin
+1. Done/not done since last scrum:
+-misc bug fixes
+-some mobile formatting
+-improved 2nd API call
+(tracklist + year should be more accurate)
+-set up emailing w sendgrid
+2. To do until next Scrum:
+- implement MustVerifyEmail
+- more bug fixes
+- continue jenkins config
+3. Need assistance / figure things out:
+-
+
+3/06/2023 Matthew
+1. Done/not done since last scrum:
+- Regular Stripe checkout implemented
+- Removing listings after sold
+- Export user's collections, albums and orders to csv
+- Modified Orders/OrderItems table to show status
+2. To do until next Scrum:
+- Show Albums a user has sold
+- assist in bughunt
+3. Need assistance / figure things out:
+
+
+3/06/2023 Chris
+1. Done/not done since last scrum:
+- landing page w/carousel
+- phpUnit unit testing
+- worked on export to csv
+2. To do until next Scrum:
+- final styling
+- bug hunting
+- populating hosted version
+- add new album/my albums finalize split
+- finalize explore contoller/section
+- code cleanup (unused imports, comments, etc)
+3. Need assistance / figure things out:
+- unit testing album inputs
+
+3/06/2023 Seena
+1. Done/not done since last scrum:
+- user can view friends' collection & like it
+- user can view mutual friends
+- likers & #of likes showing on users' collection
+2. To do until next Scrum:
+- general ui/ux (flash messages where appropriate)
+- bug hunt start
+3. Need assistance / figure things out:
+-
+
+3/06/2023 Nathaniel
+1. Done/not done since last scrum:
+- Modified Conversations table
+- New Conversation created when contacting seller
+- Tab formating
+2. To do until next Scrum:
+- Show messages/conversations created with seller
+- Messages between user and seller
+3. Need assistance / figure things out:
+- Messages
 
