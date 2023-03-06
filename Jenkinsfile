@@ -13,9 +13,8 @@ pipeline {
             }
         }
      stage('Install') {
-          steps {
-              sh 'npm install'
-   
+          steps {             
+              sh 'npm ci'   
             }
         }  
 
@@ -29,7 +28,7 @@ pipeline {
         stage('Deploy') {
             steps {
                  // Push changes to deploy branch
-                 sh "git push origin testing:deploy"
+                 sh "git push origin jenkins:deploy"
             }
         }
     }
