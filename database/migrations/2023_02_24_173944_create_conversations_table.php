@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sender');
+            $table->foreignId('sender')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('recipient');
             $table->unsignedBigInteger('threadId');
             $table->timestamps();
-            $table->unsignedBigInteger('album_id')->nullable(true); //optional album id, to send a message to a seller about a certain album
-
+            $table->foreignId('album_id')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('user_id');
         });
     }
 
