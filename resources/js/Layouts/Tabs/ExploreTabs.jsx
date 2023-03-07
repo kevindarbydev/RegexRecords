@@ -31,7 +31,7 @@ export default function ExploreTabs() {
                 <Tab>
                     <NavLink
                         href={route("explore.advSearch")}
-                        active={route().current("submissions.advSearch")}
+                        active={route().current("explore.advSearch")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
                             Advanced Search

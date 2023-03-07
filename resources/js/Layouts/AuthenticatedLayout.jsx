@@ -49,7 +49,16 @@ export default function Authenticated({ auth, header, children, cartCount }) {
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink
                                     href={route("dashboard.index")}
-                                    active={route().current("dashboard.index")}
+                                    active={
+                                        route().current("dashboard.index") ||
+                                        route().current(
+                                            "dashboard.collections"
+                                        ) ||
+                                        route().current(
+                                            "dashboard.wishlists"
+                                        ) ||
+                                        route().current("dashboard.export")
+                                    }
                                 >
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
                                         Dashboard
@@ -58,7 +67,13 @@ export default function Authenticated({ auth, header, children, cartCount }) {
 
                                 <NavLink
                                     href={route("explore.index")}
-                                    active={route().current("explore.index")}
+                                    active={
+                                        route().current("explore.index") ||
+                                        route().current(
+                                            "explore.viewAllAlbums"
+                                        ) ||
+                                        route().current("explore.advSearch")
+                                    }
                                 >
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
                                         Explore
@@ -67,7 +82,10 @@ export default function Authenticated({ auth, header, children, cartCount }) {
 
                                 <NavLink
                                     href={route("friends.index")}
-                                    active={route().current("friends.index")}
+                                    active={
+                                        route().current("friends.index") ||
+                                        route().current("messages.index")
+                                    }
                                 >
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
                                         Community
@@ -76,9 +94,13 @@ export default function Authenticated({ auth, header, children, cartCount }) {
 
                                 <NavLink
                                     href={route("marketplace.index")}
-                                    active={route().current(
-                                        "marketplace.index"
-                                    )}
+                                    active={
+                                        route().current("marketplace.index") ||
+                                        route().current("orders.index") ||
+                                        route().current(
+                                            "marketplace.orders.albums.sold"
+                                        )
+                                    }
                                 >
                                     <span className=" dark:text-white dark:hover:bg-gray-700">
                                         Marketplace
@@ -267,25 +289,43 @@ export default function Authenticated({ auth, header, children, cartCount }) {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("dashboard.index")}
-                            active={route().current("dashboard.index")}
+                            active={
+                                route().current("dashboard.index") ||
+                                route().current("dashboard.collections") ||
+                                route().current("dashboard.wishlists") ||
+                                route().current("dashboard.export")
+                            }
                         >
                             Home
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("explore.index")}
-                            active={route().current("explore.index")}
+                            active={
+                                route().current("explore.index") ||
+                                route().current("explore.viewAllAlbums") ||
+                                route().current("explore.advSearch")
+                            }
                         >
                             Explore
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("friends.index")}
-                            active={route().current("friends.index")}
+                            active={
+                                route().current("friends.index") ||
+                                route().current("messages.index")
+                            }
                         >
                             Community
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("marketplace.index")}
-                            active={route().current("marketplace.index")}
+                            active={
+                                route().current("marketplace.index") ||
+                                route().current("orders.index") ||
+                                route().current(
+                                    "marketplace.orders.albums.sold"
+                                )
+                            }
                         >
                             Marketplace
                         </ResponsiveNavLink>
