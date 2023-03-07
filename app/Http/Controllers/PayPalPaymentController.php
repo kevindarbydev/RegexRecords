@@ -133,8 +133,6 @@ class PayPalPaymentController extends Controller
                     Cart::remove($items[$j]->rowId);
 
                     $c->delete($c);
-
-                    break;
                 }
             }
         }
