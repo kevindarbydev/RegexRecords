@@ -67,14 +67,18 @@ class AlbumController extends Controller
 
         if ($response->ok()) {
             // The API call was successful
+            error_log("response 1");
             $data = $response->json();
 
             //results may be empty due to a typo or if the artist/album is not well known
             if (empty($data['results'])) {
                 //assign it null now, checking for null later (Album.jsx component) to assign default img
+                error_log("response 2");
                 $validated['cover_image_url'] = null;
+                return redirect(route('dashboard.index'))->with('failure', 'Album does not exist!');
             } else {
                 // Get the first item in the results array (usually will be correct)
+                error_log("response 3");
                 $item = $data['results'][0];
 
                 // Get the album img, genre, year from the response obj
@@ -103,6 +107,7 @@ class AlbumController extends Controller
                 //perform 2nd API call with discogs_album_id
                 $data2 = Http::get("https://api.discogs.com/masters/{$item['master_id']}")->json();
                 if (!empty($data2)) {
+                    error_log("response 4");
                     error_log("year: " . $data2['year']);
                     error_log("price: " . $data2['lowest_price']);
 
@@ -135,16 +140,21 @@ class AlbumController extends Controller
                     }
                 } else {
                     // The second API call failed
-                    $status_code = $response2->status();
-                    $error_message = $response2->body();
+                    error_log("response 5");
+                    $status_code = $data2->status();
+                    $error_message = $data2->body();
                     error_log("2nd API Call -> " .  $status_code . ': ' . $error_message);
+                    return redirect(route('dashboard.index'))->with('failure', 'Album does not exist!');
                 }
             }
         } else {
             // The API call failed
+            error_log("response 6");
             $status_code = $response->status();
             $error_message = $response->body();
             error_log("1st API Call -> " .  $status_code . ': ' . $error_message);
+
+            return redirect(route('dashboard.index'))->with('failure', 'Album does not exist!');
         }
 
         return redirect()->route('dashboard.index');
