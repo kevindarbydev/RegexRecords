@@ -62,20 +62,22 @@ class ExportController extends Controller
             $csvData = stream_get_contents($handle);
             fclose($handle);
             $path = storage_path("app/app/downloads/{$filename}");
-            $url = Storage::url($path);
+            $url = asset("storage/app/app/downloads/{$filename}");
             if (Storage::put("app/downloads/{$filename}", $csvData)) {
-                error_log("Stored file at " . $path);
+                $headers = [
+                    'Content-Type' => 'text/csv',
+                    'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                ];
                 return Inertia::render('Dashboard/Export', [
                     'downloadUrl' => $url,
                     'fileName' => $filename,
+                    'headers' => $headers,
                     'cartCount' => Cart::count(),
                 ]);
             } else {
                 error_log("Something went wrong");
             }
         }
-   
-
     }
 
     public function exportAlbumsToCSV()
