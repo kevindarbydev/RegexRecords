@@ -4,7 +4,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function Index({ auth, cartCount }) {
+export default function Index({ auth, cartCount, url }) {
     const { data, setData, post, processing, reset, errors, get } = useForm({});
     const exportCollections = (e) => {
         e.preventDefault();
@@ -54,6 +54,11 @@ export default function Index({ auth, cartCount }) {
                     </button>
                 </div>
             </div>
+            {url && (
+                <div>
+                    <a href={url}>Download</a>
+                </div>
+            )}
         </AuthenticatedLayout>
     );
 }

@@ -73,7 +73,10 @@ class ExportController extends Controller
                 error_log("Something went wrong");
             }
         }
-        return redirect()->route('dashboard.export')->with($url);
+        return Inertia::render('Dashboard/Export', [
+            'downloadUrl' => $url,
+            'cartCount' => Cart::count(),
+        ]);
 
     }
 
