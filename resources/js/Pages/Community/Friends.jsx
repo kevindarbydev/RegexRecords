@@ -18,6 +18,8 @@ function Friends({
     pendingFriendships,
     current_user,
     cartCount,
+    numOfFriends,
+    friendRequestsCount,
 }) {
     const [currentComp, setCurrentComp] = useState("friends");
     const [isShowing, setIsShowing] = useState(true);
@@ -25,7 +27,6 @@ function Friends({
     const handleComponentChange = (newComp) => {
         setCurrentComp(newComp);
     };
-
     let componentToShow;
     if (currentComp === "friends") {
         componentToShow = (
@@ -113,9 +114,10 @@ function Friends({
                                                     }
                                                 >
                                                     <UsersIcon className="h-6 w-6 text-blue-500" />
-                                                    <span class="ml-3">
+                                                    <span class="flex-1 ml-3 whitespace-nowrap">
                                                         Friends
                                                     </span>
+                                                    {numOfFriends}
                                                 </a>
                                             </li>
                                             <li>
@@ -137,6 +139,20 @@ function Friends({
                                                     <span class="flex-1 ml-3 whitespace-nowrap">
                                                         Pending
                                                     </span>
+                                                    {friendRequestsCount ==
+                                                    0 ? (
+                                                        <span class="">
+                                                            {
+                                                                friendRequestsCount
+                                                            }
+                                                        </span>
+                                                    ) : (
+                                                        <span class="animate-pulse">
+                                                            {
+                                                                friendRequestsCount
+                                                            }
+                                                        </span>
+                                                    )}
                                                 </a>
                                             </li>
                                         </ul>
