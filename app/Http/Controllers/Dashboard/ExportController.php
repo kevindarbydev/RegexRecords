@@ -67,6 +67,7 @@ class ExportController extends Controller
                 error_log("Stored file at " . $path);
                 return Inertia::render('Dashboard/Export', [
                     'downloadUrl' => $url,
+                    'fileName' => $filename,
                     'cartCount' => Cart::count(),
                 ]);
             } else {
