@@ -62,7 +62,7 @@ class ExportController extends Controller
             $csvData = stream_get_contents($handle);
             fclose($handle);
             $path = storage_path("app/downloads/{$filename}");
-
+            $url = Storage::url($path);
             if (Storage::put("app/downloads/{$filename}", $csvData)) {
                 error_log("Stored file at " . $path);
                 return response()->download($path, $filename, [
@@ -73,7 +73,8 @@ class ExportController extends Controller
                 error_log("Something went wrong");
             }
         }
-        return back();
+        return redirect()->route('dashboard.export')->with($url);
+
     }
 
     public function exportAlbumsToCSV()
