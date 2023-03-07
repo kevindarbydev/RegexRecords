@@ -4,7 +4,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function Index({ auth, cartCount, downloadUrl, fileName }) {
+export default function Index({ auth, cartCount, downloadUrl, fileName, headers }) {
     const { data, setData, post, processing, reset, errors, get } = useForm({});
     const exportCollections = (e) => {
         e.preventDefault();
