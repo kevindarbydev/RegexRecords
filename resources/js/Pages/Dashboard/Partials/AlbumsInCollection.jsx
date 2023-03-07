@@ -19,10 +19,10 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
         patch(route("dashboard.collections.remove.album"), {
             onSuccess: () => reset(),
         });
-    }
+    };
     return (
         <div className="relative overflow-x-auto">
-            <h5 className="mt-2 mb-2 text-center">
+            <h5 className="text-center text-2xl">
                 {collection.collection_name}
             </h5>
             <table className="w-1/2 text-sm text-left text-gray-500 dark:text-gray-400 mx-auto mt-10">
@@ -44,7 +44,7 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                 {collection_albums.map((collection_album) =>
                     albums.map((album) =>
                         album.id == collection_album.album_id &&
-                            collection_album.collection_id == collection.id ? (
+                        collection_album.collection_id == collection.id ? (
                             <tbody>
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th
@@ -61,7 +61,9 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                         </p>
                                     </th>
                                     <td class="px-6 py-4">{album.artist}</td>
-                                    <td class="px-6 py-4">${(album.value).toFixed(2)}</td>
+                                    <td class="px-6 py-4">
+                                        ${album.value.toFixed(2)}
+                                    </td>
                                     {collection_album.for_sale == 0 ? (
                                         <>
                                             <td className="px-6 py-4">
@@ -70,9 +72,14 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                             <td className="px-6 py-4">
                                                 <Dropdown>
                                                     <Dropdown.Trigger>
-                                                        <button onClick={() => {
-                                                            setData('cAlbum', collection_album.id);
-                                                        }}>
+                                                        <button
+                                                            onClick={() => {
+                                                                setData(
+                                                                    "cAlbum",
+                                                                    collection_album.id
+                                                                );
+                                                            }}
+                                                        >
                                                             <svg
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                 className="h-4 w-4 text-gray-400"
@@ -85,11 +92,15 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                                     </Dropdown.Trigger>
                                                     <Dropdown.Content>
                                                         <form>
-                                                            <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={submit}>
+                                                            <button
+                                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                                                onClick={submit}
+                                                            >
                                                                 Sell Album
                                                             </button>
                                                             <button
-                                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={remove}
+                                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                                                onClick={remove}
                                                             >
                                                                 Remove Album
                                                             </button>
@@ -106,9 +117,14 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                             <td className="px-6 py-4">
                                                 <Dropdown>
                                                     <Dropdown.Trigger>
-                                                        <button onClick={() => {
-                                                            setData('cAlbum', collection_album.id);
-                                                        }}>
+                                                        <button
+                                                            onClick={() => {
+                                                                setData(
+                                                                    "cAlbum",
+                                                                    collection_album.id
+                                                                );
+                                                            }}
+                                                        >
                                                             <svg
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                 className="h-4 w-4 text-gray-400"
@@ -121,11 +137,16 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                                     </Dropdown.Trigger>
                                                     <Dropdown.Content>
                                                         <form>
-                                                            <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={submit}>
-                                                                Stop Selling Album
+                                                            <button
+                                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                                                onClick={submit}
+                                                            >
+                                                                Stop Selling
+                                                                Album
                                                             </button>
                                                             <button
-                                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={remove}
+                                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                                                onClick={remove}
                                                             >
                                                                 Remove Album
                                                             </button>

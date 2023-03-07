@@ -143,7 +143,7 @@ export default function Index({
                         <InputError message={errors.artist} className="mt-2" />
                         <div className="relative">
                             <PrimaryButton
-                                className="mt-4 mr-6 absolute right-64"
+                                className="mt-4 mr-64 float-right"
                                 processing={processing}
                             >
                                 Post Album
