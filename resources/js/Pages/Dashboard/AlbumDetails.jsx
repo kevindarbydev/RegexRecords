@@ -34,7 +34,7 @@ export default function AlbumDetails({
             <DashboardTabs />
             <Head title={album.album_name} />
             <div className="flex flex-col md:flex-row mt-6">
-                <div className="p-6 rounded-lg shadow-lg w-full mx-auto md:w-3/4">
+                <div className="p-6 mb-4 rounded-lg shadow-xl w-full mx-auto md:w-3/4 border border-black border-opacity-25">
                     <div className="flex items-center mb-8">
                         <img
                             src={album.cover_image_url}
