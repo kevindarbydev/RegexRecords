@@ -50,16 +50,7 @@ class ExportController extends Controller
                 }
                 $albums[$i] = array($album->id, $album->album_name, (float)$album->value, $for_sale);
                 $i++;
-            }
-            // var_dump(ini_get('allow_url_fopen'));
-
-            // $handle = fopen('C:\Users\Public\Downloads\\' . $collection->collection_name . '.csv', 'w');
-
-            // fputcsv($handle, array('Album ID', 'Album Name', 'Value', 'For Sale?'));
-
-            // collect($albums)->each(fn ($row) => fputcsv($handle, $row));
-
-            // fclose($handle);
+            }      
             $filename = $collection->collection_name . '.csv';
             $handle = fopen('php://temp', 'w');
             fputcsv($handle, ['Album ID', 'Album Name', 'Value', 'For Sale?']);
@@ -68,10 +59,9 @@ class ExportController extends Controller
             $csvData = stream_get_contents($handle);
             fclose($handle);
             $path = storage_path("app/downloads/{$filename}");
-            //link for the user to download their exported coll
-            $url = Storage::url("app/downloads/{$filename}");
+           
             if(Storage::put("app/downloads/{$filename}", $csvData)){
-                error_log("Stored file at " . $url);
+                error_log("Stored file at " . $path);
                 return new BinaryFileResponse($path, 200, [
                     'Content-Type' => 'text/csv',
                     'Content-Disposition' =>
@@ -80,11 +70,9 @@ class ExportController extends Controller
             }else{
                 error_log("Something went wrong");
             }   
-
-         
         }
-
-        return redirect(route('dashboard.export'));
+        // If we get here, there was an error
+        abort(500, 'Failed to export collections to CSV');
     }
 
     public function exportAlbumsToCSV()
