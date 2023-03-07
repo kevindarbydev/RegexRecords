@@ -5,6 +5,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import Album from "./Partials/Album";
 import makeRequestCreator from "@/utils/utils";
+import Pagination from "@/Components/Pagination";
 const search = makeRequestCreator("/proxy");
 
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
@@ -38,7 +39,7 @@ export default function Index({
             }
             console.log("current q: " + currentQuery);
             const res = search(currentQuery)
-                .then((results) => {            
+                .then((results) => {
                     setSearchResults(results);
                     setShowDropdown(true);
                 })
@@ -51,7 +52,6 @@ export default function Index({
     }, [searchQuery]);
 
     const handleSearchQueryChange = (e) => {
-    
         const albumName = data.album_name || "";
         const artist = data.artist || "";
 
@@ -62,25 +62,21 @@ export default function Index({
         }
 
         if (!albumName || !artist) {
-        
             const impreciseQuery = albumName || artist;
             setSearchQuery(impreciseQuery);
         } else {
-      
             setSearchQuery(`${albumName},${artist}`);
         }
     };
 
-
-
     const handleDropdownItemClick = (result) => {
         const [artist, album_name] = result.title.split(" - ");
-   
+
         setData((prevData) => ({
             ...prevData,
             album_name: album_name,
             artist: artist,
-        }));      
+        }));
 
         setShowDropdown(false);
     };
@@ -180,7 +176,7 @@ export default function Index({
             </div>
             {/* bottom container (albums) */}
             <div className="dashboard-albums-bottom flex flex-col md:flex-row flex-wrap">
-                {albums.map((album) => (
+                {albums.data.map((album) => (
                     <Album
                         key={album.id}
                         album={album}
@@ -189,6 +185,7 @@ export default function Index({
                     />
                 ))}
             </div>
+            <Pagination links={albums.links} />
         </AuthenticatedLayout>
     );
 }
