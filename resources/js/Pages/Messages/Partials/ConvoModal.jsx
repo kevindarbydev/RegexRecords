@@ -61,7 +61,7 @@ function ConvoModal({
         idForEmail = conversation.messages.recipientId;
     } else if (conversation.messages.sender === recipientName) {
         idForEmail = conversation.messages.senderId;
-    }  
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -72,7 +72,7 @@ function ConvoModal({
         axios
             .post(`/messages/${convoId}`, {
                 message: newMessage,
-                threadId: convoId,
+                threadId: conversation.threadId,
                 idForEmail: idForEmail,
             })
             .then((data) => {
@@ -116,11 +116,10 @@ function ConvoModal({
                         <div>
                             {messages.map((message, index) => (
                                 <p
-                                    className={`text-gray-700 text-lg ${
-                                        message.user_id === currentUserId
+                                    className={`text-gray-700 text-lg ${message.user_id === currentUserId
                                             ? "text-right"
                                             : "text-left"
-                                    }`}
+                                        }`}
                                     key={index}
                                 >
                                     {message.body}{" "}

@@ -178,6 +178,8 @@ class MessagesController extends Controller
 
         $subStr = "Conversation with: " . $user1->name . "+" . $user2->name;
 
+        error_log($subStr);
+
         $thread = Thread::create([
             'subject' => $subStr,
         ]);
@@ -191,7 +193,7 @@ class MessagesController extends Controller
         }
 
         $convo = Conversation::create([
-            'sender' => Auth::id(),
+            'sender' => $user2->id,
             'recipient' => $user1->id,
             'threadId' => $thread->id,
             'album_id' => $request->album,

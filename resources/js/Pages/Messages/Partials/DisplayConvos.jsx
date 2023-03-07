@@ -79,7 +79,7 @@ function DisplayConvos({
                                 </div>
                             </a>
                         </li>
-                    ) : convo.recipient !== null && convo.recipient != "" ? (
+                    ) : convo.recipient !== null && convo.recipient != "" && convo.recipient != auth.user.name ? (
                         <li
                             key={convo.id}
                             className="cursor-pointer hover:bg-gray-100 transition duration-150 ease-in-out"
@@ -101,7 +101,27 @@ function DisplayConvos({
                                 </div>
                             </a>
                         </li>
-                    ) : null
+                    ) : <li
+                        key={convo.id}
+                        className="cursor-pointer hover:bg-gray-100 transition duration-150 ease-in-out"
+                    >
+                        <a
+                            href="javascript:void(0)"
+                            className="block px-4 py-3"
+                            onClick={() => handleConversationClick(convo)}
+                        >
+                            <div className="flex justify-between">
+                                <div className="flex flex-col">
+                                    <h3 className="font-bold text-gray-800">
+                                        {convo.sender}
+                                    </h3>
+                                    <p className="text-gray-600">
+                                        No messages with {convo.sender}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
                 )}
             </ul>
 
