@@ -49,7 +49,7 @@ class ExportController extends Controller
                 $albums[$i] = array($album->id, $album->album_name, (float)$album->value, $for_sale);
                 $i++;
             }
-            var_dump(ini_get('allow_url_fopen'));
+            // var_dump(ini_get('allow_url_fopen'));
 
             $handle = fopen('C:\Users\Public\Downloads\\' . $collection->collection_name . '.csv', 'w');
             fputcsv($handle, array('Album ID', 'Album Name', 'Value', 'For Sale?'));
