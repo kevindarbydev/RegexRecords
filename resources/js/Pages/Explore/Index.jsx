@@ -22,21 +22,26 @@ export default function Index({
             <Head title="Explore" />
             <ExploreTabs />
 
-            <h1 className="text-4xl m-4">Fresh This Week:</h1>
+            <h1 className="text-5xl m-4">Discover</h1>
+            <h1 className="text-4xl ml-4 -mb-4">
+                This week's fresh Regex Records:
+            </h1>
             <NewReleases
                 recentAlbums={recentAlbums}
                 collections={collections}
                 albumsWithRatings={albumsWithRatings}
             />
 
-            <h1 className="text-4xl m-4">Top Picks in {selectedSubgenre}:</h1>
+            <h1 className="text-4xl ml-4 -mb-4">
+                Top Picks in {selectedSubgenre}:
+            </h1>
             <TopPicks
                 topPicks={topPicks}
                 collections={collections}
                 albumsWithRatings={albumsWithRatings}
             />
 
-            <h1 className="text-4xl m-4">
+            <h1 className="text-4xl ml-4 -mb-4">
                 Spotlight: "{featureLetter}" Artists
             </h1>
             <Spotlight

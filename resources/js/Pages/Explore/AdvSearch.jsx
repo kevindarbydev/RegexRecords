@@ -94,7 +94,10 @@ export default function AdvSearch({
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Advanced Search" />
             <ExploreTabs />
-            <h1 className="text-4xl m-4">🔎 Advanced Search</h1>
+            <h1 className="text-5xl mt-4 ml-4">🔎 Advanced Search</h1>
+            <h1 className="text-xl mt-4 ml-4">
+                Scour the records based on your criteria:
+            </h1>
 
             <form onSubmit={submit}>
                 <div className="advSearch-container">
@@ -284,27 +287,29 @@ export default function AdvSearch({
                         />
                     </div>
                 </div>
-                <PrimaryButton
-                    className=" mt-14 ml-12 px-7 pt-3 pb-2.5"
-                    processing={processing}
-                >
-                    Search
-                </PrimaryButton>
+                <div className="flex flex-row justify-evenly">
+                    <input
+                        onClick={resetSliders}
+                        id="reset"
+                        type="button"
+                        value="Reset Year and Price"
+                        className="mt-14 items-center px-2 py-2 h-10 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-200 active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    />
+                    <input
+                        onClick={resetForm}
+                        id="resetForm"
+                        type="button"
+                        value="Clear & Reset All"
+                        className="mt-14 items-center px-2 py-2 h-10 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-200 active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    />
+                    <PrimaryButton
+                        className=" mt-14 ml-12 px-7 pt-3 pb-2.5 h-14"
+                        processing={processing}
+                    >
+                        Search
+                    </PrimaryButton>
+                </div>
             </form>
-            <input
-                onClick={resetSliders}
-                id="reset"
-                type="button"
-                value="Reset Year and Price"
-                className=" mt-10 ml-12 px-7 pt-3 pb-2.5 bg-slate-50"
-            />
-            <input
-                onClick={resetForm}
-                id="resetForm"
-                type="button"
-                value="Clear & Reset All"
-                className=" mt-10 ml-12 px-7 pt-3 pb-2.5 bg-slate-50"
-            />
             <AdvSearchResults
                 albums={albums}
                 collections={collections}
