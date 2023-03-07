@@ -11,6 +11,7 @@ use App\Models\Order_Item;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Error;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class ExportController extends Controller
         ]);
     }
 
-    public function exportCollectionsToCSV(): RedirectResponse
+    public function exportCollectionsToCSV(): BinaryFileResponse
     {
         $collections = Collection::with('user')->where('user_id', Auth::user()->id)->get();
 
@@ -67,9 +68,12 @@ class ExportController extends Controller
             $csvData = stream_get_contents($handle);
             fclose($handle);
 
-            Storage::put("downloads/{$filename}", $csvData);
             //link for the user to download their exported coll
-            $url = Storage::url("downloads/{$filename}");
+            $url = Storage::url("app/downloads/{$filename}");
+            if(Storage::put("app/downloads/{$filename}", $csvData)){
+                error_log("Stored file at " . $url);
+            }
+   
 
             return response()
             ->download(storage_path("app/downloads/{$filename}"), $filename, [
