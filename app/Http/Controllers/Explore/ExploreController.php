@@ -32,8 +32,6 @@ class ExploreController extends Controller
         }
 
         $letter = randomLetter();
-        // error_log("the first letter searched " . $letter);
-
 
         $spotlightAlbums = Album::where(function ($query) use ($letter) {
             $query->where('artist', 'like',  $letter . '%');
@@ -44,7 +42,7 @@ class ExploreController extends Controller
         while ($spotlightAlbums->isEmpty()) {
 
             $letter = randomLetter();
-            // error_log("rerolled, new letter is " . $letter);
+
             $spotlightAlbums = Album::where(function ($query) use ($letter) {
                 $query->where('artist', 'like',  $letter . '%');
             })
@@ -68,7 +66,7 @@ class ExploreController extends Controller
             }
         }
         $weekday = Carbon::now()->dayOfWeek;
-        // error_log($weekday);
+
 
         // days are 0-6 where sunday is 0, monday is 1, etc
         switch ($weekday) {
@@ -89,18 +87,17 @@ class ExploreController extends Controller
                 break;
             case 3:
                 $subgenreList = ["Classic Rock", "Guitar Rock"];
-                $selectedSubgenre = "Rock";
                 $subgenre = process($subgenreList);
+                $selectedSubgenre = "Rock";
                 break;
             case 4:
-                $subgenreList = ["Blues", "Rhythm & Blues", "Piano Blues"];
-                $selectedSubgenre = "Blues";
+                $subgenreList = ["Punk", "Melodic Hardcore", "Hardcore"];
+                $selectedSubgenre = "Punk";
                 $subgenre = process($subgenreList);
                 break;
             case 5:
-                $subgenreList = ["Blues", "Rhythm & Blues", "Piano Blues"];
-                $selectedSubgenre = "Blues";
-                $subgenre = process($subgenreList);
+                $subgenreList = ["Hardcore Hip-Hop", "Thug Rap", "Pop Rap", "Boom Bap", "Gangsta"];
+                $selectedSubgenre = "Hip Hop";
                 break;
             case 6:
                 $subgenreList = ["Blues", "Rhythm & Blues", "Piano Blues"];
@@ -121,27 +118,16 @@ class ExploreController extends Controller
             ->get();
 
         // error handler for if no results gotten via switch - uses broader "genre" search instead of "subgenre"
-
-        //* FIXME: still bugs, may actually just need more records
         if ($topPicks->isEmpty()) {
-            $topPicks = Album::where(function ($query) use ($selectedSubgenre) {
-                $query->where('genre', 'like', '%' . $selectedSubgenre . '%');
+            $guaranteed = "Rock";
+            $selectedSubgenre = $guaranteed;
+            $topPicks = Album::where(function ($query) use ($guaranteed) {
+                $query->where('genre', 'like', '%' . $guaranteed . '%');
             })
                 ->inRandomOrder()
                 ->limit($limit)
                 ->get();
         }
-        // enable below else, try again once more records
-
-        // else {
-        //     // completes the section header phrase if error, logs
-        //     $selectedSubgenre = "general are subjective to the listener";
-        //     error_log("ExploreController.php has failed in 'TopPicks' section");
-        // }
-
-
-
-        // error_log($topPicks);
 
         // sending album + ratings to views
         $albumsWithRatings = [];

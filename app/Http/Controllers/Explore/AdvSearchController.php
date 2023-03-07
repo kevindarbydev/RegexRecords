@@ -58,8 +58,6 @@ class AdvSearchController extends Controller
                 })
 
                 ->get();
-
-            // error_log($albums);
         }
 
         // manages message header based on # of results
