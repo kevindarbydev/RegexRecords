@@ -87,7 +87,7 @@ class ExportController extends Controller
         return redirect(route('dashboard.export'));
     }
 
-    public function exportAlbumsToCSV(): RedirectResponse
+    public function exportAlbumsToCSV()
     {
 
         $userAlbums = Album::with('user')->where('user_id', Auth::user()->id)->get();
@@ -109,7 +109,7 @@ class ExportController extends Controller
         return redirect(route('dashboard.export'));
     }
 
-    public function exportOrdersToCSV(): RedirectResponse
+    public function exportOrdersToCSV()
     {
         $orders = Order::with('user')->where('user_id', Auth::user()->id)->get();
 
