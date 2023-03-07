@@ -50,7 +50,7 @@ class ExportController extends Controller
                 $i++;
             }
             $handle = fopen($collection->collection_name . '.csv', 'w');
-
+            error_log("hello $handle");
             fputcsv($handle, array('Album ID', 'Album Name', 'Value', 'For Sale?'));
 
             collect($albums)->each(fn ($row) => fputcsv($handle, $row));
