@@ -9,6 +9,7 @@ use App\Models\Collection_Album;
 use App\Models\Order;
 use App\Models\Order_Item;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Error;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
@@ -51,12 +52,22 @@ class ExportController extends Controller
             }
             // var_dump(ini_get('allow_url_fopen'));
 
-            $handle = fopen('C:\Users\Public\Downloads\\' . $collection->collection_name . '.csv', 'w');
-            fputcsv($handle, array('Album ID', 'Album Name', 'Value', 'For Sale?'));
+            // $handle = fopen('C:\Users\Public\Downloads\\' . $collection->collection_name . '.csv', 'w');
 
+            // fputcsv($handle, array('Album ID', 'Album Name', 'Value', 'For Sale?'));
+
+            // collect($albums)->each(fn ($row) => fputcsv($handle, $row));
+
+            // fclose($handle);
+            $filename = $collection->collection_name . '.csv';
+            $handle = fopen('php://temp', 'w');
+            fputcsv($handle, ['Album ID', 'Album Name', 'Value', 'For Sale?']);
             collect($albums)->each(fn ($row) => fputcsv($handle, $row));
-
+            rewind($handle);
+            $csvData = stream_get_contents($handle);
             fclose($handle);
+
+            Storage::put("downloads/{$filename}", $csvData);
         }
 
         return redirect(route('dashboard.export'));
