@@ -74,7 +74,7 @@ class ExportController extends Controller
             $i++;
         }
 
-        $handle = fopen('C:\Users\Public\Downloads\My_Albums.csv', 'w');
+        $handle = fopen('C:/Users/Public/Downloads/My_Albums.csv', 'w');
 
         fputcsv($handle, array('Album ID', 'Album Name'));
 
