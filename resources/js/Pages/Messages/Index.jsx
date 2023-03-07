@@ -68,7 +68,7 @@ function Index({
                 {success && (
                     <div className="alert alert-success">{success}</div>
                 )}
-                <div className="w-3/4 lg:w-1/4 h-fit bg-gray-200 px-4 py-8 ">
+                <div className="w-3/4 lg:w-1/3 h-fit bg-gray-200 px-4 py-8 ">
              
                     <h1
                         className="font-medium text-lg mb-4"
