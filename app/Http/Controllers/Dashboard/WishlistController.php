@@ -52,10 +52,10 @@ class WishlistController extends Controller
         if ($duplicate == 0) {
 
             $wishlist->wishlist_albums()->save($wAlbum);
-            return redirect()->route('dashboard.wishlists');
+            return redirect()->route('marketplace.index')->with('success', 'Added to Wishlist');
         }
 
-        return redirect()->route('dashboard.wishlists');
+        return redirect()->route('marketplace.index')->with('failure', 'Already in Wishlist');
     }
 
     //Remove Album from Wishlist
