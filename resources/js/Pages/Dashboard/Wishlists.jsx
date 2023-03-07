@@ -3,17 +3,16 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head } from "@inertiajs/react";
 import DashboardTabs from "@/Layouts/Tabs/DashboardTabs";
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
- 
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
 dayjs.extend(relativeTime);
 
 export default function Index({ auth, wishlist_albums, cartCount, album }) {
-    const { setData, processing, reset, get, patch } =
-        useForm({
-            list_name: "",
-            album_id: "",
-        });
+    const { setData, processing, reset, get, patch } = useForm({
+        list_name: "",
+        album_id: "",
+    });
 
     const addAlbums = (e) => {
         e.preventDefault();
@@ -31,12 +30,12 @@ export default function Index({ auth, wishlist_albums, cartCount, album }) {
             <DashboardTabs />
             <Head title="Wishlist" />
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 ">
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center text-center text-2xl">
                     My Wishlist
                 </div>
                 <div className="flex justify-center items-center">
                     <PrimaryButton className="mt-4" onClick={addAlbums}>
-                        Add Albums
+                        Visit Marketplace & add more
                     </PrimaryButton>
                 </div>
 
@@ -71,7 +70,11 @@ export default function Index({ auth, wishlist_albums, cartCount, album }) {
                                         />
                                     </td>
                                     <td>{item.album.artist}</td>
-                                    <td>{dayjs(item.created_at).format('DD/MM/YYYY')}</td>
+                                    <td>
+                                        {dayjs(item.created_at).format(
+                                            "DD/MM/YYYY"
+                                        )}
+                                    </td>
                                     <td>
                                         <form onSubmit={removefromWishlist}>
                                             <PrimaryButton
