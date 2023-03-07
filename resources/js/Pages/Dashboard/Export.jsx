@@ -57,10 +57,10 @@ export default function Index({ auth, cartCount, downloadUrl, fileName, headers 
             {downloadUrl && (
                 <div>
                     <a
-                        href="#"
+                        href={`${window.location.origin}/storage/app/app/downloads/${fileName}`}
                         target="_blank"
                         rel="noreferrer"
-                        download={`${window.location.origin}/storage/app/app/downloads/${fileName}`}
+                        download={fileName}
                     >
                         Download CSV
                     </a>
