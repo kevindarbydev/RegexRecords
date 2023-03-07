@@ -17,7 +17,12 @@ class Conversation extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
     
     protected $table = 'conversations';
-
+    protected $fillable = [
+        'sender',
+        'recipient',
+        'threadId',
+        'album_id',
+    ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

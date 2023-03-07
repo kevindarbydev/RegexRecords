@@ -15,7 +15,7 @@ function SearchedUser({ user }) {
         patch(route("community.search.add.friend", user.id));
     };
     return (
-        <div class="mb-2 mr-2">
+        <div class="ml-8">
             <div class=" lg:w-[32rem] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex lg:flex-row flex-col mb-2">
                 <div class="flex-1">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

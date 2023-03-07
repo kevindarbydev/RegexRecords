@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::drop('conversations');
+        
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sender');
             $table->unsignedBigInteger('recipient');
             $table->unsignedBigInteger('threadId');
             $table->timestamps();
-            $table->unsignedBigInteger('album_id')->nullable(true);            
+            $table->foreignId('album_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -26,9 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('conversations', function (Blueprint $table) {
-
-
-        });
+        //
     }
 };

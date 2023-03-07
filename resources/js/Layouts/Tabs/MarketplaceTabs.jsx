@@ -38,6 +38,16 @@ export default function MarketplaceTabs() {
                         </span>
                     </NavLink>
                 </Tab>
+                <Tab>
+                    <NavLink
+                        href={route("marketplace.orders.albums.sold")}
+                        active={route().current("marketplace.orders.albums.sold")}
+                    >
+                        <span className=" dark:text-white dark:hover:bg-gray-700">
+                            My Sold Albums
+                        </span>
+                    </NavLink>
+                </Tab>
             </Tab.List>
         </Tab.Group>
     );

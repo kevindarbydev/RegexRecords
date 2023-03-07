@@ -75,6 +75,14 @@ class MarketplaceController extends Controller
         error_log("TESTING -- $request->album");
         error_log("TESTING -- $request->seller");
 
+        $items = [];
+        $i = 0;
+
+        foreach (Cart::content() as $item) {
+            $items[$i] = $item;
+            $i++;
+        }
+
         $album = Album::with('user')->where('id', $request->album)->first();
         $cAlbum = Collection_Album::where('album_id', $album->id)->where('for_sale', true)->get();
 
@@ -91,9 +99,17 @@ class MarketplaceController extends Controller
         error_log($album);
         error_log($collection);
 
+        for ($j = 0; $j < sizeof($items); $j++) {
+            if ($items[$j]->name == $album->album_name && $items[$j]->options['seller'] == $collection->user_id) {
+                return redirect()->route('marketplace.index')->with('failure', 'Album already in cart!');
+            } else {
+                continue;
+            }
+        }
+
         Cart::add($album->id, $album->album_name, 1, $album->value, ['imageURL' => $album->cover_image_url, 'seller' => $collection->user_id]);
 
-        return redirect()->route('marketplace.index');
+        return redirect()->route('marketplace.index')->with('success', 'Album added to cart!');
     }
 
     public function viewCart(Request $request): Response

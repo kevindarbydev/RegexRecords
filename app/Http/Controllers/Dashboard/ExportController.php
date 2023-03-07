@@ -17,6 +17,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response as FacadesResponse;
 
 class ExportController extends Controller
 {
@@ -48,7 +49,7 @@ class ExportController extends Controller
                 $albums[$i] = array($album->id, $album->album_name, (float)$album->value, $for_sale);
                 $i++;
             }
-            $handle = fopen($collection->collection_name . '.csv', 'w');
+            $handle = fopen('C:/Users/Public/Downloads/' . $collection->collection_name . '.csv', 'w');
 
             fputcsv($handle, array('Album ID', 'Album Name', 'Value', 'For Sale?'));
 
@@ -73,13 +74,11 @@ class ExportController extends Controller
             $i++;
         }
 
-        $handle = fopen('My_Albums.csv', 'w');
+        $handle = fopen('C:\Users\Public\Downloads\My_Albums.csv', 'w');
 
         fputcsv($handle, array('Album ID', 'Album Name'));
 
         collect($albums)->each(fn ($row) => fputcsv($handle, $row));
-
-        fclose($handle);
 
         return redirect(route('dashboard.export'));
     }
@@ -110,7 +109,7 @@ class ExportController extends Controller
         }
 
         // File for all orders
-        $handle = fopen('My_Orders.csv', 'w');
+        $handle = fopen('C:/Users/Public/Downloads/My_Orders.csv', 'w');
 
         fputcsv($handle, array('Order ID', 'Ordered Date', 'Subtotal', 'Tax', 'Shipping', 'Total'));
 
@@ -119,7 +118,7 @@ class ExportController extends Controller
         fclose($handle);
 
         // File for Items in each Order
-        $handle2 = fopen('Albums_Purchased.csv', 'w');
+        $handle2 = fopen('C:/Users/Public/Downloads/Albums_Purchased.csv', 'w');
 
         fputcsv($handle2, array('Order ID', 'Album Purchased', 'Price', 'Bought From'));
 

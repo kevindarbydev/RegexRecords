@@ -69,13 +69,16 @@ class CollectionController extends Controller
     {
         try {
             $cAlbum = Collection_Album::where('id', $request->cAlbum)->first();
+            $cAlbum2 = Collection_Album::where('for_sale',1)->all();
 
             error_log("test $cAlbum");
 
             if ($cAlbum->for_sale == false) {
                 $cAlbum->for_sale = true;
+                $cAlbum2->for_sale = true;
             } else {
                 $cAlbum->for_sale = false;
+                $cAlbum2->for_sale = false;
             }
 
             $cAlbum->update();

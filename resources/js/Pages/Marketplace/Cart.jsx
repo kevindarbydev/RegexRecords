@@ -6,7 +6,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import { useForm, Head, Link } from "@inertiajs/react";
 import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
 import Dropdown from "@/Components/Dropdown";
-
+import FlashMessage from "@/Components/FlashMessage";
 
 export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -22,6 +22,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
 
     const checkout = (e) => {
         e.preventDefault();
+        console.log('test');
         post(route('stripe.pay.post'), { onSuccess: () => reset() });
     }
 
@@ -44,6 +45,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Cart" />
             <div className="flex flex-row">
+                <FlashMessage/>
                 <table className=" w-1/2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-6">
                     <thead>
                         <th scope="col" className="px-3 py-3 ml-5 text-left">
@@ -71,7 +73,7 @@ export default function Cart({ auth, cartContents, cartCount, tax, subtotal }) {
                                     <p className="mt-4">{cartItem.name}</p>
                                 </th>
                                 <td className="px-6 py-4">
-                                    ${cartItem.price}
+                                    ${(cartItem.price).toFixed(2)}
                                 </td>
                                 <td className="px-6 py-4">
                                     <Dropdown>

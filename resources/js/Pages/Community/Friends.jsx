@@ -66,15 +66,18 @@ function Friends({
 
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
-            <Head title="MyFriends" />
             <CommunityTabs />
+            <Head title="MyFriends" />
             <div className="flex flex-row">
-                <div className="w-fit h-screen sticky top-0">
+                <div className="w-fit h-screen sticky top-0 m-2">
                     <button
                         onClick={() => setIsShowing((isShowing) => !isShowing)}
                         class="absolute z-50"
                     >
-                        <Bars3BottomLeftIcon className="w-7 h-7" />
+                        <Bars3BottomLeftIcon className="w-10 h-10" />
+                        <p className="text-xs ml-1 font-thin tracking-tight">
+                            {isShowing ? "Collapse" : "Expand"}{" "}
+                        </p>
                     </button>
                     <Transition
                         show={isShowing}
@@ -91,42 +94,54 @@ function Friends({
                             aria-label="Sidebar"
                         >
                             <div class="h-full px-3 py-4 overflow-y-auto bg-violet-300 dark:bg-gray-800">
-                                <ul class="space-y-2 mt-5">
-                                    <li>
-                                        <a
-                                            href="#"
-                                            class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                                                currentComp === "friends"
-                                                    ? "bg-white"
-                                                    : ""
-                                            }`}
-                                            onClick={() =>
-                                                handleComponentChange("friends")
-                                            }
-                                        >
-                                            <UsersIcon className="h-6 w-6 text-blue-500" />
-                                            <span class="ml-3">Friends</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                                                currentComp === "pending"
-                                                    ? "bg-white"
-                                                    : ""
-                                            }`}
-                                            onClick={() =>
-                                                handleComponentChange("pending")
-                                            }
-                                        >
-                                            <ExclamationCircleIcon className="h-6 w-6 text-blue-500" />
-                                            <span class="flex-1 ml-3 whitespace-nowrap">
-                                                Pending
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
+                                <div className="flex flex-col">
+                                    <div className="mb-4 mt-8">
+                                        <ul class="space-y-2 mt-5">
+                                            <li>
+                                                <a
+                                                    href="#"
+                                                    class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${
+                                                        currentComp ===
+                                                        "friends"
+                                                            ? "bg-white"
+                                                            : ""
+                                                    }`}
+                                                    onClick={() =>
+                                                        handleComponentChange(
+                                                            "friends"
+                                                        )
+                                                    }
+                                                >
+                                                    <UsersIcon className="h-6 w-6 text-blue-500" />
+                                                    <span class="ml-3">
+                                                        Friends
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a
+                                                    href="#"
+                                                    class={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 ${
+                                                        currentComp ===
+                                                        "pending"
+                                                            ? "bg-white"
+                                                            : ""
+                                                    }`}
+                                                    onClick={() =>
+                                                        handleComponentChange(
+                                                            "pending"
+                                                        )
+                                                    }
+                                                >
+                                                    <ExclamationCircleIcon className="h-6 w-6 text-blue-500" />
+                                                    <span class="flex-1 ml-3 whitespace-nowrap">
+                                                        Pending
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </aside>
                     </Transition>

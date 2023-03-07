@@ -44,6 +44,9 @@ export default function Index({
                     Album
                 </th>
                 <th scope="col" className="px-6 py-3">
+                    Artist
+                </th>
+                <th scope="col" className="px-6 py-3">
                     Price
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -79,6 +82,7 @@ export default function Index({
                                                 </p>
                                             </a>
                                         </th>
+                                        <td class="px-6 py-4">{album.artist}</td>
                                         <td class="px-6 py-4">
                                             ${(album.value).toFixed(2)}
                                         </td>

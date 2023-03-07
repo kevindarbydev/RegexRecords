@@ -27,7 +27,10 @@ export default function Index({ auth, users, cartCount }) {
                             }
                             class="absolute z-50"
                         >
-                            <Bars3BottomLeftIcon className="w-7 h-7" />
+                            <Bars3BottomLeftIcon className="w-10 h-10" />
+                            <p className="text-xs ml-1 font-thin tracking-tight">
+                                {isShowing ? "Collapse" : "Expand"}{" "}
+                            </p>
                         </button>
                         <Transition
                             show={isShowing}
@@ -44,14 +47,18 @@ export default function Index({ auth, users, cartCount }) {
                                 aria-label="Sidebar"
                             >
                                 <div class="h-full px-3 py-4 overflow-y-auto bg-violet-300 dark:bg-gray-800">
-                                    <ul class="space-y-2 mt-5">
-                                        <li>
-                                            <span class="ml-3 flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:bg-gray-700">
-                                                <MagnifyingGlassIcon className="h-6 w-6 text-blue-500 mr-2" />
-                                                Search Results
-                                            </span>
-                                        </li>
-                                    </ul>
+                                    <div className="flex flex-col">
+                                        <div className="m-3">
+                                            <ul class="space-y-2 mt-5">
+                                                <li>
+                                                    <span class="ml-3 mt-10 flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:bg-gray-700">
+                                                        <MagnifyingGlassIcon className="h-6 w-6 text-blue-500 mr-2" />
+                                                        Search Results:
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </aside>
                         </Transition>

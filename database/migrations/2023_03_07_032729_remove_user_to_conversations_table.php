@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('conversations', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('sender');
-            $table->unsignedBigInteger('recipient');
-            $table->unsignedBigInteger('threadId');
-            $table->timestamps();
-            $table->unsignedBigInteger('album_id')->nullable(true);            
+        Schema::table('conversations', function (Blueprint $table) {
+            //
+            $table->dropColumn('user_id');
         });
     }
 
@@ -27,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('conversations', function (Blueprint $table) {
-
-
+            //
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
         });
     }
 };

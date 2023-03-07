@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import AdminUserTable from "./Partials/AdminUserTable";
 import AdminAlbumTable from "./Partials/AdminAlbumTable";
 import AdminMessageTable from "./Partials/AdminMessageTable";
-import AdminReviewTable from "./Partials/AdminReviewTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 function AdminPage({ auth, users, albums, messages, currentUser, cartCount }) {
@@ -39,16 +38,14 @@ function AdminPage({ auth, users, albums, messages, currentUser, cartCount }) {
         currentTableComponent = (
             <AdminMessageTable messages={messages} csrf={csrfToken} />
         );
-    } else if (currentTable === "reviews") {
-        currentTableComponent = <AdminReviewTable csrf={csrfToken} />;
-    }
+    } 
 
     return (
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Admin Interface" />
-            <div className="flex justify-center mr-64">
-                <div className="flex flex-col w-full max-w-md">
-                    <div className="flex justify-between mb-4 mt-8">
+            <div className="flex justify-center">
+                <div className="flex flex-col w-full max-w-md -ml-64">
+                    <div className="flex justify-evenly mb-4 mt-8">
                         <button
                             className={`py-2 px-4 text-sm font-medium focus:outline-none ${
                                 currentTable === "users"
@@ -58,16 +55,6 @@ function AdminPage({ auth, users, albums, messages, currentUser, cartCount }) {
                             onClick={() => handleTableChange("users")}
                         >
                             Users
-                        </button>
-                        <button
-                            className={`py-2 px-4 text-sm font-medium focus:outline-none ${
-                                currentTable === "users"
-                                    ? "bg-gray-100"
-                                    : "bg-white"
-                            }`}
-                            onClick={() => handleTableChange("reviews")}
-                        >
-                            Reviews
                         </button>
                         <button
                             className={`py-2 px-4 text-sm font-medium focus:outline-none ${

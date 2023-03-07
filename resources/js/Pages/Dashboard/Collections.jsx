@@ -59,12 +59,15 @@ export default function Index({
             <DashboardTabs />
             <Head title="Collection" />
             <div className="flex flex-row">
-                <div className="w-fit h-screen sticky top-0">
+                <div className="w-fit h-screen sticky top-0 m-2">
                     <button
                         onClick={() => setIsShowing((isShowing) => !isShowing)}
                         class="absolute z-50"
                     >
-                        <Bars3BottomLeftIcon className="w-7 h-7" />
+                        <Bars3BottomLeftIcon className="w-10 h-10" />
+                        <p className="text-xs ml-1 font-thin tracking-tight">
+                            {isShowing ? "Collapse" : "Expand"}{" "}
+                        </p>
                     </button>
                     <Transition
                         show={isShowing}
@@ -88,13 +91,14 @@ export default function Index({
                                             onSubmit={submit}
                                         >
                                             <div className="flex flex-col">
-                                                <div className="mb-4">
+                                                <div className="mb-4 mt-8">
                                                     <label className="">
-                                                        Title
+                                                        Name your new
+                                                        collection:
                                                     </label>
                                                     <input
                                                         type="text"
-                                                        className="w-full px-4 py-2"
+                                                        className="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm p-2"
                                                         label="Collection Name"
                                                         name="collection_name"
                                                         value={
@@ -115,7 +119,7 @@ export default function Index({
                                                     />
                                                     <button
                                                         type="submit"
-                                                        className="px-6 py-2 font-bold text-white rounded m-2 bg-gradient-to-r from-cyan-500 to-blue-500"
+                                                        className="px-6 py-2 font-bold text-white rounded mt-4 bg-gradient-to-r from-cyan-500 to-blue-500 float-right"
                                                     >
                                                         Create Collection
                                                     </button>
@@ -126,7 +130,7 @@ export default function Index({
                                             <div>
                                                 {collections.map(
                                                     (collection) => (
-                                                        <div className="mt-6 bg-violet-300 shadow-xl rounded-lg border-2 border-violet-700 dark:bg-gray-800">
+                                                        <div className="mt-4 bg-violet-300 shadow-xl rounded-lg border-2 border-violet-700 dark:bg-gray-800">
                                                             <Collection
                                                                 key={
                                                                     collection.id
