@@ -72,7 +72,7 @@ class ExportController extends Controller
             $url = Storage::url("downloads/{$filename}");
 
             return response()
-            ->download(storage_path("public/{$filename}"), $filename, [
+            ->download(storage_path("downloads/{$filename}"), $filename, [
                 'Content-Type' => 'text/csv',
                 'Content-Disposition' => 'attachment; filename="' . $filename . '"',
             ]);
