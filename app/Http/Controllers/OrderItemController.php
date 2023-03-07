@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ItemStatus;
 use App\Models\Order;
 use App\Models\Order_Item;
 use Illuminate\Http\RedirectResponse;
@@ -19,9 +20,9 @@ class OrderItemController extends Controller
     {
         return Inertia::render('Orders/order_items', [
             //return order items
-            'order_items' => Order_Item::with('order','album')->latest()->get(),
+            'order_items' => Order_Item::with('order', 'album')->latest()->get(),
             'cartCount' => Cart::count(),
+            'itemStatus' => ItemStatus::cases(),
         ]);
     }
-
 }
