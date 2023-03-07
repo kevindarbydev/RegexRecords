@@ -116,10 +116,11 @@ function ConvoModal({
                         <div>
                             {messages.map((message, index) => (
                                 <p
-                                    className={`text-gray-700 text-lg ${message.user_id === currentUserId
+                                    className={`text-gray-700 text-lg ${
+                                        message.user_id === currentUserId
                                             ? "text-right"
                                             : "text-left"
-                                        }`}
+                                    }`}
                                     key={index}
                                 >
                                     {message.body}{" "}
@@ -158,7 +159,7 @@ function ConvoModal({
                     <a
                         href="#"
                         className="text-red-600"
-                        onClick={() => handleDelete(convoId)}
+                        onClick={() => handleDelete(conversation.threadId)}
                     >
                         Delete Conversation
                     </a>
