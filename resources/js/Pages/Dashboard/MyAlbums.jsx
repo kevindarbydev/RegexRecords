@@ -77,13 +77,7 @@ export default function Index({
         setShowDropdown(false);
     };
 
-    const uniqueTitles = searchResults.reduce((acc, current) => {
-        if (!acc.some((item) => item.title === current.title)) {
-            acc.push(current);
-        }
-        return acc;
-    }, searchResults.slice(0, 1)); // initialize the accumulator with the first element of the array
-
+    
     const submit = (e) => {
         e.preventDefault();
         post(route("dashboard.albums.store"), { onSuccess: () => reset() });
@@ -140,7 +134,7 @@ export default function Index({
                                 <div className="absolute z-10 w-full md:w-1/5 mt-2 rounded-md shadow-lg">
                                     <div className="bg-white rounded-md shadow-xs">
                                         <ul className="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-32">
-                                            {uniqueTitles.map((result) => (
+                                            {searchResults.map((result) => (
                                                 <li
                                                     key={result.id}
                                                     className="cursor-pointer text-gray-900 hover:bg-indigo-400 hover:text-white py-2 px-3"
