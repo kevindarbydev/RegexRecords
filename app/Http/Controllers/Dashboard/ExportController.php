@@ -68,6 +68,14 @@ class ExportController extends Controller
             fclose($handle);
 
             Storage::put("downloads/{$filename}", $csvData);
+            //link for the user to download their exported coll
+            $url = Storage::url("downloads/{$filename}");
+
+            return response()
+            ->download(storage_path("public/{$filename}"), $filename, [
+                'Content-Type' => 'text/csv',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            ]);
         }
 
         return redirect(route('dashboard.export'));
