@@ -41,7 +41,7 @@ export default function Index({
                         setData("sort", e.target.value);
                     }}
                 >
-                    <option value="">Default</option>
+                    <option value="">Latest</option>
                     <option value="PriceLtoH">Price (Lowest to Highest)</option>
                     <option value="PriceHtoL">Price (Highest to Lowest)</option>
                     <option value="Seller">Seller Name</option>

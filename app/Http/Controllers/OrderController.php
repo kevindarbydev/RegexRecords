@@ -21,9 +21,11 @@ class OrderController extends Controller
     {
         return Inertia::render('Marketplace/Orders', [
             'orders' => Order::with('order_item', 'user')->where('user_id', Auth::user()->id)->latest()->get(),
+            'orders2' => Order::with('order_item', 'user')->where('user_id', Auth::user()->id)->where('status', OrderStatus::Submitted)->get(),
+            'orders3' => Order::with('order_item', 'user')->where('user_id', Auth::user()->id)->where('status', OrderStatus::Processed)->get(),
+            'orders4' => Order::with('order_item', 'user')->where('user_id', Auth::user()->id)->where('status', OrderStatus::Completed)->get(),
             'cartCount' => Cart::count(),
             'orderStatus' => OrderStatus::cases(),
-            'itemStatus' => ItemStatus::cases(),
         ]);
     }
 
@@ -75,7 +77,11 @@ class OrderController extends Controller
         return Inertia::render('Marketplace/OrderItems', [
             //return order items
             'order_items' => Order_Item::with('order', 'album')->where('order_id', $request->order)->latest()->get(),
+            'order_items2' => Order_Item::with('order', 'album')->where('order_id', $request->order)->where('status', ItemStatus::Sold)->latest()->get(),
+            'order_items3' => Order_Item::with('order', 'album')->where('order_id', $request->order)->where('status', ItemStatus::Shipped)->latest()->get(),
+            'order_items4' => Order_Item::with('order', 'album')->where('order_id', $request->order)->where('status', ItemStatus::Received)->latest()->get(),
             'cartCount' => Cart::count(),
+            'itemStatus' => ItemStatus::cases(),
         ]);
     }
 
@@ -84,7 +90,11 @@ class OrderController extends Controller
         return Inertia::render('Marketplace/AlbumsSold', [
             //return order items
             'order_items' => Order_Item::with('user', 'album')->where('user_id', Auth::user()->id)->latest()->get(),
+            'order_items2' => Order_Item::with('user', 'album')->where('user_id', Auth::user()->id)->where('status', ItemStatus::Sold)->latest()->get(),
+            'order_items3' => Order_Item::with('user', 'album')->where('user_id', Auth::user()->id)->where('status', ItemStatus::Shipped)->latest()->get(),
+            'order_items4' => Order_Item::with('user', 'album')->where('user_id', Auth::user()->id)->where('status', ItemStatus::Received)->latest()->get(),
             'cartCount' => Cart::count(),
+            'itemStatus' => ItemStatus::cases(),
         ]);
     }
 

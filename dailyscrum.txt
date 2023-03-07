@@ -856,3 +856,62 @@ artist, album and artist+album
 3. Need assistance / figure things out:
 - Messages
 
+------------------------------------------------------------------
+3/07/2023 Kevin
+1. Done/not done since last scrum:
+-jenkins pipeline working
+- some styling changes
+-bug fixes
+2. To do until next Scrum:
+- implement MustVerifyEmail
+- more bug fixes
+3. Need assistance / figure things out:
+-
+
+3/07/2023 Matthew
+1. Done/not done since last scrum:
+- Contact Seller bug fix
+- Add album to cart once
+- Albums sold with status + order status
+- Export to csv into a user accessible directory
+- Sort orders and order_items by status
+2. To do until next Scrum:
+- finish bughunt
+- work on ppt
+- finish up Gantt chart
+3. Need assistance / figure things out:
+
+
+3/07/2023 Chris
+1. Done/not done since last scrum:
+- styled 3/4 main sections and thier subsections
+2. To do until next Scrum:
+- final styling
+- bug hunting
+- populating hosted version
+- add new album/my albums finalize split
+- finalize explore contoller/section
+- code cleanup (unused imports, comments, etc)
+3. Need assistance / figure things out:
+- 
+
+3/07/2023 Seena
+1. Done/not done since last scrum:
+- broad bug fixes and improvements
+- friend count + friend requests count showing
+2. To do until next Scrum:
+- continue bug hunt
+- assist ppt
+- general code clean up
+3. Need assistance / figure things out:
+-
+
+3/07/2023 Nathaniel
+1. Done/not done since last scrum:
+- Flash messages for Cart and Wishlist
+- Styling (Nav bars, Date formats, table columns to show data)
+2. To do until next Scrum:
+- For Sale status on collection albums
+- Fix more bugs
+3. Need assistance / figure things out:
+

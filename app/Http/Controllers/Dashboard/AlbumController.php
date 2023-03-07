@@ -36,7 +36,7 @@ class AlbumController extends Controller
         return Inertia::render('Dashboard/MyAlbums', [
 
             // only returning user albums
-            'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->get(),
+            'albums' => Album::with('user:id,name')->where('user_id', Auth::user()->id)->latest()->paginate(6),
             'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),
             'cartCount' => Cart::count(),
             'albumsWithRatings' => $albumsWithRatings,
@@ -107,6 +107,9 @@ class AlbumController extends Controller
                 //perform 2nd API call with discogs_album_id
                 $data2 = Http::get("https://api.discogs.com/masters/{$item['master_id']}")->json();
                 if (!empty($data2)) {
+
+
+
                     $validated['year_of_release'] = $data2['year'] ?? null;
                     $validated['value'] = $data2['lowest_price'] ?? 0;
 

@@ -19,6 +19,10 @@ class FriendController extends Controller
     public function index(): Response
     {
         $user = Auth()->user();
+
+        $numOfFriends = $user->getFriendsCount();
+        $friendRequestsCount = $user->getFriendRequests()->count();
+
         $currentFriendships = $user->getAcceptedFriendships();
 
         $pendingFriendships = $user->getPendingFriendships();
@@ -28,6 +32,8 @@ class FriendController extends Controller
             'pendingFriendships'  => $pendingFriendships,
             'current_user' => $user,
             'cartCount' => Cart::count(),
+            'numOfFriends' => $numOfFriends,
+            'friendRequestsCount' => $friendRequestsCount
         ]);
     }
 
