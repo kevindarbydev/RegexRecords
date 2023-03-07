@@ -31,7 +31,7 @@ class ExportController extends Controller
         ]);
     }
 
-    public function exportCollectionsToCSV(): BinaryFileResponse
+    public function exportCollectionsToCSV(): RedirectResponse
     {
         $collections = Collection::with('user')->where('user_id', Auth::user()->id)->get();
 
@@ -74,7 +74,8 @@ class ExportController extends Controller
             }
         }
         // If we get here, there was an error
-        abort(500, 'Failed to export collections to CSV');
+        //abort(500, 'Failed to export collections to CSV');
+        return response();
     }
 
     public function exportAlbumsToCSV()
