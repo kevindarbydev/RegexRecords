@@ -52,6 +52,9 @@ class ExportController extends Controller
                 $i++;
             }      
             $filename = $collection->collection_name . '.csv';
+            if (Storage::exists("app/downloads/{$filename}")) {
+                Storage::delete("app/downloads/{$filename}");
+            }
             $handle = fopen('php://temp', 'w');
             fputcsv($handle, ['Album ID', 'Album Name', 'Value', 'For Sale?']);
             collect($albums)->each(fn ($row) => fputcsv($handle, $row));
