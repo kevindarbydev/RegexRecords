@@ -19,6 +19,7 @@ export default function AlbumDetails({
 }) {
     const subgenres = album.subgenres;
     const price = album.value;
+  
 
     const { data, setData, patch, errors } = useForm({
         rating: "",
@@ -128,6 +129,7 @@ export default function AlbumDetails({
                                 </tr>
                             </thead>
                             <tbody>
+                                
                                 {tracks.map((track, index) => (
                                     <tr key={track.id}>
                                         <td className="text-lg border-b py-2">

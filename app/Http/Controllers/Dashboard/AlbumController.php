@@ -106,35 +106,34 @@ class AlbumController extends Controller
 
                 //perform 2nd API call with discogs_album_id
                 $data2 = Http::get("https://api.discogs.com/masters/{$item['master_id']}")->json();
-                if (!empty($data2)) {                
-
-
-
+                if (!empty($data2)) {
                     $validated['year_of_release'] = $data2['year'] ?? null;
                     $validated['value'] = $data2['lowest_price'] ?? 0;
 
                     //save the album obj and save it to a var to grab album_id for tracklist
                     $album = $request->user()->albums()->create($validated);
-                    // Second API call was successful
-                    $tracklist = $data2['tracklist'];
+                    if (isset($data2['tracklist'])) {
+                        $tracklist = $data2['tracklist'];
 
-                    $tracklistModel = new Tracklist();
-                    $tracklistModel->album_id = $album->id;
-                    $tracklistModel->save();
+                        $tracklistModel = new Tracklist();
+                        $tracklistModel->album_id = $album->id;
+                        $tracklistModel->save();
 
-                    // Loop through each track in the tracklist and create a new Track model
-                    foreach ($tracklist as $trackData) {
-                        $track = new Track();
-                        $track->tracklist_id = $tracklistModel->id;
-                        $track->track_number = $trackData['position'];
-                        $track->title = $trackData['title'];
-                        $track->duration = $trackData['duration'];
-                        if ($track->save()) {
-                            error_log("Track saved successfully (duration: " . $track->duration . ")");
-                        } else {
-                            dd($track->getError());
+                        // Loop through each track in the tracklist and create a new Track model
+                        foreach ($tracklist as $trackData) {
+                            $track = new Track();
+                            $track->tracklist_id = $tracklistModel->id;
+                            $track->track_number = $trackData['position'];
+                            $track->title = $trackData['title'];
+                            $track->duration = $trackData['duration'];
+                            if ($track->save()) {
+                                error_log("Track saved successfully (duration: " . $track->duration . ")");
+                            } else {
+                                dd($track->getError());
+                            }
                         }
                     }
+                    error_log("Tracklist might have been null, didnt get saved");
                 } else {
                     // The second API call failed
                     error_log("response 5");
@@ -163,7 +162,7 @@ class AlbumController extends Controller
         $avgRating = $album->averageRatingAllTypes();
         $allRaters = $album->raters(true)->get();
         $album = Album::with('tracklist')->find($album->id);
-        $tracklistId = $album->tracklist->id;
+        $tracklistId = $album->tracklist->id ?? null;
         $tracks = Track::where('tracklist_id', $tracklistId)->get();
         $forSaleCount = Collection_Album::where('album_id', $album->id)
             ->where('for_sale', 1)
