@@ -32,9 +32,12 @@ export default function Index({
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Marketplace" />
             <MarketplaceTabs />
-            <div className="relative overflow-x-auto">
-                <h3 className="mt-2 mb-2 text-center">Marketplace</h3>
-                Sort Listings by:{" "}
+            <div className="relative overflow-x-auto m-4">
+                <h1 className="text-5xl mt-2 ml-4 text-center">Marketplace</h1>
+                <h1 className="text-2xl mt-4 ml-4 text-center">
+                    Currently for sale @ Regex Records
+                </h1>
+                Sort Listings by: &nbsp;{" "}
                 <select
                     name="sort"
                     onChange={(e) => {

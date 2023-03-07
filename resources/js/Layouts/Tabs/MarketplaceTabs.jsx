@@ -4,7 +4,7 @@ import NavLink from "@/Components/NavLink";
 export default function MarketplaceTabs() {
     return (
         <Tab.Group defaultIndex={1}>
-            <Tab.List className="flex space-x-8 bg-blue-300/20 p-2">
+            <Tab.List className="flex justify-evenly bg-blue-300/20 p-2">
                 <Tab disabled className="ml-2">
                     Marketplace
                 </Tab>
@@ -34,7 +34,7 @@ export default function MarketplaceTabs() {
                         active={route().current("orders.index")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Purchases
+                            Order History
                         </span>
                     </NavLink>
                 </Tab>

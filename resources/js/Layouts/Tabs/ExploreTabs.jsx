@@ -4,7 +4,7 @@ import NavLink from "@/Components/NavLink";
 export default function ExploreTabs() {
     return (
         <Tab.Group defaultIndex={1}>
-            <Tab.List className="flex space-x-8 bg-blue-300/20 p-2">
+            <Tab.List className="flex justify-evenly bg-blue-300/20 p-2">
                 <Tab disabled className="ml-2">
                     Explore
                 </Tab>

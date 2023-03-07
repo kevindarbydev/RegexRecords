@@ -36,7 +36,7 @@ export default function Authenticated({ auth, header, children, cartCount }) {
         <div className={`min-h-screen ${theme == "dark" ? "dark" : ""}`}>
             <nav className=" border-b border-gray-100">
                 {/* main-nav */}
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 p-1">
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             {/* nav-logo */}

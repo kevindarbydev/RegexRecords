@@ -26,7 +26,7 @@ export default function Index({ auth, wishlist_albums, cartCount, album }) {
             <MarketplaceTabs />
             <Head title="Wishlist" />
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 ">
-                <div className="flex justify-center items-center text-center text-2xl">
+                <div className="flex justify-center items-center text-5xl ml-4 mb-2 text-center">
                     My Wishlist
                 </div>
                 <div className="flex justify-center items-center">
