@@ -67,19 +67,21 @@ class ExportController extends Controller
             rewind($handle);
             $csvData = stream_get_contents($handle);
             fclose($handle);
-
+            $path = storage_path("app/downloads/{$filename}");
             //link for the user to download their exported coll
             $url = Storage::url("app/downloads/{$filename}");
             if(Storage::put("app/downloads/{$filename}", $csvData)){
                 error_log("Stored file at " . $url);
-            }
-   
+                return new BinaryFileResponse($path, 200, [
+                    'Content-Type' => 'text/csv',
+                    'Content-Disposition' =>
+                    'attachment; filename="' . $filename . '"',
+                ]);
+            }else{
+                error_log("Something went wrong");
+            }   
 
-            return response()
-            ->download(storage_path("app/downloads/{$filename}"), $filename, [
-                'Content-Type' => 'text/csv',
-                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-            ]);
+         
         }
 
         return redirect(route('dashboard.export'));
