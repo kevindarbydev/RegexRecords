@@ -23,7 +23,7 @@ class PayPalPaymentController extends Controller
         $quantity= Cart::count();
 
         if ($quantity == 0) {
-            return redirect()->route('marketplace.cart');
+            return redirect()->route('marketplace.cart')->with('failure', 'No items in Cart!');
 
         }
         $items = [];
