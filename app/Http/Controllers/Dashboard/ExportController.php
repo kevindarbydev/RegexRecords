@@ -61,7 +61,7 @@ class ExportController extends Controller
             rewind($handle);
             $csvData = stream_get_contents($handle);
             fclose($handle);
-            $path = storage_path("app/downloads/{$filename}");
+            $path = storage_path("app/app/downloads/{$filename}");
             $url = Storage::url($path);
             if (Storage::put("app/downloads/{$filename}", $csvData)) {
                 error_log("Stored file at " . $path);
