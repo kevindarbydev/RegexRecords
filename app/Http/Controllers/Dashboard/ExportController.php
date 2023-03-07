@@ -50,7 +50,7 @@ class ExportController extends Controller
                 }
                 $albums[$i] = array($album->id, $album->album_name, (float)$album->value, $for_sale);
                 $i++;
-            }      
+            }
             $filename = $collection->collection_name . '.csv';
             if (Storage::exists("app/downloads/{$filename}")) {
                 Storage::delete("app/downloads/{$filename}");
@@ -62,17 +62,16 @@ class ExportController extends Controller
             $csvData = stream_get_contents($handle);
             fclose($handle);
             $path = storage_path("app/downloads/{$filename}");
-           
-            if(Storage::put("app/downloads/{$filename}", $csvData)){
+
+            if (Storage::put("app/downloads/{$filename}", $csvData)) {
                 error_log("Stored file at " . $path);
-                return new BinaryFileResponse($path, 200, [
+                return response()->download($path, $filename, [
                     'Content-Type' => 'text/csv',
-                    'Content-Disposition' =>
-                    'attachment; filename="' . $filename . '"',
-                ]);
-            }else{
+                    'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                ])->deleteFileAfterSend(true);
+            } else {
                 error_log("Something went wrong");
-            }   
+            }
         }
         // If we get here, there was an error
         abort(500, 'Failed to export collections to CSV');
