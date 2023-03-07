@@ -98,6 +98,9 @@ export default function Authenticated({ auth, header, children, cartCount }) {
                                         route().current("marketplace.index") ||
                                         route().current("orders.index") ||
                                         route().current(
+                                            "marketplace.wishlists"
+                                        ) ||
+                                        route().current(
                                             "marketplace.orders.albums.sold"
                                         )
                                     }
@@ -322,6 +325,7 @@ export default function Authenticated({ auth, header, children, cartCount }) {
                             active={
                                 route().current("marketplace.index") ||
                                 route().current("orders.index") ||
+                                route().current("marketplace.wishlists") ||
                                 route().current(
                                     "marketplace.orders.albums.sold"
                                 )

@@ -122,7 +122,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'marketplace'], function () {
     Route::patch('/orders/{order}', [OrderController::class, 'destroy'])->name('marketplace.orders.destroy');
 
     // Wishlist-------------------------
-    Route::get('/wishlists', [WishlistController::class, 'index'])->name('marketplace.wishlists');
+    Route::get('/wishlists', [MarketplaceController::class, 'showWishlist'])->name('marketplace.wishlists');
     Route::post('/wishlists', [WishlistController::class, 'addAlbumToWishlist'])->name('marketplace.album.to.wishlist');
     Route::get('/wishlists/remove/{id}', [WishlistController::class, 'removeFromWishlist'])->name('marketplace.wishlists.remove.album');
 

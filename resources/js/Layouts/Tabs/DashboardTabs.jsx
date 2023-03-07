@@ -35,7 +35,7 @@ export default function DashboardTabs() {
                         active={route().current("dashboard.wishlists")}
                     >
                         <span className=" dark:text-white dark:hover:bg-gray-700">
-                            Wishlists
+                            Wishlist
                         </span>
                     </NavLink>
                 </Tab>

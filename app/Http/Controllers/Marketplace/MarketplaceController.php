@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
 use App\Models\Conversation;
 use App\Models\User;
+use App\Models\Wishlist_Album;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 use App\Models\Status;
@@ -138,5 +139,15 @@ class MarketplaceController extends Controller
     public function removeFromCart(Request $request)
     {
         Cart::remove($request->rowId);
+    }
+
+    public function showWishlist(): Response
+    {
+
+        return Inertia::render('Marketplace/Wishlists', [
+            'wishlist_albums' => Wishlist_Album::with('wishlist', 'album')->latest()->get(),
+            'cartCount' => Cart::count(),
+
+        ]);
     }
 }
