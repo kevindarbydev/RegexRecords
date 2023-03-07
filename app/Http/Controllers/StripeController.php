@@ -23,6 +23,7 @@ class StripeController extends Controller
 
     public function stripePost(Request $request): RedirectResponse
     {
+
         // CREATE ARRAY FOR CART ITEMS
         $items = [];
         $i = 0;
