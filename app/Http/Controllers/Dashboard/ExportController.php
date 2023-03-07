@@ -31,7 +31,7 @@ class ExportController extends Controller
         ]);
     }
 
-    public function exportCollectionsToCSV(): RedirectResponse
+    public function exportCollectionsToCSV()
     {
         $collections = Collection::with('user')->where('user_id', Auth::user()->id)->get();
 
