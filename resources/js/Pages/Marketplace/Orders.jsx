@@ -48,7 +48,7 @@ export default function Orders({
                 <div className="flex justify-center text-5xl ml-4 mb-2 text-center">
                     Order History
                 </div>
-                <div className="float-left">Sort by Status:&nbsp; </div>
+                <div className="flex justify-left items-left">Sort by Status:&nbsp; </div>
                 <select
                     name="sort"
                     onChange={(e) => {

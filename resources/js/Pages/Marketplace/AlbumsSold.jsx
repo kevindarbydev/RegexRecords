@@ -36,7 +36,7 @@ export default function AlbumsSold({
                 <div className="flex justify-center items-center text-5xl ml-4 mb-2 text-center">
                     Albums Sold
                 </div>
-                <div className="">Sort by Status:&nbsp;</div>
+                <div className="flex justify-left items-left">Sort by Status:&nbsp;</div>
                 <select
                     name="sort"
                     onChange={(e) => {
@@ -63,7 +63,7 @@ export default function AlbumsSold({
                             <th scope="col" class="px-20 py-3">
                                 Album
                             </th>
-                            <th scope="col" class="px-10 py-3">
+                            <th scope="col" class="px-20 py-3">
                                 Price
                             </th>
                             <th scope="col" class="px-10 py-3">
