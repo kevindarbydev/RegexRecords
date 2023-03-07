@@ -68,14 +68,12 @@ class ExportController extends Controller
                 return response()->download($path, $filename, [
                     'Content-Type' => 'text/csv',
                     'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-                ])->deleteFileAfterSend(true);
+                ]);
             } else {
                 error_log("Something went wrong");
             }
         }
-        // If we get here, there was an error
-        //abort(500, 'Failed to export collections to CSV');
-        return response();
+        return back();
     }
 
     public function exportAlbumsToCSV()
