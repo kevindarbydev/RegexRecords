@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Conversation;
 use App\Models\User;
+use App\Models\Album;
 use App\Mail\NewMessage;
 use Carbon\Carbon;
 use Cmgmyr\Messenger\Models\Message;
@@ -176,21 +177,30 @@ class MessagesController extends Controller
         $user1 = User::where('id', $request->seller)->first();
         $user2 = Auth::user();
 
+
+        $album_id = $request->album;
+        $album = Album::find($album_id);
+        $album_name = $album->album_name;
         $subStr = "Conversation with: " . $user1->name . "+" . $user2->name;
 
-        error_log($subStr);
+        error_log($album_name);
+       
 
         $thread = Thread::create([
             'subject' => $subStr,
         ]);
-
-        $album_id = $request->album;
         $duplicate1 = Conversation::where('album_id', $album_id)->count();
 
         if ($duplicate1 != 0) {
 
             return redirect()->route('marketplace.index')->with('failure', "Conversation Exists");
         }
+
+        $product_inquiry = Message::create([
+            'thread_id' => $thread->id,
+            'user_id' => Auth::id(),
+            'body' => "Hi, I'm interested in your album for sale, " . $album_name . ".",
+        ]);
 
         $convo = Conversation::create([
             'sender' => $user2->id,
