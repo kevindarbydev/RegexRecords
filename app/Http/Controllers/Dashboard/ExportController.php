@@ -65,18 +65,15 @@ class ExportController extends Controller
             $url = Storage::url($path);
             if (Storage::put("app/downloads/{$filename}", $csvData)) {
                 error_log("Stored file at " . $path);
-                return response()->download($path, $filename, [
-                    'Content-Type' => 'text/csv',
-                    'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                return Inertia::render('Dashboard/Export', [
+                    'downloadUrl' => $url,
+                    'cartCount' => Cart::count(),
                 ]);
             } else {
                 error_log("Something went wrong");
             }
         }
-        return Inertia::render('Dashboard/Export', [
-            'downloadUrl' => $url,
-            'cartCount' => Cart::count(),
-        ]);
+   
 
     }
 
