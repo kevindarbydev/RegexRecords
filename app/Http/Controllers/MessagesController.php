@@ -98,7 +98,7 @@ class MessagesController extends Controller
     {
         $user1 = User::find($userId);
         $user2 = Auth::user();
-        $subStr= "Conversation with: " . $user1->name . "+" . $user2->name;
+        $subStr = "Conversation with: " . $user1->name . "+" . $user2->name;
         error_log($subStr);
         // Check if conversation already exists between the current user and the second user
         $conversationExists = Conversation::where(function ($query) use ($userId) {
@@ -141,7 +141,7 @@ class MessagesController extends Controller
         $notifyUser = $request->input('idForEmail');
         error_log("Found id: " . $notifyUser);
         $user = User::findOrFail($notifyUser);
-         error_log("Found user: " . $user->name);
+        error_log("Found user: " . $user->name);
         $newMsg = Message::create([
             'thread_id' => $threadId,
             'user_id' => Auth::id(),
@@ -152,12 +152,13 @@ class MessagesController extends Controller
     }
 
     //deletes selected conversation and all related entities
-    public function delete($threadId){       
+    public function delete($threadId)
+    {
         $thread = Thread::find($threadId);
         $thread->delete();
 
         $convo = Conversation::where('threadId', $threadId)->first();
-        if (!$convo){
+        if (!$convo) {
             error_log("trying to delete a conversation that doesnt exist");
             return;
         }
@@ -168,29 +169,34 @@ class MessagesController extends Controller
         error_log("Deleted conversation #" . $threadId);
 
         return response()->json(['message' => 'Conversation deleted successfully.'], 200);
-
     }
 
     public function contactSeller(Request $request): RedirectResponse
     {
-        $conversation = new Conversation();
-        $conversation->sender = Auth::id();
-        $conversation->recipient = $request-> seller;
-        $conversation->threadId = 1;
-        $conversation->album_id = $request -> album;
+        $user1 = User::where('id', $request->seller)->first();
+        $user2 = Auth::user();
+
+        $subStr = "Conversation with: " . $user1->name . "+" . $user2->name;
+
+        $thread = Thread::create([
+            'subject' => $subStr,
+        ]);
 
         $album_id = $request->album;
-        $duplicate = Conversation::where('album_id', $album_id)->count();
+        $duplicate1 = Conversation::where('album_id', $album_id)->count();
 
-        if ($duplicate ==0){
+        if ($duplicate1 != 0) {
 
-            $request->user()->conversations()->save($conversation);
-            
-            return redirect()->route('messages.show');
-
+            return redirect()->route('marketplace.index')->with('failure', "Conversation Exists");
         }
 
-        return redirect()->route('marketplace.index');
+        $convo = Conversation::create([
+            'sender' => Auth::id(),
+            'recipient' => $user1->id,
+            'threadId' => $thread->id,
+            'album_id' => $request->album,
+        ]);
 
+        return redirect()->route('messages.index');
     }
 }
