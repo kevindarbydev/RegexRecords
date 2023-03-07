@@ -11,7 +11,7 @@ function ConvoModal({
 }) {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
-
+    
     useEffect(() => {
         function handleKeyDown(event) {
             if (event.keyCode === 27) {
@@ -158,7 +158,7 @@ function ConvoModal({
                     <a
                         href="#"
                         className="text-red-600"
-                        onClick={() => handleDelete(convoId)}
+                        onClick={() => handleDelete(conversation.threadId)}
                     >
                         Delete Conversation
                     </a>

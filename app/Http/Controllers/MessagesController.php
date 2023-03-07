@@ -155,6 +155,7 @@ class MessagesController extends Controller
     //deletes selected conversation and all related entities
     public function delete($threadId)
     {
+        error_log($threadId);
         $thread = Thread::find($threadId);
         $thread->delete();
 
@@ -163,6 +164,7 @@ class MessagesController extends Controller
             error_log("trying to delete a conversation that doesnt exist");
             return;
         }
+        $thread->delete();
         $convo->delete();
 
         Message::where('thread_id', $threadId)->delete();
