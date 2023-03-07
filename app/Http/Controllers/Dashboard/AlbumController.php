@@ -106,10 +106,7 @@ class AlbumController extends Controller
 
                 //perform 2nd API call with discogs_album_id
                 $data2 = Http::get("https://api.discogs.com/masters/{$item['master_id']}")->json();
-                if (!empty($data2)) {
-                    error_log("response 4");
-                    error_log("year: " . $data2['year']);
-                    error_log("price: " . $data2['lowest_price']);
+                if (!empty($data2)) {                
 
 
 

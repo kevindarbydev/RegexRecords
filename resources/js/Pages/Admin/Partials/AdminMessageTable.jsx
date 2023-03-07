@@ -1,15 +1,10 @@
 import React, { useState } from "react";
-import AdminDeleteButton from "./AdminDeleteButton";
+
 function AdminMessageTable({ messages, csrf }) {
     const [messageList, setMessageList] = useState(messages || []);
-
-    //console.log(messages.isArra)
-    console.log("m:" + messages);
-    console.dir(messageList);
     
     const handleDelete = async (messageId) => {
-        console.log("id: " + messageId);
-        console.log("csrf: " + csrf);
+   
         if (window.confirm("Are you sure you want to delete this message?")) {
             try {
                 const response = await fetch(`/admin/messages/${messageId}`, {

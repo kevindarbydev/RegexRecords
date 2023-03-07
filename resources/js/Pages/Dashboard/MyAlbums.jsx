@@ -38,9 +38,7 @@ export default function Index({
             }
             console.log("current q: " + currentQuery);
             const res = search(currentQuery)
-                .then((results) => {
-                    console.log("results: " + results);
-                    console.dir(results);
+                .then((results) => {            
                     setSearchResults(results);
                     setShowDropdown(true);
                 })
@@ -53,7 +51,7 @@ export default function Index({
     }, [searchQuery]);
 
     const handleSearchQueryChange = (e) => {
-        console.log("inside");
+    
         const albumName = data.album_name || "";
         const artist = data.artist || "";
 
@@ -64,31 +62,25 @@ export default function Index({
         }
 
         if (!albumName || !artist) {
-            console.log("Found either artist or album, not both");
+        
             const impreciseQuery = albumName || artist;
             setSearchQuery(impreciseQuery);
         } else {
-            console.log("found both, trying precise query");
+      
             setSearchQuery(`${albumName},${artist}`);
         }
     };
 
-    useEffect(() => {
-        console.log("After setData: ", data);
-    }, [data]);
+
 
     const handleDropdownItemClick = (result) => {
         const [artist, album_name] = result.title.split(" - ");
-        console.log("Found artist name in the response: " + artist);
-        console.log("Found album name in the response: " + album_name);
-
-        console.log("Before setData: ", data.album_name);
+   
         setData((prevData) => ({
             ...prevData,
             album_name: album_name,
             artist: artist,
-        }));
-        console.log("After setData: ", data.album_name);
+        }));      
 
         setShowDropdown(false);
     };
