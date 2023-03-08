@@ -30,7 +30,7 @@ pipeline {
                 sh "git config --global user.email 'kevindarbydev@gmail.com'"
                 sh "git config --global user.name 'Kevin Darby' " 
                 sh "git pull origin deploy"
-                sh "git push -u origin HEAD:deploy"
+                sh "git push -u origin HEAD:deploy --force"
                }
             }
         }
