@@ -63,6 +63,7 @@ class ExportController extends Controller
             fclose($handle);
             $path = storage_path("app/app/downloads/{$filename}");
             $url = asset("storage/app/app/downloads/{$filename}");
+            //exact file location on the server is laravelprojectfsd05.com/storage/app/app/downloads/{$filename}
             if (Storage::put("app/downloads/{$filename}", $csvData)) {
                 $headers = [
                     'Content-Type' => 'text/csv',

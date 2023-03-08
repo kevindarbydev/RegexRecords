@@ -57,7 +57,7 @@ export default function Index({ auth, cartCount, downloadUrl, fileName, headers 
             {downloadUrl && (
                 <div>
                     <a
-                        href={`${window.location.origin}/storage/app/downloads/${fileName}`}
+                        href={`${window.location.origin}/storage/app/app/downloads/${fileName}`}
                         target="_blank"
                         rel="noreferrer"
                         download={fileName}
