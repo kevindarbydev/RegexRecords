@@ -42,9 +42,7 @@ class MarketplaceController extends Controller
             'collection_albums2' => DB::table('collection__albums')->where('for_sale', true)->join('albums', 'collection__albums.album_id', '=', 'albums.id')->orderBy('albums.value', 'asc')->groupBy('album_id')->get(),
             'collection_albums3' => DB::table('collection__albums')->where('for_sale', true)->join('albums', 'collection__albums.album_id', '=', 'albums.id')->orderBy('albums.value', 'desc')->groupBy('album_id')->get(),
             'collection_albums4' => DB::table('collection__albums')->where('for_sale', true)->join('collections', 'collection__albums.collection_id', '=', 'collections.id')->join('users', 'collections.user_id', '=', 'users.id')->orderBy('users.name', 'asc')->groupBy('album_id')->get(),
-            
-            'collection_albums5' => DB::table('collection__albums')->select('album_id')->distinct()->latest()->get(),
-
+        
             'albums' => Album::with('user')->latest()->get(),
             'collections' => Collection::with('user')->latest()->get(),
             'users' => User::all(),
