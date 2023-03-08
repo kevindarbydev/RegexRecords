@@ -5,6 +5,7 @@ import Dropdown from "@/Components/Dropdown";
 function AlbumsInCollection({ collection, collection_albums, albums }) {
     const { data, setData, patch, processing, reset, errors } = useForm({
         cAlbum: "",
+        collection:"",
     });
 
     const submit = (e) => {
@@ -120,8 +121,9 @@ function AlbumsInCollection({ collection, collection_albums, albums }) {
                                                         <button
                                                             onClick={() => {
                                                                 setData(
-                                                                    "cAlbum",
-                                                                    collection_album.id
+                                                                    "cAlbum",collection_album.id
+                                                                
+                                                                    // "collection", collection_album.collection_id
                                                                 );
                                                             }}
                                                         >

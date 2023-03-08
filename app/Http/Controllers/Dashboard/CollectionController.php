@@ -70,6 +70,11 @@ class CollectionController extends Controller
         try {
             $cAlbum = Collection_Album::where('id', $request->cAlbum)->first();
 
+            $album_id = $request->cAlbum;
+            $cAlbum2 = Collection_Album::where('album_id','=', $album_id)->collections;
+
+            $duplicateSale = Collection::whereIn('collection_id',Collection_Album::where('id', $request->cAlbum))->get()->first();
+
             error_log("test $cAlbum");
 
             if ($cAlbum->for_sale == false) {
