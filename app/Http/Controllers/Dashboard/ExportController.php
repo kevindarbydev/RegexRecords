@@ -33,7 +33,52 @@ class ExportController extends Controller
 
     public function exportCollectionsToCSV()
     {
-    
+        $collections = Collection::with('user')->where('user_id', Auth::user()->id)->get();
+
+        foreach ($collections as $collection) {
+            $albums = [];
+            $i = 0;
+            $cAlbums = Collection_Album::where('collection_id', $collection->id)->get();
+
+            foreach ($cAlbums as $cAlbum) {
+                $album = Album::with('user')->where('id', $cAlbum->album_id)->first();
+
+                if ($cAlbum->for_sale == 0) {
+                    $for_sale = 'Not Selling';
+                } else {
+                    $for_sale = 'Selling';
+                }
+                $albums[$i] = array($album->id, $album->album_name, (float)$album->value, $for_sale);
+                $i++;
+            }
+            $filename = $collection->collection_name . '.csv';
+            if (Storage::exists("app/downloads/{$filename}")) {
+                Storage::delete("app/downloads/{$filename}");
+            }
+            $handle = fopen('php://temp', 'w');
+            fputcsv($handle, ['Album ID', 'Album Name', 'Value', 'For Sale?']);
+            collect($albums)->each(fn ($row) => fputcsv($handle, $row));
+            rewind($handle);
+            $csvData = stream_get_contents($handle);
+            fclose($handle);
+            $path = storage_path("app/app/downloads/{$filename}");
+            $url = asset("storage/app/app/downloads/{$filename}");
+            //exact file location on the server is laravelprojectfsd05.com/storage/app/app/downloads/{$filename}
+            if (Storage::put("app/downloads/{$filename}", $csvData)) {
+                $headers = [
+                    'Content-Type' => 'text/csv',
+                    'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                ];
+                return Inertia::render('Dashboard/Export', [
+                    'downloadUrl' => $url,
+                    'fileName' => $filename,
+                    'headers' => $headers,
+                    'cartCount' => Cart::count(),
+                ]);
+            } else {
+                error_log("Something went wrong");
+            }
+        }
     }
 
     public function exportAlbumsToCSV()
