@@ -13,25 +13,24 @@ const makeRequestCreator = (proxyUrl) => {
         console.log(query);
         let preciseQuery;
         if (!query) {
-            // No query provided
+        
             console.log("No query provided");
             return;
         }
 
         const [releaseTitle, artistName] = query.split(",");
     
-        if (artistName && releaseTitle) {
-            // Both release title and artist name provided
+        if (artistName && releaseTitle) {            
             console.log("Both release title and artist name provided");
             preciseQuery = `release_title=${encodeURIComponent(
                 releaseTitle.trim()
-            )}&artist=${encodeURIComponent(artistName.trim())}`;
+            )}&artist=${encodeURIComponent(artistName.trim())}`;            
         } else {
             console.log("Missing either artist or release title, firing general search");
             preciseQuery = `q=${encodeURIComponent(query.trim())}`;
         }
 
-        console.log("preciseQuery:", preciseQuery);      
+      
 
         if (cancel) {
             // Cancel the previous request before making a new request
