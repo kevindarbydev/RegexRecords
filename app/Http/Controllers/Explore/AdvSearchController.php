@@ -9,12 +9,16 @@ use App\Models\Collection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class AdvSearchController extends Controller
 {
     public function advSearch(Request $request): Response
     {
+
+
+
         // if block prevents all albums showing on page load or performing a search on all-empty fields
         if (
             !isset($request->album_name)
@@ -30,6 +34,15 @@ class AdvSearchController extends Controller
         ) {
             $albums = [];
         } else {
+
+            $request->validate([
+                'album_name' => 'string|nullable|min:1|max:200',
+                'artist' => 'string|nullable|min:1|max:200',
+                'genre' => 'string|nullable|min:1|max:100',
+                'subgenres' => 'string|nullable|min:1|max:100',
+                'year_of_release' => 'nullable|integer|min:1920|max:' . date('Y'),
+                'value' => 'numeric|min:0|max:3000|nullable',
+            ]);
 
             $albums = Album::query()
                 ->when(request('album_name'), function ($q) {

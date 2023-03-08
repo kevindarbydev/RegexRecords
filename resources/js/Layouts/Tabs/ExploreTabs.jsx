@@ -8,7 +8,7 @@ export default function ExploreTabs() {
                 <Tab disabled className="ml-2">
                     Explore
                 </Tab>
-                <Tab Index={1}>
+                <Tab>
                     <NavLink
                         href={route("explore.index")}
                         active={route().current("explore.index")}
@@ -18,7 +18,7 @@ export default function ExploreTabs() {
                         </span>
                     </NavLink>
                 </Tab>
-                <Tab Index={1}>
+                <Tab>
                     <NavLink
                         href={route("explore.viewAllAlbums")}
                         active={route().current("explore.viewAllAlbums")}
