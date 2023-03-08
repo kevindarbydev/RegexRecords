@@ -4,16 +4,26 @@ import { useForm, Head } from "@inertiajs/react";
 
 import PrimaryButton from "@/Components/PrimaryButton";
 import MarketplaceTabs from "@/Layouts/Tabs/MarketplaceTabs";
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 
-export default function Orders({ auth, orders, orders2, orders3, orders4, cartCount, orderStatus, itemStatus }) {
-    const { data, setData, post, patch, processing, reset, errors, get } = useForm({
-        sort: "",
-        order: "",
-    });
+export default function Orders({
+    auth,
+    orders,
+    orders2,
+    orders3,
+    orders4,
+    cartCount,
+    orderStatus,
+    itemStatus,
+}) {
+    const { data, setData, post, patch, processing, reset, errors, get } =
+        useForm({
+            sort: "",
+            order: "",
+        });
 
     const orderDetails = (e) => {
         e.preventDefault();
@@ -34,11 +44,11 @@ export default function Orders({ auth, orders, orders2, orders3, orders4, cartCo
         <AuthenticatedLayout auth={auth} cartCount={cartCount}>
             <Head title="Order History" />
             <MarketplaceTabs />
-            <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-                <div className="flex justify-center items-center">
+            <div className="relative overflow-x-auto m-4">
+                <div className="flex justify-center text-5xl ml-4 mb-2 text-center">
                     Order History
                 </div>
-                Sort by Status:{" "}
+                <div className="flex justify-left items-left">Sort by Status:&nbsp; </div>
                 <select
                     name="sort"
                     onChange={(e) => {
@@ -75,15 +85,19 @@ export default function Orders({ auth, orders, orders2, orders3, orders4, cartCo
                                 Actions
                             </th>
                         </thead>
-                        {data.sort == "" ?
+                        {data.sort == "" ? (
                             orders.map((order) => (
                                 <tbody>
                                     <tr>
-                                        <td>{dayjs(order.created_at).format('DD/MM/YYYY')}</td>
-                                        <td>${(order.subtotal).toFixed(2)}</td>
-                                        <td>${(order.shipping).toFixed(2)}</td>
-                                        <td>${(order.tax).toFixed(2)}</td>
-                                        <td>${(order.totalPrice).toFixed(2)}</td>
+                                        <td>
+                                            {dayjs(order.created_at).format(
+                                                "DD/MM/YYYY"
+                                            )}
+                                        </td>
+                                        <td>${order.subtotal.toFixed(2)}</td>
+                                        <td>${order.shipping.toFixed(2)}</td>
+                                        <td>${order.tax.toFixed(2)}</td>
+                                        <td>${order.totalPrice.toFixed(2)}</td>
                                         <td>{order.status}</td>
                                         <td>
                                             <form onSubmit={orderDetails}>
@@ -91,7 +105,10 @@ export default function Orders({ auth, orders, orders2, orders3, orders4, cartCo
                                                     className="mt-2 mb-2"
                                                     processing={processing}
                                                     onClick={() => {
-                                                        setData("order", order.id);
+                                                        setData(
+                                                            "order",
+                                                            order.id
+                                                        );
                                                     }}
                                                 >
                                                     Order Details
@@ -100,16 +117,23 @@ export default function Orders({ auth, orders, orders2, orders3, orders4, cartCo
                                         </td>
                                     </tr>
                                 </tbody>
-                            )) : <></>}
-                        {data.sort == "Submitted" ?
+                            ))
+                        ) : (
+                            <></>
+                        )}
+                        {data.sort == "Submitted" ? (
                             orders2.map((order) => (
                                 <tbody>
                                     <tr>
-                                        <td>{dayjs(order.created_at).format('DD/MM/YYYY')}</td>
-                                        <td>${(order.subtotal).toFixed(2)}</td>
-                                        <td>${(order.shipping).toFixed(2)}</td>
-                                        <td>${(order.tax).toFixed(2)}</td>
-                                        <td>${(order.totalPrice).toFixed(2)}</td>
+                                        <td>
+                                            {dayjs(order.created_at).format(
+                                                "DD/MM/YYYY"
+                                            )}
+                                        </td>
+                                        <td>${order.subtotal.toFixed(2)}</td>
+                                        <td>${order.shipping.toFixed(2)}</td>
+                                        <td>${order.tax.toFixed(2)}</td>
+                                        <td>${order.totalPrice.toFixed(2)}</td>
                                         <td>{order.status}</td>
                                         <td>
                                             <form onSubmit={orderDetails}>
@@ -117,7 +141,10 @@ export default function Orders({ auth, orders, orders2, orders3, orders4, cartCo
                                                     className="mt-2 mb-2"
                                                     processing={processing}
                                                     onClick={() => {
-                                                        setData("order", order.id);
+                                                        setData(
+                                                            "order",
+                                                            order.id
+                                                        );
                                                     }}
                                                 >
                                                     Order Details
@@ -126,16 +153,23 @@ export default function Orders({ auth, orders, orders2, orders3, orders4, cartCo
                                         </td>
                                     </tr>
                                 </tbody>
-                            )) : <></>}
-                        {data.sort == "Processed" ?
+                            ))
+                        ) : (
+                            <></>
+                        )}
+                        {data.sort == "Processed" ? (
                             orders3.map((order) => (
                                 <tbody>
                                     <tr>
-                                        <td>{dayjs(order.created_at).format('DD/MM/YYYY')}</td>
-                                        <td>${(order.subtotal).toFixed(2)}</td>
-                                        <td>${(order.shipping).toFixed(2)}</td>
-                                        <td>${(order.tax).toFixed(2)}</td>
-                                        <td>${(order.totalPrice).toFixed(2)}</td>
+                                        <td>
+                                            {dayjs(order.created_at).format(
+                                                "DD/MM/YYYY"
+                                            )}
+                                        </td>
+                                        <td>${order.subtotal.toFixed(2)}</td>
+                                        <td>${order.shipping.toFixed(2)}</td>
+                                        <td>${order.tax.toFixed(2)}</td>
+                                        <td>${order.totalPrice.toFixed(2)}</td>
                                         <td>{order.status}</td>
                                         <td>
                                             <form onSubmit={orderDetails}>
@@ -143,7 +177,10 @@ export default function Orders({ auth, orders, orders2, orders3, orders4, cartCo
                                                     className="mt-2 mb-2"
                                                     processing={processing}
                                                     onClick={() => {
-                                                        setData("order", order.id);
+                                                        setData(
+                                                            "order",
+                                                            order.id
+                                                        );
                                                     }}
                                                 >
                                                     Order Details
@@ -152,16 +189,23 @@ export default function Orders({ auth, orders, orders2, orders3, orders4, cartCo
                                         </td>
                                     </tr>
                                 </tbody>
-                            )) : <></>}
-                        {data.sort == "Completed" ?
+                            ))
+                        ) : (
+                            <></>
+                        )}
+                        {data.sort == "Completed" ? (
                             orders4.map((order) => (
                                 <tbody>
                                     <tr>
-                                        <td>{dayjs(order.created_at).format('DD/MM/YYYY')}</td>
-                                        <td>${(order.subtotal).toFixed(2)}</td>
-                                        <td>${(order.shipping).toFixed(2)}</td>
-                                        <td>${(order.tax).toFixed(2)}</td>
-                                        <td>${(order.totalPrice).toFixed(2)}</td>
+                                        <td>
+                                            {dayjs(order.created_at).format(
+                                                "DD/MM/YYYY"
+                                            )}
+                                        </td>
+                                        <td>${order.subtotal.toFixed(2)}</td>
+                                        <td>${order.shipping.toFixed(2)}</td>
+                                        <td>${order.tax.toFixed(2)}</td>
+                                        <td>${order.totalPrice.toFixed(2)}</td>
                                         <td>{order.status}</td>
                                         <td>
                                             <form onSubmit={orderDetails}>
@@ -169,7 +213,10 @@ export default function Orders({ auth, orders, orders2, orders3, orders4, cartCo
                                                     className="mt-2 mb-2"
                                                     processing={processing}
                                                     onClick={() => {
-                                                        setData("order", order.id);
+                                                        setData(
+                                                            "order",
+                                                            order.id
+                                                        );
                                                     }}
                                                 >
                                                     Order Details
@@ -178,7 +225,10 @@ export default function Orders({ auth, orders, orders2, orders3, orders4, cartCo
                                         </td>
                                     </tr>
                                 </tbody>
-                            )) : <></>}
+                            ))
+                        ) : (
+                            <></>
+                        )}
                     </table>
                 </div>
             </div>

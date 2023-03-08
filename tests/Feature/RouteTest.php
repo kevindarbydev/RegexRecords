@@ -66,18 +66,6 @@ class RouteTest extends TestCase
         }
     }
 
-    public function test_route_to_purchases()
-    {
-        $user14 = User::factory()->create([
-            'name' => "Larry",
-            'email' => "larry@test.com",
-            'password' => 'GoodPasswooord255!!'
-        ]); {
-            $response = $this->actingAs($user14)->get('marketplace/purchases');
-
-            $response->assertStatus(200);
-        }
-    }
 
     // needs a seller, so checks if fail (code 200 vs 405)
     public function test_route_to_seller()

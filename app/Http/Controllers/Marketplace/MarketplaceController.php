@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
 use App\Models\Conversation;
 use App\Models\User;
+use App\Models\Wishlist_Album;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 use App\Models\Status;
@@ -37,10 +38,11 @@ class MarketplaceController extends Controller
 
         return Inertia::render('Marketplace/Index', [
             'current_user' => Auth::user(),
-            'collection_albums' => Collection_Album::where('for_sale', true)->latest()->get(),
-            'collection_albums2' => DB::table('collection__albums')->where('for_sale', true)->join('albums', 'collection__albums.album_id', '=', 'albums.id')->orderBy('albums.value', 'asc')->get(),
-            'collection_albums3' => DB::table('collection__albums')->where('for_sale', true)->join('albums', 'collection__albums.album_id', '=', 'albums.id')->orderBy('albums.value', 'desc')->get(),
-            'collection_albums4' => DB::table('collection__albums')->where('for_sale', true)->join('collections', 'collection__albums.collection_id', '=', 'collections.id')->join('users', 'collections.user_id', '=', 'users.id')->orderBy('users.name', 'asc')->get(),
+            'collection_albums' => Collection_Album::where('for_sale', true)->latest()->groupBy('album_id')->get(),
+            'collection_albums2' => DB::table('collection__albums')->where('for_sale', true)->join('albums', 'collection__albums.album_id', '=', 'albums.id')->orderBy('albums.value', 'asc')->groupBy('album_id')->get(),
+            'collection_albums3' => DB::table('collection__albums')->where('for_sale', true)->join('albums', 'collection__albums.album_id', '=', 'albums.id')->orderBy('albums.value', 'desc')->groupBy('album_id')->get(),
+            'collection_albums4' => DB::table('collection__albums')->where('for_sale', true)->join('collections', 'collection__albums.collection_id', '=', 'collections.id')->join('users', 'collections.user_id', '=', 'users.id')->orderBy('users.name', 'asc')->groupBy('album_id')->get(),
+        
             'albums' => Album::with('user')->latest()->get(),
             'collections' => Collection::with('user')->latest()->get(),
             'users' => User::all(),
@@ -138,5 +140,15 @@ class MarketplaceController extends Controller
     public function removeFromCart(Request $request)
     {
         Cart::remove($request->rowId);
+    }
+
+    public function showWishlist(): Response
+    {
+
+        return Inertia::render('Marketplace/Wishlists', [
+            'wishlist_albums' => Wishlist_Album::with('wishlist', 'album')->latest()->get(),
+            'cartCount' => Cart::count(),
+
+        ]);
     }
 }

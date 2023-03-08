@@ -57,6 +57,10 @@ class ExportController extends Controller
             }
             $handle = fopen('php://temp', 'w');
             fputcsv($handle, ['Album ID', 'Album Name', 'Value', 'For Sale?']);
+            $handle = fopen('C:\Users\Public\Downloads\\' . $collection->collection_name . '.csv', 'w');
+
+            fputcsv($handle, array('Album ID', 'Album Name', 'Value', 'For Sale?'));
+
             collect($albums)->each(fn ($row) => fputcsv($handle, $row));
             rewind($handle);
             $csvData = stream_get_contents($handle);

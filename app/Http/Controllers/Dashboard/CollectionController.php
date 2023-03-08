@@ -70,6 +70,7 @@ class CollectionController extends Controller
         try {
             $cAlbum = Collection_Album::where('id', $request->cAlbum)->first();
 
+
             error_log("test $cAlbum");
 
             if ($cAlbum->for_sale == false) {

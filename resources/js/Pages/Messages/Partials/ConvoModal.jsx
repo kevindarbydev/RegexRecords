@@ -116,10 +116,11 @@ function ConvoModal({
                         <div>
                             {messages.map((message, index) => (
                                 <p
-                                    className={`text-gray-700 text-lg ${message.user_id === currentUserId
+                                    className={`text-gray-700 text-lg ${
+                                        message.user_id === currentUserId
                                             ? "text-right"
                                             : "text-left"
-                                        }`}
+                                    }`}
                                     key={index}
                                 >
                                     {message.body}{" "}
