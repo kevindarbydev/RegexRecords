@@ -29,14 +29,11 @@ class UserTest extends TestCase
 
     public function test_delete_user()
     {
-
         $user = User::factory()->count(1)->make();
         $user = User::first();
-
         if ($user) {
             $user->delete();
         }
-
         $this->assertTrue(true);
     }
 }
