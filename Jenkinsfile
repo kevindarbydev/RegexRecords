@@ -15,7 +15,8 @@ pipeline {
         }
      stage('Install') {
           steps {             
-              sh 'npm ci'   
+              sh 'npm ci'
+              sh 'composer install'
             }
         }  
 
@@ -24,7 +25,11 @@ pipeline {
                 sh 'npm run build'
             }
         }
-
+        stage('PHPUnit Tests') {
+            steps {
+                sh 'php vendor/bin/phpunit'
+            }
+        }
         stage('Deploy') {
             steps {
                withCredentials([gitUsernamePassword(credentialsId: 'github-credentials')]) {       
