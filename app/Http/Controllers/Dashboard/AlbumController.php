@@ -90,7 +90,9 @@ class AlbumController extends Controller
                 //save these fields as whatever the API returns
                 $validated['cover_image_url'] = $cover_image_spaces_url;
                 $validated['genre'] = $item['genre'][0];
-                $validated['subgenres'] = $item['style'];
+                // Converting the subgenres array to a JSON string
+                $validated['subgenres'] = json_encode($item['style']);
+                
                 $validated['artist'] = $artist_name;
                 $validated['album_name'] = $album_name;
 
