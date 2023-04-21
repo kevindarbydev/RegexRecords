@@ -144,7 +144,7 @@ export default function Index({
                                 <div className="absolute z-10 w-full md:w-1/5 mt-2 rounded-md shadow-lg">
                                     <div className="bg-white rounded-md shadow-xs">
                                         <ul className="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-32">
-                                            {uniqueTitles.map((result) => (
+                                            {searchResults.map((result) => (
                                                 <li
                                                     key={result.id}
                                                     className="cursor-pointer text-gray-900 hover:bg-indigo-400 hover:text-white py-2 px-3"
