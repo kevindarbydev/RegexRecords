@@ -86,7 +86,7 @@ class AlbumController extends Controller
 
                 // Upload the cover image to DigitalOcean Spaces bucket and get the URL
                 $cover_image_spaces_url = $spaceController->uploadCoverImageToSpace($cover_image_url);
-
+                error_log($cover_image_spaces_url);
                 //save these fields as whatever the API returns
                 $validated['cover_image_url'] = $cover_image_spaces_url;
                 $validated['genre'] = $item['genre'][0];

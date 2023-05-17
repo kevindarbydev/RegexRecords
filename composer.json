@@ -16,6 +16,7 @@
     "require": {
         "php": "^8.1",
         "aws/aws-sdk-php": "^3.258",
+        "cloudinary/cloudinary_php": "^2.10",
         "cmgmyr/messenger": "^2.28",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
