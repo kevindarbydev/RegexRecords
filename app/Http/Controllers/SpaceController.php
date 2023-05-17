@@ -30,9 +30,9 @@ DefaultEndpointsProtocol=https;AccountName=rrblobfsd05;AccountKey=392p3hsd1oMeNk
         $cloudinary = new Cloudinary(
             [
                 'cloud' => [
-                    'cloud_name' => 'dhk52ynhs',
-                    'api_key'    => '826385766923682',
-                    'api_secret' => 'F9Rq4L2TsuT-XWXkJh1B2_rPzKk',
+                    'cloud_name' => env('CLOUDINARY_NAME'),
+                    'api_key'    => env('CLOUDINARY_KEY'),
+                    'api_secret' => env('CLOUDINARY_SECRET'),
                 ],
             ]
         );
