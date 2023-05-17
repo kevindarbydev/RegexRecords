@@ -1,1 +1,1 @@
-web: heroku-php-apache2 resources/Pages
+web: heroku-php-apache2 resources/
