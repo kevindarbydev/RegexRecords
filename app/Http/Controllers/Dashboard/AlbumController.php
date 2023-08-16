@@ -47,7 +47,7 @@ class AlbumController extends Controller
     // add album to user-master list
     public function store(Request $request): RedirectResponse
     {
-        $spaceController = app(\App\Http\Controllers\SpaceController::class);
+        $s3controller = app(\App\Http\Controllers\S3Controller::class);
         $validated = $request->validate([
             'album_name' => 'required|string|max:255',
             'artist' => 'required|string|max:255',
@@ -65,38 +65,32 @@ class AlbumController extends Controller
             'token' => env('DISCOGS_ACCESS_TOKEN'),
         ]);
 
-        if ($response->ok()) {
-            // The API call was successful
-            error_log("response 1");
+        if ($response->ok()) {            
             $data = $response->json();
 
             //results may be empty due to a typo or if the artist/album is not well known
             if (empty($data['results'])) {
-                //assign it null now, checking for null later (Album.jsx component) to assign default img
-                error_log("response 2");
+                //assign it null now, checking for null later (Album.jsx component) to assign default img                
                 $validated['cover_image_url'] = null;
                 return redirect(route('dashboard.index'))->with('failure', 'Album does not exist!');
             } else {
                 // Get the first item in the results array (usually will be correct)
-                error_log("response 3");
                 $item = $data['results'][0];
 
                 // Get the album img, genre, year from the response obj
                 $cover_image_url = $item['cover_image'];
 
-                // Upload the cover image to DigitalOcean Spaces bucket and get the URL
-                $cover_image_spaces_url = $spaceController->uploadCoverImageToSpace($cover_image_url);
-                error_log($cover_image_spaces_url);
+                // Upload the cover image to s3 bucket and get the URL
+                $cover_image_s3_url = $s3controller->uploadCoverImageToS3($cover_image_url);
+                error_log("S3 location: " . $cover_image_s3_url);
                 //save these fields as whatever the API returns
-                $validated['cover_image_url'] = $cover_image_spaces_url;
+                $validated['cover_image_url'] = $cover_image_s3_url;
                 $validated['genre'] = $item['genre'][0];
                 $validated['subgenres'] = $item['style'];
                 $validated['artist'] = $artist_name;
                 $validated['album_name'] = $album_name;
 
                 $validated['discogs_album_id'] = $item['master_id']; // discogs_album_id is the ID thats used for the 2nd API request
-                error_log("master ID: " . $item['master_id']);
-
                 $title = $item['title'];
 
                 // Split the title string on the dash and assume the first part is the artist name and the second part is the album name
@@ -107,9 +101,6 @@ class AlbumController extends Controller
                 //perform 2nd API call with discogs_album_id
                 $data2 = Http::get("https://api.discogs.com/masters/{$item['master_id']}")->json();
                 if (!empty($data2)) {
-
-
-
                     $validated['year_of_release'] = $data2['year'] ?? null;
                     $validated['value'] = $data2['lowest_price'] ?? 0;
 
