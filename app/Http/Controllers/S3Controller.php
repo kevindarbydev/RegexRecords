@@ -54,9 +54,9 @@ class S3Controller extends Controller
 
         $bucket = env('AWS_BUCKET');
         $fileName = substr(md5(uniqid()), 0, 8);
-
+        error_log("Bucket: " . $bucket);
         $s3->putObject([
-            'Bucket' => $bucket,
+            'Bucket' => env('AWS_BUCKET'),
             'Key' => $fileName,
             'Body' => file_get_contents($coverImageURL),
         ]);
