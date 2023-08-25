@@ -47,24 +47,10 @@ class S3Controller extends Controller
 
     public function uploadCoverImageToS3($coverImageURL)
     {
-        $s3 = new S3Client([
-            'version' => 'latest',
-            'region' => env('AWS_DEFAULT_REGION'),
-            'credentials' => [
-                'key' => env('AWS_ACCESS_KEY_ID'),
-                'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            ],
-        ]);
-
-        $bucket = env('AWS_BUCKET');
         $fileName = substr(md5(uniqid()), 0, 8);
 
-        $s3->putObject([
-            'Bucket' => $bucket,
-            'Key' => $fileName,
-            'Body' => file_get_contents($coverImageURL),
-        ]);
+        Storage::disk('s3')->put($fileName, file_get_contents($coverImageURL));
 
-        return $s3->getObjectUrl($bucket, $fileName);
+        return Storage::disk('s3')->url($fileName);
     }
 }

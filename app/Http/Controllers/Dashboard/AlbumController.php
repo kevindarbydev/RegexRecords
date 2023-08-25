@@ -122,15 +122,11 @@ class AlbumController extends Controller
                             $track->duration = $trackData['duration'];
                             if ($track->save()) {
                                 error_log("Track saved successfully (duration: " . $track->duration . ")");
-                            } else {
-                                dd($track->getError());
                             }
                         }
                     }
-                    error_log("Tracklist might have been null, didnt get saved");
                 } else {
                     // The second API call failed
-                    error_log("response 5");
                     $status_code = $data2->status();
                     $error_message = $data2->body();
                     error_log("2nd API Call -> " .  $status_code . ': ' . $error_message);
