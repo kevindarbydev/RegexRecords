@@ -94,7 +94,7 @@ class AlbumController extends Controller
 
                 // Upload the cover image to s3 bucket and get the URL
                 $cover_image_s3_url = $s3controller->uploadCoverImageToS3($cover_image_url);
-                error_log("S3 location: " . $cover_image_s3_url);
+                //error_log("S3 location: " . $cover_image_s3_url);
                 //save these fields as whatever the API returns
                 $validated['cover_image_url'] = $cover_image_s3_url;
                 $validated['genre'] = $item['genre'][0];
@@ -133,7 +133,7 @@ class AlbumController extends Controller
                             $track->title = $trackData['title'];
                             $track->duration = $trackData['duration'];
                             if ($track->save()) {
-                                error_log("Track saved successfully (duration: " . $track->duration . ")");
+              //                  error_log("Track saved successfully (duration: " . $track->duration . ")");
                             }
                         }
                     }
@@ -141,16 +141,16 @@ class AlbumController extends Controller
                     // The second API call failed
                     $status_code = $data2->status();
                     $error_message = $data2->body();
-                    error_log("2nd API Call -> " .  $status_code . ': ' . $error_message);
+            //        error_log("2nd API Call -> " .  $status_code . ': ' . $error_message);
                     return redirect(route('dashboard.index'))->with('failure', 'Album does not exist!');
                 }
             }
         } else {
             // The API call failed
-            error_log("response 6");
+          //  error_log("response 6");
             $status_code = $response->status();
             $error_message = $response->body();
-            error_log("1st API Call -> " .  $status_code . ': ' . $error_message);
+            // error_log("1st API Call -> " .  $status_code . ': ' . $error_message);
 
             return redirect(route('dashboard.index'))->with('failure', 'Album does not exist!');
         }
