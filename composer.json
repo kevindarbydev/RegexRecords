@@ -30,6 +30,7 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "microsoft/azure-storage-blob": "1.4",
         "multicaret/laravel-acquaintances": "dev-master#v3.0.1",
+        "predis/predis": "^2.2",
         "sendgrid/sendgrid": "^8.0",
         "srmklive/paypal": "~1.0",
         "stripe/stripe-php": "^10.8",
