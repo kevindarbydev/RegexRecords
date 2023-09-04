@@ -8,7 +8,7 @@ use App\Models\Collection_Album;
 use App\Models\Tracklist;
 use App\Http\Controllers\Controller;
 use App\Models\Track;
-use Error;
+use Illuminate\Support\Facades\Cache;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -58,6 +58,18 @@ class AlbumController extends Controller
 
         $album_name = $request->album_name;
         $artist_name = $request->artist;
+
+        // Generate a unique cache key based on the input parameters
+        $cacheKey = 'album_' . md5($album_name . $artist_name);
+
+        // Try to retrieve the data from the cache
+        $cachedData = Cache::get($cacheKey);
+
+        if ($cachedData) {
+            // If cached data exists, use it instead of making the API request
+            // You can directly return or use the $cachedData as needed
+            return redirect()->route('dashboard.index')->with('success', 'Album added from cache!');
+        }
 
         $response = Http::get('https://api.discogs.com/database/search', [
             'release_title' => $album_name,
@@ -142,8 +154,10 @@ class AlbumController extends Controller
 
             return redirect(route('dashboard.index'))->with('failure', 'Album does not exist!');
         }
+        // Store the data in the cache for a specified duration (e.g., 15 minutes)
+        Cache::put($cacheKey, $validated, now()->addMinutes(15));
 
-        return redirect()->route('dashboard.index');
+        return redirect()->route('dashboard.index')->with('success', 'Album added!');
     }
 
     // show album track details
