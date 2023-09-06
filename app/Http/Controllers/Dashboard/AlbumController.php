@@ -23,7 +23,6 @@ class AlbumController extends Controller
 {
     // display user albums only
     public function index(): Response
-
     {
         $albumsWithRatings = [];
         $i = 0;
@@ -66,8 +65,6 @@ class AlbumController extends Controller
         $cachedData = Cache::get($cacheKey);
 
         if ($cachedData) {
-            // If cached data exists, use it instead of making the API request
-            // You can directly return or use the $cachedData as needed
             return redirect()->route('dashboard.index')->with('success', 'Album added from cache!');
         }
 
@@ -77,7 +74,7 @@ class AlbumController extends Controller
             'token' => env('DISCOGS_ACCESS_TOKEN'),
         ]);
 
-        if ($response->ok()) {            
+        if ($response->ok()) {
             $data = $response->json();
 
             //results may be empty due to a typo or if the artist/album is not well known
@@ -133,7 +130,7 @@ class AlbumController extends Controller
                             $track->title = $trackData['title'];
                             $track->duration = $trackData['duration'];
                             if ($track->save()) {
-              //                  error_log("Track saved successfully (duration: " . $track->duration . ")");
+                                //                  error_log("Track saved successfully (duration: " . $track->duration . ")");
                             }
                         }
                     }
@@ -141,18 +138,12 @@ class AlbumController extends Controller
                     // The second API call failed
                     $status_code = $data2->status();
                     $error_message = $data2->body();
-            //        error_log("2nd API Call -> " .  $status_code . ': ' . $error_message);
+                    //        error_log("2nd API Call -> " .  $status_code . ': ' . $error_message);
                     return redirect(route('dashboard.index'))->with('failure', 'Album does not exist!');
                 }
             }
-        } else {
-            // The API call failed
-          //  error_log("response 6");
-            $status_code = $response->status();
-            $error_message = $response->body();
-            // error_log("1st API Call -> " .  $status_code . ': ' . $error_message);
-
-            return redirect(route('dashboard.index'))->with('failure', 'Album does not exist!');
+        } else {         
+            return redirect(route('dashboard.index'))->with('failure', 'Album not found!');
         }
         // Store the data in the cache for a specified duration (e.g., 15 minutes)
         Cache::put($cacheKey, $validated, now()->addMinutes(15));
@@ -184,7 +175,6 @@ class AlbumController extends Controller
     // add album to collection
     public function addAlbumToCollection(Request $request): RedirectResponse
     {
-
         if ($request->collection_name == null) {
             return redirect()->back()->with('warning', 'You need to select a collection');
         }
