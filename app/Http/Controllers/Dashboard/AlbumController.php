@@ -44,6 +44,7 @@ class AlbumController extends Controller
 
 
     // add album to user-master list
+    // Saves & Tries to retrieve from ElastiCache
     public function store(Request $request): RedirectResponse
     {
         $s3controller = app(\App\Http\Controllers\S3Controller::class);
