@@ -58,16 +58,16 @@ class AlbumController extends Controller
 
         $album_name = $request->album_name;
         $artist_name = $request->artist;
+        //TODO: fix caching impl
+        // // Generate a unique cache key based on the input parameters
+        // $cacheKey = 'album_' . md5($album_name . $artist_name);
 
-        // Generate a unique cache key based on the input parameters
-        $cacheKey = 'album_' . md5($album_name . $artist_name);
+        // // Try to retrieve the data from the cache
+        // $cachedData = Cache::get($cacheKey);
 
-        // Try to retrieve the data from the cache
-        $cachedData = Cache::get($cacheKey);
-
-        if ($cachedData) {
-            return redirect()->route('dashboard.index')->with('success', 'Album added from cache!');
-        }
+        // if ($cachedData) {
+        //     return redirect()->route('dashboard.index')->with('success', 'Album added from cache!');
+        // }
 
         $response = Http::get('https://api.discogs.com/database/search', [
             'release_title' => $album_name,
@@ -147,7 +147,7 @@ class AlbumController extends Controller
             return redirect(route('dashboard.index'))->with('failure', 'Album not found!');
         }
         // Store the data in the cache for a specified duration (e.g., 15 minutes)
-        Cache::put($cacheKey, $validated, now()->addMinutes(15));
+      //  Cache::put($cacheKey, $validated, now()->addMinutes(15));
 
         return redirect()->route('dashboard.index')->with('success', 'Album added!');
     }
