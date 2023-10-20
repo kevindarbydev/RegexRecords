@@ -19,7 +19,7 @@ export default function LandingPage(props) {
                 <div className="max-w-6xl mx-auto sm:px-5 lg:px-7">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg dark:bg-black">
                         <div className="p-4 text-lg text-gray-900 dark:text-white">
-                            Welcome to Regex Records, {props.auth.user.name}!
+                            Hello from heroku
                         </div>
                     </div>
                 </div>

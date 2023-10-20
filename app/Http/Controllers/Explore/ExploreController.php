@@ -110,24 +110,24 @@ class ExploreController extends Controller
         }
 
 
-        $topPicks = Album::where(function ($query) use ($subgenre) {
-            $query->where('subgenres', 'like', '%' . $subgenre . '%');
-        })
-            ->inRandomOrder()
-            ->limit($limit)
-            ->get();
+        // $topPicks = Album::where(function ($query) use ($subgenre) {
+        //     $query->where('subgenres', 'like', '%' . $subgenre . '%');
+        // })
+        //     ->inRandomOrder()
+        //     ->limit($limit)
+        //     ->get();
 
-        // error handler for if no results gotten via switch - uses broader "genre" search instead of "subgenre"
-        if ($topPicks->isEmpty()) {
-            $guaranteed = "Rock";
-            $selectedSubgenre = $guaranteed;
-            $topPicks = Album::where(function ($query) use ($guaranteed) {
-                $query->where('genre', 'like', '%' . $guaranteed . '%');
-            })
-                ->inRandomOrder()
-                ->limit($limit)
-                ->get();
-        }
+        // // error handler for if no results gotten via switch - uses broader "genre" search instead of "subgenre"
+        // if ($topPicks->isEmpty()) {
+        //     $guaranteed = "Rock";
+        //     $selectedSubgenre = $guaranteed;
+        //     $topPicks = Album::where(function ($query) use ($guaranteed) {
+        //         $query->where('genre', 'like', '%' . $guaranteed . '%');
+        //     })
+        //         ->inRandomOrder()
+        //         ->limit($limit)
+        //         ->get();
+        // }
 
         // sending album + ratings to views
         $albumsWithRatings = [];
@@ -142,8 +142,7 @@ class ExploreController extends Controller
             'Explore/Index',
             [
                 'featureLetter' => $featureLetter,
-                'selectedSubgenre' => $selectedSubgenre,
-                'topPicks' => $topPicks,
+                'selectedSubgenre' => $selectedSubgenre,                
                 'recentAlbums' => $recentAlbums,
                 'spotlightAlbums' => $spotlightAlbums,
                 'collections' => Collection::with('user')->where('user_id', Auth::user()->id)->get(),

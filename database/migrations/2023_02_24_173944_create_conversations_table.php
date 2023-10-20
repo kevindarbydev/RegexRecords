@@ -17,7 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('recipient');
             $table->unsignedBigInteger('threadId');
             $table->timestamps();
+
             $table->unsignedBigInteger('album_id')->nullable(true);            
+
         });
     }
 

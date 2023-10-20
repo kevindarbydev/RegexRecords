@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('album_name');
             $table->string('artist');
             $table->integer('value');
+            $table->text('subgenres')->nullable();
             $table->timestamps();
         });
     }
