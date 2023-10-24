@@ -1,4 +1,7 @@
 # Regex Records
+
+Available at: https://www.laravelprojectfsd05.com/
+
 ### Discogs clone made with Laravel and React
 + Users can register and sign in to add albums to their collections.
 + Discogs API is used to fetch data about the album, such as the album cover and tracklist.
